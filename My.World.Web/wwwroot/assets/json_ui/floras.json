@@ -1,0 +1,170 @@
+{
+  "appearance": {
+    "attributes": [
+      {
+        "label": "Colorings",
+        "name": "colorings"
+      },
+      {
+        "label": "Size",
+        "name": "size"
+      },
+      {
+        "label": "Height",
+        "name": "height"
+      },
+      {
+        "label": "Smell",
+        "name": "smell"
+      },
+      {
+        "label": "Taste",
+        "name": "taste"
+      }
+    ],
+    "icon": "local_florist",
+    "label": "Appearance"
+  },
+  "classification": {
+    "attributes": [
+      {
+        "label": "Order",
+        "name": "order"
+      },
+      {
+        "label": "Family",
+        "name": "family"
+      },
+      {
+        "label": "Genus",
+        "name": "genus"
+      },
+      {
+        "field_type": "link",
+        "label": "Related flora",
+        "name": "related_floras"
+      }
+    ],
+    "icon": "bubble_chart",
+    "label": "Classification"
+  },
+  "ecosystem": {
+    "attributes": [
+      {
+        "field_type": "link",
+        "label": "Locations",
+        "name": "locations"
+      },
+      {
+        "label": "Reproduction",
+        "name": "reproduction"
+      },
+      {
+        "label": "Seasonality",
+        "name": "seasonality"
+      },
+      {
+        "field_type": "link",
+        "label": "Eaten by",
+        "name": "creatures"
+      },
+      {
+        "label": "Pests",
+        "name": "pests"
+      },
+      {
+        "label": "Diseases",
+        "name": "diseases"
+      }
+    ],
+    "icon": "language",
+    "label": "Ecosystem"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private Notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "label": "Other names",
+        "name": "aliases"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  },
+  "produce": {
+    "attributes": [
+      {
+        "label": "Fruits",
+        "name": "fruits"
+      },
+      {
+        "label": "Seeds",
+        "name": "seeds"
+      },
+      {
+        "label": "Nuts",
+        "name": "nuts"
+      },
+      {
+        "label": "Berries",
+        "name": "berries"
+      },
+      {
+        "label": "Medicinal purposes",
+        "name": "medicinal_purposes"
+      },
+      {
+        "label": "Leaves",
+        "name": "leaves"
+      },
+      {
+        "label": "Material uses",
+        "name": "material_uses"
+      },
+      {
+        "field_type": "link",
+        "label": "Magical effects",
+        "name": "magics"
+      }
+    ],
+    "icon": "add_box",
+    "label": "Produce"
+  }
+}

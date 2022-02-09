@@ -1,0 +1,290 @@
+{
+  "classification": {
+    "attributes": [
+      {
+        "label": "Phylum",
+        "name": "phylum"
+      },
+      {
+        "label": "Class",
+        "name": "class_string"
+      },
+      {
+        "label": "Order",
+        "name": "order"
+      },
+      {
+        "label": "Family",
+        "name": "family"
+      },
+      {
+        "label": "Genus",
+        "name": "genus"
+      },
+      {
+        "label": "Species",
+        "name": "species"
+      },
+      {
+        "label": "Variations",
+        "name": "variations"
+      }
+    ],
+    "icon": "bubble_chart",
+    "label": "Classification"
+  },
+  "comparisons": {
+    "attributes": [
+      {
+        "label": "Similar creatures",
+        "name": "similar_animals"
+      },
+      {
+        "label": "Symbolisms",
+        "name": "symbolisms"
+      },
+      {
+        "field_type": "link",
+        "label": "Related creatures",
+        "name": "related_creatures"
+      }
+    ],
+    "icon": "call_split",
+    "label": "Comparisons"
+  },
+  "evolution": {
+    "attributes": [
+      {
+        "label": "Ancestors",
+        "name": "ancestors"
+      },
+      {
+        "label": "Evolutionary drive",
+        "name": "evolutionary_drive"
+      },
+      {
+        "label": "Tradeoffs",
+        "name": "tradeoffs"
+      },
+      {
+        "label": "Predictions",
+        "name": "predictions"
+      }
+    ],
+    "icon": "timeline",
+    "label": "Evolution"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "habitat": {
+    "attributes": [
+      {
+        "label": "Preferred habitat",
+        "name": "preferred_habitat"
+      },
+      {
+        "field_type": "link",
+        "label": "Habitats",
+        "name": "habitats"
+      },
+      {
+        "label": "Food sources",
+        "name": "food_sources"
+      },
+      {
+        "label": "Migratory patterns",
+        "name": "migratory_patterns"
+      },
+      {
+        "label": "Herding patterns",
+        "name": "herd_patterns"
+      },
+      {
+        "label": "Competitors",
+        "name": "competitors"
+      },
+      {
+        "label": "Predators",
+        "name": "predators"
+      },
+      {
+        "label": "Prey",
+        "name": "prey"
+      }
+    ],
+    "icon": "location_on",
+    "label": "Habitat"
+  },
+  "looks": {
+    "attributes": [
+      {
+        "label": "Color",
+        "name": "color"
+      },
+      {
+        "label": "Shape",
+        "name": "shape"
+      },
+      {
+        "label": "Size",
+        "name": "size"
+      },
+      {
+        "label": "Height",
+        "name": "height"
+      },
+      {
+        "label": "Weight",
+        "name": "weight"
+      },
+      {
+        "label": "Notable features",
+        "name": "notable_features"
+      },
+      {
+        "label": "Vestigial features",
+        "name": "vestigial_features"
+      },
+      {
+        "label": "Materials",
+        "name": "materials"
+      }
+    ],
+    "icon": "pets",
+    "label": "Looks"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "label": "Type of creature",
+        "name": "type_of"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  },
+  "reproduction": {
+    "attributes": [
+      {
+        "label": "Reproduction age",
+        "name": "reproduction_age"
+      },
+      {
+        "label": "Requirements",
+        "name": "requirements"
+      },
+      {
+        "label": "Mating ritual",
+        "name": "mating_ritual"
+      },
+      {
+        "label": "Reproduction",
+        "name": "reproduction"
+      },
+      {
+        "label": "Reproduction frequency",
+        "name": "reproduction_frequency"
+      },
+      {
+        "label": "Parental instincts",
+        "name": "parental_instincts"
+      },
+      {
+        "label": "Offspring care",
+        "name": "offspring_care"
+      },
+      {
+        "label": "Mortality rate",
+        "name": "mortality_rate"
+      }
+    ],
+    "icon": "scatter_plot",
+    "label": "Reproduction"
+  },
+  "traits": {
+    "attributes": [
+      {
+        "label": "Aggressiveness",
+        "name": "aggressiveness"
+      },
+      {
+        "label": "Method of attack",
+        "name": "attack_method"
+      },
+      {
+        "label": "Methods of defense",
+        "name": "defense_method"
+      },
+      {
+        "label": "Maximum speed",
+        "name": "maximum_speed"
+      },
+      {
+        "label": "Strengths",
+        "name": "strengths"
+      },
+      {
+        "label": "Weaknesses",
+        "name": "weaknesses"
+      },
+      {
+        "label": "Sounds",
+        "name": "sounds"
+      },
+      {
+        "label": "Spoils",
+        "name": "spoils"
+      },
+      {
+        "label": "Condition(s)",
+        "name": "conditions"
+      },
+      {
+        "label": "Strongest sense",
+        "name": "strongest_sense"
+      },
+      {
+        "label": "Weakest sense",
+        "name": "weakest_sense"
+      }
+    ],
+    "icon": "fingerprint",
+    "label": "Traits"
+  }
+}

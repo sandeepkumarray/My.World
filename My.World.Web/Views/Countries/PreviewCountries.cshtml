@@ -1,0 +1,335 @@
+@model My.World.Web.ViewModel.CountriesViewModel
+
+@{
+    ViewData["Title"] = "ViewCountries";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Breadcrumb"] = "Countries / View";
+}
+
+
+<style>
+    .editorNative {
+        min-height: 2em;
+        overflow-y: scroll;
+        max-height: 12em;
+        max-width: 50em;
+        margin: 0;
+        margin-bottom: 2px;
+        padding: 1px 0;
+        color: black;
+        font-weight: 400;
+        font-size: 1.125rem;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 2rem;
+        background: white;
+    }
+</style>
+<div class="c-body">
+    <main class="c-main">
+        <div class="container-fluid">
+            <div class="fade-in">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header"><strong>Countrie</strong> Details</div>
+                            <div class="card-body">
+                               <div class="align-items-start">
+                                    <div class="tab-content">
+                                        @foreach (var cat in Model.ContentTemplate.categories.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+                                            if (cat.Attributes != null && cat.Attributes.Count > 0)
+                                            {
+                                                <div id="@panelName">
+                                                    <div class="card">
+                                                        <div class="card-header d-flex justify-content-between align-items-center" style="background:@Model.headerBackgroundColor">
+                                                            <span>@cat.Label</span>
+                                                            <span>@Html.Raw(@cat.Icon)</span>
+                                                        </div>
+                                                        <div class="card-body" style="padding:10px;">
+                                                            @foreach (var att in cat.Attributes)
+                                                            {
+                                                                if (att.is_active)
+                                                                {
+                                                                    <div class="form-group row">
+                                                                        <label class="col-md-3 col-form-label" for="text-input">@att.field_label</label>
+                                                                        <div class="col-md-9">
+                                                                            @if (att.field_name.ToLower() != "name" && att.field_type.In(new List<string>() { "binary", "varbinary", "tinyblob", "blob", "mediumblob", "longblob", "char byte", "char", "varchar", "tinytext", "text", "mediumtext", "longtext", "set", "enum", "nchar", "national char", "nvarchar", "national varchar", "character varying" }))
+                                                                            {
+                                                                                <div id="@att.field_name" class="form-control editorNative"></div>
+                                                                            }
+                                                                            else if (att.field_name.ToLower() == "universe")
+                                                                            {
+                                                                                <select id="ddlUniverseList" class="form-control" style="min-width:150px" disabled
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name", Model.countriesModel.Universe))">
+                                                                                </select>
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "int", "integer", "smallint unsigned", "mediumint", "bigint", "int unsigned", "integer unsigned", "bit" }))
+                                                                            {
+                                                                                <input id="countriesModel_@att.field_name" class="form-control" type="number" readonly />
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "tinyint" }))
+                                                                            {
+                                                                                <input id="countriesModel_@att.field_name" class="form-control" type="checkbox" readonly />
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <input id="countriesModel_@att.field_name" class="form-control" readonly />
+
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+
+
+                                        @foreach (var cat in Model.ContentTemplate.references.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+
+                                            <div id="@panelName">
+                                                <div class="card">
+                                                    <div class="card-header d-flex justify-content-between align-items-center" style="background:cadetblue">
+                                                        <span>@cat.Label</span>
+                                                        <span>@Html.Raw(@cat.Icon)</span>
+                                                    </div>
+                                                    <div class="card-body" style="padding:10px;">
+                                                        @foreach (var att in cat.Attributes)
+                                                        {
+                                                            if (att.is_active)
+                                                            {
+                                                                if (att.field_name.ToLower() == "gallery")
+                                                                {
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Uploaded Images</label>
+
+                                                                        <div class="row">
+                                                                            @foreach (var contentObject in Model.ContentObjectModelList)
+                                                                            {
+                                                                                <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
+                                                                                    <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">                                                                                                                                                                              
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>                                                                   
+                                                                }
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+							</div>
+                            <div class="card-footer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+@section Scripts {
+   
+    <script type="text/javascript">
+    
+		function setArchitectureBody() {
+		    html = htmlDecode('@Model.countriesModel.Architecture');
+		    $('#Architecture').append(html);
+		};
+
+		function setAreaBody() {
+		    $('#countriesModel_Area').val('@Model.countriesModel.Area');
+		};
+
+		function setBordering_countriesBody() {
+		    html = htmlDecode('@Model.countriesModel.Bordering_countries');
+		    $('#Bordering_countries').append(html);
+		};
+
+		function setClimateBody() {
+		    html = htmlDecode('@Model.countriesModel.Climate');
+		    $('#Climate').append(html);
+		};
+
+		function setCreaturesBody() {
+		    html = htmlDecode('@Model.countriesModel.Creatures');
+		    $('#Creatures').append(html);
+		};
+
+		function setCropsBody() {
+		    html = htmlDecode('@Model.countriesModel.Crops');
+		    $('#Crops').append(html);
+		};
+
+		function setCurrencyBody() {
+		    html = htmlDecode('@Model.countriesModel.Currency');
+		    $('#Currency').append(html);
+		};
+
+		function setDescriptionBody() {
+		    html = htmlDecode('@Model.countriesModel.Description');
+		    $('#Description').append(html);
+		};
+
+		function setEducationBody() {
+		    html = htmlDecode('@Model.countriesModel.Education');
+		    $('#Education').append(html);
+		};
+
+		function setEstablished_yearBody() {
+		    $('#countriesModel_Established_year').val('@Model.countriesModel.Established_year');
+		};
+
+		function setFloraBody() {
+		    html = htmlDecode('@Model.countriesModel.Flora');
+		    $('#Flora').append(html);
+		};
+
+		function setFounding_storyBody() {
+		    html = htmlDecode('@Model.countriesModel.Founding_story');
+		    $('#Founding_story').append(html);
+		};
+
+		function setGovernmentsBody() {
+		    html = htmlDecode('@Model.countriesModel.Governments');
+		    $('#Governments').append(html);
+		};
+
+		function setLandmarksBody() {
+		    html = htmlDecode('@Model.countriesModel.Landmarks');
+		    $('#Landmarks').append(html);
+		};
+
+		function setLanguagesBody() {
+		    html = htmlDecode('@Model.countriesModel.Languages');
+		    $('#Languages').append(html);
+		};
+
+		function setLawsBody() {
+		    html = htmlDecode('@Model.countriesModel.Laws');
+		    $('#Laws').append(html);
+		};
+
+		function setLocationsBody() {
+		    html = htmlDecode('@Model.countriesModel.Locations');
+		    $('#Locations').append(html);
+		};
+
+		function setMusicBody() {
+		    html = htmlDecode('@Model.countriesModel.Music');
+		    $('#Music').append(html);
+		};
+
+		function setNameBody() {
+		    $('#countriesModel_Name').val('@Model.countriesModel.Name');
+		};
+
+		function setNotable_warsBody() {
+		    html = htmlDecode('@Model.countriesModel.Notable_wars');
+		    $('#Notable_wars').append(html);
+		};
+
+		function setNotesBody() {
+		    html = htmlDecode('@Model.countriesModel.Notes');
+		    $('#Notes').append(html);
+		};
+
+		function setOther_NamesBody() {
+		    html = htmlDecode('@Model.countriesModel.Other_Names');
+		    $('#Other_Names').append(html);
+		};
+
+		function setPop_cultureBody() {
+		    html = htmlDecode('@Model.countriesModel.Pop_culture');
+		    $('#Pop_culture').append(html);
+		};
+
+		function setPopulationBody() {
+		    $('#countriesModel_Population').val('@Model.countriesModel.Population');
+		};
+
+		function setPrivate_NotesBody() {
+		    html = htmlDecode('@Model.countriesModel.Private_Notes');
+		    $('#Private_Notes').append(html);
+		};
+
+		function setReligionsBody() {
+		    html = htmlDecode('@Model.countriesModel.Religions');
+		    $('#Religions').append(html);
+		};
+
+		function setSocial_hierarchyBody() {
+		    html = htmlDecode('@Model.countriesModel.Social_hierarchy');
+		    $('#Social_hierarchy').append(html);
+		};
+
+		function setSportsBody() {
+		    html = htmlDecode('@Model.countriesModel.Sports');
+		    $('#Sports').append(html);
+		};
+
+		function setTagsBody() {
+		    html = htmlDecode('@Model.countriesModel.Tags');
+		    $('#Tags').append(html);
+		};
+
+		function setTownsBody() {
+		    html = htmlDecode('@Model.countriesModel.Towns');
+		    $('#Towns').append(html);
+		};
+
+		function setUniverseBody() {
+		    $('#countriesModel_Universe').val('@Model.countriesModel.Universe');
+		};
+
+
+
+        $(document).ready(function () {
+			setArchitectureBody();
+			setAreaBody();
+			setBordering_countriesBody();
+			setClimateBody();
+			setCreaturesBody();
+			setCropsBody();
+			setCurrencyBody();
+			setDescriptionBody();
+			setEducationBody();
+			setEstablished_yearBody();
+			setFloraBody();
+			setFounding_storyBody();
+			setGovernmentsBody();
+			setLandmarksBody();
+			setLanguagesBody();
+			setLawsBody();
+			setLocationsBody();
+			setMusicBody();
+			setNameBody();
+			setNotable_warsBody();
+			setNotesBody();
+			setOther_NamesBody();
+			setPop_cultureBody();
+			setPopulationBody();
+			setPrivate_NotesBody();
+			setReligionsBody();
+			setSocial_hierarchyBody();
+			setSportsBody();
+			setTagsBody();
+			setTownsBody();
+
+        });
+
+    </script>
+}

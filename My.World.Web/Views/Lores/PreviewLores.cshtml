@@ -1,0 +1,560 @@
+@model My.World.Web.ViewModel.LoresViewModel
+
+@{
+    ViewData["Title"] = "ViewLores";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Breadcrumb"] = "Lores / View";
+}
+
+
+<style>
+    .editorNative {
+        min-height: 2em;
+        overflow-y: scroll;
+        max-height: 12em;
+        max-width: 50em;
+        margin: 0;
+        margin-bottom: 2px;
+        padding: 1px 0;
+        color: black;
+        font-weight: 400;
+        font-size: 1.125rem;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 2rem;
+        background: white;
+    }
+</style>
+<div class="c-body">
+    <main class="c-main">
+        <div class="container-fluid">
+            <div class="fade-in">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header"><strong>Lore</strong> Details</div>
+                            <div class="card-body">
+                               <div class="align-items-start">
+                                    <div class="tab-content">
+                                        @foreach (var cat in Model.ContentTemplate.categories.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+                                            if (cat.Attributes != null && cat.Attributes.Count > 0)
+                                            {
+                                                <div id="@panelName">
+                                                    <div class="card">
+                                                        <div class="card-header d-flex justify-content-between align-items-center" style="background:@Model.headerBackgroundColor">
+                                                            <span>@cat.Label</span>
+                                                            <span>@Html.Raw(@cat.Icon)</span>
+                                                        </div>
+                                                        <div class="card-body" style="padding:10px;">
+                                                            @foreach (var att in cat.Attributes)
+                                                            {
+                                                                if (att.is_active)
+                                                                {
+                                                                    <div class="form-group row">
+                                                                        <label class="col-md-3 col-form-label" for="text-input">@att.field_label</label>
+                                                                        <div class="col-md-9">
+                                                                            @if (att.field_name.ToLower() != "name" && att.field_type.In(new List<string>() { "binary", "varbinary", "tinyblob", "blob", "mediumblob", "longblob", "char byte", "char", "varchar", "tinytext", "text", "mediumtext", "longtext", "set", "enum", "nchar", "national char", "nvarchar", "national varchar", "character varying" }))
+                                                                            {
+                                                                                <div id="@att.field_name" class="form-control editorNative"></div>
+                                                                            }
+                                                                            else if (att.field_name.ToLower() == "universe")
+                                                                            {
+                                                                                <select id="ddlUniverseList" class="form-control" style="min-width:150px" disabled
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name", Model.loresModel.Universe))">
+                                                                                </select>
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "int", "integer", "smallint unsigned", "mediumint", "bigint", "int unsigned", "integer unsigned", "bit" }))
+                                                                            {
+                                                                                <input id="loresModel_@att.field_name" class="form-control" type="number" readonly />
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "tinyint" }))
+                                                                            {
+                                                                                <input id="loresModel_@att.field_name" class="form-control" type="checkbox" readonly />
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <input id="loresModel_@att.field_name" class="form-control" readonly />
+
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+
+
+                                        @foreach (var cat in Model.ContentTemplate.references.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+
+                                            <div id="@panelName">
+                                                <div class="card">
+                                                    <div class="card-header d-flex justify-content-between align-items-center" style="background:cadetblue">
+                                                        <span>@cat.Label</span>
+                                                        <span>@Html.Raw(@cat.Icon)</span>
+                                                    </div>
+                                                    <div class="card-body" style="padding:10px;">
+                                                        @foreach (var att in cat.Attributes)
+                                                        {
+                                                            if (att.is_active)
+                                                            {
+                                                                if (att.field_name.ToLower() == "gallery")
+                                                                {
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Uploaded Images</label>
+
+                                                                        <div class="row">
+                                                                            @foreach (var contentObject in Model.ContentObjectModelList)
+                                                                            {
+                                                                                <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
+                                                                                    <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">                                                                                                                                                                              
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>                                                                   
+                                                                }
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+							</div>
+                            <div class="card-footer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+@section Scripts {
+   
+    <script type="text/javascript">
+    
+		function setBackground_informationBody() {
+		    html = htmlDecode('@Model.loresModel.Background_information');
+		    $('#Background_information').append(html);
+		};
+
+		function setBelievabilityBody() {
+		    html = htmlDecode('@Model.loresModel.Believability');
+		    $('#Believability').append(html);
+		};
+
+		function setBelieversBody() {
+		    html = htmlDecode('@Model.loresModel.Believers');
+		    $('#Believers').append(html);
+		};
+
+		function setBuildingsBody() {
+		    html = htmlDecode('@Model.loresModel.Buildings');
+		    $('#Buildings').append(html);
+		};
+
+		function setCharactersBody() {
+		    html = htmlDecode('@Model.loresModel.Characters');
+		    $('#Characters').append(html);
+		};
+
+		function setConditionsBody() {
+		    html = htmlDecode('@Model.loresModel.Conditions');
+		    $('#Conditions').append(html);
+		};
+
+		function setContinentsBody() {
+		    html = htmlDecode('@Model.loresModel.Continents');
+		    $('#Continents').append(html);
+		};
+
+		function setCountriesBody() {
+		    html = htmlDecode('@Model.loresModel.Countries');
+		    $('#Countries').append(html);
+		};
+
+		function setCreated_phrasesBody() {
+		    html = htmlDecode('@Model.loresModel.Created_phrases');
+		    $('#Created_phrases').append(html);
+		};
+
+		function setCreated_traditionsBody() {
+		    html = htmlDecode('@Model.loresModel.Created_traditions');
+		    $('#Created_traditions').append(html);
+		};
+
+		function setCreaturesBody() {
+		    html = htmlDecode('@Model.loresModel.Creatures');
+		    $('#Creatures').append(html);
+		};
+
+		function setCriticismBody() {
+		    html = htmlDecode('@Model.loresModel.Criticism');
+		    $('#Criticism').append(html);
+		};
+
+		function setDate_recordedBody() {
+		    html = htmlDecode('@Model.loresModel.Date_recorded');
+		    $('#Date_recorded').append(html);
+		};
+
+		function setDeitiesBody() {
+		    html = htmlDecode('@Model.loresModel.Deities');
+		    $('#Deities').append(html);
+		};
+
+		function setDialectBody() {
+		    html = htmlDecode('@Model.loresModel.Dialect');
+		    $('#Dialect').append(html);
+		};
+
+		function setEvolution_over_timeBody() {
+		    html = htmlDecode('@Model.loresModel.Evolution_over_time');
+		    $('#Evolution_over_time').append(html);
+		};
+
+		function setFalse_partsBody() {
+		    html = htmlDecode('@Model.loresModel.False_parts');
+		    $('#False_parts').append(html);
+		};
+
+		function setFlorasBody() {
+		    html = htmlDecode('@Model.loresModel.Floras');
+		    $('#Floras').append(html);
+		};
+
+		function setFoodsBody() {
+		    html = htmlDecode('@Model.loresModel.Foods');
+		    $('#Foods').append(html);
+		};
+
+		function setFull_textBody() {
+		    html = htmlDecode('@Model.loresModel.Full_text');
+		    $('#Full_text').append(html);
+		};
+
+		function setGenreBody() {
+		    html = htmlDecode('@Model.loresModel.Genre');
+		    $('#Genre').append(html);
+		};
+
+		function setGeographical_variationsBody() {
+		    html = htmlDecode('@Model.loresModel.Geographical_variations');
+		    $('#Geographical_variations').append(html);
+		};
+
+		function setGovernmentsBody() {
+		    html = htmlDecode('@Model.loresModel.Governments');
+		    $('#Governments').append(html);
+		};
+
+		function setGroupsBody() {
+		    html = htmlDecode('@Model.loresModel.Groups');
+		    $('#Groups').append(html);
+		};
+
+		function setHistorical_contextBody() {
+		    html = htmlDecode('@Model.loresModel.Historical_context');
+		    $('#Historical_context').append(html);
+		};
+
+		function setHoaxesBody() {
+		    html = htmlDecode('@Model.loresModel.Hoaxes');
+		    $('#Hoaxes').append(html);
+		};
+
+		function setImpactBody() {
+		    html = htmlDecode('@Model.loresModel.Impact');
+		    $('#Impact').append(html);
+		};
+
+		function setImportant_translationsBody() {
+		    html = htmlDecode('@Model.loresModel.Important_translations');
+		    $('#Important_translations').append(html);
+		};
+
+		function setInfluence_on_modern_timesBody() {
+		    html = htmlDecode('@Model.loresModel.Influence_on_modern_times');
+		    $('#Influence_on_modern_times').append(html);
+		};
+
+		function setInspirationsBody() {
+		    html = htmlDecode('@Model.loresModel.Inspirations');
+		    $('#Inspirations').append(html);
+		};
+
+		function setInterpretationsBody() {
+		    html = htmlDecode('@Model.loresModel.Interpretations');
+		    $('#Interpretations').append(html);
+		};
+
+		function setJobsBody() {
+		    html = htmlDecode('@Model.loresModel.Jobs');
+		    $('#Jobs').append(html);
+		};
+
+		function setLandmarksBody() {
+		    html = htmlDecode('@Model.loresModel.Landmarks');
+		    $('#Landmarks').append(html);
+		};
+
+		function setMagicBody() {
+		    html = htmlDecode('@Model.loresModel.Magic');
+		    $('#Magic').append(html);
+		};
+
+		function setMedia_adaptationsBody() {
+		    html = htmlDecode('@Model.loresModel.Media_adaptations');
+		    $('#Media_adaptations').append(html);
+		};
+
+		function setMoralsBody() {
+		    html = htmlDecode('@Model.loresModel.Morals');
+		    $('#Morals').append(html);
+		};
+
+		function setMotivationsBody() {
+		    html = htmlDecode('@Model.loresModel.Motivations');
+		    $('#Motivations').append(html);
+		};
+
+		function setNameBody() {
+		    $('#loresModel_Name').val('@Model.loresModel.Name');
+		};
+
+		function setNotesBody() {
+		    html = htmlDecode('@Model.loresModel.Notes');
+		    $('#Notes').append(html);
+		};
+
+		function setOriginal_authorBody() {
+		    html = htmlDecode('@Model.loresModel.Original_author');
+		    $('#Original_author').append(html);
+		};
+
+		function setOriginal_languagesBody() {
+		    html = htmlDecode('@Model.loresModel.Original_languages');
+		    $('#Original_languages').append(html);
+		};
+
+		function setOriginal_tellingBody() {
+		    html = htmlDecode('@Model.loresModel.Original_telling');
+		    $('#Original_telling').append(html);
+		};
+
+		function setPlanetsBody() {
+		    html = htmlDecode('@Model.loresModel.Planets');
+		    $('#Planets').append(html);
+		};
+
+		function setPrivate_NotesBody() {
+		    html = htmlDecode('@Model.loresModel.Private_Notes');
+		    $('#Private_Notes').append(html);
+		};
+
+		function setPropagation_methodBody() {
+		    html = htmlDecode('@Model.loresModel.Propagation_method');
+		    $('#Propagation_method').append(html);
+		};
+
+		function setRacesBody() {
+		    html = htmlDecode('@Model.loresModel.Races');
+		    $('#Races').append(html);
+		};
+
+		function setReceptionBody() {
+		    html = htmlDecode('@Model.loresModel.Reception');
+		    $('#Reception').append(html);
+		};
+
+		function setRelated_loresBody() {
+		    html = htmlDecode('@Model.loresModel.Related_lores');
+		    $('#Related_lores').append(html);
+		};
+
+		function setReligionsBody() {
+		    html = htmlDecode('@Model.loresModel.Religions');
+		    $('#Religions').append(html);
+		};
+
+		function setSchoolsBody() {
+		    html = htmlDecode('@Model.loresModel.Schools');
+		    $('#Schools').append(html);
+		};
+
+		function setSourceBody() {
+		    html = htmlDecode('@Model.loresModel.Source');
+		    $('#Source').append(html);
+		};
+
+		function setSportsBody() {
+		    html = htmlDecode('@Model.loresModel.Sports');
+		    $('#Sports').append(html);
+		};
+
+		function setStructureBody() {
+		    html = htmlDecode('@Model.loresModel.Structure');
+		    $('#Structure').append(html);
+		};
+
+		function setSubjectsBody() {
+		    html = htmlDecode('@Model.loresModel.Subjects');
+		    $('#Subjects').append(html);
+		};
+
+		function setSummaryBody() {
+		    html = htmlDecode('@Model.loresModel.Summary');
+		    $('#Summary').append(html);
+		};
+
+		function setSymbolismsBody() {
+		    html = htmlDecode('@Model.loresModel.Symbolisms');
+		    $('#Symbolisms').append(html);
+		};
+
+		function setTagsBody() {
+		    html = htmlDecode('@Model.loresModel.Tags');
+		    $('#Tags').append(html);
+		};
+
+		function setTechnologiesBody() {
+		    html = htmlDecode('@Model.loresModel.Technologies');
+		    $('#Technologies').append(html);
+		};
+
+		function setTime_periodBody() {
+		    html = htmlDecode('@Model.loresModel.Time_period');
+		    $('#Time_period').append(html);
+		};
+
+		function setToneBody() {
+		    html = htmlDecode('@Model.loresModel.Tone');
+		    $('#Tone').append(html);
+		};
+
+		function setTownsBody() {
+		    html = htmlDecode('@Model.loresModel.Towns');
+		    $('#Towns').append(html);
+		};
+
+		function setTraditionsBody() {
+		    html = htmlDecode('@Model.loresModel.Traditions');
+		    $('#Traditions').append(html);
+		};
+
+		function setTranslation_variationsBody() {
+		    html = htmlDecode('@Model.loresModel.Translation_variations');
+		    $('#Translation_variations').append(html);
+		};
+
+		function setTrue_partsBody() {
+		    html = htmlDecode('@Model.loresModel.True_parts');
+		    $('#True_parts').append(html);
+		};
+
+		function setTypeBody() {
+		    html = htmlDecode('@Model.loresModel.Type');
+		    $('#Type').append(html);
+		};
+
+		function setUniverseBody() {
+		    $('#loresModel_Universe').val('@Model.loresModel.Universe');
+		};
+
+		function setVariationsBody() {
+		    html = htmlDecode('@Model.loresModel.Variations');
+		    $('#Variations').append(html);
+		};
+
+		function setVehiclesBody() {
+		    html = htmlDecode('@Model.loresModel.Vehicles');
+		    $('#Vehicles').append(html);
+		};
+
+
+
+        $(document).ready(function () {
+			setBackground_informationBody();
+			setBelievabilityBody();
+			setBelieversBody();
+			setBuildingsBody();
+			setCharactersBody();
+			setConditionsBody();
+			setContinentsBody();
+			setCountriesBody();
+			setCreated_phrasesBody();
+			setCreated_traditionsBody();
+			setCreaturesBody();
+			setCriticismBody();
+			setDate_recordedBody();
+			setDeitiesBody();
+			setDialectBody();
+			setEvolution_over_timeBody();
+			setFalse_partsBody();
+			setFlorasBody();
+			setFoodsBody();
+			setFull_textBody();
+			setGenreBody();
+			setGeographical_variationsBody();
+			setGovernmentsBody();
+			setGroupsBody();
+			setHistorical_contextBody();
+			setHoaxesBody();
+			setImpactBody();
+			setImportant_translationsBody();
+			setInfluence_on_modern_timesBody();
+			setInspirationsBody();
+			setInterpretationsBody();
+			setJobsBody();
+			setLandmarksBody();
+			setMagicBody();
+			setMedia_adaptationsBody();
+			setMoralsBody();
+			setMotivationsBody();
+			setNameBody();
+			setNotesBody();
+			setOriginal_authorBody();
+			setOriginal_languagesBody();
+			setOriginal_tellingBody();
+			setPlanetsBody();
+			setPrivate_NotesBody();
+			setPropagation_methodBody();
+			setRacesBody();
+			setReceptionBody();
+			setRelated_loresBody();
+			setReligionsBody();
+			setSchoolsBody();
+			setSourceBody();
+			setSportsBody();
+			setStructureBody();
+			setSubjectsBody();
+			setSummaryBody();
+			setSymbolismsBody();
+			setTagsBody();
+			setTechnologiesBody();
+			setTime_periodBody();
+			setToneBody();
+			setTownsBody();
+			setTraditionsBody();
+			setTranslation_variationsBody();
+			setTrue_partsBody();
+			setTypeBody();
+			setVariationsBody();
+			setVehiclesBody();
+
+        });
+
+    </script>
+}

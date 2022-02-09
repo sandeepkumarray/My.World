@@ -1,0 +1,283 @@
+@model My.World.Web.ViewModel.MagicsViewModel
+
+@{
+    ViewData["Title"] = "ViewMagics";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Breadcrumb"] = "Magics / View";
+}
+
+
+<style>
+    .editorNative {
+        min-height: 2em;
+        overflow-y: scroll;
+        max-height: 12em;
+        max-width: 50em;
+        margin: 0;
+        margin-bottom: 2px;
+        padding: 1px 0;
+        color: black;
+        font-weight: 400;
+        font-size: 1.125rem;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 2rem;
+        background: white;
+    }
+</style>
+<div class="c-body">
+    <main class="c-main">
+        <div class="container-fluid">
+            <div class="fade-in">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header"><strong>Magic</strong> Details</div>
+                            <div class="card-body">
+                               <div class="align-items-start">
+                                    <div class="tab-content">
+                                        @foreach (var cat in Model.ContentTemplate.categories.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+                                            if (cat.Attributes != null && cat.Attributes.Count > 0)
+                                            {
+                                                <div id="@panelName">
+                                                    <div class="card">
+                                                        <div class="card-header d-flex justify-content-between align-items-center" style="background:@Model.headerBackgroundColor">
+                                                            <span>@cat.Label</span>
+                                                            <span>@Html.Raw(@cat.Icon)</span>
+                                                        </div>
+                                                        <div class="card-body" style="padding:10px;">
+                                                            @foreach (var att in cat.Attributes)
+                                                            {
+                                                                if (att.is_active)
+                                                                {
+                                                                    <div class="form-group row">
+                                                                        <label class="col-md-3 col-form-label" for="text-input">@att.field_label</label>
+                                                                        <div class="col-md-9">
+                                                                            @if (att.field_name.ToLower() != "name" && att.field_type.In(new List<string>() { "binary", "varbinary", "tinyblob", "blob", "mediumblob", "longblob", "char byte", "char", "varchar", "tinytext", "text", "mediumtext", "longtext", "set", "enum", "nchar", "national char", "nvarchar", "national varchar", "character varying" }))
+                                                                            {
+                                                                                <div id="@att.field_name" class="form-control editorNative"></div>
+                                                                            }
+                                                                            else if (att.field_name.ToLower() == "universe")
+                                                                            {
+                                                                                <select id="ddlUniverseList" class="form-control" style="min-width:150px" disabled
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name", Model.magicsModel.Universe))">
+                                                                                </select>
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "int", "integer", "smallint unsigned", "mediumint", "bigint", "int unsigned", "integer unsigned", "bit" }))
+                                                                            {
+                                                                                <input id="magicsModel_@att.field_name" class="form-control" type="number" readonly />
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "tinyint" }))
+                                                                            {
+                                                                                <input id="magicsModel_@att.field_name" class="form-control" type="checkbox" readonly />
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <input id="magicsModel_@att.field_name" class="form-control" readonly />
+
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+
+
+                                        @foreach (var cat in Model.ContentTemplate.references.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+
+                                            <div id="@panelName">
+                                                <div class="card">
+                                                    <div class="card-header d-flex justify-content-between align-items-center" style="background:cadetblue">
+                                                        <span>@cat.Label</span>
+                                                        <span>@Html.Raw(@cat.Icon)</span>
+                                                    </div>
+                                                    <div class="card-body" style="padding:10px;">
+                                                        @foreach (var att in cat.Attributes)
+                                                        {
+                                                            if (att.is_active)
+                                                            {
+                                                                if (att.field_name.ToLower() == "gallery")
+                                                                {
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Uploaded Images</label>
+
+                                                                        <div class="row">
+                                                                            @foreach (var contentObject in Model.ContentObjectModelList)
+                                                                            {
+                                                                                <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
+                                                                                    <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">                                                                                                                                                                              
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>                                                                   
+                                                                }
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+							</div>
+                            <div class="card-footer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+@section Scripts {
+   
+    <script type="text/javascript">
+    
+		function setAftereffectsBody() {
+		    html = htmlDecode('@Model.magicsModel.Aftereffects');
+		    $('#Aftereffects').append(html);
+		};
+
+		function setConditionsBody() {
+		    html = htmlDecode('@Model.magicsModel.Conditions');
+		    $('#Conditions').append(html);
+		};
+
+		function setDeitiesBody() {
+		    html = htmlDecode('@Model.magicsModel.Deities');
+		    $('#Deities').append(html);
+		};
+
+		function setDescriptionBody() {
+		    html = htmlDecode('@Model.magicsModel.Description');
+		    $('#Description').append(html);
+		};
+
+		function setEducationBody() {
+		    html = htmlDecode('@Model.magicsModel.Education');
+		    $('#Education').append(html);
+		};
+
+		function setEffectsBody() {
+		    html = htmlDecode('@Model.magicsModel.Effects');
+		    $('#Effects').append(html);
+		};
+
+		function setElementBody() {
+		    html = htmlDecode('@Model.magicsModel.Element');
+		    $('#Element').append(html);
+		};
+
+		function setLimitationsBody() {
+		    html = htmlDecode('@Model.magicsModel.Limitations');
+		    $('#Limitations').append(html);
+		};
+
+		function setMaterials_requiredBody() {
+		    html = htmlDecode('@Model.magicsModel.Materials_required');
+		    $('#Materials_required').append(html);
+		};
+
+		function setNameBody() {
+		    $('#magicsModel_Name').val('@Model.magicsModel.Name');
+		};
+
+		function setNegative_effectsBody() {
+		    html = htmlDecode('@Model.magicsModel.Negative_effects');
+		    $('#Negative_effects').append(html);
+		};
+
+		function setNeutral_effectsBody() {
+		    html = htmlDecode('@Model.magicsModel.Neutral_effects');
+		    $('#Neutral_effects').append(html);
+		};
+
+		function setNotesBody() {
+		    html = htmlDecode('@Model.magicsModel.Notes');
+		    $('#Notes').append(html);
+		};
+
+		function setPositive_effectsBody() {
+		    html = htmlDecode('@Model.magicsModel.Positive_effects');
+		    $('#Positive_effects').append(html);
+		};
+
+		function setPrivate_notesBody() {
+		    html = htmlDecode('@Model.magicsModel.Private_notes');
+		    $('#Private_notes').append(html);
+		};
+
+		function setResource_costsBody() {
+		    html = htmlDecode('@Model.magicsModel.Resource_costs');
+		    $('#Resource_costs').append(html);
+		};
+
+		function setScaleBody() {
+		    $('#magicsModel_Scale').val('@Model.magicsModel.Scale');
+		};
+
+		function setSkills_requiredBody() {
+		    html = htmlDecode('@Model.magicsModel.Skills_required');
+		    $('#Skills_required').append(html);
+		};
+
+		function setTagsBody() {
+		    html = htmlDecode('@Model.magicsModel.Tags');
+		    $('#Tags').append(html);
+		};
+
+		function setType_of_magicBody() {
+		    html = htmlDecode('@Model.magicsModel.Type_of_magic');
+		    $('#Type_of_magic').append(html);
+		};
+
+		function setUniverseBody() {
+		    $('#magicsModel_Universe').val('@Model.magicsModel.Universe');
+		};
+
+		function setVisualsBody() {
+		    html = htmlDecode('@Model.magicsModel.Visuals');
+		    $('#Visuals').append(html);
+		};
+
+
+
+        $(document).ready(function () {
+			setAftereffectsBody();
+			setConditionsBody();
+			setDeitiesBody();
+			setDescriptionBody();
+			setEducationBody();
+			setEffectsBody();
+			setElementBody();
+			setLimitationsBody();
+			setMaterials_requiredBody();
+			setNameBody();
+			setNegative_effectsBody();
+			setNeutral_effectsBody();
+			setNotesBody();
+			setPositive_effectsBody();
+			setPrivate_notesBody();
+			setResource_costsBody();
+			setScaleBody();
+			setSkills_requiredBody();
+			setTagsBody();
+			setType_of_magicBody();
+			setVisualsBody();
+
+        });
+
+    </script>
+}

@@ -1,0 +1,200 @@
+{
+  "changelog": {
+    "icon": "history",
+    "label": "Changelog"
+  },
+  "eating": {
+    "attributes": [
+      {
+        "label": "Meal",
+        "name": "meal"
+      },
+      {
+        "label": "Serving",
+        "name": "serving"
+      },
+      {
+        "label": "Utensils needed",
+        "name": "utensils_needed"
+      },
+      {
+        "label": "Texture",
+        "name": "texture"
+      },
+      {
+        "label": "Scent",
+        "name": "scent"
+      },
+      {
+        "label": "Flavor",
+        "name": "flavor"
+      }
+    ],
+    "icon": "restaurant",
+    "label": "Eating"
+  },
+  "effects": {
+    "attributes": [
+      {
+        "label": "Nutrition",
+        "name": "nutrition"
+      },
+      {
+        "label": "Conditions",
+        "name": "conditions"
+      },
+      {
+        "label": "Side effects",
+        "name": "side_effects"
+      }
+    ],
+    "icon": "cake",
+    "label": "Effects"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "history": {
+    "attributes": [
+      {
+        "label": "Place of origin",
+        "name": "place_of_origin"
+      },
+      {
+        "label": "Origin story",
+        "name": "origin_story"
+      },
+      {
+        "label": "Traditions",
+        "name": "traditions"
+      },
+      {
+        "label": "Symbolisms",
+        "name": "symbolisms"
+      },
+      {
+        "label": "Related foods",
+        "name": "related_foods"
+      },
+      {
+        "label": "Reputation",
+        "name": "reputation"
+      }
+    ],
+    "icon": "history",
+    "label": "History"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private Notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "label": "Type of food",
+        "name": "type_of_food"
+      },
+      {
+        "label": "Other names",
+        "name": "other_names"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  },
+  "recipe": {
+    "attributes": [
+      {
+        "label": "Ingredients",
+        "name": "ingredients"
+      },
+      {
+        "label": "Preparation",
+        "name": "preparation"
+      },
+      {
+        "label": "Cooking method",
+        "name": "cooking_method"
+      },
+      {
+        "label": "Spices",
+        "name": "spices"
+      },
+      {
+        "label": "Yield",
+        "name": "yield"
+      },
+      {
+        "label": "Color",
+        "name": "color"
+      },
+      {
+        "label": "Size",
+        "name": "size"
+      },
+      {
+        "label": "Smell",
+        "name": "smell"
+      },
+      {
+        "label": "Variations",
+        "name": "variations"
+      }
+    ],
+    "icon": "kitchen",
+    "label": "Recipe"
+  },
+  "sales": {
+    "attributes": [
+      {
+        "label": "Cost",
+        "name": "cost"
+      },
+      {
+        "label": "Sold by",
+        "name": "sold_by"
+      },
+      {
+        "label": "Rarity",
+        "name": "rarity"
+      },
+      {
+        "label": "Shelf life",
+        "name": "shelf_live"
+      }
+    ],
+    "icon": "room_service",
+    "label": "Sales"
+  }
+}

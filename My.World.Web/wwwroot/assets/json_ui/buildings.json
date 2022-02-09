@@ -1,0 +1,303 @@
+{
+  "amenities": {
+    "attributes": [
+      {
+        "label": "Parking",
+        "name": "parking"
+      },
+      {
+        "label": "Cooling",
+        "name": "cooling"
+      },
+      {
+        "label": "Heating",
+        "name": "heating"
+      },
+      {
+        "label": "Security",
+        "name": "security"
+      },
+      {
+        "label": "Walkability",
+        "name": "walkability"
+      }
+    ],
+    "icon": "pool",
+    "label": "Amenities",
+    "order": 1
+  },
+  "design": {
+    "attributes": [
+      {
+        "label": "Architectural style",
+        "name": "architectural_style"
+      },
+      {
+        "label": "Facade",
+        "name": "facade"
+      },
+      {
+        "label": "Roof",
+        "name": "roof"
+      },
+      {
+        "label": "Dimensions",
+        "name": "dimensions"
+      },
+      {
+        "label": "Square feet",
+        "name": "square_feet"
+      },
+      {
+        "label": "Floor count",
+        "name": "floor_count"
+      },
+      {
+        "label": "Flooring",
+        "name": "flooring"
+      },
+      {
+        "label": "Walls",
+        "name": "walls"
+      },
+      {
+        "label": "Windows",
+        "name": "windows"
+      }
+    ],
+    "icon": "format_paint",
+    "label": "Design",
+    "order": 1
+  },
+  "financial": {
+    "attributes": [
+      {
+        "label": "Value",
+        "name": "value"
+      },
+      {
+        "label": "Last sale price",
+        "name": "last_sale_price"
+      },
+      {
+        "label": "Monthly payments",
+        "name": "monthly_payments"
+      }
+    ],
+    "icon": "attach_money",
+    "label": "Financial",
+    "order": 1
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery",
+    "order": 1
+  },
+  "history": {
+    "attributes": [
+      {
+        "label": "Constructed year",
+        "name": "constructed_year"
+      },
+      {
+        "label": "Construction cost",
+        "name": "construction_cost"
+      },
+      {
+        "label": "Construction time",
+        "name": "construction_time"
+      },
+      {
+        "label": "Last remodel",
+        "name": "last_remodel"
+      },
+      {
+        "label": "Architect",
+        "name": "architect"
+      },
+      {
+        "label": "Developer",
+        "name": "developer"
+      },
+      {
+        "label": "Notable events",
+        "name": "notable_events"
+      }
+    ],
+    "icon": "date_range",
+    "label": "History",
+    "order": 1
+  },
+  "location": {
+    "attributes": [
+      {
+        "label": "Address",
+        "name": "address"
+      },
+      {
+        "field_type": "link",
+        "label": "Town",
+        "name": "towns"
+      },
+      {
+        "field_type": "link",
+        "label": "Country",
+        "name": "countries"
+      },
+      {
+        "field_type": "link",
+        "label": "Landmark",
+        "name": "landmarks"
+      },
+      {
+        "field_type": "link",
+        "label": "Location",
+        "name": "locations"
+      }
+    ],
+    "icon": "location_on",
+    "label": "Location",
+    "order": 1
+  },
+  "neighborhood": {
+    "attributes": [
+      {
+        "label": "Neighborhood name",
+        "name": "neighborhood_name"
+      },
+      {
+        "label": "Crime rate",
+        "name": "crime_rate"
+      },
+      {
+        "field_type": "link",
+        "label": "Nearby buildings",
+        "name": "nearby_buildings"
+      },
+      {
+        "label": "View",
+        "name": "view"
+      },
+      {
+        "label": "Stereotype",
+        "name": "stereotype"
+      },
+      {
+        "field_type": "link",
+        "label": "District schools",
+        "name": "district_schools"
+      }
+    ],
+    "icon": "store_mall_directory",
+    "label": "Neighborhood",
+    "order": 1
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private Notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes",
+    "order": 1
+  },
+  "occupants": {
+    "attributes": [
+      {
+        "label": "Owner",
+        "name": "owner"
+      },
+      {
+        "label": "Tenants",
+        "name": "tenants"
+      },
+      {
+        "label": "Affiliation",
+        "name": "affiliation"
+      },
+      {
+        "label": "Capacity",
+        "name": "capacity"
+      },
+      {
+        "label": "Price",
+        "name": "price"
+      },
+      {
+        "label": "Animals",
+        "name": "animals"
+      }
+    ],
+    "icon": "recent_actors",
+    "label": "Occupants",
+    "order": 1
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "label": "Type of building",
+        "name": "type_of"
+      },
+      {
+        "label": "Alternate names",
+        "name": "alternate_names"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview",
+    "order": 1
+  },
+  "purpose": {
+    "attributes": [
+      {
+        "label": "Bedrooms",
+        "name": "bedrooms"
+      },
+      {
+        "label": "Baths",
+        "name": "baths"
+      },
+      {
+        "label": "Purpose",
+        "name": "purpose"
+      },
+      {
+        "label": "Permits",
+        "name": "permits"
+      },
+      {
+        "label": "Zone",
+        "name": "zone"
+      }
+    ],
+    "icon": "extension",
+    "label": "Usage",
+    "order": 1
+  }
+}

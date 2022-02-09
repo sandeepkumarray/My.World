@@ -1,0 +1,354 @@
+@model My.World.Web.ViewModel.DeitiesViewModel
+
+@{
+    ViewData["Title"] = "ViewDeities";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Breadcrumb"] = "Deities / View";
+}
+
+
+<style>
+    .editorNative {
+        min-height: 2em;
+        overflow-y: scroll;
+        max-height: 12em;
+        max-width: 50em;
+        margin: 0;
+        margin-bottom: 2px;
+        padding: 1px 0;
+        color: black;
+        font-weight: 400;
+        font-size: 1.125rem;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 2rem;
+        background: white;
+    }
+</style>
+<div class="c-body">
+    <main class="c-main">
+        <div class="container-fluid">
+            <div class="fade-in">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header"><strong>Deitie</strong> Details</div>
+                            <div class="card-body">
+                               <div class="align-items-start">
+                                    <div class="tab-content">
+                                        @foreach (var cat in Model.ContentTemplate.categories.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+                                            if (cat.Attributes != null && cat.Attributes.Count > 0)
+                                            {
+                                                <div id="@panelName">
+                                                    <div class="card">
+                                                        <div class="card-header d-flex justify-content-between align-items-center" style="background:@Model.headerBackgroundColor">
+                                                            <span>@cat.Label</span>
+                                                            <span>@Html.Raw(@cat.Icon)</span>
+                                                        </div>
+                                                        <div class="card-body" style="padding:10px;">
+                                                            @foreach (var att in cat.Attributes)
+                                                            {
+                                                                if (att.is_active)
+                                                                {
+                                                                    <div class="form-group row">
+                                                                        <label class="col-md-3 col-form-label" for="text-input">@att.field_label</label>
+                                                                        <div class="col-md-9">
+                                                                            @if (att.field_name.ToLower() != "name" && att.field_type.In(new List<string>() { "binary", "varbinary", "tinyblob", "blob", "mediumblob", "longblob", "char byte", "char", "varchar", "tinytext", "text", "mediumtext", "longtext", "set", "enum", "nchar", "national char", "nvarchar", "national varchar", "character varying" }))
+                                                                            {
+                                                                                <div id="@att.field_name" class="form-control editorNative"></div>
+                                                                            }
+                                                                            else if (att.field_name.ToLower() == "universe")
+                                                                            {
+                                                                                <select id="ddlUniverseList" class="form-control" style="min-width:150px" disabled
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name", Model.deitiesModel.Universe))">
+                                                                                </select>
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "int", "integer", "smallint unsigned", "mediumint", "bigint", "int unsigned", "integer unsigned", "bit" }))
+                                                                            {
+                                                                                <input id="deitiesModel_@att.field_name" class="form-control" type="number" readonly />
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "tinyint" }))
+                                                                            {
+                                                                                <input id="deitiesModel_@att.field_name" class="form-control" type="checkbox" readonly />
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <input id="deitiesModel_@att.field_name" class="form-control" readonly />
+
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+
+
+                                        @foreach (var cat in Model.ContentTemplate.references.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+
+                                            <div id="@panelName">
+                                                <div class="card">
+                                                    <div class="card-header d-flex justify-content-between align-items-center" style="background:cadetblue">
+                                                        <span>@cat.Label</span>
+                                                        <span>@Html.Raw(@cat.Icon)</span>
+                                                    </div>
+                                                    <div class="card-body" style="padding:10px;">
+                                                        @foreach (var att in cat.Attributes)
+                                                        {
+                                                            if (att.is_active)
+                                                            {
+                                                                if (att.field_name.ToLower() == "gallery")
+                                                                {
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Uploaded Images</label>
+
+                                                                        <div class="row">
+                                                                            @foreach (var contentObject in Model.ContentObjectModelList)
+                                                                            {
+                                                                                <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
+                                                                                    <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">                                                                                                                                                                              
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>                                                                   
+                                                                }
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+							</div>
+                            <div class="card-footer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+@section Scripts {
+   
+    <script type="text/javascript">
+    
+		function setAbilitiesBody() {
+		    html = htmlDecode('@Model.deitiesModel.Abilities');
+		    $('#Abilities').append(html);
+		};
+
+		function setChildrenBody() {
+		    html = htmlDecode('@Model.deitiesModel.Children');
+		    $('#Children').append(html);
+		};
+
+		function setConditionsBody() {
+		    html = htmlDecode('@Model.deitiesModel.Conditions');
+		    $('#Conditions').append(html);
+		};
+
+		function setCreaturesBody() {
+		    html = htmlDecode('@Model.deitiesModel.Creatures');
+		    $('#Creatures').append(html);
+		};
+
+		function setDescriptionBody() {
+		    html = htmlDecode('@Model.deitiesModel.Description');
+		    $('#Description').append(html);
+		};
+
+		function setElementsBody() {
+		    html = htmlDecode('@Model.deitiesModel.Elements');
+		    $('#Elements').append(html);
+		};
+
+		function setFamily_HistoryBody() {
+		    html = htmlDecode('@Model.deitiesModel.Family_History');
+		    $('#Family_History').append(html);
+		};
+
+		function setFlorasBody() {
+		    html = htmlDecode('@Model.deitiesModel.Floras');
+		    $('#Floras').append(html);
+		};
+
+		function setHeightBody() {
+		    $('#deitiesModel_Height').val('@Model.deitiesModel.Height');
+		};
+
+		function setHuman_InteractionBody() {
+		    html = htmlDecode('@Model.deitiesModel.Human_Interaction');
+		    $('#Human_Interaction').append(html);
+		};
+
+		function setLife_StoryBody() {
+		    html = htmlDecode('@Model.deitiesModel.Life_Story');
+		    $('#Life_Story').append(html);
+		};
+
+		function setNameBody() {
+		    $('#deitiesModel_Name').val('@Model.deitiesModel.Name');
+		};
+
+		function setNotable_EventsBody() {
+		    html = htmlDecode('@Model.deitiesModel.Notable_Events');
+		    $('#Notable_Events').append(html);
+		};
+
+		function setNotesBody() {
+		    html = htmlDecode('@Model.deitiesModel.Notes');
+		    $('#Notes').append(html);
+		};
+
+		function setOther_NamesBody() {
+		    html = htmlDecode('@Model.deitiesModel.Other_Names');
+		    $('#Other_Names').append(html);
+		};
+
+		function setParentsBody() {
+		    html = htmlDecode('@Model.deitiesModel.Parents');
+		    $('#Parents').append(html);
+		};
+
+		function setPartnersBody() {
+		    html = htmlDecode('@Model.deitiesModel.Partners');
+		    $('#Partners').append(html);
+		};
+
+		function setPhysical_DescriptionBody() {
+		    html = htmlDecode('@Model.deitiesModel.Physical_Description');
+		    $('#Physical_Description').append(html);
+		};
+
+		function setPrayersBody() {
+		    html = htmlDecode('@Model.deitiesModel.Prayers');
+		    $('#Prayers').append(html);
+		};
+
+		function setPrivate_NotesBody() {
+		    html = htmlDecode('@Model.deitiesModel.Private_Notes');
+		    $('#Private_Notes').append(html);
+		};
+
+		function setRelated_landmarksBody() {
+		    html = htmlDecode('@Model.deitiesModel.Related_landmarks');
+		    $('#Related_landmarks').append(html);
+		};
+
+		function setRelated_racesBody() {
+		    html = htmlDecode('@Model.deitiesModel.Related_races');
+		    $('#Related_races').append(html);
+		};
+
+		function setRelated_townsBody() {
+		    html = htmlDecode('@Model.deitiesModel.Related_towns');
+		    $('#Related_towns').append(html);
+		};
+
+		function setRelicsBody() {
+		    html = htmlDecode('@Model.deitiesModel.Relics');
+		    $('#Relics').append(html);
+		};
+
+		function setReligionsBody() {
+		    html = htmlDecode('@Model.deitiesModel.Religions');
+		    $('#Religions').append(html);
+		};
+
+		function setRitualsBody() {
+		    html = htmlDecode('@Model.deitiesModel.Rituals');
+		    $('#Rituals').append(html);
+		};
+
+		function setSiblingsBody() {
+		    html = htmlDecode('@Model.deitiesModel.Siblings');
+		    $('#Siblings').append(html);
+		};
+
+		function setStrengthsBody() {
+		    html = htmlDecode('@Model.deitiesModel.Strengths');
+		    $('#Strengths').append(html);
+		};
+
+		function setSymbolsBody() {
+		    html = htmlDecode('@Model.deitiesModel.Symbols');
+		    $('#Symbols').append(html);
+		};
+
+		function setTagsBody() {
+		    html = htmlDecode('@Model.deitiesModel.Tags');
+		    $('#Tags').append(html);
+		};
+
+		function setTraditionsBody() {
+		    html = htmlDecode('@Model.deitiesModel.Traditions');
+		    $('#Traditions').append(html);
+		};
+
+		function setUniverseBody() {
+		    $('#deitiesModel_Universe').val('@Model.deitiesModel.Universe');
+		};
+
+		function setWeaknessesBody() {
+		    html = htmlDecode('@Model.deitiesModel.Weaknesses');
+		    $('#Weaknesses').append(html);
+		};
+
+		function setWeightBody() {
+		    $('#deitiesModel_Weight').val('@Model.deitiesModel.Weight');
+		};
+
+
+
+        $(document).ready(function () {
+			setAbilitiesBody();
+			setChildrenBody();
+			setConditionsBody();
+			setCreaturesBody();
+			setDescriptionBody();
+			setElementsBody();
+			setFamily_HistoryBody();
+			setFlorasBody();
+			setHeightBody();
+			setHuman_InteractionBody();
+			setLife_StoryBody();
+			setNameBody();
+			setNotable_EventsBody();
+			setNotesBody();
+			setOther_NamesBody();
+			setParentsBody();
+			setPartnersBody();
+			setPhysical_DescriptionBody();
+			setPrayersBody();
+			setPrivate_NotesBody();
+			setRelated_landmarksBody();
+			setRelated_racesBody();
+			setRelated_townsBody();
+			setRelicsBody();
+			setReligionsBody();
+			setRitualsBody();
+			setSiblingsBody();
+			setStrengthsBody();
+			setSymbolsBody();
+			setTagsBody();
+			setTraditionsBody();
+			setWeaknessesBody();
+			setWeightBody();
+
+        });
+
+    </script>
+}

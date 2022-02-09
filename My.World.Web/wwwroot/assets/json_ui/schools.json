@@ -1,0 +1,230 @@
+{
+  "classes": {
+    "attributes": [
+      {
+        "label": "Subjects",
+        "name": "subjects"
+      },
+      {
+        "label": "Class offerings",
+        "name": "class_offerings"
+      },
+      {
+        "label": "Core curriculum",
+        "name": "core_curriculum"
+      },
+      {
+        "label": "School specialties",
+        "name": "school_specialties"
+      },
+      {
+        "label": "Tuition",
+        "name": "tuition"
+      },
+      {
+        "label": "Other costs",
+        "name": "other_costs"
+      },
+      {
+        "label": "Grading system",
+        "name": "grading_system"
+      },
+      {
+        "label": "Schedule",
+        "name": "schedule"
+      }
+    ],
+    "icon": "color_lens",
+    "label": "Classes"
+  },
+  "extracurriculars": {
+    "attributes": [
+      {
+        "label": "Sports",
+        "name": "sports"
+      },
+      {
+        "label": "Clubs",
+        "name": "clubs"
+      },
+      {
+        "label": "Activities",
+        "name": "activities"
+      },
+      {
+        "label": "Traditions",
+        "name": "traditions"
+      }
+    ],
+    "icon": "rowing",
+    "label": "Extracurriculars"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "history": {
+    "attributes": [
+      {
+        "label": "Date founded",
+        "name": "date_founded"
+      },
+      {
+        "label": "Founding story",
+        "name": "founding_story"
+      },
+      {
+        "label": "Founded by",
+        "name": "founded_by"
+      }
+    ],
+    "icon": "history",
+    "label": "History"
+  },
+  "identity": {
+    "attributes": [
+      {
+        "label": "Motto",
+        "name": "motto"
+      },
+      {
+        "label": "Mascot",
+        "name": "mascot"
+      },
+      {
+        "label": "Colors",
+        "name": "colors"
+      },
+      {
+        "label": "Crest",
+        "name": "crest"
+      },
+      {
+        "label": "Uniforms",
+        "name": "uniforms"
+      },
+      {
+        "label": "Houses",
+        "name": "houses"
+      },
+      {
+        "label": "Purpose",
+        "name": "purpose"
+      },
+      {
+        "label": "Reputation",
+        "name": "reputation"
+      }
+    ],
+    "icon": "security",
+    "label": "Identity"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private Notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "label": "Type of school",
+        "name": "type_of_school"
+      },
+      {
+        "label": "Nicknames",
+        "name": "nicknames"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  },
+  "staff": {
+    "attributes": [
+      {
+        "label": "Headmaster",
+        "name": "headmaster"
+      },
+      {
+        "label": "Teachers",
+        "name": "teachers"
+      },
+      {
+        "label": "Administrators",
+        "name": "administrators"
+      },
+      {
+        "label": "Other employees",
+        "name": "other_employees"
+      },
+      {
+        "label": "Funding source",
+        "name": "funding_source"
+      }
+    ],
+    "icon": "supervisor_account",
+    "label": "Staff"
+  },
+  "students": {
+    "attributes": [
+      {
+        "label": "Acceptance criteria",
+        "name": "acceptance_criteria"
+      },
+      {
+        "label": "Demographics",
+        "name": "demographics"
+      },
+      {
+        "label": "Grade levels",
+        "name": "grade_levels"
+      },
+      {
+        "label": "Student ages",
+        "name": "student_ages"
+      },
+      {
+        "label": "Current students",
+        "name": "current_students"
+      },
+      {
+        "label": "Past students",
+        "name": "past_students"
+      },
+      {
+        "label": "Famous students",
+        "name": "famous_students"
+      }
+    ],
+    "icon": "assignment_ind",
+    "label": "Students"
+  }
+}

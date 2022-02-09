@@ -1,0 +1,367 @@
+@model My.World.Web.ViewModel.FoodsViewModel
+
+@{
+    ViewData["Title"] = "ViewFoods";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Breadcrumb"] = "Foods / View";
+}
+
+
+<style>
+    .editorNative {
+        min-height: 2em;
+        overflow-y: scroll;
+        max-height: 12em;
+        max-width: 50em;
+        margin: 0;
+        margin-bottom: 2px;
+        padding: 1px 0;
+        color: black;
+        font-weight: 400;
+        font-size: 1.125rem;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 2rem;
+        background: white;
+    }
+</style>
+<div class="c-body">
+    <main class="c-main">
+        <div class="container-fluid">
+            <div class="fade-in">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header"><strong>Food</strong> Details</div>
+                            <div class="card-body">
+                               <div class="align-items-start">
+                                    <div class="tab-content">
+                                        @foreach (var cat in Model.ContentTemplate.categories.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+                                            if (cat.Attributes != null && cat.Attributes.Count > 0)
+                                            {
+                                                <div id="@panelName">
+                                                    <div class="card">
+                                                        <div class="card-header d-flex justify-content-between align-items-center" style="background:@Model.headerBackgroundColor">
+                                                            <span>@cat.Label</span>
+                                                            <span>@Html.Raw(@cat.Icon)</span>
+                                                        </div>
+                                                        <div class="card-body" style="padding:10px;">
+                                                            @foreach (var att in cat.Attributes)
+                                                            {
+                                                                if (att.is_active)
+                                                                {
+                                                                    <div class="form-group row">
+                                                                        <label class="col-md-3 col-form-label" for="text-input">@att.field_label</label>
+                                                                        <div class="col-md-9">
+                                                                            @if (att.field_name.ToLower() != "name" && att.field_type.In(new List<string>() { "binary", "varbinary", "tinyblob", "blob", "mediumblob", "longblob", "char byte", "char", "varchar", "tinytext", "text", "mediumtext", "longtext", "set", "enum", "nchar", "national char", "nvarchar", "national varchar", "character varying" }))
+                                                                            {
+                                                                                <div id="@att.field_name" class="form-control editorNative"></div>
+                                                                            }
+                                                                            else if (att.field_name.ToLower() == "universe")
+                                                                            {
+                                                                                <select id="ddlUniverseList" class="form-control" style="min-width:150px" disabled
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name", Model.foodsModel.Universe))">
+                                                                                </select>
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "int", "integer", "smallint unsigned", "mediumint", "bigint", "int unsigned", "integer unsigned", "bit" }))
+                                                                            {
+                                                                                <input id="foodsModel_@att.field_name" class="form-control" type="number" readonly />
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "tinyint" }))
+                                                                            {
+                                                                                <input id="foodsModel_@att.field_name" class="form-control" type="checkbox" readonly />
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <input id="foodsModel_@att.field_name" class="form-control" readonly />
+
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+
+
+                                        @foreach (var cat in Model.ContentTemplate.references.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+
+                                            <div id="@panelName">
+                                                <div class="card">
+                                                    <div class="card-header d-flex justify-content-between align-items-center" style="background:cadetblue">
+                                                        <span>@cat.Label</span>
+                                                        <span>@Html.Raw(@cat.Icon)</span>
+                                                    </div>
+                                                    <div class="card-body" style="padding:10px;">
+                                                        @foreach (var att in cat.Attributes)
+                                                        {
+                                                            if (att.is_active)
+                                                            {
+                                                                if (att.field_name.ToLower() == "gallery")
+                                                                {
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Uploaded Images</label>
+
+                                                                        <div class="row">
+                                                                            @foreach (var contentObject in Model.ContentObjectModelList)
+                                                                            {
+                                                                                <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
+                                                                                    <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">                                                                                                                                                                              
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>                                                                   
+                                                                }
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+							</div>
+                            <div class="card-footer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+@section Scripts {
+   
+    <script type="text/javascript">
+    
+		function setColorBody() {
+		    html = htmlDecode('@Model.foodsModel.Color');
+		    $('#Color').append(html);
+		};
+
+		function setConditionsBody() {
+		    html = htmlDecode('@Model.foodsModel.Conditions');
+		    $('#Conditions').append(html);
+		};
+
+		function setCooking_methodBody() {
+		    html = htmlDecode('@Model.foodsModel.Cooking_method');
+		    $('#Cooking_method').append(html);
+		};
+
+		function setCostBody() {
+		    html = htmlDecode('@Model.foodsModel.Cost');
+		    $('#Cost').append(html);
+		};
+
+		function setDescriptionBody() {
+		    html = htmlDecode('@Model.foodsModel.Description');
+		    $('#Description').append(html);
+		};
+
+		function setFlavorBody() {
+		    html = htmlDecode('@Model.foodsModel.Flavor');
+		    $('#Flavor').append(html);
+		};
+
+		function setIngredientsBody() {
+		    html = htmlDecode('@Model.foodsModel.Ingredients');
+		    $('#Ingredients').append(html);
+		};
+
+		function setMealBody() {
+		    html = htmlDecode('@Model.foodsModel.Meal');
+		    $('#Meal').append(html);
+		};
+
+		function setNameBody() {
+		    $('#foodsModel_Name').val('@Model.foodsModel.Name');
+		};
+
+		function setNotesBody() {
+		    html = htmlDecode('@Model.foodsModel.Notes');
+		    $('#Notes').append(html);
+		};
+
+		function setNutritionBody() {
+		    html = htmlDecode('@Model.foodsModel.Nutrition');
+		    $('#Nutrition').append(html);
+		};
+
+		function setOrigin_storyBody() {
+		    html = htmlDecode('@Model.foodsModel.Origin_story');
+		    $('#Origin_story').append(html);
+		};
+
+		function setOther_NamesBody() {
+		    html = htmlDecode('@Model.foodsModel.Other_Names');
+		    $('#Other_Names').append(html);
+		};
+
+		function setPlace_of_originBody() {
+		    html = htmlDecode('@Model.foodsModel.Place_of_origin');
+		    $('#Place_of_origin').append(html);
+		};
+
+		function setPreparationBody() {
+		    html = htmlDecode('@Model.foodsModel.Preparation');
+		    $('#Preparation').append(html);
+		};
+
+		function setPrivate_NotesBody() {
+		    html = htmlDecode('@Model.foodsModel.Private_Notes');
+		    $('#Private_Notes').append(html);
+		};
+
+		function setRarityBody() {
+		    html = htmlDecode('@Model.foodsModel.Rarity');
+		    $('#Rarity').append(html);
+		};
+
+		function setRelated_foodsBody() {
+		    html = htmlDecode('@Model.foodsModel.Related_foods');
+		    $('#Related_foods').append(html);
+		};
+
+		function setReputationBody() {
+		    html = htmlDecode('@Model.foodsModel.Reputation');
+		    $('#Reputation').append(html);
+		};
+
+		function setScentBody() {
+		    html = htmlDecode('@Model.foodsModel.Scent');
+		    $('#Scent').append(html);
+		};
+
+		function setServingBody() {
+		    html = htmlDecode('@Model.foodsModel.Serving');
+		    $('#Serving').append(html);
+		};
+
+		function setShelf_lifeBody() {
+		    html = htmlDecode('@Model.foodsModel.Shelf_life');
+		    $('#Shelf_life').append(html);
+		};
+
+		function setSide_effectsBody() {
+		    html = htmlDecode('@Model.foodsModel.Side_effects');
+		    $('#Side_effects').append(html);
+		};
+
+		function setSizeBody() {
+		    $('#foodsModel_Size').val('@Model.foodsModel.Size');
+		};
+
+		function setSmellBody() {
+		    html = htmlDecode('@Model.foodsModel.Smell');
+		    $('#Smell').append(html);
+		};
+
+		function setSold_byBody() {
+		    html = htmlDecode('@Model.foodsModel.Sold_by');
+		    $('#Sold_by').append(html);
+		};
+
+		function setSpicesBody() {
+		    html = htmlDecode('@Model.foodsModel.Spices');
+		    $('#Spices').append(html);
+		};
+
+		function setSymbolismsBody() {
+		    html = htmlDecode('@Model.foodsModel.Symbolisms');
+		    $('#Symbolisms').append(html);
+		};
+
+		function setTagsBody() {
+		    html = htmlDecode('@Model.foodsModel.Tags');
+		    $('#Tags').append(html);
+		};
+
+		function setTextureBody() {
+		    html = htmlDecode('@Model.foodsModel.Texture');
+		    $('#Texture').append(html);
+		};
+
+		function setTraditionsBody() {
+		    html = htmlDecode('@Model.foodsModel.Traditions');
+		    $('#Traditions').append(html);
+		};
+
+		function setType_of_foodBody() {
+		    html = htmlDecode('@Model.foodsModel.Type_of_food');
+		    $('#Type_of_food').append(html);
+		};
+
+		function setUniverseBody() {
+		    $('#foodsModel_Universe').val('@Model.foodsModel.Universe');
+		};
+
+		function setUtensils_neededBody() {
+		    html = htmlDecode('@Model.foodsModel.Utensils_needed');
+		    $('#Utensils_needed').append(html);
+		};
+
+		function setVariationsBody() {
+		    html = htmlDecode('@Model.foodsModel.Variations');
+		    $('#Variations').append(html);
+		};
+
+		function setYieldBody() {
+		    html = htmlDecode('@Model.foodsModel.Yield');
+		    $('#Yield').append(html);
+		};
+
+
+
+        $(document).ready(function () {
+			setColorBody();
+			setConditionsBody();
+			setCooking_methodBody();
+			setCostBody();
+			setDescriptionBody();
+			setFlavorBody();
+			setIngredientsBody();
+			setMealBody();
+			setNameBody();
+			setNotesBody();
+			setNutritionBody();
+			setOrigin_storyBody();
+			setOther_NamesBody();
+			setPlace_of_originBody();
+			setPreparationBody();
+			setPrivate_NotesBody();
+			setRarityBody();
+			setRelated_foodsBody();
+			setReputationBody();
+			setScentBody();
+			setServingBody();
+			setShelf_lifeBody();
+			setSide_effectsBody();
+			setSizeBody();
+			setSmellBody();
+			setSold_byBody();
+			setSpicesBody();
+			setSymbolismsBody();
+			setTagsBody();
+			setTextureBody();
+			setTraditionsBody();
+			setType_of_foodBody();
+			setUtensils_neededBody();
+			setVariationsBody();
+			setYieldBody();
+
+        });
+
+    </script>
+}

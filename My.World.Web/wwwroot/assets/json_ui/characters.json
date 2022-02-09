@@ -1,0 +1,313 @@
+{
+  "family": {
+    "attributes": [
+      {
+        "field_type": "link",
+        "label": "Mothers",
+        "name": "mothers"
+      },
+      {
+        "field_type": "link",
+        "label": "Fathers",
+        "name": "fathers"
+      },
+      {
+        "field_type": "link",
+        "label": "Spouses",
+        "name": "spouses"
+      },
+      {
+        "field_type": "link",
+        "label": "Love interests",
+        "name": "love_interests"
+      },
+      {
+        "field_type": "link",
+        "label": "Siblings",
+        "name": "siblings"
+      },
+      {
+        "field_type": "link",
+        "label": "Children",
+        "name": "children"
+      },
+      {
+        "label": "Pets",
+        "name": "pets"
+      }
+    ],
+    "icon": "device_hub",
+    "label": "Family"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "history": {
+    "attributes": [
+      {
+        "label": "Birthday",
+        "name": "birthday"
+      },
+      {
+        "field_type": "link",
+        "label": "Birthplace",
+        "name": "birthplaces"
+      },
+      {
+        "field_type": "link",
+        "label": "Birthplace",
+        "name": "birthtowns"
+      },
+      {
+        "label": "Education",
+        "name": "education"
+      },
+      {
+        "label": "Background",
+        "name": "background"
+      }
+    ],
+    "icon": "date_range",
+    "label": "History"
+  },
+  "inventory": {
+    "attributes": [
+      {
+        "field_type": "link",
+        "label": "Items",
+        "name": "items"
+      },
+      {
+        "field_type": "link",
+        "label": "Technologies",
+        "name": "technologies"
+      },
+      {
+        "field_type": "link",
+        "label": "Floras",
+        "name": "floras"
+      }
+    ],
+    "icon": "shopping_basket",
+    "label": "Inventory"
+  },
+  "looks": {
+    "attributes": [
+      {
+        "label": "Weight",
+        "name": "weight"
+      },
+      {
+        "label": "Height",
+        "name": "height"
+      },
+      {
+        "label": "Hair Color",
+        "name": "haircolor"
+      },
+      {
+        "label": "Hair Style",
+        "name": "hairstyle"
+      },
+      {
+        "label": "Facial Hair",
+        "name": "facialhair"
+      },
+      {
+        "label": "Eye Color",
+        "name": "eyecolor"
+      },
+      {
+        "label": "Race",
+        "name": "race"
+      },
+      {
+        "field_type": "link",
+        "label": "Linked Races",
+        "name": "races"
+      },
+      {
+        "label": "Skin Tone",
+        "name": "skintone"
+      },
+      {
+        "label": "Body Type",
+        "name": "bodytype"
+      },
+      {
+        "label": "Identifying Marks",
+        "name": "identmarks"
+      }
+    ],
+    "icon": "face",
+    "label": "Looks"
+  },
+  "nature": {
+    "attributes": [
+      {
+        "label": "Mannerisms",
+        "name": "mannerisms"
+      },
+      {
+        "label": "Motivations",
+        "name": "motivations"
+      },
+      {
+        "label": "Flaws",
+        "name": "flaws"
+      },
+      {
+        "label": "Prejudices",
+        "name": "prejudices"
+      },
+      {
+        "label": "Talents",
+        "name": "talents"
+      },
+      {
+        "label": "Hobbies",
+        "name": "hobbies"
+      },
+      {
+        "label": "Personality type",
+        "name": "personality_type"
+      },
+      {
+        "field_type": "link",
+        "label": "Magical abilities",
+        "name": "magics"
+      },
+      {
+        "label": "Condition(s)",
+        "name": "conditions"
+      }
+    ],
+    "icon": "fingerprint",
+    "label": "Nature"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private Notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "label": "Role",
+        "name": "role"
+      },
+      {
+        "label": "Other names",
+        "name": "aliases"
+      },
+      {
+        "label": "Gender",
+        "name": "gender"
+      },
+      {
+        "label": "Age",
+        "name": "age"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  },
+  "social": {
+    "attributes": [
+      {
+        "field_type": "link",
+        "label": "Best friends",
+        "name": "best_friends"
+      },
+      {
+        "field_type": "link",
+        "label": "Friends",
+        "name": "friends"
+      },
+      {
+        "field_type": "link",
+        "label": "Companions",
+        "name": "companions"
+      },
+      {
+        "field_type": "link",
+        "label": "Enemies",
+        "name": "enemies"
+      },
+      {
+        "field_type": "link",
+        "label": "Arch-enemies",
+        "name": "archenemies"
+      },
+      {
+        "label": "Religion",
+        "name": "religion"
+      },
+      {
+        "label": "Politics",
+        "name": "politics"
+      },
+      {
+        "label": "Occupation",
+        "name": "occupation"
+      },
+      {
+        "label": "Favorite color",
+        "name": "fave_color"
+      },
+      {
+        "label": "Favorite food",
+        "name": "fave_food"
+      },
+      {
+        "label": "Favorite possession",
+        "name": "fave_possession"
+      },
+      {
+        "label": "Favorite weapon",
+        "name": "fave_weapon"
+      },
+      {
+        "label": "Favorite animal",
+        "name": "fave_animal"
+      },
+      {
+        "field_type": "link",
+        "label": "Languages spoken",
+        "name": "spoken_languages"
+      },
+      {
+        "label": "Job",
+        "name": "job"
+      }
+    ],
+    "icon": "groups",
+    "label": "Social"
+  }
+}

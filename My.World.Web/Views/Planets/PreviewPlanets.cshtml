@@ -1,0 +1,391 @@
+@model My.World.Web.ViewModel.PlanetsViewModel
+
+@{
+    ViewData["Title"] = "ViewPlanets";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Breadcrumb"] = "Planets / View";
+}
+
+
+<style>
+    .editorNative {
+        min-height: 2em;
+        overflow-y: scroll;
+        max-height: 12em;
+        max-width: 50em;
+        margin: 0;
+        margin-bottom: 2px;
+        padding: 1px 0;
+        color: black;
+        font-weight: 400;
+        font-size: 1.125rem;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 2rem;
+        background: white;
+    }
+</style>
+<div class="c-body">
+    <main class="c-main">
+        <div class="container-fluid">
+            <div class="fade-in">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header"><strong>Planet</strong> Details</div>
+                            <div class="card-body">
+                               <div class="align-items-start">
+                                    <div class="tab-content">
+                                        @foreach (var cat in Model.ContentTemplate.categories.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+                                            if (cat.Attributes != null && cat.Attributes.Count > 0)
+                                            {
+                                                <div id="@panelName">
+                                                    <div class="card">
+                                                        <div class="card-header d-flex justify-content-between align-items-center" style="background:@Model.headerBackgroundColor">
+                                                            <span>@cat.Label</span>
+                                                            <span>@Html.Raw(@cat.Icon)</span>
+                                                        </div>
+                                                        <div class="card-body" style="padding:10px;">
+                                                            @foreach (var att in cat.Attributes)
+                                                            {
+                                                                if (att.is_active)
+                                                                {
+                                                                    <div class="form-group row">
+                                                                        <label class="col-md-3 col-form-label" for="text-input">@att.field_label</label>
+                                                                        <div class="col-md-9">
+                                                                            @if (att.field_name.ToLower() != "name" && att.field_type.In(new List<string>() { "binary", "varbinary", "tinyblob", "blob", "mediumblob", "longblob", "char byte", "char", "varchar", "tinytext", "text", "mediumtext", "longtext", "set", "enum", "nchar", "national char", "nvarchar", "national varchar", "character varying" }))
+                                                                            {
+                                                                                <div id="@att.field_name" class="form-control editorNative"></div>
+                                                                            }
+                                                                            else if (att.field_name.ToLower() == "universe")
+                                                                            {
+                                                                                <select id="ddlUniverseList" class="form-control" style="min-width:150px" disabled
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name", Model.planetsModel.Universe))">
+                                                                                </select>
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "int", "integer", "smallint unsigned", "mediumint", "bigint", "int unsigned", "integer unsigned", "bit" }))
+                                                                            {
+                                                                                <input id="planetsModel_@att.field_name" class="form-control" type="number" readonly />
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "tinyint" }))
+                                                                            {
+                                                                                <input id="planetsModel_@att.field_name" class="form-control" type="checkbox" readonly />
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <input id="planetsModel_@att.field_name" class="form-control" readonly />
+
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+
+
+                                        @foreach (var cat in Model.ContentTemplate.references.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+
+                                            <div id="@panelName">
+                                                <div class="card">
+                                                    <div class="card-header d-flex justify-content-between align-items-center" style="background:cadetblue">
+                                                        <span>@cat.Label</span>
+                                                        <span>@Html.Raw(@cat.Icon)</span>
+                                                    </div>
+                                                    <div class="card-body" style="padding:10px;">
+                                                        @foreach (var att in cat.Attributes)
+                                                        {
+                                                            if (att.is_active)
+                                                            {
+                                                                if (att.field_name.ToLower() == "gallery")
+                                                                {
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Uploaded Images</label>
+
+                                                                        <div class="row">
+                                                                            @foreach (var contentObject in Model.ContentObjectModelList)
+                                                                            {
+                                                                                <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
+                                                                                    <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">                                                                                                                                                                              
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>                                                                   
+                                                                }
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+							</div>
+                            <div class="card-footer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+@section Scripts {
+   
+    <script type="text/javascript">
+    
+		function setAtmosphereBody() {
+		    html = htmlDecode('@Model.planetsModel.Atmosphere');
+		    $('#Atmosphere').append(html);
+		};
+
+		function setCalendar_SystemBody() {
+		    html = htmlDecode('@Model.planetsModel.Calendar_System');
+		    $('#Calendar_System').append(html);
+		};
+
+		function setClimateBody() {
+		    html = htmlDecode('@Model.planetsModel.Climate');
+		    $('#Climate').append(html);
+		};
+
+		function setContinentsBody() {
+		    html = htmlDecode('@Model.planetsModel.Continents');
+		    $('#Continents').append(html);
+		};
+
+		function setCountriesBody() {
+		    html = htmlDecode('@Model.planetsModel.Countries');
+		    $('#Countries').append(html);
+		};
+
+		function setCreaturesBody() {
+		    html = htmlDecode('@Model.planetsModel.Creatures');
+		    $('#Creatures').append(html);
+		};
+
+		function setDay_skyBody() {
+		    html = htmlDecode('@Model.planetsModel.Day_sky');
+		    $('#Day_sky').append(html);
+		};
+
+		function setDeitiesBody() {
+		    html = htmlDecode('@Model.planetsModel.Deities');
+		    $('#Deities').append(html);
+		};
+
+		function setDescriptionBody() {
+		    html = htmlDecode('@Model.planetsModel.Description');
+		    $('#Description').append(html);
+		};
+
+		function setFirst_Inhabitants_StoryBody() {
+		    html = htmlDecode('@Model.planetsModel.First_Inhabitants_Story');
+		    $('#First_Inhabitants_Story').append(html);
+		};
+
+		function setFloraBody() {
+		    html = htmlDecode('@Model.planetsModel.Flora');
+		    $('#Flora').append(html);
+		};
+
+		function setGroupsBody() {
+		    html = htmlDecode('@Model.planetsModel.Groups');
+		    $('#Groups').append(html);
+		};
+
+		function setLandmarksBody() {
+		    html = htmlDecode('@Model.planetsModel.Landmarks');
+		    $('#Landmarks').append(html);
+		};
+
+		function setLanguagesBody() {
+		    html = htmlDecode('@Model.planetsModel.Languages');
+		    $('#Languages').append(html);
+		};
+
+		function setLength_Of_DayBody() {
+		    $('#planetsModel_Length_Of_Day').val('@Model.planetsModel.Length_Of_Day');
+		};
+
+		function setLength_Of_NightBody() {
+		    $('#planetsModel_Length_Of_Night').val('@Model.planetsModel.Length_Of_Night');
+		};
+
+		function setLocationsBody() {
+		    html = htmlDecode('@Model.planetsModel.Locations');
+		    $('#Locations').append(html);
+		};
+
+		function setMoonsBody() {
+		    html = htmlDecode('@Model.planetsModel.Moons');
+		    $('#Moons').append(html);
+		};
+
+		function setNameBody() {
+		    $('#planetsModel_Name').val('@Model.planetsModel.Name');
+		};
+
+		function setNatural_diastersBody() {
+		    html = htmlDecode('@Model.planetsModel.Natural_diasters');
+		    $('#Natural_diasters').append(html);
+		};
+
+		function setNatural_ResourcesBody() {
+		    html = htmlDecode('@Model.planetsModel.Natural_Resources');
+		    $('#Natural_Resources').append(html);
+		};
+
+		function setNearby_planetsBody() {
+		    html = htmlDecode('@Model.planetsModel.Nearby_planets');
+		    $('#Nearby_planets').append(html);
+		};
+
+		function setNight_skyBody() {
+		    html = htmlDecode('@Model.planetsModel.Night_sky');
+		    $('#Night_sky').append(html);
+		};
+
+		function setNotesBody() {
+		    html = htmlDecode('@Model.planetsModel.Notes');
+		    $('#Notes').append(html);
+		};
+
+		function setOrbitBody() {
+		    html = htmlDecode('@Model.planetsModel.Orbit');
+		    $('#Orbit').append(html);
+		};
+
+		function setPopulationBody() {
+		    $('#planetsModel_Population').val('@Model.planetsModel.Population');
+		};
+
+		function setPrivate_NotesBody() {
+		    html = htmlDecode('@Model.planetsModel.Private_Notes');
+		    $('#Private_Notes').append(html);
+		};
+
+		function setRacesBody() {
+		    html = htmlDecode('@Model.planetsModel.Races');
+		    $('#Races').append(html);
+		};
+
+		function setReligionsBody() {
+		    html = htmlDecode('@Model.planetsModel.Religions');
+		    $('#Religions').append(html);
+		};
+
+		function setSeasonsBody() {
+		    html = htmlDecode('@Model.planetsModel.Seasons');
+		    $('#Seasons').append(html);
+		};
+
+		function setSizeBody() {
+		    $('#planetsModel_Size').val('@Model.planetsModel.Size');
+		};
+
+		function setSunsBody() {
+		    html = htmlDecode('@Model.planetsModel.Suns');
+		    $('#Suns').append(html);
+		};
+
+		function setSurfaceBody() {
+		    $('#planetsModel_Surface').val('@Model.planetsModel.Surface');
+		};
+
+		function setTagsBody() {
+		    html = htmlDecode('@Model.planetsModel.Tags');
+		    $('#Tags').append(html);
+		};
+
+		function setTemperatureBody() {
+		    $('#planetsModel_Temperature').val('@Model.planetsModel.Temperature');
+		};
+
+		function setTownsBody() {
+		    html = htmlDecode('@Model.planetsModel.Towns');
+		    $('#Towns').append(html);
+		};
+
+		function setUniverseBody() {
+		    $('#planetsModel_Universe').val('@Model.planetsModel.Universe');
+		};
+
+		function setVisible_ConstellationsBody() {
+		    html = htmlDecode('@Model.planetsModel.Visible_Constellations');
+		    $('#Visible_Constellations').append(html);
+		};
+
+		function setWater_ContentBody() {
+		    $('#planetsModel_Water_Content').val('@Model.planetsModel.Water_Content');
+		};
+
+		function setWeatherBody() {
+		    html = htmlDecode('@Model.planetsModel.Weather');
+		    $('#Weather').append(html);
+		};
+
+		function setWorld_HistoryBody() {
+		    html = htmlDecode('@Model.planetsModel.World_History');
+		    $('#World_History').append(html);
+		};
+
+
+
+        $(document).ready(function () {
+			setAtmosphereBody();
+			setCalendar_SystemBody();
+			setClimateBody();
+			setContinentsBody();
+			setCountriesBody();
+			setCreaturesBody();
+			setDay_skyBody();
+			setDeitiesBody();
+			setDescriptionBody();
+			setFirst_Inhabitants_StoryBody();
+			setFloraBody();
+			setGroupsBody();
+			setLandmarksBody();
+			setLanguagesBody();
+			setLength_Of_DayBody();
+			setLength_Of_NightBody();
+			setLocationsBody();
+			setMoonsBody();
+			setNameBody();
+			setNatural_diastersBody();
+			setNatural_ResourcesBody();
+			setNearby_planetsBody();
+			setNight_skyBody();
+			setNotesBody();
+			setOrbitBody();
+			setPopulationBody();
+			setPrivate_NotesBody();
+			setRacesBody();
+			setReligionsBody();
+			setSeasonsBody();
+			setSizeBody();
+			setSunsBody();
+			setSurfaceBody();
+			setTagsBody();
+			setTemperatureBody();
+			setTownsBody();
+			setVisible_ConstellationsBody();
+			setWater_ContentBody();
+			setWeatherBody();
+			setWorld_HistoryBody();
+
+        });
+
+    </script>
+}

@@ -1,0 +1,27 @@
+﻿@model My.World.Api.Models.UsersModel
+
+@{
+    ViewData["Title"] = "ConfirmAccount";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+<div class="card-group">
+    <div class="card p-4">
+        <div class="card-header">
+            <h1>Confirm Account</h1>
+        </div>
+        <div class="card-body">
+            <form asp-action="Login" method="post" class="form-signin">
+                <div class="row">
+                    <div class="col-9">
+                        <h3>The email is confirmed.</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 text-right">
+                        <button class="btn btn-primary px-4" type="button" onclick="@("window.location.href='" + @Url.Action("Login", "Account") + "'");">Login</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

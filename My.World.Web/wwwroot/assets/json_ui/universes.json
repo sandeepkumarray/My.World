@@ -1,0 +1,84 @@
+{
+  "contributors": {
+    "icon": "group_add",
+    "label": "Contributors"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "history": {
+    "attributes": [
+      {
+        "label": "Origin",
+        "name": "origin"
+      },
+      {
+        "label": "History",
+        "name": "history"
+      }
+    ],
+    "icon": "date_range",
+    "label": "History"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Inspiration",
+        "name": "inspiration"
+      },
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "label": "Private Notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "label": "Genre",
+        "name": "genre"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  },
+  "rules": {
+    "attributes": [
+      {
+        "label": "Laws of Physics",
+        "name": "laws_of_physics"
+      },
+      {
+        "label": "Magic System",
+        "name": "magic_system"
+      },
+      {
+        "label": "Technology",
+        "name": "technology"
+      }
+    ],
+    "icon": "gavel",
+    "label": "Systems"
+  }
+}

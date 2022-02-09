@@ -1,0 +1,72 @@
+﻿body {
+}
+
+.collection {
+    font-size: 20px;
+    margin: 0.5rem 0 1rem 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+}
+
+.content-tabs li.tab, .content-tabs li.fake-tab {
+    margin: 0;
+    padding: 0 !important;
+}
+
+.collection .collection-item {
+    background-color: #fff;
+    line-height: 1.5rem;
+    padding: 10px 20px;
+    margin: 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.content-tabs li.tab a, .content-tabs li.fake-tab a {
+    display: block;
+    padding: 10px 20px;
+    color: #039be5;
+    text-decoration: none;
+    clear: both;
+}
+
+.content-tabs li.tab a.active {
+        color: #f44336 !important;
+    }
+
+.row .col.m3 {
+    width: 25%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}
+
+.row .col {
+    float: left;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0 0.75rem;
+    min-height: 1px;
+}
+
+.row .col {
+    padding: 0 0.25rem !important;
+}
+
+i .left {
+    float: left;
+    margin-right: 15px;
+}
+
+.tab-content {
+    font-size: 20px;
+}
+
+.tab-pane .card .card-header {
+    color: white;
+}
+
+.tab-pane .card .card-header .material-icons {
+    font-size: 1.5em;
+}

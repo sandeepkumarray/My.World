@@ -1,0 +1,85 @@
+{
+  "action": {
+    "attributes": [
+      {
+        "label": "What caused this?",
+        "name": "cause"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "label": "Results",
+        "name": "results"
+      }
+    ],
+    "icon": "gesture",
+    "label": "Action"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "looks": {
+    "attributes": [
+      {
+        "field_type": "link",
+        "label": "Characters in scene",
+        "name": "scene_characters"
+      },
+      {
+        "field_type": "link",
+        "label": "Locations in scene",
+        "name": "scene_locations"
+      },
+      {
+        "field_type": "link",
+        "label": "Items in scene",
+        "name": "scene_items"
+      }
+    ],
+    "icon": "face",
+    "label": "Members"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "label": "Summary",
+        "name": "summary"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  }
+}

@@ -1,0 +1,216 @@
+﻿@model My.World.Web.ViewModel.UserAccountViewModel
+
+@{
+    ViewData["Title"] = "AccountSetting";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Breadcrumb"] = "Account Setting";
+}
+
+
+<div class="c-body">
+    <main class="c-main">
+        <div class="container-fluid">
+            <div class="fade-in">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>Your Details</strong>
+                            </div>
+                            <div class="card-body">
+                                <form class="form-horizontal" action="" method="post">
+                                    <ul class="c-sidebar-nav">
+                                        <li class="c-sidebar-nav-item">
+                                            <a class="c-sidebar-nav-link" asp-area="" asp-controller="Account" asp-action="UserProfile">
+                                                Profile
+                                            </a>
+                                        </li>
+                                        <li class="c-sidebar-nav-item">
+                                            <a class="c-sidebar-nav-link active" asp-area="" asp-controller="Account" asp-action="AccountSetting">
+                                                Account
+                                            </a>
+                                        </li>
+                                        <li class="c-sidebar-nav-item">
+                                            <a class="c-sidebar-nav-link" asp-area="" asp-controller="Account" asp-action="Notification">
+                                                Notification
+                                            </a>
+                                        </li>
+                                        <li class="c-sidebar-nav-item">
+                                            <a class="c-sidebar-nav-link" asp-area="" asp-controller="Account" asp-action="ChangePassword">
+                                                Change Password
+                                            </a>
+                                        </li>
+                                        <li class="c-sidebar-nav-item">
+                                            <a class="c-sidebar-nav-link" asp-area="" asp-controller="Account" asp-action="UserPlanDetails">
+                                                Content Plans
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header"><strong>Account</strong> Settings</div>
+                            <div class="card-body">
+                                <form asp-action="AccountSetting">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="form-group row">
+                                        <label asp-for="age" class="col-md-3 col-form-label" for="text-input"></label>
+                                        <div class="col-md-9">
+                                            <input asp-for="age" class="form-control">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label asp-for="email" class="col-md-3 col-form-label" for="text-input"></label>
+                                        <div class="col-md-9">
+                                            <input asp-for="email" class="form-control">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-md-12 d-flex justify-content-between align-items-center">
+                                            @Html.DisplayNameFor(model => model.email_updates)
+                                            <label class="c-switch c-switch-pill c-switch-success">
+                                                <input asp-for="email_updates" class="c-switch-input">
+                                                <span class="c-switch-slider"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label asp-for="favorite_author" class="col-md-3 col-form-label" for="text-input"></label>
+                                        <div class="col-md-9">
+                                            <input asp-for="favorite_author" class="form-control">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label asp-for="favorite_book" class="col-md-3 col-form-label" for="text-input"></label>
+                                        <div class="col-md-9">
+                                            <input asp-for="favorite_book" class="form-control">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label asp-for="favorite_genre" class="col-md-3 col-form-label" for="text-input"></label>
+                                        <div class="col-md-9">
+                                            <input asp-for="favorite_genre" class="form-control">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label asp-for="favorite_page_type" class="col-md-3 col-form-label" for="text-input"></label>
+                                        <div class="col-md-9">
+                                            <input asp-for="favorite_page_type" class="form-control">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label asp-for="favorite_quote" class="col-md-3 col-form-label" for="text-input"></label>
+                                        <div class="col-md-9">
+                                            <input asp-for="favorite_quote" class="form-control">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label asp-for="forums_badge_text" class="col-md-3 col-form-label" for="text-input"></label>
+                                        <div class="col-md-9">
+                                            <input asp-for="forums_badge_text" class="form-control">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label asp-for="gender" class="col-md-3 col-form-label" for="text-input"></label>
+                                        <div class="col-md-9">
+                                            <div>
+                                                <input asp-for="gender" type="radio" value="Male" />Male
+                                                <input asp-for="gender" type="radio" value="Female" />Female
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label asp-for="inspirations" class="col-md-3 col-form-label" for="text-input"></label>
+                                        <div class="col-md-9">
+                                            <input asp-for="inspirations" class="form-control">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label asp-for="interests" class="col-md-3 col-form-label" for="text-input">interests</label>
+                                        <div class="col-md-9">
+                                            <input asp-for="interests" class="form-control">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label asp-for="location" class="col-md-3 col-form-label" for="text-input"></label>
+                                        <div class="col-md-9">
+                                            <input asp-for="location" class="form-control">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label asp-for="name" class="col-md-3 col-form-label" for="text-input"></label>
+                                        <div class="col-md-9">
+                                            <input asp-for="name" class="form-control">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-md-12 d-flex justify-content-between align-items-center">
+                                            @Html.DisplayNameFor(model => model.notification_updates)
+                                            <label class="c-switch c-switch-pill c-switch-success">
+                                                <input asp-for="notification_updates" class="c-switch-input">
+                                                <span class="c-switch-slider"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label asp-for="occupation" class="col-md-3 col-form-label" for="text-input"></label>
+                                        <div class="col-md-9">
+                                            <input asp-for="occupation" class="form-control">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label asp-for="other_names" class="col-md-3 col-form-label" for="text-input"></label>
+                                        <div class="col-md-9">
+                                            <input asp-for="other_names" class="form-control">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <input type="submit" value="Update" class="btn btn-primary" />
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-footer">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

@@ -1,0 +1,172 @@
+{
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "history": {
+    "attributes": [
+      {
+        "label": "Job origin",
+        "name": "job_origin"
+      },
+      {
+        "label": "Initial goal",
+        "name": "initial_goal"
+      },
+      {
+        "label": "Changes over time",
+        "name": "changes_over_time"
+      },
+      {
+        "label": "Notable figures",
+        "name": "notable_figures"
+      },
+      {
+        "label": "Traditions",
+        "name": "traditions"
+      }
+    ],
+    "icon": "date_range",
+    "label": "History"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private Notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "label": "Type of job",
+        "name": "type_of"
+      },
+      {
+        "label": "Alternate names",
+        "name": "alternate_names"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  },
+  "requirements": {
+    "attributes": [
+      {
+        "label": "Education",
+        "name": "education"
+      },
+      {
+        "label": "Experience",
+        "name": "experience"
+      },
+      {
+        "label": "Training",
+        "name": "training"
+      },
+      {
+        "label": "Work hours",
+        "name": "work_hours"
+      },
+      {
+        "label": "Vehicles",
+        "name": "vehicles"
+      }
+    ],
+    "icon": "storage",
+    "label": "Requirements"
+  },
+  "rewards": {
+    "attributes": [
+      {
+        "label": "Pay rate",
+        "name": "pay_rate"
+      },
+      {
+        "label": "Time off",
+        "name": "time_off"
+      },
+      {
+        "label": "Bonuses",
+        "name": "bonuses"
+      },
+      {
+        "label": "Perks",
+        "name": "perks"
+      }
+    ],
+    "icon": "hdr_strong",
+    "label": "Rewards"
+  },
+  "risks": {
+    "attributes": [
+      {
+        "label": "Occupational hazards",
+        "name": "occupational_hazards"
+      },
+      {
+        "label": "Long-term risks",
+        "name": "longterm_risks"
+      },
+      {
+        "label": "Reputation",
+        "name": "reputation"
+      }
+    ],
+    "icon": "hdr_weak",
+    "label": "Risks"
+  },
+  "specialization": {
+    "attributes": [
+      {
+        "label": "Promotions",
+        "name": "promotions"
+      },
+      {
+        "label": "Specializations",
+        "name": "specializations"
+      },
+      {
+        "label": "Field",
+        "name": "field"
+      },
+      {
+        "label": "Ranks",
+        "name": "ranks"
+      },
+      {
+        "label": "Similar jobs",
+        "name": "similar_jobs"
+      }
+    ],
+    "icon": "grain",
+    "label": "Specialization"
+  }
+}

@@ -1,0 +1,148 @@
+{
+  "beliefs": {
+    "attributes": [
+      {
+        "field_type": "link",
+        "label": "Deities",
+        "name": "deities"
+      },
+      {
+        "field_type": "link",
+        "label": "Deities",
+        "name": "deity_characters"
+      },
+      {
+        "label": "Teachings",
+        "name": "teachings"
+      },
+      {
+        "label": "Prophecies",
+        "name": "prophecies"
+      },
+      {
+        "label": "Places of worship",
+        "name": "places_of_worship"
+      },
+      {
+        "label": "Worship services",
+        "name": "worship_services"
+      },
+      {
+        "label": "Obligations",
+        "name": "obligations"
+      },
+      {
+        "label": "Vision of paradise",
+        "name": "paradise"
+      }
+    ],
+    "icon": "forum",
+    "label": "Beliefs"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "history": {
+    "attributes": [
+      {
+        "label": "Origin story",
+        "name": "origin_story"
+      },
+      {
+        "field_type": "link",
+        "label": "Notable figures",
+        "name": "notable_figures"
+      },
+      {
+        "field_type": "link",
+        "label": "Artifacts",
+        "name": "artifacts"
+      }
+    ],
+    "icon": "date_range",
+    "label": "History"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "label": "Other names",
+        "name": "other_names"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  },
+  "spread": {
+    "attributes": [
+      {
+        "field_type": "link",
+        "label": "Practicing locations",
+        "name": "practicing_locations"
+      },
+      {
+        "field_type": "link",
+        "label": "Practicing races",
+        "name": "races"
+      }
+    ],
+    "icon": "location_on",
+    "label": "Spread"
+  },
+  "traditions": {
+    "attributes": [
+      {
+        "label": "Initiation process",
+        "name": "initiation"
+      },
+      {
+        "label": "Rituals",
+        "name": "rituals"
+      },
+      {
+        "label": "Holidays",
+        "name": "holidays"
+      },
+      {
+        "label": "Traditions",
+        "name": "traditions"
+      }
+    ],
+    "icon": "account_balance",
+    "label": "Traditions"
+  }
+}

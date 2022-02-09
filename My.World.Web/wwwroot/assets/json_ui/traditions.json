@@ -1,0 +1,128 @@
+{
+  "celebrations": {
+    "attributes": [
+      {
+        "label": "Activities",
+        "name": "activities"
+      },
+      {
+        "label": "Gifts",
+        "name": "gifts"
+      },
+      {
+        "label": "Games",
+        "name": "games"
+      },
+      {
+        "label": "Symbolism",
+        "name": "symbolism"
+      },
+      {
+        "label": "Food",
+        "name": "food"
+      }
+    ],
+    "icon": "flare",
+    "label": "Celebrations"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "history": {
+    "attributes": [
+      {
+        "label": "Etymology",
+        "name": "etymology"
+      },
+      {
+        "label": "Origin",
+        "name": "origin"
+      },
+      {
+        "label": "Significance",
+        "name": "significance"
+      },
+      {
+        "label": "Religions",
+        "name": "religions"
+      },
+      {
+        "label": "Notable events",
+        "name": "notable_events"
+      }
+    ],
+    "icon": "date_range",
+    "label": "History"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private Notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "observance": {
+    "attributes": [
+      {
+        "label": "Date(s)",
+        "name": "dates"
+      },
+      {
+        "label": "Countries",
+        "name": "countries"
+      },
+      {
+        "label": "Towns",
+        "name": "towns"
+      },
+      {
+        "label": "Groups",
+        "name": "groups"
+      }
+    ],
+    "icon": "track_changes",
+    "label": "Observance"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "label": "Type of tradition",
+        "name": "type_of"
+      },
+      {
+        "label": "Alternate names",
+        "name": "alternate_names"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  }
+}

@@ -1,0 +1,380 @@
+@model My.World.Web.ViewModel.GovernmentsViewModel
+
+@{
+    ViewData["Title"] = "ViewGovernments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Breadcrumb"] = "Governments / View";
+}
+
+
+<style>
+    .editorNative {
+        min-height: 2em;
+        overflow-y: scroll;
+        max-height: 12em;
+        max-width: 50em;
+        margin: 0;
+        margin-bottom: 2px;
+        padding: 1px 0;
+        color: black;
+        font-weight: 400;
+        font-size: 1.125rem;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 2rem;
+        background: white;
+    }
+</style>
+<div class="c-body">
+    <main class="c-main">
+        <div class="container-fluid">
+            <div class="fade-in">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header"><strong>Government</strong> Details</div>
+                            <div class="card-body">
+                               <div class="align-items-start">
+                                    <div class="tab-content">
+                                        @foreach (var cat in Model.ContentTemplate.categories.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+                                            if (cat.Attributes != null && cat.Attributes.Count > 0)
+                                            {
+                                                <div id="@panelName">
+                                                    <div class="card">
+                                                        <div class="card-header d-flex justify-content-between align-items-center" style="background:@Model.headerBackgroundColor">
+                                                            <span>@cat.Label</span>
+                                                            <span>@Html.Raw(@cat.Icon)</span>
+                                                        </div>
+                                                        <div class="card-body" style="padding:10px;">
+                                                            @foreach (var att in cat.Attributes)
+                                                            {
+                                                                if (att.is_active)
+                                                                {
+                                                                    <div class="form-group row">
+                                                                        <label class="col-md-3 col-form-label" for="text-input">@att.field_label</label>
+                                                                        <div class="col-md-9">
+                                                                            @if (att.field_name.ToLower() != "name" && att.field_type.In(new List<string>() { "binary", "varbinary", "tinyblob", "blob", "mediumblob", "longblob", "char byte", "char", "varchar", "tinytext", "text", "mediumtext", "longtext", "set", "enum", "nchar", "national char", "nvarchar", "national varchar", "character varying" }))
+                                                                            {
+                                                                                <div id="@att.field_name" class="form-control editorNative"></div>
+                                                                            }
+                                                                            else if (att.field_name.ToLower() == "universe")
+                                                                            {
+                                                                                <select id="ddlUniverseList" class="form-control" style="min-width:150px" disabled
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name", Model.governmentsModel.Universe))">
+                                                                                </select>
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "int", "integer", "smallint unsigned", "mediumint", "bigint", "int unsigned", "integer unsigned", "bit" }))
+                                                                            {
+                                                                                <input id="governmentsModel_@att.field_name" class="form-control" type="number" readonly />
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "tinyint" }))
+                                                                            {
+                                                                                <input id="governmentsModel_@att.field_name" class="form-control" type="checkbox" readonly />
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <input id="governmentsModel_@att.field_name" class="form-control" readonly />
+
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+
+
+                                        @foreach (var cat in Model.ContentTemplate.references.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+
+                                            <div id="@panelName">
+                                                <div class="card">
+                                                    <div class="card-header d-flex justify-content-between align-items-center" style="background:cadetblue">
+                                                        <span>@cat.Label</span>
+                                                        <span>@Html.Raw(@cat.Icon)</span>
+                                                    </div>
+                                                    <div class="card-body" style="padding:10px;">
+                                                        @foreach (var att in cat.Attributes)
+                                                        {
+                                                            if (att.is_active)
+                                                            {
+                                                                if (att.field_name.ToLower() == "gallery")
+                                                                {
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Uploaded Images</label>
+
+                                                                        <div class="row">
+                                                                            @foreach (var contentObject in Model.ContentObjectModelList)
+                                                                            {
+                                                                                <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
+                                                                                    <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">                                                                                                                                                                              
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>                                                                   
+                                                                }
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+							</div>
+                            <div class="card-footer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+@section Scripts {
+   
+    <script type="text/javascript">
+    
+		function setAirforceBody() {
+		    html = htmlDecode('@Model.governmentsModel.Airforce');
+		    $('#Airforce').append(html);
+		};
+
+		function setApproval_RatingsBody() {
+		    html = htmlDecode('@Model.governmentsModel.Approval_Ratings');
+		    $('#Approval_Ratings').append(html);
+		};
+
+		function setChecks_And_BalancesBody() {
+		    html = htmlDecode('@Model.governmentsModel.Checks_And_Balances');
+		    $('#Checks_And_Balances').append(html);
+		};
+
+		function setCivilian_LifeBody() {
+		    html = htmlDecode('@Model.governmentsModel.Civilian_Life');
+		    $('#Civilian_Life').append(html);
+		};
+
+		function setCreaturesBody() {
+		    html = htmlDecode('@Model.governmentsModel.Creatures');
+		    $('#Creatures').append(html);
+		};
+
+		function setCriminal_SystemBody() {
+		    html = htmlDecode('@Model.governmentsModel.Criminal_System');
+		    $('#Criminal_System').append(html);
+		};
+
+		function setDescriptionBody() {
+		    html = htmlDecode('@Model.governmentsModel.Description');
+		    $('#Description').append(html);
+		};
+
+		function setElectoral_ProcessBody() {
+		    html = htmlDecode('@Model.governmentsModel.Electoral_Process');
+		    $('#Electoral_Process').append(html);
+		};
+
+		function setFlag_Design_StoryBody() {
+		    html = htmlDecode('@Model.governmentsModel.Flag_Design_Story');
+		    $('#Flag_Design_Story').append(html);
+		};
+
+		function setFounding_StoryBody() {
+		    html = htmlDecode('@Model.governmentsModel.Founding_Story');
+		    $('#Founding_Story').append(html);
+		};
+
+		function setGeoculturalBody() {
+		    html = htmlDecode('@Model.governmentsModel.Geocultural');
+		    $('#Geocultural').append(html);
+		};
+
+		function setGroupsBody() {
+		    html = htmlDecode('@Model.governmentsModel.Groups');
+		    $('#Groups').append(html);
+		};
+
+		function setHolidaysBody() {
+		    html = htmlDecode('@Model.governmentsModel.Holidays');
+		    $('#Holidays').append(html);
+		};
+
+		function setImmigrationBody() {
+		    html = htmlDecode('@Model.governmentsModel.Immigration');
+		    $('#Immigration').append(html);
+		};
+
+		function setInternational_RelationsBody() {
+		    html = htmlDecode('@Model.governmentsModel.International_Relations');
+		    $('#International_Relations').append(html);
+		};
+
+		function setItemsBody() {
+		    html = htmlDecode('@Model.governmentsModel.Items');
+		    $('#Items').append(html);
+		};
+
+		function setJobsBody() {
+		    html = htmlDecode('@Model.governmentsModel.Jobs');
+		    $('#Jobs').append(html);
+		};
+
+		function setLawsBody() {
+		    html = htmlDecode('@Model.governmentsModel.Laws');
+		    $('#Laws').append(html);
+		};
+
+		function setLeadersBody() {
+		    html = htmlDecode('@Model.governmentsModel.Leaders');
+		    $('#Leaders').append(html);
+		};
+
+		function setMilitaryBody() {
+		    html = htmlDecode('@Model.governmentsModel.Military');
+		    $('#Military').append(html);
+		};
+
+		function setNameBody() {
+		    $('#governmentsModel_Name').val('@Model.governmentsModel.Name');
+		};
+
+		function setNavyBody() {
+		    html = htmlDecode('@Model.governmentsModel.Navy');
+		    $('#Navy').append(html);
+		};
+
+		function setNotable_WarsBody() {
+		    html = htmlDecode('@Model.governmentsModel.Notable_Wars');
+		    $('#Notable_Wars').append(html);
+		};
+
+		function setNotesBody() {
+		    html = htmlDecode('@Model.governmentsModel.Notes');
+		    $('#Notes').append(html);
+		};
+
+		function setPolitical_figuresBody() {
+		    html = htmlDecode('@Model.governmentsModel.Political_figures');
+		    $('#Political_figures').append(html);
+		};
+
+		function setPower_SourceBody() {
+		    html = htmlDecode('@Model.governmentsModel.Power_Source');
+		    $('#Power_Source').append(html);
+		};
+
+		function setPower_StructureBody() {
+		    html = htmlDecode('@Model.governmentsModel.Power_Structure');
+		    $('#Power_Structure').append(html);
+		};
+
+		function setPrivacy_IdeologiesBody() {
+		    html = htmlDecode('@Model.governmentsModel.Privacy_Ideologies');
+		    $('#Privacy_Ideologies').append(html);
+		};
+
+		function setPrivate_NotesBody() {
+		    html = htmlDecode('@Model.governmentsModel.Private_Notes');
+		    $('#Private_Notes').append(html);
+		};
+
+		function setSocioeconomicalBody() {
+		    html = htmlDecode('@Model.governmentsModel.Socioeconomical');
+		    $('#Socioeconomical').append(html);
+		};
+
+		function setSociopoliticalBody() {
+		    html = htmlDecode('@Model.governmentsModel.Sociopolitical');
+		    $('#Sociopolitical').append(html);
+		};
+
+		function setSpace_ProgramBody() {
+		    html = htmlDecode('@Model.governmentsModel.Space_Program');
+		    $('#Space_Program').append(html);
+		};
+
+		function setTagsBody() {
+		    html = htmlDecode('@Model.governmentsModel.Tags');
+		    $('#Tags').append(html);
+		};
+
+		function setTechnologiesBody() {
+		    html = htmlDecode('@Model.governmentsModel.Technologies');
+		    $('#Technologies').append(html);
+		};
+
+		function setTerm_LengthsBody() {
+		    html = htmlDecode('@Model.governmentsModel.Term_Lengths');
+		    $('#Term_Lengths').append(html);
+		};
+
+		function setType_Of_GovernmentBody() {
+		    html = htmlDecode('@Model.governmentsModel.Type_Of_Government');
+		    $('#Type_Of_Government').append(html);
+		};
+
+		function setUniverseBody() {
+		    $('#governmentsModel_Universe').val('@Model.governmentsModel.Universe');
+		};
+
+		function setVehiclesBody() {
+		    html = htmlDecode('@Model.governmentsModel.Vehicles');
+		    $('#Vehicles').append(html);
+		};
+
+
+
+        $(document).ready(function () {
+			setAirforceBody();
+			setApproval_RatingsBody();
+			setChecks_And_BalancesBody();
+			setCivilian_LifeBody();
+			setCreaturesBody();
+			setCriminal_SystemBody();
+			setDescriptionBody();
+			setElectoral_ProcessBody();
+			setFlag_Design_StoryBody();
+			setFounding_StoryBody();
+			setGeoculturalBody();
+			setGroupsBody();
+			setHolidaysBody();
+			setImmigrationBody();
+			setInternational_RelationsBody();
+			setItemsBody();
+			setJobsBody();
+			setLawsBody();
+			setLeadersBody();
+			setMilitaryBody();
+			setNameBody();
+			setNavyBody();
+			setNotable_WarsBody();
+			setNotesBody();
+			setPolitical_figuresBody();
+			setPower_SourceBody();
+			setPower_StructureBody();
+			setPrivacy_IdeologiesBody();
+			setPrivate_NotesBody();
+			setSocioeconomicalBody();
+			setSociopoliticalBody();
+			setSpace_ProgramBody();
+			setTagsBody();
+			setTechnologiesBody();
+			setTerm_LengthsBody();
+			setType_Of_GovernmentBody();
+			setVehiclesBody();
+
+        });
+
+    </script>
+}

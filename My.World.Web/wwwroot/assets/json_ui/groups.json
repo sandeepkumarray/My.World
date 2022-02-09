@@ -1,0 +1,194 @@
+{
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "hierarchy": {
+    "attributes": [
+      {
+        "field_type": "link",
+        "label": "Supergroups",
+        "name": "supergroups"
+      },
+      {
+        "field_type": "link",
+        "label": "Subgroups",
+        "name": "subgroups"
+      },
+      {
+        "field_type": "link",
+        "label": "Sistergroups",
+        "name": "sistergroups"
+      },
+      {
+        "label": "Organization structure",
+        "name": "organization_structure"
+      }
+    ],
+    "icon": "call_split",
+    "label": "Hierarchy"
+  },
+  "inventory": {
+    "attributes": [
+      {
+        "label": "Inventory",
+        "name": "inventory"
+      },
+      {
+        "field_type": "link",
+        "label": "Equipment",
+        "name": "equipment"
+      },
+      {
+        "field_type": "link",
+        "label": "Key items",
+        "name": "key_items"
+      },
+      {
+        "field_type": "link",
+        "label": "Suppliers",
+        "name": "suppliers"
+      }
+    ],
+    "icon": "shopping_cart",
+    "label": "Inventory"
+  },
+  "locations": {
+    "attributes": [
+      {
+        "field_type": "link",
+        "label": "Locations",
+        "name": "locations"
+      },
+      {
+        "field_type": "link",
+        "label": "Headquarters",
+        "name": "headquarters"
+      },
+      {
+        "field_type": "link",
+        "label": "Offices",
+        "name": "offices"
+      }
+    ],
+    "icon": "location_on",
+    "label": "Locations"
+  },
+  "members": {
+    "attributes": [
+      {
+        "field_type": "link",
+        "label": "Leaders",
+        "name": "leaders"
+      },
+      {
+        "field_type": "link",
+        "label": "Members",
+        "name": "members"
+      },
+      {
+        "field_type": "link",
+        "label": "Creatures",
+        "name": "creatures"
+      }
+    ],
+    "icon": "list",
+    "label": "Members"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "label": "Other names",
+        "name": "other_names"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  },
+  "politics": {
+    "attributes": [
+      {
+        "field_type": "link",
+        "label": "Allies",
+        "name": "allies"
+      },
+      {
+        "field_type": "link",
+        "label": "Enemies",
+        "name": "enemies"
+      },
+      {
+        "field_type": "link",
+        "label": "Rivals",
+        "name": "rivals"
+      },
+      {
+        "field_type": "link",
+        "label": "Clients",
+        "name": "clients"
+      }
+    ],
+    "icon": "thumbs_up_down",
+    "label": "Politics"
+  },
+  "purpose": {
+    "attributes": [
+      {
+        "label": "Motivations",
+        "name": "motivation"
+      },
+      {
+        "label": "Goals",
+        "name": "goal"
+      },
+      {
+        "label": "Obstacles",
+        "name": "obstacles"
+      },
+      {
+        "label": "Risks",
+        "name": "risks"
+      },
+      {
+        "label": "Traditions",
+        "name": "traditions"
+      }
+    ],
+    "icon": "business",
+    "label": "Purpose"
+  }
+}

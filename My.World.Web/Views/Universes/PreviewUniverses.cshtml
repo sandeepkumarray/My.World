@@ -1,0 +1,220 @@
+@model My.World.Web.ViewModel.UniversesViewModel
+
+@{
+    ViewData["Title"] = "ViewUniverses";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Breadcrumb"] = "Universes / View";
+}
+
+
+<style>
+    .editorNative {
+        min-height: 2em;
+        overflow-y: scroll;
+        max-height: 12em;
+        max-width: 50em;
+        margin: 0;
+        margin-bottom: 2px;
+        padding: 1px 0;
+        color: black;
+        font-weight: 400;
+        font-size: 1.125rem;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 2rem;
+        background: white;
+    }
+</style>
+<div class="c-body">
+    <main class="c-main">
+        <div class="container-fluid">
+            <div class="fade-in">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header"><strong>Universe</strong> Details</div>
+                            <div class="card-body">
+                               <div class="align-items-start">
+                                    <div class="tab-content">
+                                        @foreach (var cat in Model.ContentTemplate.categories.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+                                            if (cat.Attributes != null && cat.Attributes.Count > 0)
+                                            {
+                                                <div id="@panelName">
+                                                    <div class="card">
+                                                        <div class="card-header d-flex justify-content-between align-items-center" style="background:@Model.headerBackgroundColor">
+                                                            <span>@cat.Label</span>
+                                                            <span>@Html.Raw(@cat.Icon)</span>
+                                                        </div>
+                                                        <div class="card-body" style="padding:10px;">
+                                                            @foreach (var att in cat.Attributes)
+                                                            {
+                                                                if (att.is_active)
+                                                                {
+                                                                    <div class="form-group row">
+                                                                        <label class="col-md-3 col-form-label" for="text-input">@att.field_label</label>
+                                                                        <div class="col-md-9">
+                                                                            @if (att.field_name.ToLower() != "name" && att.field_type.In(new List<string>() { "binary", "varbinary", "tinyblob", "blob", "mediumblob", "longblob", "char byte", "char", "varchar", "tinytext", "text", "mediumtext", "longtext", "set", "enum", "nchar", "national char", "nvarchar", "national varchar", "character varying" }))
+                                                                            {
+                                                                                <div id="@att.field_name" class="form-control editorNative"></div>
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "int", "integer", "smallint unsigned", "mediumint", "bigint", "int unsigned", "integer unsigned", "bit" }))
+                                                                            {
+                                                                                <input id="universesModel_@att.field_name" class="form-control" type="number" readonly />
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "tinyint" }))
+                                                                            {
+                                                                                <input id="universesModel_@att.field_name" class="form-control" type="checkbox" readonly />
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <input id="universesModel_@att.field_name" class="form-control" readonly />
+
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+
+
+                                        @foreach (var cat in Model.ContentTemplate.references.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+
+                                            <div id="@panelName">
+                                                <div class="card">
+                                                    <div class="card-header d-flex justify-content-between align-items-center" style="background:cadetblue">
+                                                        <span>@cat.Label</span>
+                                                        <span>@Html.Raw(@cat.Icon)</span>
+                                                    </div>
+                                                    <div class="card-body" style="padding:10px;">
+                                                        @foreach (var att in cat.Attributes)
+                                                        {
+                                                            if (att.is_active)
+                                                            {
+                                                                <div class="form-group row">
+                                                                    <label class="col-md-3 col-form-label" for="text-input">@att.field_label</label>
+                                                                    <div class="col-md-9">
+                                                                        @if (att.field_name.ToLower() != "name" && att.field_type.In(new List<string>() { "binary", "varbinary", "tinyblob", "blob", "mediumblob", "longblob", "char byte", "char", "varchar", "tinytext", "text", "mediumtext", "longtext", "set", "enum", "nchar", "national char", "nvarchar", "national varchar", "character varying" }))
+                                                                        {
+                                                                            <div id="@att.field_name" class="form-control editorNative"></div>
+                                                                        }
+                                                                        else if (att.field_type.In(new List<string>() { "int", "integer", "smallint unsigned", "mediumint", "bigint", "int unsigned", "integer unsigned", "bit" }))
+                                                                        {
+                                                                            <input id="universesModel_@att.field_name" class="form-control" type="number" readonly />
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <input id="universesModel_@att.field_name" class="form-control" readonly />
+
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+							</div>
+                            <div class="card-footer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+@section Scripts {
+   
+    <script type="text/javascript">
+    
+			function setdescriptionBody() {
+			    html = htmlDecode('@Model.universesModel.description');
+			    $('#description').append(html);
+			};
+
+			function setfavoriteBody() {
+			    $('#universesModel_favorite').val('@Model.universesModel.favorite');
+			};
+
+			function setgenreBody() {
+			    html = htmlDecode('@Model.universesModel.genre');
+			    $('#genre').append(html);
+			};
+
+			function sethistoryBody() {
+			    html = htmlDecode('@Model.universesModel.history');
+			    $('#history').append(html);
+			};
+
+			function setlaws_of_physicsBody() {
+			    html = htmlDecode('@Model.universesModel.laws_of_physics');
+			    $('#laws_of_physics').append(html);
+			};
+
+			function setmagic_systemBody() {
+			    html = htmlDecode('@Model.universesModel.magic_system');
+			    $('#magic_system').append(html);
+			};
+
+			function setnameBody() {
+			    $('#universesModel_name').val('@Model.universesModel.name');
+			};
+
+			function setnotesBody() {
+			    html = htmlDecode('@Model.universesModel.notes');
+			    $('#notes').append(html);
+			};
+
+			function setpage_typeBody() {
+			    html = htmlDecode('@Model.universesModel.page_type');
+			    $('#page_type').append(html);
+			};
+
+			function setprivacyBody() {
+			    $('#universesModel_privacy').val('@Model.universesModel.privacy');
+			};
+
+			function setprivate_notesBody() {
+			    html = htmlDecode('@Model.universesModel.private_notes');
+			    $('#private_notes').append(html);
+			};
+
+			function settechnologyBody() {
+			    html = htmlDecode('@Model.universesModel.technology');
+			    $('#technology').append(html);
+			};
+
+
+
+        $(document).ready(function () {
+			setdescriptionBody();
+			setfavoriteBody();
+			setgenreBody();
+			sethistoryBody();
+			setlaws_of_physicsBody();
+			setmagic_systemBody();
+			setnameBody();
+			setnotesBody();
+			setpage_typeBody();
+			setprivacyBody();
+			setprivate_notesBody();
+			settechnologyBody();
+
+        });
+
+    </script>
+}

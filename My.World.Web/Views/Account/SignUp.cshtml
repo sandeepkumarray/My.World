@@ -1,0 +1,51 @@
+﻿@model My.World.Web.ViewModel.UserSignUpViewModel
+@{
+    ViewData["Title"] = "SignUp";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="card mx-4">
+    <div class="card-body p-4">
+        <form asp-action="SignUp">
+            <h1>Register</h1>
+            <p class="text-muted">Create your account</p>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <svg class="c-icon">
+                            <use xlink:href="/vendors/coreui/icons/svg/free.svg#cil-envelope-open"></use>
+                        </svg>
+                    </span>
+                </div>
+                <input asp-for="email" class="form-control">
+                <span asp-validation-for="email" class="text-danger"></span>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <svg class="c-icon">
+                            <use xlink:href="/vendors/coreui/icons/svg/free.svg#cil-lock-locked"></use>
+                        </svg>
+                    </span>
+                </div>
+                <input asp-for="password" type="password" class="form-control">
+                <span asp-validation-for="password" class="text-danger"></span>
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <svg class="c-icon">
+                            <use xlink:href="/vendors/coreui/icons/svg/free.svg#cil-lock-locked"></use>
+                        </svg>
+                    </span>
+                </div>
+                <input asp-for="confirm_password" type="password" class="form-control">
+                <span asp-validation-for="confirm_password" class="text-danger"></span>
+            </div>
+            <button class="btn btn-block btn-success" type="submit">Create Account</button>
+        </form>
+    </div>
+    <div class="card-footer p-4">
+    </div>
+</div>
+

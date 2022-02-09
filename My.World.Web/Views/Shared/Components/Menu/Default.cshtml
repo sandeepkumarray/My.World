@@ -1,0 +1,71 @@
+﻿@model My.World.Web.ViewModel.MenuViewModel
+@{
+    ViewData["Title"] = "NavigationMenu";
+    ViewData["Breadcrumb"] = "Menu";
+}
+
+<ul class="c-sidebar-nav">
+    <li class="c-sidebar-nav-item">
+        <a class="c-sidebar-nav-link" asp-area="" asp-controller="Dashboard" asp-action="Index">
+            <svg class="c-sidebar-nav-icon">
+                <use xlink:href="/vendors/coreui/icons/svg/free.svg#cil-speedometer" crossorigin="anonymous"></use>
+            </svg> Dashboard
+        </a>
+    </li>
+
+    @foreach (var item in Model.DefaultPlanMenuList)
+    {
+        if (!string.IsNullOrWhiteSpace(item.Controller))
+        {
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" asp-area="" asp-controller="@item.Controller" asp-action="Index">
+                    @Html.Raw(item.Icon) @item.Header
+                    <span class="badge">@item.CountString</span>
+                </a>
+            </li>
+        }
+    }
+
+    <li class="c-sidebar-nav-title">Components</li>
+    <li class="c-sidebar-nav-item c-sidebar-nav-dropdown">
+        <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="~/#">
+            <svg class="c-sidebar-nav-icon">
+                <use xlink:href="/vendors/coreui/icons/svg/free.svg#cil-puzzle"></use>
+            </svg> More
+        </a>
+        <ul class="c-sidebar-nav-dropdown-items">
+
+            @foreach (var item in Model.PremiumPlanMenuList)
+            {
+                if (!string.IsNullOrWhiteSpace(item.Controller))
+                {
+                    <li class="c-sidebar-nav-item">
+                        <a class="c-sidebar-nav-link" asp-area="" asp-controller="@item.Controller" asp-action="Index">
+                            @Html.Raw(item.Icon) @item.Header
+                            <span class="badge">@item.CountString</span>
+                        </a>
+                    </li>
+                }
+            }
+
+        </ul>
+    </li>
+
+    <li class="c-sidebar-nav-title c-sidebar-nav-dropdown">
+        <a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="~/#">
+            Writing
+        </a>
+        <ul class="c-sidebar-nav-dropdown-items">
+
+            <li class="c-sidebar-nav-item">
+                <a class="c-sidebar-nav-link" asp-area="" asp-controller="Document" asp-action="Index">
+                    <svg class="c-sidebar-nav-icon">
+                        <use xlink:href="/vendors/coreui/icons/svg/free.svg#cil-pencil"></use>
+                    </svg> Document
+                </a>
+            </li>
+
+        </ul>
+    </li>
+    <li class="c-sidebar-nav-divider"></li>
+</ul>

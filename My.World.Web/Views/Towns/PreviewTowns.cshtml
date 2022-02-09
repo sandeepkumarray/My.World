@@ -1,0 +1,303 @@
+@model My.World.Web.ViewModel.TownsViewModel
+
+@{
+    ViewData["Title"] = "ViewTowns";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Breadcrumb"] = "Towns / View";
+}
+
+
+<style>
+    .editorNative {
+        min-height: 2em;
+        overflow-y: scroll;
+        max-height: 12em;
+        max-width: 50em;
+        margin: 0;
+        margin-bottom: 2px;
+        padding: 1px 0;
+        color: black;
+        font-weight: 400;
+        font-size: 1.125rem;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 2rem;
+        background: white;
+    }
+</style>
+<div class="c-body">
+    <main class="c-main">
+        <div class="container-fluid">
+            <div class="fade-in">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header"><strong>Town</strong> Details</div>
+                            <div class="card-body">
+                               <div class="align-items-start">
+                                    <div class="tab-content">
+                                        @foreach (var cat in Model.ContentTemplate.categories.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+                                            if (cat.Attributes != null && cat.Attributes.Count > 0)
+                                            {
+                                                <div id="@panelName">
+                                                    <div class="card">
+                                                        <div class="card-header d-flex justify-content-between align-items-center" style="background:@Model.headerBackgroundColor">
+                                                            <span>@cat.Label</span>
+                                                            <span>@Html.Raw(@cat.Icon)</span>
+                                                        </div>
+                                                        <div class="card-body" style="padding:10px;">
+                                                            @foreach (var att in cat.Attributes)
+                                                            {
+                                                                if (att.is_active)
+                                                                {
+                                                                    <div class="form-group row">
+                                                                        <label class="col-md-3 col-form-label" for="text-input">@att.field_label</label>
+                                                                        <div class="col-md-9">
+                                                                            @if (att.field_name.ToLower() != "name" && att.field_type.In(new List<string>() { "binary", "varbinary", "tinyblob", "blob", "mediumblob", "longblob", "char byte", "char", "varchar", "tinytext", "text", "mediumtext", "longtext", "set", "enum", "nchar", "national char", "nvarchar", "national varchar", "character varying" }))
+                                                                            {
+                                                                                <div id="@att.field_name" class="form-control editorNative"></div>
+                                                                            }
+                                                                            else if (att.field_name.ToLower() == "universe")
+                                                                            {
+                                                                                <select id="ddlUniverseList" class="form-control" style="min-width:150px" disabled
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name", Model.townsModel.Universe))">
+                                                                                </select>
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "int", "integer", "smallint unsigned", "mediumint", "bigint", "int unsigned", "integer unsigned", "bit" }))
+                                                                            {
+                                                                                <input id="townsModel_@att.field_name" class="form-control" type="number" readonly />
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "tinyint" }))
+                                                                            {
+                                                                                <input id="townsModel_@att.field_name" class="form-control" type="checkbox" readonly />
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <input id="townsModel_@att.field_name" class="form-control" readonly />
+
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+
+
+                                        @foreach (var cat in Model.ContentTemplate.references.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+
+                                            <div id="@panelName">
+                                                <div class="card">
+                                                    <div class="card-header d-flex justify-content-between align-items-center" style="background:cadetblue">
+                                                        <span>@cat.Label</span>
+                                                        <span>@Html.Raw(@cat.Icon)</span>
+                                                    </div>
+                                                    <div class="card-body" style="padding:10px;">
+                                                        @foreach (var att in cat.Attributes)
+                                                        {
+                                                            if (att.is_active)
+                                                            {
+                                                                if (att.field_name.ToLower() == "gallery")
+                                                                {
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Uploaded Images</label>
+
+                                                                        <div class="row">
+                                                                            @foreach (var contentObject in Model.ContentObjectModelList)
+                                                                            {
+                                                                                <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
+                                                                                    <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">                                                                                                                                                                              
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>                                                                   
+                                                                }
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+							</div>
+                            <div class="card-footer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+@section Scripts {
+   
+    <script type="text/javascript">
+    
+		function setBuildingsBody() {
+		    $('#townsModel_Buildings').val('@Model.townsModel.Buildings');
+		};
+
+		function setBusy_areasBody() {
+		    html = htmlDecode('@Model.townsModel.Busy_areas');
+		    $('#Busy_areas').append(html);
+		};
+
+		function setCitizensBody() {
+		    $('#townsModel_Citizens').val('@Model.townsModel.Citizens');
+		};
+
+		function setCountryBody() {
+		    $('#townsModel_Country').val('@Model.townsModel.Country');
+		};
+
+		function setCreaturesBody() {
+		    html = htmlDecode('@Model.townsModel.Creatures');
+		    $('#Creatures').append(html);
+		};
+
+		function setDescriptionBody() {
+		    html = htmlDecode('@Model.townsModel.Description');
+		    $('#Description').append(html);
+		};
+
+		function setEnergy_sourcesBody() {
+		    html = htmlDecode('@Model.townsModel.Energy_sources');
+		    $('#Energy_sources').append(html);
+		};
+
+		function setEstablished_yearBody() {
+		    $('#townsModel_Established_year').val('@Model.townsModel.Established_year');
+		};
+
+		function setFloraBody() {
+		    html = htmlDecode('@Model.townsModel.Flora');
+		    $('#Flora').append(html);
+		};
+
+		function setFood_sourcesBody() {
+		    html = htmlDecode('@Model.townsModel.Food_sources');
+		    $('#Food_sources').append(html);
+		};
+
+		function setFounding_storyBody() {
+		    html = htmlDecode('@Model.townsModel.Founding_story');
+		    $('#Founding_story').append(html);
+		};
+
+		function setGroupsBody() {
+		    html = htmlDecode('@Model.townsModel.Groups');
+		    $('#Groups').append(html);
+		};
+
+		function setLandmarksBody() {
+		    html = htmlDecode('@Model.townsModel.Landmarks');
+		    $('#Landmarks').append(html);
+		};
+
+		function setLanguagesBody() {
+		    html = htmlDecode('@Model.townsModel.Languages');
+		    $('#Languages').append(html);
+		};
+
+		function setLawsBody() {
+		    html = htmlDecode('@Model.townsModel.Laws');
+		    $('#Laws').append(html);
+		};
+
+		function setNameBody() {
+		    $('#townsModel_Name').val('@Model.townsModel.Name');
+		};
+
+		function setNeighborhoodsBody() {
+		    $('#townsModel_Neighborhoods').val('@Model.townsModel.Neighborhoods');
+		};
+
+		function setNotesBody() {
+		    html = htmlDecode('@Model.townsModel.Notes');
+		    $('#Notes').append(html);
+		};
+
+		function setOther_namesBody() {
+		    html = htmlDecode('@Model.townsModel.Other_names');
+		    $('#Other_names').append(html);
+		};
+
+		function setPoliticsBody() {
+		    html = htmlDecode('@Model.townsModel.Politics');
+		    $('#Politics').append(html);
+		};
+
+		function setPrivate_NotesBody() {
+		    html = htmlDecode('@Model.townsModel.Private_Notes');
+		    $('#Private_Notes').append(html);
+		};
+
+		function setRecyclingBody() {
+		    html = htmlDecode('@Model.townsModel.Recycling');
+		    $('#Recycling').append(html);
+		};
+
+		function setSportsBody() {
+		    html = htmlDecode('@Model.townsModel.Sports');
+		    $('#Sports').append(html);
+		};
+
+		function setTagsBody() {
+		    html = htmlDecode('@Model.townsModel.Tags');
+		    $('#Tags').append(html);
+		};
+
+		function setUniverseBody() {
+		    $('#townsModel_Universe').val('@Model.townsModel.Universe');
+		};
+
+		function setWasteBody() {
+		    html = htmlDecode('@Model.townsModel.Waste');
+		    $('#Waste').append(html);
+		};
+
+
+
+        $(document).ready(function () {
+			setBuildingsBody();
+			setBusy_areasBody();
+			setCitizensBody();
+			setCountryBody();
+			setCreaturesBody();
+			setDescriptionBody();
+			setEnergy_sourcesBody();
+			setEstablished_yearBody();
+			setFloraBody();
+			setFood_sourcesBody();
+			setFounding_storyBody();
+			setGroupsBody();
+			setLandmarksBody();
+			setLanguagesBody();
+			setLawsBody();
+			setNameBody();
+			setNeighborhoodsBody();
+			setNotesBody();
+			setOther_namesBody();
+			setPoliticsBody();
+			setPrivate_NotesBody();
+			setRecyclingBody();
+			setSportsBody();
+			setTagsBody();
+			setWasteBody();
+
+        });
+
+    </script>
+}

@@ -1,0 +1,178 @@
+{
+  "appearance": {
+    "attributes": [
+      {
+        "label": "Physical Description",
+        "name": "physical_description"
+      },
+      {
+        "label": "Size",
+        "name": "size"
+      },
+      {
+        "label": "Weight",
+        "name": "weight"
+      },
+      {
+        "label": "Colors",
+        "name": "colors"
+      }
+    ],
+    "icon": "sd_card",
+    "label": "Appearance"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private Notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "label": "Other Names",
+        "name": "other_names"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  },
+  "presence": {
+    "attributes": [
+      {
+        "field_type": "link",
+        "label": "Characters",
+        "name": "characters"
+      },
+      {
+        "field_type": "link",
+        "label": "Towns",
+        "name": "towns"
+      },
+      {
+        "field_type": "link",
+        "label": "Countries",
+        "name": "countries"
+      },
+      {
+        "field_type": "link",
+        "label": "Groups",
+        "name": "groups"
+      },
+      {
+        "field_type": "link",
+        "label": "Creatures",
+        "name": "creatures"
+      },
+      {
+        "field_type": "link",
+        "label": "Planets",
+        "name": "planets"
+      },
+      {
+        "label": "Rarity",
+        "name": "rarity"
+      }
+    ],
+    "icon": "blur_on",
+    "label": "Presence"
+  },
+  "production": {
+    "attributes": [
+      {
+        "label": "Materials",
+        "name": "materials"
+      },
+      {
+        "label": "Manufacturing Process",
+        "name": "manufacturing_process"
+      },
+      {
+        "label": "Sales Process",
+        "name": "sales_process"
+      },
+      {
+        "label": "Cost",
+        "name": "cost"
+      }
+    ],
+    "icon": "build",
+    "label": "Production"
+  },
+  "related_technologies": {
+    "attributes": [
+      {
+        "field_type": "link",
+        "label": "Related technologies",
+        "name": "related_technologies"
+      },
+      {
+        "field_type": "link",
+        "label": "Parent technologies",
+        "name": "parent_technologies"
+      },
+      {
+        "field_type": "link",
+        "label": "Child technologies",
+        "name": "child_technologies"
+      }
+    ],
+    "icon": "call_split",
+    "label": "Related technologies"
+  },
+  "use": {
+    "attributes": [
+      {
+        "label": "Purpose",
+        "name": "purpose"
+      },
+      {
+        "label": "How It Works",
+        "name": "how_it_works"
+      },
+      {
+        "label": "Resources Used",
+        "name": "resources_used"
+      },
+      {
+        "field_type": "link",
+        "label": "Magic effects",
+        "name": "magics"
+      }
+    ],
+    "icon": "speaker_phone",
+    "label": "Use"
+  }
+}

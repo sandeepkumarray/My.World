@@ -1,0 +1,168 @@
+{
+  "analysis": {
+    "attributes": [
+      {
+        "label": "Specialty",
+        "name": "specialty"
+      },
+      {
+        "label": "Rarity",
+        "name": "rarity"
+      },
+      {
+        "label": "Symbolism",
+        "name": "symbolism"
+      }
+    ],
+    "icon": "bar_chart",
+    "label": "Analysis"
+  },
+  "causes": {
+    "attributes": [
+      {
+        "label": "Genetic factors",
+        "name": "genetic_factors"
+      },
+      {
+        "label": "Environmental factors",
+        "name": "environmental_factors"
+      },
+      {
+        "label": "Lifestyle factors",
+        "name": "lifestyle_factors"
+      },
+      {
+        "label": "Transmission",
+        "name": "transmission"
+      },
+      {
+        "label": "Epidemiology",
+        "name": "epidemiology"
+      }
+    ],
+    "icon": "bubble_chart",
+    "label": "Causes"
+  },
+  "effects": {
+    "attributes": [
+      {
+        "label": "Visual effects",
+        "name": "visual_effects"
+      },
+      {
+        "label": "Mental effects",
+        "name": "mental_effects"
+      },
+      {
+        "label": "Symptoms",
+        "name": "symptoms"
+      },
+      {
+        "label": "Duration",
+        "name": "duration"
+      },
+      {
+        "label": "Prognosis",
+        "name": "prognosis"
+      },
+      {
+        "label": "Variations",
+        "name": "variations"
+      }
+    ],
+    "icon": "local_hospital",
+    "label": "Effects"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "history": {
+    "attributes": [
+      {
+        "label": "Origin",
+        "name": "origin"
+      },
+      {
+        "label": "Evolution",
+        "name": "evolution"
+      }
+    ],
+    "icon": "date_range",
+    "label": "History"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private Notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "label": "Type of condition",
+        "name": "type_of"
+      },
+      {
+        "label": "Alternate names",
+        "name": "alternate_names"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  },
+  "treatment": {
+    "attributes": [
+      {
+        "label": "Prevention",
+        "name": "prevention"
+      },
+      {
+        "label": "Diagnostic method",
+        "name": "diagnostic_method"
+      },
+      {
+        "label": "Treatment",
+        "name": "treatment"
+      },
+      {
+        "label": "Medication",
+        "name": "medication"
+      },
+      {
+        "label": "Immunization",
+        "name": "immunization"
+      }
+    ],
+    "icon": "healing",
+    "label": "Treatment"
+  }
+}

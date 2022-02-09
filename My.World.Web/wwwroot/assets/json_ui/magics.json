@@ -1,0 +1,143 @@
+{
+  "alignment": {
+    "attributes": [
+      {
+        "label": "Morality",
+        "name": "morality"
+      },
+      {
+        "label": "Respectability",
+        "name": "respectability"
+      },
+      {
+        "label": "Element",
+        "name": "element"
+      },
+      {
+        "field_type": "link",
+        "label": "Deities",
+        "name": "deities"
+      }
+    ],
+    "icon": "polymer",
+    "label": "Alignment"
+  },
+  "appearance": {
+    "attributes": [
+      {
+        "label": "Visuals",
+        "name": "visuals"
+      },
+      {
+        "label": "Effects",
+        "name": "effects"
+      },
+      {
+        "label": "Aftereffects",
+        "name": "aftereffects"
+      }
+    ],
+    "icon": "flash_on",
+    "label": "Appearance"
+  },
+  "effects": {
+    "attributes": [
+      {
+        "label": "Positive effects",
+        "name": "positive_effects"
+      },
+      {
+        "label": "Neutral effects",
+        "name": "neutral_effects"
+      },
+      {
+        "label": "Negative effects",
+        "name": "negative_effects"
+      },
+      {
+        "label": "Conditions",
+        "name": "conditions"
+      },
+      {
+        "label": "Scale",
+        "name": "scale"
+      }
+    ],
+    "icon": "flare",
+    "label": "Effects"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "label": "Type of magic",
+        "name": "type_of"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  },
+  "requirements": {
+    "attributes": [
+      {
+        "label": "Resource costs",
+        "name": "resource_costs"
+      },
+      {
+        "label": "Materials required",
+        "name": "materials"
+      },
+      {
+        "label": "Skills required",
+        "name": "skills_required"
+      },
+      {
+        "label": "Limitations",
+        "name": "limitations"
+      },
+      {
+        "label": "Education",
+        "name": "education"
+      }
+    ],
+    "icon": "lock",
+    "label": "Requirements"
+  }
+}

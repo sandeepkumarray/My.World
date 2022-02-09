@@ -1,0 +1,226 @@
+{
+  "appearance": {
+    "attributes": [
+      {
+        "label": "Physical Description",
+        "name": "physical_description"
+      },
+      {
+        "label": "Height",
+        "name": "height"
+      },
+      {
+        "label": "Weight",
+        "name": "weight"
+      }
+    ],
+    "icon": "accessibility",
+    "label": "Appearance"
+  },
+  "family": {
+    "attributes": [
+      {
+        "field_type": "link",
+        "label": "Parents",
+        "name": "character_parents"
+      },
+      {
+        "field_type": "link",
+        "label": "Partners",
+        "name": "character_partners"
+      },
+      {
+        "field_type": "link",
+        "label": "Children",
+        "name": "character_children"
+      },
+      {
+        "field_type": "link",
+        "label": "Siblings",
+        "name": "character_siblings"
+      },
+      {
+        "field_type": "link",
+        "label": "Parents",
+        "name": "deity_parents"
+      },
+      {
+        "field_type": "link",
+        "label": "Partners",
+        "name": "deity_partners"
+      },
+      {
+        "field_type": "link",
+        "label": "Children",
+        "name": "deity_children"
+      },
+      {
+        "field_type": "link",
+        "label": "Siblings",
+        "name": "deity_siblings"
+      }
+    ],
+    "icon": "supervisor_account",
+    "label": "Family"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "history": {
+    "attributes": [
+      {
+        "label": "Notable Events",
+        "name": "notable_events"
+      },
+      {
+        "label": "Family History",
+        "name": "family_history"
+      },
+      {
+        "label": "Life Story",
+        "name": "life_story"
+      }
+    ],
+    "icon": "date_range",
+    "label": "History"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private Notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "label": "Other Names",
+        "name": "other_names"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  },
+  "powers": {
+    "attributes": [
+      {
+        "label": "Strengths",
+        "name": "strengths"
+      },
+      {
+        "label": "Weaknesses",
+        "name": "weaknesses"
+      },
+      {
+        "field_type": "link",
+        "label": "Abilities",
+        "name": "abilities"
+      },
+      {
+        "label": "Conditions",
+        "name": "conditions"
+      }
+    ],
+    "icon": "grade",
+    "label": "Powers"
+  },
+  "rituals": {
+    "attributes": [
+      {
+        "label": "Prayers",
+        "name": "prayers"
+      },
+      {
+        "label": "Rituals",
+        "name": "rituals"
+      },
+      {
+        "label": "Traditions",
+        "name": "traditions"
+      },
+      {
+        "label": "Human Interaction",
+        "name": "human_interaction"
+      },
+      {
+        "field_type": "link",
+        "label": "Related towns",
+        "name": "related_towns"
+      },
+      {
+        "field_type": "link",
+        "label": "Related landmarks",
+        "name": "related_landmarks"
+      },
+      {
+        "field_type": "link",
+        "label": "Related races",
+        "name": "races"
+      }
+    ],
+    "icon": "import_contacts",
+    "label": "Rituals"
+  },
+  "symbolism": {
+    "attributes": [
+      {
+        "label": "Symbols",
+        "name": "symbols"
+      },
+      {
+        "label": "Elements",
+        "name": "elements"
+      },
+      {
+        "field_type": "link",
+        "label": "Creatures",
+        "name": "creatures"
+      },
+      {
+        "field_type": "link",
+        "label": "Floras",
+        "name": "floras"
+      },
+      {
+        "field_type": "link",
+        "label": "Religions",
+        "name": "religions"
+      },
+      {
+        "field_type": "link",
+        "label": "Relics",
+        "name": "relics"
+      }
+    ],
+    "icon": "thumbs_up_down",
+    "label": "Symbolism"
+  }
+}

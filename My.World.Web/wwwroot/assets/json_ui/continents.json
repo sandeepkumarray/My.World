@@ -1,0 +1,220 @@
+{
+  "climate": {
+    "attributes": [
+      {
+        "label": "Temperature",
+        "name": "temperature"
+      },
+      {
+        "label": "Seasons",
+        "name": "seasons"
+      },
+      {
+        "label": "Humidity",
+        "name": "humidity"
+      },
+      {
+        "label": "Precipitation",
+        "name": "precipitation"
+      },
+      {
+        "label": "Winds",
+        "name": "winds"
+      },
+      {
+        "label": "Natural disasters",
+        "name": "natural_disasters"
+      }
+    ],
+    "icon": "fireplace",
+    "label": "Climate"
+  },
+  "culture": {
+    "attributes": [
+      {
+        "label": "Demonym",
+        "name": "demonym"
+      },
+      {
+        "label": "Politics",
+        "name": "politics"
+      },
+      {
+        "label": "Economy",
+        "name": "economy"
+      },
+      {
+        "label": "Tourism",
+        "name": "tourism"
+      },
+      {
+        "label": "Architecture",
+        "name": "architecture"
+      },
+      {
+        "label": "Reputation",
+        "name": "reputation"
+      },
+      {
+        "field_type": "link",
+        "label": "Countries",
+        "name": "countries"
+      },
+      {
+        "field_type": "link",
+        "label": "Languages",
+        "name": "languages"
+      },
+      {
+        "field_type": "link",
+        "label": "Traditions",
+        "name": "traditions"
+      },
+      {
+        "field_type": "link",
+        "label": "Governments",
+        "name": "governments"
+      },
+      {
+        "field_type": "link",
+        "label": "Popular foods",
+        "name": "popular_foods"
+      }
+    ],
+    "icon": "face",
+    "label": "Culture"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "geography": {
+    "attributes": [
+      {
+        "label": "Area",
+        "name": "area"
+      },
+      {
+        "label": "Shape",
+        "name": "shape"
+      },
+      {
+        "label": "Population",
+        "name": "population"
+      },
+      {
+        "label": "Topography",
+        "name": "topography"
+      },
+      {
+        "label": "Mineralogy",
+        "name": "mineralogy"
+      },
+      {
+        "label": "Bodies of water",
+        "name": "bodies_of_water"
+      },
+      {
+        "field_type": "link",
+        "label": "Landmarks",
+        "name": "landmarks"
+      },
+      {
+        "label": "Regional advantages",
+        "name": "regional_advantages"
+      },
+      {
+        "label": "Regional disadvantages",
+        "name": "regional_disadvantages"
+      }
+    ],
+    "icon": "terrain",
+    "label": "Geography"
+  },
+  "history": {
+    "attributes": [
+      {
+        "label": "Formation",
+        "name": "formation"
+      },
+      {
+        "label": "Discovery",
+        "name": "discovery"
+      },
+      {
+        "label": "Wars",
+        "name": "wars"
+      },
+      {
+        "label": "Ruins",
+        "name": "ruins"
+      }
+    ],
+    "icon": "date_range",
+    "label": "History"
+  },
+  "nature": {
+    "attributes": [
+      {
+        "label": "Crops",
+        "name": "crops"
+      },
+      {
+        "field_type": "link",
+        "label": "Creatures",
+        "name": "creatures"
+      },
+      {
+        "field_type": "link",
+        "label": "Floras",
+        "name": "floras"
+      }
+    ],
+    "icon": "local_florist",
+    "label": "Nature"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private Notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Local name",
+        "name": "name"
+      },
+      {
+        "label": "Other names",
+        "name": "other_names"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  }
+}

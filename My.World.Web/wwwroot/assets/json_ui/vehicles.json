@@ -1,0 +1,158 @@
+{
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "looks": {
+    "attributes": [
+      {
+        "label": "Size",
+        "name": "size"
+      },
+      {
+        "label": "Materials",
+        "name": "materials"
+      },
+      {
+        "label": "Colors",
+        "name": "colors"
+      },
+      {
+        "label": "Dimensions",
+        "name": "dimensions"
+      },
+      {
+        "label": "Doors",
+        "name": "doors"
+      },
+      {
+        "label": "Windows",
+        "name": "windows"
+      },
+      {
+        "label": "Designer",
+        "name": "designer"
+      }
+    ],
+    "icon": "airport_shuttle",
+    "label": "Looks"
+  },
+  "manufacturing": {
+    "attributes": [
+      {
+        "label": "Manufacturer",
+        "name": "manufacturer"
+      },
+      {
+        "label": "Costs",
+        "name": "costs"
+      },
+      {
+        "label": "Weight",
+        "name": "weight"
+      },
+      {
+        "label": "Country",
+        "name": "country"
+      },
+      {
+        "label": "Variants",
+        "name": "variants"
+      }
+    ],
+    "icon": "gavel",
+    "label": "Manufacturing"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private Notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "operators": {
+    "attributes": [
+      {
+        "label": "Jobs",
+        "name": "jobs"
+      },
+      {
+        "label": "Training",
+        "name": "training"
+      },
+      {
+        "label": "Owner",
+        "name": "owner"
+      }
+    ],
+    "icon": "people_outline",
+    "label": "Operators"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "label": "Type of vehicle",
+        "name": "type_of"
+      },
+      {
+        "label": "Alternate names",
+        "name": "alternate_names"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  },
+  "travel": {
+    "attributes": [
+      {
+        "label": "Speed",
+        "name": "speed"
+      },
+      {
+        "label": "Distance",
+        "name": "distance"
+      },
+      {
+        "label": "Fuel",
+        "name": "fuel"
+      },
+      {
+        "label": "Safety",
+        "name": "safety"
+      },
+      {
+        "label": "Features",
+        "name": "features"
+      }
+    ],
+    "icon": "near_me",
+    "label": "Travel"
+  }
+}

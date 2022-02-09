@@ -1,0 +1,179 @@
+{
+  "culture": {
+    "attributes": [
+      {
+        "label": "Population",
+        "name": "population"
+      },
+      {
+        "label": "Social hierarchy",
+        "name": "social_hierarchy"
+      },
+      {
+        "label": "Currency",
+        "name": "currency"
+      },
+      {
+        "label": "Laws",
+        "name": "laws"
+      },
+      {
+        "label": "Pop culture",
+        "name": "pop_culture"
+      },
+      {
+        "label": "Music",
+        "name": "music"
+      },
+      {
+        "label": "Education",
+        "name": "education"
+      },
+      {
+        "label": "Architecture",
+        "name": "architecture"
+      },
+      {
+        "label": "Sports",
+        "name": "sports"
+      },
+      {
+        "field_type": "link",
+        "label": "Languages",
+        "name": "languages"
+      },
+      {
+        "field_type": "link",
+        "label": "Religions",
+        "name": "religions"
+      },
+      {
+        "field_type": "link",
+        "label": "Governments",
+        "name": "governments"
+      }
+    ],
+    "icon": "face",
+    "label": "Culture"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "geography": {
+    "attributes": [
+      {
+        "label": "Area",
+        "name": "area"
+      },
+      {
+        "label": "Crops",
+        "name": "crops"
+      },
+      {
+        "label": "Climate",
+        "name": "climate"
+      },
+      {
+        "field_type": "link",
+        "label": "Creatures",
+        "name": "creatures"
+      },
+      {
+        "field_type": "link",
+        "label": "Flora",
+        "name": "floras"
+      }
+    ],
+    "icon": "terrain",
+    "label": "Geography"
+  },
+  "history": {
+    "attributes": [
+      {
+        "label": "Founding story",
+        "name": "founding_story"
+      },
+      {
+        "label": "Established year",
+        "name": "established_year"
+      },
+      {
+        "label": "Notable wars",
+        "name": "notable_wars"
+      }
+    ],
+    "icon": "date_range",
+    "label": "History"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private Notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "label": "Other names",
+        "name": "other_names"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  },
+  "points_of_interest": {
+    "attributes": [
+      {
+        "field_type": "link",
+        "label": "Locations",
+        "name": "locations"
+      },
+      {
+        "field_type": "link",
+        "label": "Towns",
+        "name": "towns"
+      },
+      {
+        "field_type": "link",
+        "label": "Landmarks",
+        "name": "landmarks"
+      },
+      {
+        "field_type": "link",
+        "label": "Bordering countries",
+        "name": "bordering_countries"
+      }
+    ],
+    "icon": "location_on",
+    "label": "Points of interest"
+  }
+}

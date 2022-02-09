@@ -1,0 +1,172 @@
+{
+  "entities": {
+    "attributes": [
+      {
+        "label": "Numbers",
+        "name": "numbers"
+      },
+      {
+        "label": "Quantifiers",
+        "name": "quantifiers"
+      },
+      {
+        "label": "Pronouns",
+        "name": "pronouns"
+      },
+      {
+        "label": "Determiners",
+        "name": "determiners"
+      }
+    ],
+    "icon": "settings_input_component",
+    "label": "Entities"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "grammar": {
+    "attributes": [
+      {
+        "label": "Grammar",
+        "name": "grammar"
+      }
+    ],
+    "icon": "list",
+    "label": "Grammar"
+  },
+  "info": {
+    "attributes": [
+      {
+        "label": "History",
+        "name": "history"
+      },
+      {
+        "label": "Typology",
+        "name": "typology"
+      },
+      {
+        "label": "Dialectical information",
+        "name": "dialectical_information"
+      },
+      {
+        "label": "Register",
+        "name": "register"
+      },
+      {
+        "label": "Gestures",
+        "name": "gestures"
+      },
+      {
+        "label": "Evolution",
+        "name": "evolution"
+      }
+    ],
+    "icon": "forum",
+    "label": "Info"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "label": "Other names",
+        "name": "other_names"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  },
+  "phonology": {
+    "attributes": [
+      {
+        "label": "Phonology",
+        "name": "phonology"
+      }
+    ],
+    "icon": "speaker_notes",
+    "label": "Phonology"
+  },
+  "vocabulary": {
+    "attributes": [
+      {
+        "label": "Greetings",
+        "name": "greetings"
+      },
+      {
+        "label": "Goodbyes",
+        "name": "goodbyes"
+      },
+      {
+        "label": "Please",
+        "name": "please"
+      },
+      {
+        "label": "Thank you",
+        "name": "thanks"
+      },
+      {
+        "label": "You are welcome",
+        "name": "you_are_welcome"
+      },
+      {
+        "label": "Sorry",
+        "name": "sorry"
+      },
+      {
+        "label": "Excuse me",
+        "name": "excuse_me"
+      },
+      {
+        "label": "Yes words",
+        "name": "yes_words"
+      },
+      {
+        "label": "No words",
+        "name": "no_words"
+      },
+      {
+        "label": "Body parts",
+        "name": "body_parts"
+      },
+      {
+        "label": "Family",
+        "name": "family"
+      },
+      {
+        "label": "Trade",
+        "name": "trade"
+      }
+    ],
+    "icon": "book",
+    "label": "Vocabulary"
+  }
+}

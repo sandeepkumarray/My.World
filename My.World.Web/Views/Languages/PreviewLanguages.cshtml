@@ -1,0 +1,326 @@
+@model My.World.Web.ViewModel.LanguagesViewModel
+
+@{
+    ViewData["Title"] = "ViewLanguages";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Breadcrumb"] = "Languages / View";
+}
+
+
+<style>
+    .editorNative {
+        min-height: 2em;
+        overflow-y: scroll;
+        max-height: 12em;
+        max-width: 50em;
+        margin: 0;
+        margin-bottom: 2px;
+        padding: 1px 0;
+        color: black;
+        font-weight: 400;
+        font-size: 1.125rem;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 2rem;
+        background: white;
+    }
+</style>
+<div class="c-body">
+    <main class="c-main">
+        <div class="container-fluid">
+            <div class="fade-in">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header"><strong>Language</strong> Details</div>
+                            <div class="card-body">
+                               <div class="align-items-start">
+                                    <div class="tab-content">
+                                        @foreach (var cat in Model.ContentTemplate.categories.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+                                            if (cat.Attributes != null && cat.Attributes.Count > 0)
+                                            {
+                                                <div id="@panelName">
+                                                    <div class="card">
+                                                        <div class="card-header d-flex justify-content-between align-items-center" style="background:@Model.headerBackgroundColor">
+                                                            <span>@cat.Label</span>
+                                                            <span>@Html.Raw(@cat.Icon)</span>
+                                                        </div>
+                                                        <div class="card-body" style="padding:10px;">
+                                                            @foreach (var att in cat.Attributes)
+                                                            {
+                                                                if (att.is_active)
+                                                                {
+                                                                    <div class="form-group row">
+                                                                        <label class="col-md-3 col-form-label" for="text-input">@att.field_label</label>
+                                                                        <div class="col-md-9">
+                                                                            @if (att.field_name.ToLower() != "name" && att.field_type.In(new List<string>() { "binary", "varbinary", "tinyblob", "blob", "mediumblob", "longblob", "char byte", "char", "varchar", "tinytext", "text", "mediumtext", "longtext", "set", "enum", "nchar", "national char", "nvarchar", "national varchar", "character varying" }))
+                                                                            {
+                                                                                <div id="@att.field_name" class="form-control editorNative"></div>
+                                                                            }
+                                                                            else if (att.field_name.ToLower() == "universe")
+                                                                            {
+                                                                                <select id="ddlUniverseList" class="form-control" style="min-width:150px" disabled
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name", Model.languagesModel.Universe))">
+                                                                                </select>
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "int", "integer", "smallint unsigned", "mediumint", "bigint", "int unsigned", "integer unsigned", "bit" }))
+                                                                            {
+                                                                                <input id="languagesModel_@att.field_name" class="form-control" type="number" readonly />
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "tinyint" }))
+                                                                            {
+                                                                                <input id="languagesModel_@att.field_name" class="form-control" type="checkbox" readonly />
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <input id="languagesModel_@att.field_name" class="form-control" readonly />
+
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+
+
+                                        @foreach (var cat in Model.ContentTemplate.references.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+
+                                            <div id="@panelName">
+                                                <div class="card">
+                                                    <div class="card-header d-flex justify-content-between align-items-center" style="background:cadetblue">
+                                                        <span>@cat.Label</span>
+                                                        <span>@Html.Raw(@cat.Icon)</span>
+                                                    </div>
+                                                    <div class="card-body" style="padding:10px;">
+                                                        @foreach (var att in cat.Attributes)
+                                                        {
+                                                            if (att.is_active)
+                                                            {
+                                                                if (att.field_name.ToLower() == "gallery")
+                                                                {
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Uploaded Images</label>
+
+                                                                        <div class="row">
+                                                                            @foreach (var contentObject in Model.ContentObjectModelList)
+                                                                            {
+                                                                                <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
+                                                                                    <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">                                                                                                                                                                              
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>                                                                   
+                                                                }
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+							</div>
+                            <div class="card-footer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+@section Scripts {
+   
+    <script type="text/javascript">
+    
+		function setBody_partsBody() {
+		    html = htmlDecode('@Model.languagesModel.Body_parts');
+		    $('#Body_parts').append(html);
+		};
+
+		function setDeterminersBody() {
+		    html = htmlDecode('@Model.languagesModel.Determiners');
+		    $('#Determiners').append(html);
+		};
+
+		function setDialectical_informationBody() {
+		    html = htmlDecode('@Model.languagesModel.Dialectical_information');
+		    $('#Dialectical_information').append(html);
+		};
+
+		function setEvolutionBody() {
+		    html = htmlDecode('@Model.languagesModel.Evolution');
+		    $('#Evolution').append(html);
+		};
+
+		function setFamilyBody() {
+		    html = htmlDecode('@Model.languagesModel.Family');
+		    $('#Family').append(html);
+		};
+
+		function setGesturesBody() {
+		    html = htmlDecode('@Model.languagesModel.Gestures');
+		    $('#Gestures').append(html);
+		};
+
+		function setGoodbyesBody() {
+		    html = htmlDecode('@Model.languagesModel.Goodbyes');
+		    $('#Goodbyes').append(html);
+		};
+
+		function setGrammarBody() {
+		    html = htmlDecode('@Model.languagesModel.Grammar');
+		    $('#Grammar').append(html);
+		};
+
+		function setGreetingsBody() {
+		    html = htmlDecode('@Model.languagesModel.Greetings');
+		    $('#Greetings').append(html);
+		};
+
+		function setHistoryBody() {
+		    html = htmlDecode('@Model.languagesModel.History');
+		    $('#History').append(html);
+		};
+
+		function setNameBody() {
+		    $('#languagesModel_Name').val('@Model.languagesModel.Name');
+		};
+
+		function setNo_wordsBody() {
+		    html = htmlDecode('@Model.languagesModel.No_words');
+		    $('#No_words').append(html);
+		};
+
+		function setNotesBody() {
+		    html = htmlDecode('@Model.languagesModel.Notes');
+		    $('#Notes').append(html);
+		};
+
+		function setNumbersBody() {
+		    html = htmlDecode('@Model.languagesModel.Numbers');
+		    $('#Numbers').append(html);
+		};
+
+		function setOther_NamesBody() {
+		    html = htmlDecode('@Model.languagesModel.Other_Names');
+		    $('#Other_Names').append(html);
+		};
+
+		function setPhonologyBody() {
+		    html = htmlDecode('@Model.languagesModel.Phonology');
+		    $('#Phonology').append(html);
+		};
+
+		function setPleaseBody() {
+		    html = htmlDecode('@Model.languagesModel.Please');
+		    $('#Please').append(html);
+		};
+
+		function setPrivate_notesBody() {
+		    html = htmlDecode('@Model.languagesModel.Private_notes');
+		    $('#Private_notes').append(html);
+		};
+
+		function setPronounsBody() {
+		    html = htmlDecode('@Model.languagesModel.Pronouns');
+		    $('#Pronouns').append(html);
+		};
+
+		function setQuantifiersBody() {
+		    html = htmlDecode('@Model.languagesModel.Quantifiers');
+		    $('#Quantifiers').append(html);
+		};
+
+		function setRegisterBody() {
+		    html = htmlDecode('@Model.languagesModel.Register');
+		    $('#Register').append(html);
+		};
+
+		function setSorryBody() {
+		    html = htmlDecode('@Model.languagesModel.Sorry');
+		    $('#Sorry').append(html);
+		};
+
+		function setTagsBody() {
+		    html = htmlDecode('@Model.languagesModel.Tags');
+		    $('#Tags').append(html);
+		};
+
+		function setThank_youBody() {
+		    html = htmlDecode('@Model.languagesModel.Thank_you');
+		    $('#Thank_you').append(html);
+		};
+
+		function setTradeBody() {
+		    html = htmlDecode('@Model.languagesModel.Trade');
+		    $('#Trade').append(html);
+		};
+
+		function setTypologyBody() {
+		    html = htmlDecode('@Model.languagesModel.Typology');
+		    $('#Typology').append(html);
+		};
+
+		function setUniverseBody() {
+		    $('#languagesModel_Universe').val('@Model.languagesModel.Universe');
+		};
+
+		function setYes_wordsBody() {
+		    html = htmlDecode('@Model.languagesModel.Yes_words');
+		    $('#Yes_words').append(html);
+		};
+
+		function setYou_are_welcomeBody() {
+		    html = htmlDecode('@Model.languagesModel.You_are_welcome');
+		    $('#You_are_welcome').append(html);
+		};
+
+
+
+        $(document).ready(function () {
+			setBody_partsBody();
+			setDeterminersBody();
+			setDialectical_informationBody();
+			setEvolutionBody();
+			setFamilyBody();
+			setGesturesBody();
+			setGoodbyesBody();
+			setGrammarBody();
+			setGreetingsBody();
+			setHistoryBody();
+			setNameBody();
+			setNo_wordsBody();
+			setNotesBody();
+			setNumbersBody();
+			setOther_NamesBody();
+			setPhonologyBody();
+			setPleaseBody();
+			setPrivate_notesBody();
+			setPronounsBody();
+			setQuantifiersBody();
+			setRegisterBody();
+			setSorryBody();
+			setTagsBody();
+			setThank_youBody();
+			setTradeBody();
+			setTypologyBody();
+			setYes_wordsBody();
+			setYou_are_welcomeBody();
+
+        });
+
+    </script>
+}

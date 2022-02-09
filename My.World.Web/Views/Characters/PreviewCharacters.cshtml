@@ -1,0 +1,391 @@
+@model My.World.Web.ViewModel.CharactersViewModel
+
+@{
+    ViewData["Title"] = "ViewCharacters";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Breadcrumb"] = "Characters / View";
+}
+
+
+<style>
+    .editorNative {
+        min-height: 2em;
+        overflow-y: scroll;
+        max-height: 12em;
+        max-width: 50em;
+        margin: 0;
+        margin-bottom: 2px;
+        padding: 1px 0;
+        color: black;
+        font-weight: 400;
+        font-size: 1.125rem;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 2rem;
+        background: white;
+    }
+</style>
+<div class="c-body">
+    <main class="c-main">
+        <div class="container-fluid">
+            <div class="fade-in">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header"><strong>Character</strong> Details</div>
+                            <div class="card-body">
+                               <div class="align-items-start">
+                                    <div class="tab-content">
+                                        @foreach (var cat in Model.ContentTemplate.categories.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+                                            if (cat.Attributes != null && cat.Attributes.Count > 0)
+                                            {
+                                                <div id="@panelName">
+                                                    <div class="card">
+                                                        <div class="card-header d-flex justify-content-between align-items-center" style="background:@Model.headerBackgroundColor">
+                                                            <span>@cat.Label</span>
+                                                            <span>@Html.Raw(@cat.Icon)</span>
+                                                        </div>
+                                                        <div class="card-body" style="padding:10px;">
+                                                            @foreach (var att in cat.Attributes)
+                                                            {
+                                                                if (att.is_active)
+                                                                {
+                                                                    <div class="form-group row">
+                                                                        <label class="col-md-3 col-form-label" for="text-input">@att.field_label</label>
+                                                                        <div class="col-md-9">
+                                                                            @if (att.field_name.ToLower() != "name" && att.field_type.In(new List<string>() { "binary", "varbinary", "tinyblob", "blob", "mediumblob", "longblob", "char byte", "char", "varchar", "tinytext", "text", "mediumtext", "longtext", "set", "enum", "nchar", "national char", "nvarchar", "national varchar", "character varying" }))
+                                                                            {
+                                                                                <div id="@att.field_name" class="form-control editorNative"></div>
+                                                                            }
+                                                                            else if (att.field_name.ToLower() == "universe")
+                                                                            {
+                                                                                <select id="ddlUniverseList" class="form-control" style="min-width:150px" disabled
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name", Model.charactersModel.Universe))">
+                                                                                </select>
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "int", "integer", "smallint unsigned", "mediumint", "bigint", "int unsigned", "integer unsigned", "bit" }))
+                                                                            {
+                                                                                <input id="charactersModel_@att.field_name" class="form-control" type="number" readonly />
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "tinyint" }))
+                                                                            {
+                                                                                <input id="charactersModel_@att.field_name" class="form-control" type="checkbox" readonly />
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <input id="charactersModel_@att.field_name" class="form-control" readonly />
+
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+
+
+                                        @foreach (var cat in Model.ContentTemplate.references.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+
+                                            <div id="@panelName">
+                                                <div class="card">
+                                                    <div class="card-header d-flex justify-content-between align-items-center" style="background:cadetblue">
+                                                        <span>@cat.Label</span>
+                                                        <span>@Html.Raw(@cat.Icon)</span>
+                                                    </div>
+                                                    <div class="card-body" style="padding:10px;">
+                                                        @foreach (var att in cat.Attributes)
+                                                        {
+                                                            if (att.is_active)
+                                                            {
+                                                                if (att.field_name.ToLower() == "gallery")
+                                                                {
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Uploaded Images</label>
+
+                                                                        <div class="row">
+                                                                            @foreach (var contentObject in Model.ContentObjectModelList)
+                                                                            {
+                                                                                <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
+                                                                                    <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">                                                                                                                                                                              
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>                                                                   
+                                                                }
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+							</div>
+                            <div class="card-footer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+@section Scripts {
+   
+    <script type="text/javascript">
+    
+		function setAgeBody() {
+		    html = htmlDecode('@Model.charactersModel.Age');
+		    $('#Age').append(html);
+		};
+
+		function setAliasesBody() {
+		    html = htmlDecode('@Model.charactersModel.Aliases');
+		    $('#Aliases').append(html);
+		};
+
+		function setBackgroundBody() {
+		    html = htmlDecode('@Model.charactersModel.Background');
+		    $('#Background').append(html);
+		};
+
+		function setBirthdayBody() {
+		    html = htmlDecode('@Model.charactersModel.Birthday');
+		    $('#Birthday').append(html);
+		};
+
+		function setBirthplaceBody() {
+		    html = htmlDecode('@Model.charactersModel.Birthplace');
+		    $('#Birthplace').append(html);
+		};
+
+		function setBodytypeBody() {
+		    html = htmlDecode('@Model.charactersModel.Bodytype');
+		    $('#Bodytype').append(html);
+		};
+
+		function setEducationBody() {
+		    html = htmlDecode('@Model.charactersModel.Education');
+		    $('#Education').append(html);
+		};
+
+		function setEyecolorBody() {
+		    html = htmlDecode('@Model.charactersModel.Eyecolor');
+		    $('#Eyecolor').append(html);
+		};
+
+		function setFacialhairBody() {
+		    html = htmlDecode('@Model.charactersModel.Facialhair');
+		    $('#Facialhair').append(html);
+		};
+
+		function setFave_animalBody() {
+		    html = htmlDecode('@Model.charactersModel.Fave_animal');
+		    $('#Fave_animal').append(html);
+		};
+
+		function setFave_colorBody() {
+		    html = htmlDecode('@Model.charactersModel.Fave_color');
+		    $('#Fave_color').append(html);
+		};
+
+		function setFave_foodBody() {
+		    html = htmlDecode('@Model.charactersModel.Fave_food');
+		    $('#Fave_food').append(html);
+		};
+
+		function setFave_possessionBody() {
+		    html = htmlDecode('@Model.charactersModel.Fave_possession');
+		    $('#Fave_possession').append(html);
+		};
+
+		function setFave_weaponBody() {
+		    html = htmlDecode('@Model.charactersModel.Fave_weapon');
+		    $('#Fave_weapon').append(html);
+		};
+
+		function setFavoriteBody() {
+		    $('#charactersModel_Favorite').val('@Model.charactersModel.Favorite');
+		};
+
+		function setFlawsBody() {
+		    html = htmlDecode('@Model.charactersModel.Flaws');
+		    $('#Flaws').append(html);
+		};
+
+		function setGenderBody() {
+		    html = htmlDecode('@Model.charactersModel.Gender');
+		    $('#Gender').append(html);
+		};
+
+		function setHaircolorBody() {
+		    html = htmlDecode('@Model.charactersModel.Haircolor');
+		    $('#Haircolor').append(html);
+		};
+
+		function setHairstyleBody() {
+		    html = htmlDecode('@Model.charactersModel.Hairstyle');
+		    $('#Hairstyle').append(html);
+		};
+
+		function setHeightBody() {
+		    html = htmlDecode('@Model.charactersModel.Height');
+		    $('#Height').append(html);
+		};
+
+		function setHobbiesBody() {
+		    html = htmlDecode('@Model.charactersModel.Hobbies');
+		    $('#Hobbies').append(html);
+		};
+
+		function setIdentmarksBody() {
+		    html = htmlDecode('@Model.charactersModel.Identmarks');
+		    $('#Identmarks').append(html);
+		};
+
+		function setMannerismsBody() {
+		    html = htmlDecode('@Model.charactersModel.Mannerisms');
+		    $('#Mannerisms').append(html);
+		};
+
+		function setMotivationsBody() {
+		    html = htmlDecode('@Model.charactersModel.Motivations');
+		    $('#Motivations').append(html);
+		};
+
+		function setNameBody() {
+		    $('#charactersModel_Name').val('@Model.charactersModel.Name');
+		};
+
+		function setNotesBody() {
+		    html = htmlDecode('@Model.charactersModel.Notes');
+		    $('#Notes').append(html);
+		};
+
+		function setOccupationBody() {
+		    html = htmlDecode('@Model.charactersModel.Occupation');
+		    $('#Occupation').append(html);
+		};
+
+		function setPersonality_typeBody() {
+		    html = htmlDecode('@Model.charactersModel.Personality_type');
+		    $('#Personality_type').append(html);
+		};
+
+		function setPetsBody() {
+		    html = htmlDecode('@Model.charactersModel.Pets');
+		    $('#Pets').append(html);
+		};
+
+		function setPoliticsBody() {
+		    html = htmlDecode('@Model.charactersModel.Politics');
+		    $('#Politics').append(html);
+		};
+
+		function setPrejudicesBody() {
+		    html = htmlDecode('@Model.charactersModel.Prejudices');
+		    $('#Prejudices').append(html);
+		};
+
+		function setPrivacyBody() {
+		    html = htmlDecode('@Model.charactersModel.Privacy');
+		    $('#Privacy').append(html);
+		};
+
+		function setPrivate_notesBody() {
+		    html = htmlDecode('@Model.charactersModel.Private_notes');
+		    $('#Private_notes').append(html);
+		};
+
+		function setRaceBody() {
+		    html = htmlDecode('@Model.charactersModel.Race');
+		    $('#Race').append(html);
+		};
+
+		function setReligionBody() {
+		    html = htmlDecode('@Model.charactersModel.Religion');
+		    $('#Religion').append(html);
+		};
+
+		function setRoleBody() {
+		    html = htmlDecode('@Model.charactersModel.Role');
+		    $('#Role').append(html);
+		};
+
+		function setSkintoneBody() {
+		    html = htmlDecode('@Model.charactersModel.Skintone');
+		    $('#Skintone').append(html);
+		};
+
+		function setTalentsBody() {
+		    html = htmlDecode('@Model.charactersModel.Talents');
+		    $('#Talents').append(html);
+		};
+
+		function setUniverseBody() {
+		    $('#charactersModel_Universe').val('@Model.charactersModel.Universe');
+		};
+
+		function setWeightBody() {
+		    html = htmlDecode('@Model.charactersModel.Weight');
+		    $('#Weight').append(html);
+		};
+
+
+
+        $(document).ready(function () {
+			setAgeBody();
+			setAliasesBody();
+			setBackgroundBody();
+			setBirthdayBody();
+			setBirthplaceBody();
+			setBodytypeBody();
+			setEducationBody();
+			setEyecolorBody();
+			setFacialhairBody();
+			setFave_animalBody();
+			setFave_colorBody();
+			setFave_foodBody();
+			setFave_possessionBody();
+			setFave_weaponBody();
+			setFavoriteBody();
+			setFlawsBody();
+			setGenderBody();
+			setHaircolorBody();
+			setHairstyleBody();
+			setHeightBody();
+			setHobbiesBody();
+			setIdentmarksBody();
+			setMannerismsBody();
+			setMotivationsBody();
+			setNameBody();
+			setNotesBody();
+			setOccupationBody();
+			setPersonality_typeBody();
+			setPetsBody();
+			setPoliticsBody();
+			setPrejudicesBody();
+			setPrivacyBody();
+			setPrivate_notesBody();
+			setRaceBody();
+			setReligionBody();
+			setRoleBody();
+			setSkintoneBody();
+			setTalentsBody();
+			setWeightBody();
+
+        });
+
+    </script>
+}

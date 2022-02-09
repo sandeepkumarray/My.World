@@ -1,0 +1,170 @@
+{
+  "cities": {
+    "attributes": [
+      {
+        "field_type": "link",
+        "label": "Capital cities",
+        "name": "capital_cities"
+      },
+      {
+        "field_type": "link",
+        "label": "Largest cities",
+        "name": "largest_cities"
+      },
+      {
+        "field_type": "link",
+        "label": "Notable cities",
+        "name": "notable_cities"
+      },
+      {
+        "field_type": "link",
+        "label": "Capital cities",
+        "name": "capital_towns"
+      },
+      {
+        "field_type": "link",
+        "label": "Largest cities",
+        "name": "largest_towns"
+      },
+      {
+        "field_type": "link",
+        "label": "Notable cities",
+        "name": "notable_towns"
+      }
+    ],
+    "icon": "business",
+    "label": "Cities"
+  },
+  "culture": {
+    "attributes": [
+      {
+        "label": "Language",
+        "name": "language"
+      },
+      {
+        "label": "Population",
+        "name": "population"
+      },
+      {
+        "label": "Currency",
+        "name": "currency"
+      },
+      {
+        "label": "Motto",
+        "name": "motto"
+      },
+      {
+        "label": "Laws",
+        "name": "laws"
+      },
+      {
+        "label": "Sports",
+        "name": "sports"
+      },
+      {
+        "field_type": "link",
+        "label": "Leaders",
+        "name": "leaders"
+      },
+      {
+        "field_type": "link",
+        "label": "Spoken Languages",
+        "name": "languages"
+      }
+    ],
+    "icon": "face",
+    "label": "Culture"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "geography": {
+    "attributes": [
+      {
+        "label": "Area",
+        "name": "area"
+      },
+      {
+        "label": "Crops",
+        "name": "crops"
+      },
+      {
+        "label": "Located at",
+        "name": "located_at"
+      },
+      {
+        "label": "Climate",
+        "name": "climate"
+      },
+      {
+        "field_type": "link",
+        "label": "Landmarks",
+        "name": "landmarks"
+      }
+    ],
+    "icon": "map",
+    "label": "Geography"
+  },
+  "history": {
+    "attributes": [
+      {
+        "label": "Founding Story",
+        "name": "founding_story"
+      },
+      {
+        "label": "Established Year",
+        "name": "established_year"
+      },
+      {
+        "label": "Notable Wars",
+        "name": "notable_wars"
+      }
+    ],
+    "icon": "date_range",
+    "label": "History"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "label": "Private Notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "label": "Type",
+        "name": "type_of"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  }
+}

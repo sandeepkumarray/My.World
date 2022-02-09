@@ -1,0 +1,235 @@
+{
+  "astral": {
+    "attributes": [
+      {
+        "label": "Suns",
+        "name": "suns"
+      },
+      {
+        "label": "Moons",
+        "name": "moons"
+      },
+      {
+        "label": "Orbit",
+        "name": "orbit"
+      },
+      {
+        "label": "Visible Constellations",
+        "name": "visible_constellations"
+      },
+      {
+        "field_type": "link",
+        "label": "Nearby planets",
+        "name": "nearby_planets"
+      }
+    ],
+    "icon": "star_border",
+    "label": "Astral"
+  },
+  "climate": {
+    "attributes": [
+      {
+        "label": "Seasons",
+        "name": "seasons"
+      },
+      {
+        "label": "Temperature",
+        "name": "temperature"
+      },
+      {
+        "label": "Atmosphere",
+        "name": "atmosphere"
+      },
+      {
+        "label": "Natural disasters",
+        "name": "natural_disasters"
+      }
+    ],
+    "icon": "fireplace",
+    "label": "Climate"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "geography": {
+    "attributes": [
+      {
+        "label": "Size",
+        "name": "size"
+      },
+      {
+        "label": "Surface",
+        "name": "surface"
+      },
+      {
+        "label": "Climate",
+        "name": "climate"
+      },
+      {
+        "label": "Weather",
+        "name": "weather"
+      },
+      {
+        "label": "Water Content",
+        "name": "water_content"
+      },
+      {
+        "label": "Natural Resources",
+        "name": "natural_resources"
+      },
+      {
+        "field_type": "link",
+        "label": "Continents",
+        "name": "continents"
+      },
+      {
+        "field_type": "link",
+        "label": "Countries",
+        "name": "countries"
+      },
+      {
+        "field_type": "link",
+        "label": "Landmarks",
+        "name": "landmarks"
+      },
+      {
+        "field_type": "link",
+        "label": "Locations",
+        "name": "locations"
+      }
+    ],
+    "icon": "layers",
+    "label": "Geography"
+  },
+  "history": {
+    "attributes": [
+      {
+        "label": "First Inhabitants Story",
+        "name": "first_inhabitants_story"
+      },
+      {
+        "label": "World History",
+        "name": "world_history"
+      }
+    ],
+    "icon": "date_range",
+    "label": "History"
+  },
+  "inhabitants": {
+    "attributes": [
+      {
+        "label": "Population",
+        "name": "population"
+      },
+      {
+        "field_type": "link",
+        "label": "Races",
+        "name": "races"
+      },
+      {
+        "field_type": "link",
+        "label": "Flora",
+        "name": "floras"
+      },
+      {
+        "field_type": "link",
+        "label": "Creatures",
+        "name": "creatures"
+      },
+      {
+        "field_type": "link",
+        "label": "Religions",
+        "name": "religions"
+      },
+      {
+        "field_type": "link",
+        "label": "Deities",
+        "name": "deities"
+      },
+      {
+        "field_type": "link",
+        "label": "Groups",
+        "name": "groups"
+      },
+      {
+        "field_type": "link",
+        "label": "Languages",
+        "name": "languages"
+      },
+      {
+        "field_type": "link",
+        "label": "Towns",
+        "name": "towns"
+      }
+    ],
+    "icon": "face",
+    "label": "Inhabitants"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private Notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  },
+  "time": {
+    "attributes": [
+      {
+        "label": "Length Of Day",
+        "name": "length_of_day"
+      },
+      {
+        "label": "Length Of Night",
+        "name": "length_of_night"
+      },
+      {
+        "label": "Calendar System",
+        "name": "calendar_system"
+      },
+      {
+        "label": "Night sky",
+        "name": "night_sky"
+      },
+      {
+        "label": "Day sky",
+        "name": "day_sky"
+      }
+    ],
+    "icon": "hourglass_empty",
+    "label": "Time"
+  }
+}

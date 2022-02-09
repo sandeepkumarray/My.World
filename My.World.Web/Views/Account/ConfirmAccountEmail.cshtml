@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewData["Title"] = "ConfirmAccountEmail";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+<div class="card-group">
+    <div class="card p-4">
+        <div class="card-header">
+            <h1>Confirm Account</h1>
+        </div>
+        <div class="card-body">
+            <form asp-action="ResendConfirmAccountEmail" method="post" class="form-signin">
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Email confirmation mail has been sent to <b>@Model.email</b>. Please check and confirm your Email Id.</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 text-right">
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 text-right">
+                        <button class="btn btn-primary px-4" type="submit">Re-Send</button>
+                        <button class="btn btn-primary px-4" type="button" onclick="@("window.location.href='" + @Url.Action("Login", "Account") + "'");">Login</button>
+                    </div>
+                </div>
+                <input type="hidden" value="@Model.email" name="email" />
+            </form>
+        </div>
+    </div>
+</div>

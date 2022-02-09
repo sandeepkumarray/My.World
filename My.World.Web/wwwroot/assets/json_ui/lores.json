@@ -1,0 +1,370 @@
+{
+  "about": {
+    "attributes": [
+      {
+        "label": "Subjects",
+        "name": "subjects"
+      },
+      {
+        "field_type": "link",
+        "label": "Characters",
+        "name": "characters"
+      },
+      {
+        "field_type": "link",
+        "label": "Deities",
+        "name": "deities"
+      },
+      {
+        "field_type": "link",
+        "label": "Creatures",
+        "name": "creatures"
+      },
+      {
+        "field_type": "link",
+        "label": "Floras",
+        "name": "floras"
+      },
+      {
+        "field_type": "link",
+        "label": "Jobs",
+        "name": "jobs"
+      },
+      {
+        "field_type": "link",
+        "label": "Technologies",
+        "name": "technologies"
+      },
+      {
+        "field_type": "link",
+        "label": "Vehicles",
+        "name": "vehicles"
+      },
+      {
+        "field_type": "link",
+        "label": "Conditions",
+        "name": "conditions"
+      },
+      {
+        "field_type": "link",
+        "label": "Races",
+        "name": "races"
+      },
+      {
+        "field_type": "link",
+        "label": "Religions",
+        "name": "religions"
+      },
+      {
+        "field_type": "link",
+        "label": "Magic",
+        "name": "magics"
+      },
+      {
+        "field_type": "link",
+        "label": "Governments",
+        "name": "governments"
+      },
+      {
+        "field_type": "link",
+        "label": "Groups",
+        "name": "groups"
+      },
+      {
+        "field_type": "link",
+        "label": "Traditions",
+        "name": "traditions"
+      },
+      {
+        "field_type": "link",
+        "label": "Foods",
+        "name": "foods"
+      },
+      {
+        "field_type": "link",
+        "label": "Sports",
+        "name": "sports"
+      }
+    ],
+    "icon": "find_in_page",
+    "label": "About"
+  },
+  "content": {
+    "attributes": [
+      {
+        "label": "Full text",
+        "name": "full_text"
+      },
+      {
+        "label": "Dialect",
+        "name": "dialect"
+      },
+      {
+        "label": "Structure",
+        "name": "structure"
+      },
+      {
+        "label": "Tone",
+        "name": "tone"
+      },
+      {
+        "label": "Genre",
+        "name": "genre"
+      }
+    ],
+    "icon": "import_contacts",
+    "label": "Content"
+  },
+  "culture": {
+    "attributes": [
+      {
+        "label": "Impact",
+        "name": "impact"
+      },
+      {
+        "field_type": "link",
+        "label": "Created traditions",
+        "name": "created_traditions"
+      },
+      {
+        "label": "Influence on modern times",
+        "name": "influence"
+      },
+      {
+        "label": "Motivations",
+        "name": "motivations"
+      },
+      {
+        "label": "Reception",
+        "name": "reception"
+      },
+      {
+        "label": "Interpretations",
+        "name": "interpretations"
+      },
+      {
+        "label": "Media adaptations",
+        "name": "media_adaptations"
+      },
+      {
+        "label": "Criticism",
+        "name": "criticism"
+      },
+      {
+        "label": "Created phrases",
+        "name": "created_phrases"
+      }
+    ],
+    "icon": "face",
+    "label": "Culture"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "history": {
+    "attributes": [
+      {
+        "label": "Historical context",
+        "name": "historical_context"
+      },
+      {
+        "label": "Background information",
+        "name": "background_information"
+      },
+      {
+        "label": "Important translations",
+        "name": "important_translations"
+      },
+      {
+        "label": "Propagation method",
+        "name": "propagation_method"
+      }
+    ],
+    "icon": "date_range",
+    "label": "History"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private Notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "origin": {
+    "attributes": [
+      {
+        "label": "Source",
+        "name": "source"
+      },
+      {
+        "label": "Original telling",
+        "name": "original_telling"
+      },
+      {
+        "label": "Date recorded",
+        "name": "date_recorded"
+      },
+      {
+        "label": "Inspirations",
+        "name": "inspirations"
+      },
+      {
+        "label": "Original author",
+        "name": "original_author"
+      },
+      {
+        "field_type": "link",
+        "label": "Original languages",
+        "name": "original_languages"
+      }
+    ],
+    "icon": "today",
+    "label": "Origin"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "label": "Summary",
+        "name": "summary"
+      },
+      {
+        "label": "Type",
+        "name": "type_of"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  },
+  "setting": {
+    "attributes": [
+      {
+        "label": "Time period",
+        "name": "time_period"
+      },
+      {
+        "field_type": "link",
+        "label": "Planets",
+        "name": "planets"
+      },
+      {
+        "field_type": "link",
+        "label": "Continents",
+        "name": "continents"
+      },
+      {
+        "field_type": "link",
+        "label": "Countries",
+        "name": "countries"
+      },
+      {
+        "field_type": "link",
+        "label": "Landmarks",
+        "name": "landmarks"
+      },
+      {
+        "field_type": "link",
+        "label": "Towns",
+        "name": "towns"
+      },
+      {
+        "field_type": "link",
+        "label": "Buildings",
+        "name": "buildings"
+      },
+      {
+        "field_type": "link",
+        "label": "Schools",
+        "name": "schools"
+      }
+    ],
+    "icon": "home",
+    "label": "Setting"
+  },
+  "truthiness": {
+    "attributes": [
+      {
+        "label": "True parts",
+        "name": "true_parts"
+      },
+      {
+        "label": "False parts",
+        "name": "false_parts"
+      },
+      {
+        "label": "Believability",
+        "name": "believability"
+      },
+      {
+        "label": "Morals",
+        "name": "morals"
+      },
+      {
+        "label": "Symbolisms",
+        "name": "symbolisms"
+      },
+      {
+        "field_type": "link",
+        "label": "Believers",
+        "name": "believers"
+      },
+      {
+        "label": "Hoaxes",
+        "name": "hoaxes"
+      }
+    ],
+    "icon": "thumbs_up_down",
+    "label": "Truthiness"
+  },
+  "variations": {
+    "attributes": [
+      {
+        "label": "Geographical variations",
+        "name": "geographical_variations"
+      },
+      {
+        "label": "Evolution over time",
+        "name": "evolution"
+      },
+      {
+        "label": "Translation variations",
+        "name": "translation_variations"
+      },
+      {
+        "field_type": "link",
+        "label": "Variations",
+        "name": "variations"
+      },
+      {
+        "field_type": "link",
+        "label": "Related lores",
+        "name": "related_lores"
+      }
+    ],
+    "icon": "file_copy",
+    "label": "Variations"
+  }
+}

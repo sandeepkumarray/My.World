@@ -1,0 +1,326 @@
+@model My.World.Web.ViewModel.ConditionsViewModel
+
+@{
+    ViewData["Title"] = "ViewConditions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Breadcrumb"] = "Conditions / View";
+}
+
+
+<style>
+    .editorNative {
+        min-height: 2em;
+        overflow-y: scroll;
+        max-height: 12em;
+        max-width: 50em;
+        margin: 0;
+        margin-bottom: 2px;
+        padding: 1px 0;
+        color: black;
+        font-weight: 400;
+        font-size: 1.125rem;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 2rem;
+        background: white;
+    }
+</style>
+<div class="c-body">
+    <main class="c-main">
+        <div class="container-fluid">
+            <div class="fade-in">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header"><strong>Condition</strong> Details</div>
+                            <div class="card-body">
+                               <div class="align-items-start">
+                                    <div class="tab-content">
+                                        @foreach (var cat in Model.ContentTemplate.categories.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+                                            if (cat.Attributes != null && cat.Attributes.Count > 0)
+                                            {
+                                                <div id="@panelName">
+                                                    <div class="card">
+                                                        <div class="card-header d-flex justify-content-between align-items-center" style="background:@Model.headerBackgroundColor">
+                                                            <span>@cat.Label</span>
+                                                            <span>@Html.Raw(@cat.Icon)</span>
+                                                        </div>
+                                                        <div class="card-body" style="padding:10px;">
+                                                            @foreach (var att in cat.Attributes)
+                                                            {
+                                                                if (att.is_active)
+                                                                {
+                                                                    <div class="form-group row">
+                                                                        <label class="col-md-3 col-form-label" for="text-input">@att.field_label</label>
+                                                                        <div class="col-md-9">
+                                                                            @if (att.field_name.ToLower() != "name" && att.field_type.In(new List<string>() { "binary", "varbinary", "tinyblob", "blob", "mediumblob", "longblob", "char byte", "char", "varchar", "tinytext", "text", "mediumtext", "longtext", "set", "enum", "nchar", "national char", "nvarchar", "national varchar", "character varying" }))
+                                                                            {
+                                                                                <div id="@att.field_name" class="form-control editorNative"></div>
+                                                                            }
+                                                                            else if (att.field_name.ToLower() == "universe")
+                                                                            {
+                                                                                <select id="ddlUniverseList" class="form-control" style="min-width:150px" disabled
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name", Model.conditionsModel.Universe))">
+                                                                                </select>
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "int", "integer", "smallint unsigned", "mediumint", "bigint", "int unsigned", "integer unsigned", "bit" }))
+                                                                            {
+                                                                                <input id="conditionsModel_@att.field_name" class="form-control" type="number" readonly />
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "tinyint" }))
+                                                                            {
+                                                                                <input id="conditionsModel_@att.field_name" class="form-control" type="checkbox" readonly />
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <input id="conditionsModel_@att.field_name" class="form-control" readonly />
+
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+
+
+                                        @foreach (var cat in Model.ContentTemplate.references.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+
+                                            <div id="@panelName">
+                                                <div class="card">
+                                                    <div class="card-header d-flex justify-content-between align-items-center" style="background:cadetblue">
+                                                        <span>@cat.Label</span>
+                                                        <span>@Html.Raw(@cat.Icon)</span>
+                                                    </div>
+                                                    <div class="card-body" style="padding:10px;">
+                                                        @foreach (var att in cat.Attributes)
+                                                        {
+                                                            if (att.is_active)
+                                                            {
+                                                                if (att.field_name.ToLower() == "gallery")
+                                                                {
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Uploaded Images</label>
+
+                                                                        <div class="row">
+                                                                            @foreach (var contentObject in Model.ContentObjectModelList)
+                                                                            {
+                                                                                <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
+                                                                                    <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">                                                                                                                                                                              
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>                                                                   
+                                                                }
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+							</div>
+                            <div class="card-footer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+@section Scripts {
+   
+    <script type="text/javascript">
+    
+		function setAlternate_namesBody() {
+		    html = htmlDecode('@Model.conditionsModel.Alternate_names');
+		    $('#Alternate_names').append(html);
+		};
+
+		function setDescriptionBody() {
+		    html = htmlDecode('@Model.conditionsModel.Description');
+		    $('#Description').append(html);
+		};
+
+		function setDiagnostic_methodBody() {
+		    html = htmlDecode('@Model.conditionsModel.Diagnostic_method');
+		    $('#Diagnostic_method').append(html);
+		};
+
+		function setDurationBody() {
+		    html = htmlDecode('@Model.conditionsModel.Duration');
+		    $('#Duration').append(html);
+		};
+
+		function setEnvironmental_factorsBody() {
+		    html = htmlDecode('@Model.conditionsModel.Environmental_factors');
+		    $('#Environmental_factors').append(html);
+		};
+
+		function setEpidemiologyBody() {
+		    html = htmlDecode('@Model.conditionsModel.Epidemiology');
+		    $('#Epidemiology').append(html);
+		};
+
+		function setEvolutionBody() {
+		    html = htmlDecode('@Model.conditionsModel.Evolution');
+		    $('#Evolution').append(html);
+		};
+
+		function setGenetic_factorsBody() {
+		    html = htmlDecode('@Model.conditionsModel.Genetic_factors');
+		    $('#Genetic_factors').append(html);
+		};
+
+		function setImmunizationBody() {
+		    html = htmlDecode('@Model.conditionsModel.Immunization');
+		    $('#Immunization').append(html);
+		};
+
+		function setLifestyle_factorsBody() {
+		    html = htmlDecode('@Model.conditionsModel.Lifestyle_factors');
+		    $('#Lifestyle_factors').append(html);
+		};
+
+		function setMedicationBody() {
+		    html = htmlDecode('@Model.conditionsModel.Medication');
+		    $('#Medication').append(html);
+		};
+
+		function setMental_effectsBody() {
+		    html = htmlDecode('@Model.conditionsModel.Mental_effects');
+		    $('#Mental_effects').append(html);
+		};
+
+		function setNameBody() {
+		    $('#conditionsModel_Name').val('@Model.conditionsModel.Name');
+		};
+
+		function setNotesBody() {
+		    html = htmlDecode('@Model.conditionsModel.Notes');
+		    $('#Notes').append(html);
+		};
+
+		function setOriginBody() {
+		    html = htmlDecode('@Model.conditionsModel.Origin');
+		    $('#Origin').append(html);
+		};
+
+		function setPreventionBody() {
+		    html = htmlDecode('@Model.conditionsModel.Prevention');
+		    $('#Prevention').append(html);
+		};
+
+		function setPrivate_NotesBody() {
+		    html = htmlDecode('@Model.conditionsModel.Private_Notes');
+		    $('#Private_Notes').append(html);
+		};
+
+		function setPrognosisBody() {
+		    html = htmlDecode('@Model.conditionsModel.Prognosis');
+		    $('#Prognosis').append(html);
+		};
+
+		function setRarityBody() {
+		    html = htmlDecode('@Model.conditionsModel.Rarity');
+		    $('#Rarity').append(html);
+		};
+
+		function setSpecialty_FieldBody() {
+		    html = htmlDecode('@Model.conditionsModel.Specialty_Field');
+		    $('#Specialty_Field').append(html);
+		};
+
+		function setSymbolismBody() {
+		    html = htmlDecode('@Model.conditionsModel.Symbolism');
+		    $('#Symbolism').append(html);
+		};
+
+		function setSymptomsBody() {
+		    html = htmlDecode('@Model.conditionsModel.Symptoms');
+		    $('#Symptoms').append(html);
+		};
+
+		function setTagsBody() {
+		    html = htmlDecode('@Model.conditionsModel.Tags');
+		    $('#Tags').append(html);
+		};
+
+		function setTransmissionBody() {
+		    html = htmlDecode('@Model.conditionsModel.Transmission');
+		    $('#Transmission').append(html);
+		};
+
+		function setTreatmentBody() {
+		    html = htmlDecode('@Model.conditionsModel.Treatment');
+		    $('#Treatment').append(html);
+		};
+
+		function setType_of_conditionBody() {
+		    html = htmlDecode('@Model.conditionsModel.Type_of_condition');
+		    $('#Type_of_condition').append(html);
+		};
+
+		function setUniverseBody() {
+		    $('#conditionsModel_Universe').val('@Model.conditionsModel.Universe');
+		};
+
+		function setVariationsBody() {
+		    html = htmlDecode('@Model.conditionsModel.Variations');
+		    $('#Variations').append(html);
+		};
+
+		function setVisual_effectsBody() {
+		    html = htmlDecode('@Model.conditionsModel.Visual_effects');
+		    $('#Visual_effects').append(html);
+		};
+
+
+
+        $(document).ready(function () {
+			setAlternate_namesBody();
+			setDescriptionBody();
+			setDiagnostic_methodBody();
+			setDurationBody();
+			setEnvironmental_factorsBody();
+			setEpidemiologyBody();
+			setEvolutionBody();
+			setGenetic_factorsBody();
+			setImmunizationBody();
+			setLifestyle_factorsBody();
+			setMedicationBody();
+			setMental_effectsBody();
+			setNameBody();
+			setNotesBody();
+			setOriginBody();
+			setPreventionBody();
+			setPrivate_NotesBody();
+			setPrognosisBody();
+			setRarityBody();
+			setSpecialty_FieldBody();
+			setSymbolismBody();
+			setSymptomsBody();
+			setTagsBody();
+			setTransmissionBody();
+			setTreatmentBody();
+			setType_of_conditionBody();
+			setVariationsBody();
+			setVisual_effectsBody();
+
+        });
+
+    </script>
+}

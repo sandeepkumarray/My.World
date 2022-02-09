@@ -1,0 +1,227 @@
+﻿@model My.World.Web.ViewModel.UserProfileViewModel
+
+@{
+    ViewData["Title"] = "UserProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Breadcrumb"] = "User Profile";
+}
+
+
+<style type="text/css">
+
+.user-avatar {
+position: relative;
+margin-bottom: 0;
+display: inline-block;
+width: 2rem;
+height: 2rem;
+font-size: 2rem;
+vertical-align: middle;
+border-radius: 4rem;
+}
+
+.user-avatar audio, .user-avatar canvas, .user-avatar img, .user-avatar video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 4rem;
+    -o-object-fit: cover;
+    object-fit: cover;
+    -o-object-position: top;
+    object-position: top;
+}
+
+.user-avatar-xl {
+width: 5rem;
+height: 5rem;
+font-size: 5rem;
+}
+
+.fileinput-button, .fileinput-dropzone {
+position: relative;
+overflow: hidden;
+display: inline-block;
+}
+
+.fileinput-button input, .fileinput-dropzone input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    direction: ltr;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.fileinput-button-label {
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 1rem;
+position: absolute;
+top: 0;
+right: 0;
+bottom: 0;
+left: 0;
+background-color: rgba(52,108,176,.86);
+color: #fff;
+font-size: .875rem;
+text-align: center;
+opacity: 0;
+cursor: pointer;
+z-index: 1;
+transition: opacity .2s;
+}
+</style>
+
+<div class="c-body">
+    <main class="c-main">
+        <div class="container-fluid">
+            <div class="fade-in">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="card">
+                            <div class="card-header"><strong>Your Details</strong> </div>
+                            <div class="card-body">
+                                <form class="form-horizontal" action="" method="post">
+                                    <ul class="c-sidebar-nav">
+                                        <li class="c-sidebar-nav-item">
+                                            <a class="c-sidebar-nav-link active" asp-area="" asp-controller="Account" asp-action="UserProfile">
+                                                Profile
+                                            </a>
+                                        </li>
+                                        <li class="c-sidebar-nav-item">
+                                            <a class="c-sidebar-nav-link" asp-area="" asp-controller="Account" asp-action="AccountSetting">
+                                                Account
+                                            </a>
+                                        </li>
+                                        <li class="c-sidebar-nav-item">
+                                            <a class="c-sidebar-nav-link" asp-area="" asp-controller="Account" asp-action="Notification">
+                                                Notification
+                                            </a>
+                                        </li>
+                                        <li class="c-sidebar-nav-item">
+                                            <a class="c-sidebar-nav-link" asp-area="" asp-controller="Account" asp-action="ChangePassword">
+                                                Change Password
+                                            </a>
+                                        </li>
+                                        <li class="c-sidebar-nav-item">
+                                            <a class="c-sidebar-nav-link" asp-area="" asp-controller="Account" asp-action="UserPlanDetails">
+                                                Content Plans
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header"><strong>Profile</strong> Details</div>
+                            <div class="card-body">
+                                <form asp-action="UserProfile">
+                                    <div class="user-avatar user-avatar-xl fileinput-button">
+                                        <div class="fileinput-button-label"> Change photo </div>
+                                        <img class="c-avatar-img" src="~/assets/img/avatars/6.jpg" alt="user@email.com">
+                                        <input id="fileupload-avatar" type="file" name="avatar">
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label asp-for="username" class="col-md-3 col-form-label" for="text-input"></label>
+                                        <div class="col-md-9">
+                                            <span class="col-form-label">@Model.username</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label asp-for="bio" class="col-md-3 col-form-label" for="text-input"></label>
+                                        <div class="col-md-9">
+                                            <input asp-for="bio" class="form-control">
+                                            <span asp-validation-for="bio" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">                                       
+                                        <div class="col-md-12 d-flex justify-content-between align-items-center">
+                                            @Html.DisplayNameFor(model => model.community_features_enabled)
+                                            <label class="c-switch c-switch-pill c-switch-success">
+                                                <input asp-for="community_features_enabled" class="c-switch-input">
+                                                <span class="c-switch-slider"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">                                        
+                                        <div class="col-md-12 d-flex justify-content-between align-items-center">
+                                            @Html.DisplayNameFor(model => model.dark_mode_enabled)
+                                            <label class="c-switch c-switch-pill c-switch-success">
+                                                <input asp-for="dark_mode_enabled" class="c-switch-input">
+                                                <span class="c-switch-slider"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label asp-for="forums_badge_text" class="col-md-3 col-form-label" for="text-input"></label>
+                                        <div class="col-md-9">
+                                            <input asp-for="forums_badge_text" class="form-control">
+                                            <span asp-validation-for="forums_badge_text" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label asp-for="inspirations" class="col-md-3 col-form-label" for="text-input"></label>
+                                        <div class="col-md-9">
+                                            <input asp-for="inspirations" class="form-control">
+                                            <span asp-validation-for="inspirations" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label asp-for="interests" class="col-md-3 col-form-label" for="text-input"></label>
+                                        <div class="col-md-9">
+                                            <input asp-for="interests" class="form-control">
+                                            <span asp-validation-for="interests" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">                                        
+                                        <div class="col-md-12 d-flex justify-content-between align-items-center">
+                                            @Html.DisplayNameFor(model => model.private_profile)
+                                            <label class="c-switch c-switch-pill c-switch-success">
+                                                <input asp-for="private_profile" class="c-switch-input">
+                                                <span class="c-switch-slider"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label asp-for="website" class="col-md-3 col-form-label" for="text-input"></label>
+                                        <div class="col-md-9">
+                                            <input asp-for="website" class="form-control">
+                                            <span asp-validation-for="website" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <input type="submit" value="Update" class="btn btn-primary" />
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card-footer">
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

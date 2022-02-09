@@ -1,0 +1,126 @@
+﻿@model My.World.Api.Models.DocumentsModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Breadcrumb"] = "Document / Edit";
+}
+<link href="~/css/quill.snow.css" rel="stylesheet" />
+<link href="~/css/quill.mention.min.css" rel="stylesheet" />
+<style>
+    .input-title {
+        background-color: transparent;
+        border: none;
+        border-bottom: 1px solid #9e9e9e;
+        border-radius: 0;
+        outline: none;
+        height: 3rem;
+        width: 100%;
+        font-size: 16px;
+        margin: 0 0 8px 0;
+        padding: 0;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        -webkit-box-sizing: content-box;
+        box-sizing: content-box;
+        -webkit-transition: border .3s, -webkit-box-shadow .3s;
+        transition: border .3s, -webkit-box-shadow .3s;
+        transition: box-shadow .3s, border .3s;
+        transition: box-shadow .3s, border .3s, -webkit-box-shadow .3s;
+    }
+
+
+    input:not([type]), input[type=text]:not(.browser-default), input[type=password]:not(.browser-default), input[type=email]:not(.browser-default), input[type=url]:not(.browser-default), input[type=time]:not(.browser-default), input[type=date]:not(.browser-default), input[type=datetime]:not(.browser-default), input[type=datetime-local]:not(.browser-default), input[type=tel]:not(.browser-default), input[type=number]:not(.browser-default), input[type=search]:not(.browser-default), textarea.materialize-textarea {
+        background-color: transparent;
+        border: none;
+        border-bottom: 1px solid #9e9e9e;
+        border-radius: 0;
+        outline: none;
+        height: 3rem;
+        width: 100%;
+        font-size: 16px;
+        margin: 0 0 8px 0;
+        padding: 0;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        -webkit-box-sizing: content-box;
+        box-sizing: content-box;
+        -webkit-transition: border .3s, -webkit-box-shadow .3s;
+        transition: border .3s, -webkit-box-shadow .3s;
+        transition: box-shadow .3s, border .3s;
+        transition: box-shadow .3s, border .3s, -webkit-box-shadow .3s;
+    }
+
+        input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):focus:not([readonly]), input[type=password]:not(.browser-default):focus:not([readonly]), input[type=email]:not(.browser-default):focus:not([readonly]), input[type=url]:not(.browser-default):focus:not([readonly]), input[type=time]:not(.browser-default):focus:not([readonly]), input[type=date]:not(.browser-default):focus:not([readonly]), input[type=datetime]:not(.browser-default):focus:not([readonly]), input[type=datetime-local]:not(.browser-default):focus:not([readonly]), input[type=tel]:not(.browser-default):focus:not([readonly]), input[type=number]:not(.browser-default):focus:not([readonly]), input[type=search]:not(.browser-default):focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
+            border-bottom: 1px solid #26a69a;
+            -webkit-box-shadow: 0 1px 0 0 #26a69a;
+            box-shadow: 0 1px 0 0 #26a69a
+        }
+</style>
+
+<div class="fade-in">
+    <div class="row justify-content-md-center">
+        <div class="col-lg-6">
+            <h2>Title</h2>
+            <div class="row">
+                @if (Model != null)
+                {
+                    <input asp-for="title" placeholder="title" class="form-control" />
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-md-center" style="margin-top: 20px; ">
+        <div class="col-lg-6">
+            <div id="counter"></div>
+            <div id="editor" style="min-height: 30em; max-width: 50em; margin: 0 auto; margin-bottom: 200px; border: 1px solid #dedede; padding: 5px 0; color: black; font-weight: 400; font-size: 1.125rem; font-family: Arial, Helvetica, sans-serif; line-height: 2rem; background: white;  border-bottom: 1px solid grey;"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/quill.js"></script>
+    <script src="~/js/quill.mention.min.js"></script>
+    <script src="~/js/documentEditor.js"></script>
+    <script>
+
+        function setBody() {
+            quill_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.body'));
+        };
+
+        function postSaveUniverseData(type, value) {
+            var url = '/Document/' + @ViewData["DocumentId"] + '/Save' + type;
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: value,
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    if (result.isSuccess) {
+
+                    }
+                    else {
+                        $.alert({
+                            title: 'Error',
+                            icon: 'fa fa-warning',
+                            type: 'red',
+                            content: '<hr>' + result.message + '</hr>',
+                        });
+                    }
+                },
+                error: function (error) {
+                    $.alert({
+                        title: 'Error',
+                        icon: 'fa fa-warning',
+                        type: 'red',
+                        content: '<hr>' + error + '</hr>',
+                    });
+                }
+            });
+        }
+
+    </script>
+}

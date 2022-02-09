@@ -1,0 +1,222 @@
+{
+  "assets": {
+    "attributes": [
+      {
+        "field_type": "link",
+        "label": "Items",
+        "name": "items"
+      },
+      {
+        "field_type": "link",
+        "label": "Technologies",
+        "name": "technologies"
+      },
+      {
+        "field_type": "link",
+        "label": "Creatures",
+        "name": "creatures"
+      },
+      {
+        "label": "Vehicles",
+        "name": "vehicles"
+      }
+    ],
+    "icon": "shopping_cart",
+    "label": "Assets"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "history": {
+    "attributes": [
+      {
+        "label": "Founding Story",
+        "name": "founding_story"
+      },
+      {
+        "label": "Flag Design Story",
+        "name": "flag_design_story"
+      },
+      {
+        "label": "Notable Wars",
+        "name": "notable_wars"
+      },
+      {
+        "label": "Holidays",
+        "name": "holidays"
+      }
+    ],
+    "icon": "date_range",
+    "label": "History"
+  },
+  "ideologies": {
+    "attributes": [
+      {
+        "label": "Sociopolitical",
+        "name": "sociopolitical"
+      },
+      {
+        "label": "Socioeconomical",
+        "name": "socioeconomical"
+      },
+      {
+        "label": "Geocultural",
+        "name": "geocultural"
+      },
+      {
+        "label": "Laws",
+        "name": "laws"
+      },
+      {
+        "label": "Immigration",
+        "name": "immigration"
+      },
+      {
+        "label": "Privacy Ideologies",
+        "name": "privacy_ideologies"
+      }
+    ],
+    "icon": "cloud",
+    "label": "Ideologies"
+  },
+  "members": {
+    "attributes": [
+      {
+        "field_type": "link",
+        "label": "Leaders",
+        "name": "leaders"
+      },
+      {
+        "field_type": "link",
+        "label": "Groups",
+        "name": "groups"
+      },
+      {
+        "field_type": "link",
+        "label": "Political figures",
+        "name": "political_figures"
+      },
+      {
+        "label": "Military",
+        "name": "military"
+      },
+      {
+        "label": "Navy",
+        "name": "navy"
+      },
+      {
+        "label": "Airforce",
+        "name": "airforce"
+      },
+      {
+        "label": "Space Program",
+        "name": "space_program"
+      }
+    ],
+    "icon": "group",
+    "label": "Members"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private Notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  },
+  "populace": {
+    "attributes": [
+      {
+        "label": "Approval Ratings",
+        "name": "approval_ratings"
+      },
+      {
+        "label": "International Relations",
+        "name": "international_relations"
+      },
+      {
+        "label": "Civilian Life",
+        "name": "civilian_life"
+      }
+    ],
+    "icon": "visibility",
+    "label": "Populace"
+  },
+  "process": {
+    "attributes": [
+      {
+        "label": "Electoral Process",
+        "name": "electoral_process"
+      },
+      {
+        "label": "Term Lengths",
+        "name": "term_lengths"
+      },
+      {
+        "label": "Criminal System",
+        "name": "criminal_system"
+      }
+    ],
+    "icon": "gavel",
+    "label": "Process"
+  },
+  "structure": {
+    "attributes": [
+      {
+        "label": "Type Of Government",
+        "name": "type_of_government"
+      },
+      {
+        "label": "Power Structure",
+        "name": "power_structure"
+      },
+      {
+        "label": "Power Source",
+        "name": "power_source"
+      },
+      {
+        "label": "Checks And Balances",
+        "name": "checks_and_balances"
+      },
+      {
+        "label": "Jobs",
+        "name": "jobs"
+      }
+    ],
+    "icon": "view_list",
+    "label": "Structure"
+  }
+}

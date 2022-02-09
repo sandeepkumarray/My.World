@@ -1,0 +1,212 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <base href="./">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>My World</title>
+
+    <link rel="icon" type="image/png" sizes="192x192" href="~/assets/img/Logo_192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/assets/img/Logo_32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="~/assets/img/Logo_96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/assets/img/Logo_16.png">
+    <link rel="manifest" href="~/assets/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="assets/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Main styles for this application-->
+    <link href="~/css/style.css" rel="stylesheet">
+    <link href="~/vendors/coreui/icons/css/free.min.css" rel="stylesheet">
+    <link href="~/vendors/waves/waves.min.css" rel="stylesheet">
+    <link href="~/vendors/fontawesome/css/all.css" rel="stylesheet" />
+    <link href="~/css/jquery-confirm.min.css" rel="stylesheet" />
+    <link href="~/css/app.css" rel="stylesheet">
+    <link href="~/vendors/material/css/MaterialIcons.css" rel="stylesheet" />
+</head>
+<body class="c-app">
+    <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
+        <div class="c-sidebar-brand d-lg-down-none">
+            <img class="c-sidebar-brand-full" src="~/assets/img/myWorldHeader.png" width="118" height="46" alt="Logo" />
+            <img class="c-sidebar-brand-minimized" src="~/assets/img/Logo_64.png" width="46" height="46" alt="Logo" />
+        </div>
+        @await Component.InvokeAsync("Menu")
+
+        <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-minimized"></button>
+    </div>
+    <div class="c-wrapper c-fixed-components">
+        <header class="c-header c-header-light c-header-fixed c-header-with-subheader">
+            <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar" data-class="c-sidebar-show">
+                <svg class="c-icon c-icon-lg">
+                    <use xlink:href="/vendors/coreui/icons/svg/free.svg#cil-menu"></use>
+                </svg>
+            </button><a class="c-header-brand d-lg-none" href="~/#">
+                <svg width="118" height="46" alt="CoreUI Logo">
+                    <use xlink:href="/assets/brand/coreui.svg#full"></use>
+                </svg>
+            </a>
+            <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="#sidebar" data-class="c-sidebar-lg-show" responsive="true">
+                <svg class="c-icon c-icon-lg">
+                    <use xlink:href="/vendors/coreui/icons/svg/free.svg#cil-menu"></use>
+                </svg>
+            </button>
+            <ul class="c-header-nav d-md-down-none">
+                <li class="c-header-nav-item px-3"><a class="c-header-nav-link" asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
+                <li class="c-header-nav-item px-3"><a class="c-header-nav-link" asp-controller="Account" asp-action="AccountSetting">Settings</a></li>
+            </ul>
+            <ul class="c-header-nav ml-auto mr-4">
+                <li class="c-header-nav-item d-md-down-none mx-2">
+                    <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        <svg class="c-icon">
+                            <use xlink:href="/vendors/coreui/icons/svg/free.svg#cil-bell"></use>
+                        </svg>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right pt-0">
+                        <div class="dropdown-header bg-light py-2">
+                            <strong>Notification</strong>
+                        </div>
+                        <a class="dropdown-item" href="~/#">
+                            <svg class="c-icon mr-2">
+                                <use xlink:href="/vendors/coreui/icons/svg/free.svg#cil-bell"></use>
+                            </svg> Updates<span class="badge badge-info ml-auto">42</span>
+                        </a>
+                        <a class="dropdown-item" href="~/#">
+                            <svg class="c-icon mr-2">
+                                <use xlink:href="/vendors/coreui/icons/svg/free.svg#cil-envelope-open"></use>
+                            </svg> Messages<span class="badge badge-success ml-auto">42</span>
+                        </a>
+                        <a class="dropdown-item" href="~/#">
+                            <svg class="c-icon mr-2">
+                                <use xlink:href="/vendors/coreui/icons/svg/free.svg#cil-task"></use>
+                            </svg> Tasks<span class="badge badge-danger ml-auto">42</span>
+                        </a>
+                        <a class="dropdown-item" href="~/#">
+                            <svg class="c-icon mr-2">
+                                <use xlink:href="/vendors/coreui/icons/svg/free.svg#cil-comment-square"></use>
+                            </svg> Comments<span class="badge badge-warning ml-auto">42</span>
+                        </a>
+                    </div>
+                </li>
+                <li class="c-header-nav-item dropdown">
+                    <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        <div class="c-avatar">
+                            <img class="c-avatar-img" src="~/assets/img/avatars/6.jpg" alt="user@email.com">
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right pt-0">
+                        <div class="dropdown-header bg-light py-2">
+                            <strong>Account</strong>
+                        </div>
+                        <a class="dropdown-item" href="~/#">
+                            <svg class="c-icon mr-2">
+                                <use xlink:href="/vendors/coreui/icons/svg/free.svg#cil-bell"></use>
+                            </svg> Updates<span class="badge badge-info ml-auto">42</span>
+                        </a>
+                        <a class="dropdown-item" href="~/#">
+                            <svg class="c-icon mr-2">
+                                <use xlink:href="/vendors/coreui/icons/svg/free.svg#cil-envelope-open"></use>
+                            </svg> Messages<span class="badge badge-success ml-auto">42</span>
+                        </a>
+                        <a class="dropdown-item" href="~/#">
+                            <svg class="c-icon mr-2">
+                                <use xlink:href="/vendors/coreui/icons/svg/free.svg#cil-task"></use>
+                            </svg> Tasks<span class="badge badge-danger ml-auto">42</span>
+                        </a>
+                        <a class="dropdown-item" href="~/#">
+                            <svg class="c-icon mr-2">
+                                <use xlink:href="/vendors/coreui/icons/svg/free.svg#cil-comment-square"></use>
+                            </svg> Comments<span class="badge badge-warning ml-auto">42</span>
+                        </a>
+                        <div class="dropdown-header bg-light py-2">
+                            <strong>Settings</strong>
+                        </div>
+                        <a class="dropdown-item" asp-controller="Account" asp-action="UserProfile">
+                            <svg class="c-icon mr-2">
+                                <use xlink:href="/vendors/coreui/icons/svg/free.svg#cil-user"></use>
+                            </svg> Profile
+                        </a>
+                        <a class="dropdown-item" asp-controller="Account" asp-action="AccountSetting">
+                            <svg class="c-icon mr-2">
+                                <use xlink:href="/vendors/coreui/icons/svg/free.svg#cil-settings"></use>
+                            </svg> Settings
+                        </a>
+                        <a class="dropdown-item" href="~/#">
+                            <svg class="c-icon mr-2">
+                                <use xlink:href="/vendors/coreui/icons/svg/free.svg#cil-file"></use>
+                            </svg> Projects<span class="badge badge-primary ml-auto">42</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="~/#">
+                            <svg class="c-icon mr-2">
+                                <use xlink:href="/vendors/coreui/icons/svg/free.svg#cil-lock-locked"></use>
+                            </svg> Lock Account
+                        </a><a class="dropdown-item" asp-controller="Account" asp-action="Logout">
+                            <svg class="c-icon mr-2">
+                                <use xlink:href="/vendors/coreui/icons/svg/free.svg#cil-account-logout"></use>
+                            </svg> Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <!-- Breadcrumb-->
+            <div class="c-subheader px-3">
+                <ol class="breadcrumb border-0 m-0">
+                    <li class="breadcrumb-item">Home</li>
+                    <li class="breadcrumb-item"><a href="~/#">User</a></li>
+                    <li class="breadcrumb-item active">@ViewData["Breadcrumb"].ToString()</li>
+                </ol>
+            </div>
+            <!-- Breadcrumb Menu-->
+        </header>
+        <div class="c-body">
+            <main class="c-main">
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+            </main>
+            <footer class="c-footer">
+                <div><a href="~/">My World</a> © 2020 Ray Dynamics.</div>
+                <div class="ml-auto">Ray Dynamics&nbsp;</div>
+            </footer>
+        </div>
+    </div>
+
+
+    <!-- CoreUI and necessary plugins-->
+    <script src="~/vendors/coreui/coreui/js/coreui.bundle.min.js"></script>
+    <!--[if IE]><!-->
+    <script src="~/vendors/coreui/icons/js/svgxuse.min.js"></script>
+    <!--<![endif]-->
+    <!-- Plugins and scripts required by this view-->
+    <script src="~/vendors/coreui/chartjs/js/coreui-chartjs.bundle.js"></script>
+    <script src="~/vendors/coreui/utils/js/coreui-utils.js"></script>
+    <script src="~/js/main.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/vendors/waves/waves.min.js"></script>
+    <script src="~/vendors/fontawesome/js/all.js"></script>
+    <script src="~/js/jquery-confirm.min.js"></script>
+
+    @RenderSection("scripts", false)
+    <script>
+
+
+        $(document).ready(function () {
+
+            // Init Waves
+            Waves.init();
+            Waves.attach('.drag-ripple', 'waves-block', true);
+            Waves.attach('#bg-pattern', null, true);
+
+        });
+        function htmlEncode(value) {
+            return $('<div/>').text(value).html();
+        }
+
+        function htmlDecode(value) {
+            return $('<div/>').html(value).text();
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,166 @@
+{
+  "culture": {
+    "attributes": [
+      {
+        "label": "Laws",
+        "name": "laws"
+      },
+      {
+        "label": "Sports",
+        "name": "sports"
+      },
+      {
+        "label": "Politics",
+        "name": "politics"
+      },
+      {
+        "field_type": "link",
+        "label": "Creatures",
+        "name": "creatures"
+      },
+      {
+        "field_type": "link",
+        "label": "Flora",
+        "name": "floras"
+      },
+      {
+        "field_type": "link",
+        "label": "Languages",
+        "name": "languages"
+      }
+    ],
+    "icon": "face",
+    "label": "Culture"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "history": {
+    "attributes": [
+      {
+        "label": "Founding story",
+        "name": "founding_story"
+      },
+      {
+        "label": "Established year",
+        "name": "established_year"
+      }
+    ],
+    "icon": "date_range",
+    "label": "History"
+  },
+  "layout": {
+    "attributes": [
+      {
+        "label": "Buildings",
+        "name": "buildings"
+      },
+      {
+        "label": "Landmarks",
+        "name": "landmarks"
+      },
+      {
+        "label": "Main roads",
+        "name": "main_roads"
+      },
+      {
+        "label": "Busy areas",
+        "name": "busy_areas"
+      },
+      {
+        "label": "Neighborhoods",
+        "name": "neighborhoods"
+      }
+    ],
+    "icon": "map",
+    "label": "Layout"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private Notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "label": "Other names",
+        "name": "other_names"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "field_type": "link",
+        "label": "Country",
+        "name": "countries"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  },
+  "populace": {
+    "attributes": [
+      {
+        "field_type": "link",
+        "label": "Citizens",
+        "name": "citizens"
+      },
+      {
+        "field_type": "link",
+        "label": "Groups",
+        "name": "groups"
+      }
+    ],
+    "icon": "group",
+    "label": "Populace"
+  },
+  "sustainability": {
+    "attributes": [
+      {
+        "label": "Food sources",
+        "name": "food_sources"
+      },
+      {
+        "label": "Energy sources",
+        "name": "energy_sources"
+      },
+      {
+        "label": "Recycling",
+        "name": "recycling"
+      },
+      {
+        "label": "Waste",
+        "name": "waste"
+      }
+    ],
+    "icon": "autorenew",
+    "label": "Sustainability"
+  }
+}

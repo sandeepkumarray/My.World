@@ -1,0 +1,200 @@
+﻿@model My.World.Web.ViewModel.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Breadcrumb"] = "Dashboard";
+}
+<style>
+    .dashboard-card {
+        height: 200px;
+        width: 200px;
+        padding-bottom: 15px;
+    }
+
+    .btn-floating.btn-large.halfway-fab {
+        bottom: 20px;
+        border-radius: 50%
+    }
+
+    .btn-floating.halfway-fab {
+        position: absolute;
+        right: 24px;
+        bottom: -20px;
+    }
+
+    .btn-floating.btn-large {
+        width: 56px;
+        height: 56px;
+        padding: 0;
+    }
+</style>
+<div class="fade-in">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="row">
+                @if (Model.DashboardItemList != null)
+                {
+                    foreach (var item in Model.DashboardItemList)
+                    {
+                        <div class="col-sm-6 col-lg-3 dashboard-card">
+                            <div class="card h-100 text-white" style="height: 265px; background: linear-gradient( rgb(122 122 122), rgb(122 122 122 / 50%) ), url('/assets/img/cards/@(item.Header+".png")'); background-size: cover; ">
+                                <div class="card-body card-body pb-0 d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="text-value-lg">@Html.DisplayFor(modelItem => item.CountString)</div>
+                                        <div>@Html.DisplayFor(modelItem => item.Header)</div>
+                                    </div>
+                                    <button class="btn btn-floating btn-large hoverable halfway-fab waves-effect waves-light text-white tooltipped" type="button"
+                                            onclick="@("window.location.href='" + @Url.Action("CreateItem","Dashboard", new { content_type = item.Controller}) + "'");">
+                                        <i class="fas fa-plus fa-2x"></i>
+                                    </button>
+                                    @*<div class="btn-group">
+                                            <button class="btn btn-transparent dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <svg class="c-icon">
+                                                    <use xlink:href="vendors/coreui/icons/svg/free.svg#cil-settings"></use>
+                                                </svg>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="#">Action</a>
+                                                <a class="dropdown-item" href="#">Another action</a>
+                                                <a class="dropdown-item" href="#">Something else here</a>
+                                            </div>
+                                        </div>*@
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <h5>PICK UP WHERE YOU LEFT OFF</h5>
+            @foreach (var item in Model.DashboardRecentList.OrderByDescending(x => x.updated_at).Take(5))
+            {
+                <a href="/@item.content_type/@item.id" class="btn"
+                   style="width: inherit;">
+                    <div class="card text-white text-center" style="background-color: @item.primary_color;">
+                        <div class="card-body d-md-flex justify-content-lg-start">
+                            @Html.Raw(item.icon)
+
+                            <div>
+                                <h3>&nbsp; @item.name</h3>
+                                <p class="text-sm-left">@My.World.Web.Helpers.Utility.TimeAgo(item.updated_at)</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            }
+
+            <h5>CREATE SOMETHING NEW</h5>
+            @foreach (var item in Model.DashboardCreateItemList)
+            {
+                <a href="/CreateItem?content_type=@item.Controller" class="btn"
+                   style="width: inherit;">
+                    <div class="card text-white text-center" style="background-color:@item.primary_color;">
+                        <div class="card-body">
+                            @Html.Raw(item.icon)
+                            <h3><i class="fas fa-plus"></i> New @item.Controller</h3>
+                            <footer>
+                                <p class="text-sm-center">@item.CountString</p>
+                            </footer>
+                        </div>
+                    </div>
+                </a>
+            }
+        </div>
+    </div>
+</div>
+<div id="contentsExceededModal" bsmodal="" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade" aria-modal="true" style="display: none;">
+    <div role="document" class="modal-dialog modal-danger modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Alert !</h4>
+                <button type="button" aria-label="Close" data-dismiss="modal" class="close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>You have Exceeded the maximum allowed numbers for content.</h4>
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header"><strong>Content Plans</strong></div>
+                        <div class="card-body">
+                            <div style="padding:20px">
+                                <h2 style="text-align: center;">Available Content Plans</h2>
+                                <div class="card-group card-group-scroll" style="padding-top:5px">
+                                    @foreach (var item in Model.ContentPlans)
+                                    {
+                                        <div class="col-md-4 col-sm-6">
+                                            <div class="pricingTable">
+                                                <div class="pricingTable-header">
+                                                    <h3 class="title">@item.name</h3>
+                                                </div>
+                                                <div class="price-value">
+                                                    <span class="amount">$ @item.monthly_cents</span>
+                                                    <span class="duration">/month</span>
+                                                </div>
+                                                <div class="pricing-content">
+                                                    <ul class="content-list list-group">
+                                                        @foreach (var desc in @item.plan_description.Split(','))
+                                                        {
+                                                            <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">
+                                                                <span>@desc </span>
+                                                                <span><i class="fas fa-plus"></i></span>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                    <div class="pricingTable-signup">
+                                                        <a onclick="@("window.location.href='" + @Url.Action("UpgradePlan", "Account", new { plan_id = item.id}) + "'");">Upgrade</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    <div class="col-md-4 col-sm-6">
+                                        <div class="pricingTable">
+                                            <div class="pricingTable-header">
+                                                <h3 class="title">Customize Plans</h3>
+                                            </div>
+                                            <div class="price-value">
+                                                <span class="amount">$ 9.99</span>
+                                                <span class="duration">/month</span>
+                                            </div>
+                                            <div class="pricing-content">
+                                                <div>Contact Us at</div>
+                                                <div>9845748593</div>
+                                                <div class="pricingTable-signup">
+                                                    <a href="#">Contact</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+<script type="text/javascript">
+    function showModal(message) {
+        $("#contentsExceededModal").modal('show');
+    }
+</script>
+@if (ViewBag.JavaScriptFunction != null)
+{
+    <script type="text/javascript">
+            @Html.Raw(ViewBag.JavaScriptFunction)
+    </script>
+}

@@ -1,0 +1,166 @@
+{
+  "culture": {
+    "attributes": [
+      {
+        "label": "Uniforms",
+        "name": "uniforms"
+      },
+      {
+        "label": "Merchandise",
+        "name": "merchandise"
+      },
+      {
+        "label": "Popularity",
+        "name": "popularity"
+      },
+      {
+        "label": "Players",
+        "name": "players"
+      },
+      {
+        "label": "Countries",
+        "name": "countries"
+      },
+      {
+        "label": "Teams",
+        "name": "teams"
+      },
+      {
+        "label": "Traditions",
+        "name": "traditions"
+      }
+    ],
+    "icon": "group",
+    "label": "Culture"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "history": {
+    "attributes": [
+      {
+        "label": "Origin story",
+        "name": "origin_story"
+      },
+      {
+        "label": "Creators",
+        "name": "creators"
+      },
+      {
+        "label": "Evolution",
+        "name": "evolution"
+      },
+      {
+        "label": "Famous games",
+        "name": "famous_games"
+      }
+    ],
+    "icon": "history",
+    "label": "History"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private Notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "label": "Nicknames",
+        "name": "nicknames"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  },
+  "playing": {
+    "attributes": [
+      {
+        "label": "Rules",
+        "name": "rules"
+      },
+      {
+        "label": "Game time",
+        "name": "game_time"
+      },
+      {
+        "label": "Positions",
+        "name": "positions"
+      },
+      {
+        "label": "Strategies",
+        "name": "strategies"
+      },
+      {
+        "label": "Common injuries",
+        "name": "common_injuries"
+      },
+      {
+        "label": "Most important muscles",
+        "name": "most_important_muscles"
+      }
+    ],
+    "icon": "directions_run",
+    "label": "Playing"
+  },
+  "setup": {
+    "attributes": [
+      {
+        "label": "Play area",
+        "name": "play_area"
+      },
+      {
+        "label": "Equipment",
+        "name": "equipment"
+      },
+      {
+        "label": "Number of players",
+        "name": "number_of_players"
+      },
+      {
+        "label": "Scoring",
+        "name": "scoring"
+      },
+      {
+        "label": "Penalties",
+        "name": "penalties"
+      },
+      {
+        "label": "How to win",
+        "name": "how_to_win"
+      }
+    ],
+    "icon": "input",
+    "label": "Setup"
+  }
+}

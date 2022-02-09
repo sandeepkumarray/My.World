@@ -1,0 +1,482 @@
+@model My.World.Web.ViewModel.CreaturesViewModel
+
+@{
+    ViewData["Title"] = "ViewCreatures";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Breadcrumb"] = "Creatures / View";
+}
+
+
+<style>
+    .editorNative {
+        min-height: 2em;
+        overflow-y: scroll;
+        max-height: 12em;
+        max-width: 50em;
+        margin: 0;
+        margin-bottom: 2px;
+        padding: 1px 0;
+        color: black;
+        font-weight: 400;
+        font-size: 1.125rem;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 2rem;
+        background: white;
+    }
+</style>
+<div class="c-body">
+    <main class="c-main">
+        <div class="container-fluid">
+            <div class="fade-in">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header"><strong>Creature</strong> Details</div>
+                            <div class="card-body">
+                               <div class="align-items-start">
+                                    <div class="tab-content">
+                                        @foreach (var cat in Model.ContentTemplate.categories.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+                                            if (cat.Attributes != null && cat.Attributes.Count > 0)
+                                            {
+                                                <div id="@panelName">
+                                                    <div class="card">
+                                                        <div class="card-header d-flex justify-content-between align-items-center" style="background:@Model.headerBackgroundColor">
+                                                            <span>@cat.Label</span>
+                                                            <span>@Html.Raw(@cat.Icon)</span>
+                                                        </div>
+                                                        <div class="card-body" style="padding:10px;">
+                                                            @foreach (var att in cat.Attributes)
+                                                            {
+                                                                if (att.is_active)
+                                                                {
+                                                                    <div class="form-group row">
+                                                                        <label class="col-md-3 col-form-label" for="text-input">@att.field_label</label>
+                                                                        <div class="col-md-9">
+                                                                            @if (att.field_name.ToLower() != "name" && att.field_type.In(new List<string>() { "binary", "varbinary", "tinyblob", "blob", "mediumblob", "longblob", "char byte", "char", "varchar", "tinytext", "text", "mediumtext", "longtext", "set", "enum", "nchar", "national char", "nvarchar", "national varchar", "character varying" }))
+                                                                            {
+                                                                                <div id="@att.field_name" class="form-control editorNative"></div>
+                                                                            }
+                                                                            else if (att.field_name.ToLower() == "universe")
+                                                                            {
+                                                                                <select id="ddlUniverseList" class="form-control" style="min-width:150px" disabled
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name", Model.creaturesModel.Universe))">
+                                                                                </select>
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "int", "integer", "smallint unsigned", "mediumint", "bigint", "int unsigned", "integer unsigned", "bit" }))
+                                                                            {
+                                                                                <input id="creaturesModel_@att.field_name" class="form-control" type="number" readonly />
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "tinyint" }))
+                                                                            {
+                                                                                <input id="creaturesModel_@att.field_name" class="form-control" type="checkbox" readonly />
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <input id="creaturesModel_@att.field_name" class="form-control" readonly />
+
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+
+
+                                        @foreach (var cat in Model.ContentTemplate.references.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+
+                                            <div id="@panelName">
+                                                <div class="card">
+                                                    <div class="card-header d-flex justify-content-between align-items-center" style="background:cadetblue">
+                                                        <span>@cat.Label</span>
+                                                        <span>@Html.Raw(@cat.Icon)</span>
+                                                    </div>
+                                                    <div class="card-body" style="padding:10px;">
+                                                        @foreach (var att in cat.Attributes)
+                                                        {
+                                                            if (att.is_active)
+                                                            {
+                                                                if (att.field_name.ToLower() == "gallery")
+                                                                {
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Uploaded Images</label>
+
+                                                                        <div class="row">
+                                                                            @foreach (var contentObject in Model.ContentObjectModelList)
+                                                                            {
+                                                                                <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
+                                                                                    <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">                                                                                                                                                                              
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>                                                                   
+                                                                }
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+							</div>
+                            <div class="card-footer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+@section Scripts {
+   
+    <script type="text/javascript">
+    
+		function setAggressivenessBody() {
+		    html = htmlDecode('@Model.creaturesModel.Aggressiveness');
+		    $('#Aggressiveness').append(html);
+		};
+
+		function setAncestorsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Ancestors');
+		    $('#Ancestors').append(html);
+		};
+
+		function setClassBody() {
+		    html = htmlDecode('@Model.creaturesModel.Class');
+		    $('#Class').append(html);
+		};
+
+		function setColorBody() {
+		    $('#creaturesModel_Color').val('@Model.creaturesModel.Color');
+		};
+
+		function setCompetitorsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Competitors');
+		    $('#Competitors').append(html);
+		};
+
+		function setConditionsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Conditions');
+		    $('#Conditions').append(html);
+		};
+
+		function setDescriptionBody() {
+		    html = htmlDecode('@Model.creaturesModel.Description');
+		    $('#Description').append(html);
+		};
+
+		function setEvolutionary_driveBody() {
+		    html = htmlDecode('@Model.creaturesModel.Evolutionary_drive');
+		    $('#Evolutionary_drive').append(html);
+		};
+
+		function setFamilyBody() {
+		    html = htmlDecode('@Model.creaturesModel.Family');
+		    $('#Family').append(html);
+		};
+
+		function setFood_sourcesBody() {
+		    html = htmlDecode('@Model.creaturesModel.Food_sources');
+		    $('#Food_sources').append(html);
+		};
+
+		function setGenusBody() {
+		    html = htmlDecode('@Model.creaturesModel.Genus');
+		    $('#Genus').append(html);
+		};
+
+		function setHabitatsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Habitats');
+		    $('#Habitats').append(html);
+		};
+
+		function setHeightBody() {
+		    $('#creaturesModel_Height').val('@Model.creaturesModel.Height');
+		};
+
+		function setHerding_patternsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Herding_patterns');
+		    $('#Herding_patterns').append(html);
+		};
+
+		function setMaterialsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Materials');
+		    $('#Materials').append(html);
+		};
+
+		function setMating_ritualBody() {
+		    html = htmlDecode('@Model.creaturesModel.Mating_ritual');
+		    $('#Mating_ritual').append(html);
+		};
+
+		function setMaximum_speedBody() {
+		    $('#creaturesModel_Maximum_speed').val('@Model.creaturesModel.Maximum_speed');
+		};
+
+		function setMethod_of_attackBody() {
+		    html = htmlDecode('@Model.creaturesModel.Method_of_attack');
+		    $('#Method_of_attack').append(html);
+		};
+
+		function setMethods_of_defenseBody() {
+		    html = htmlDecode('@Model.creaturesModel.Methods_of_defense');
+		    $('#Methods_of_defense').append(html);
+		};
+
+		function setMigratory_patternsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Migratory_patterns');
+		    $('#Migratory_patterns').append(html);
+		};
+
+		function setMortality_rateBody() {
+		    html = htmlDecode('@Model.creaturesModel.Mortality_rate');
+		    $('#Mortality_rate').append(html);
+		};
+
+		function setNameBody() {
+		    $('#creaturesModel_Name').val('@Model.creaturesModel.Name');
+		};
+
+		function setNotable_featuresBody() {
+		    html = htmlDecode('@Model.creaturesModel.Notable_features');
+		    $('#Notable_features').append(html);
+		};
+
+		function setNotesBody() {
+		    html = htmlDecode('@Model.creaturesModel.Notes');
+		    $('#Notes').append(html);
+		};
+
+		function setOffspring_careBody() {
+		    html = htmlDecode('@Model.creaturesModel.Offspring_care');
+		    $('#Offspring_care').append(html);
+		};
+
+		function setOrderBody() {
+		    html = htmlDecode('@Model.creaturesModel.Order');
+		    $('#Order').append(html);
+		};
+
+		function setParental_instinctsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Parental_instincts');
+		    $('#Parental_instincts').append(html);
+		};
+
+		function setPhylumBody() {
+		    html = htmlDecode('@Model.creaturesModel.Phylum');
+		    $('#Phylum').append(html);
+		};
+
+		function setPredatorsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Predators');
+		    $('#Predators').append(html);
+		};
+
+		function setPredictionsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Predictions');
+		    $('#Predictions').append(html);
+		};
+
+		function setPreferred_habitatBody() {
+		    html = htmlDecode('@Model.creaturesModel.Preferred_habitat');
+		    $('#Preferred_habitat').append(html);
+		};
+
+		function setPreyBody() {
+		    html = htmlDecode('@Model.creaturesModel.Prey');
+		    $('#Prey').append(html);
+		};
+
+		function setPrivate_notesBody() {
+		    html = htmlDecode('@Model.creaturesModel.Private_notes');
+		    $('#Private_notes').append(html);
+		};
+
+		function setRelated_creaturesBody() {
+		    html = htmlDecode('@Model.creaturesModel.Related_creatures');
+		    $('#Related_creatures').append(html);
+		};
+
+		function setReproductionBody() {
+		    html = htmlDecode('@Model.creaturesModel.Reproduction');
+		    $('#Reproduction').append(html);
+		};
+
+		function setReproduction_ageBody() {
+		    $('#creaturesModel_Reproduction_age').val('@Model.creaturesModel.Reproduction_age');
+		};
+
+		function setReproduction_frequencyBody() {
+		    html = htmlDecode('@Model.creaturesModel.Reproduction_frequency');
+		    $('#Reproduction_frequency').append(html);
+		};
+
+		function setRequirementsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Requirements');
+		    $('#Requirements').append(html);
+		};
+
+		function setShapeBody() {
+		    html = htmlDecode('@Model.creaturesModel.Shape');
+		    $('#Shape').append(html);
+		};
+
+		function setSimilar_creaturesBody() {
+		    html = htmlDecode('@Model.creaturesModel.Similar_creatures');
+		    $('#Similar_creatures').append(html);
+		};
+
+		function setSizeBody() {
+		    $('#creaturesModel_Size').val('@Model.creaturesModel.Size');
+		};
+
+		function setSoundsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Sounds');
+		    $('#Sounds').append(html);
+		};
+
+		function setSpeciesBody() {
+		    html = htmlDecode('@Model.creaturesModel.Species');
+		    $('#Species').append(html);
+		};
+
+		function setSpoilsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Spoils');
+		    $('#Spoils').append(html);
+		};
+
+		function setStrengthsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Strengths');
+		    $('#Strengths').append(html);
+		};
+
+		function setStrongest_senseBody() {
+		    html = htmlDecode('@Model.creaturesModel.Strongest_sense');
+		    $('#Strongest_sense').append(html);
+		};
+
+		function setSymbolismsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Symbolisms');
+		    $('#Symbolisms').append(html);
+		};
+
+		function setTagsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Tags');
+		    $('#Tags').append(html);
+		};
+
+		function setTradeoffsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Tradeoffs');
+		    $('#Tradeoffs').append(html);
+		};
+
+		function setType_of_creatureBody() {
+		    html = htmlDecode('@Model.creaturesModel.Type_of_creature');
+		    $('#Type_of_creature').append(html);
+		};
+
+		function setUniverseBody() {
+		    $('#creaturesModel_Universe').val('@Model.creaturesModel.Universe');
+		};
+
+		function setVariationsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Variations');
+		    $('#Variations').append(html);
+		};
+
+		function setVestigial_featuresBody() {
+		    html = htmlDecode('@Model.creaturesModel.Vestigial_features');
+		    $('#Vestigial_features').append(html);
+		};
+
+		function setWeakest_senseBody() {
+		    html = htmlDecode('@Model.creaturesModel.Weakest_sense');
+		    $('#Weakest_sense').append(html);
+		};
+
+		function setWeaknessesBody() {
+		    html = htmlDecode('@Model.creaturesModel.Weaknesses');
+		    $('#Weaknesses').append(html);
+		};
+
+		function setWeightBody() {
+		    $('#creaturesModel_Weight').val('@Model.creaturesModel.Weight');
+		};
+
+
+
+        $(document).ready(function () {
+			setAggressivenessBody();
+			setAncestorsBody();
+			setClassBody();
+			setColorBody();
+			setCompetitorsBody();
+			setConditionsBody();
+			setDescriptionBody();
+			setEvolutionary_driveBody();
+			setFamilyBody();
+			setFood_sourcesBody();
+			setGenusBody();
+			setHabitatsBody();
+			setHeightBody();
+			setHerding_patternsBody();
+			setMaterialsBody();
+			setMating_ritualBody();
+			setMaximum_speedBody();
+			setMethod_of_attackBody();
+			setMethods_of_defenseBody();
+			setMigratory_patternsBody();
+			setMortality_rateBody();
+			setNameBody();
+			setNotable_featuresBody();
+			setNotesBody();
+			setOffspring_careBody();
+			setOrderBody();
+			setParental_instinctsBody();
+			setPhylumBody();
+			setPredatorsBody();
+			setPredictionsBody();
+			setPreferred_habitatBody();
+			setPreyBody();
+			setPrivate_notesBody();
+			setRelated_creaturesBody();
+			setReproductionBody();
+			setReproduction_ageBody();
+			setReproduction_frequencyBody();
+			setRequirementsBody();
+			setShapeBody();
+			setSimilar_creaturesBody();
+			setSizeBody();
+			setSoundsBody();
+			setSpeciesBody();
+			setSpoilsBody();
+			setStrengthsBody();
+			setStrongest_senseBody();
+			setSymbolismsBody();
+			setTagsBody();
+			setTradeoffsBody();
+			setType_of_creatureBody();
+			setVariationsBody();
+			setVestigial_featuresBody();
+			setWeakest_senseBody();
+			setWeaknessesBody();
+			setWeightBody();
+
+        });
+
+    </script>
+}

@@ -1,0 +1,134 @@
+{
+  "appearance": {
+    "attributes": [
+      {
+        "label": "Shape",
+        "name": "shape"
+      },
+      {
+        "label": "Size",
+        "name": "size"
+      },
+      {
+        "label": "Materials",
+        "name": "materials"
+      },
+      {
+        "label": "Colors",
+        "name": "colors"
+      },
+      {
+        "label": "Symbolism",
+        "name": "symbolism"
+      }
+    ],
+    "icon": "face",
+    "label": "Appearance"
+  },
+  "ecosystem": {
+    "attributes": [
+      {
+        "field_type": "link",
+        "label": "Flora",
+        "name": "floras"
+      },
+      {
+        "field_type": "link",
+        "label": "Creatures",
+        "name": "creatures"
+      },
+      {
+        "label": "Weather",
+        "name": "weather"
+      }
+    ],
+    "icon": "local_florist",
+    "label": "Ecosystem"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "history": {
+    "attributes": [
+      {
+        "label": "Creation story",
+        "name": "creation_story"
+      },
+      {
+        "label": "Established year",
+        "name": "established_year"
+      },
+      {
+        "label": "Creation time",
+        "name": "creation_time"
+      }
+    ],
+    "icon": "date_range",
+    "label": "History"
+  },
+  "location": {
+    "attributes": [
+      {
+        "field_type": "link",
+        "label": "Country",
+        "name": "countries"
+      },
+      {
+        "field_type": "link",
+        "label": "Nearby towns",
+        "name": "nearby_towns"
+      }
+    ],
+    "icon": "location_on",
+    "label": "Whereabouts"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private Notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "label": "Other names",
+        "name": "other_names"
+      },
+      {
+        "label": "Type of landmark",
+        "name": "type_of_landmark"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  }
+}

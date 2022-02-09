@@ -1,0 +1,155 @@
+{
+  "culture": {
+    "attributes": [
+      {
+        "field_type": "link",
+        "label": "Famous figures",
+        "name": "famous_figures"
+      },
+      {
+        "label": "Traditions",
+        "name": "traditions"
+      },
+      {
+        "label": "Beliefs",
+        "name": "beliefs"
+      },
+      {
+        "label": "Governments",
+        "name": "governments"
+      },
+      {
+        "label": "Technologies",
+        "name": "technologies"
+      },
+      {
+        "label": "Occupations",
+        "name": "occupations"
+      },
+      {
+        "label": "Economics",
+        "name": "economics"
+      },
+      {
+        "label": "Favorite foods",
+        "name": "favorite_foods"
+      },
+      {
+        "label": "Traditions",
+        "name": "traditions"
+      }
+    ],
+    "icon": "groups",
+    "label": "Culture"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "history": {
+    "attributes": [
+      {
+        "label": "Notable events",
+        "name": "notable_events"
+      }
+    ],
+    "icon": "date_range",
+    "label": "History"
+  },
+  "looks": {
+    "attributes": [
+      {
+        "label": "Body shape",
+        "name": "body_shape"
+      },
+      {
+        "label": "Skin colors",
+        "name": "skin_colors"
+      },
+      {
+        "label": "General height",
+        "name": "height"
+      },
+      {
+        "label": "General weight",
+        "name": "weight"
+      },
+      {
+        "label": "Notable features",
+        "name": "notable_features"
+      },
+      {
+        "label": "Physical variance",
+        "name": "variance"
+      },
+      {
+        "label": "Typical clothing",
+        "name": "clothing"
+      }
+    ],
+    "icon": "face",
+    "label": "Looks"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "description": "Private notes are \u003cem\u003ealways\u003c/em\u003e visible to only you, even if content is made public and shared.",
+        "label": "Private notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "label": "Other names",
+        "name": "other_names"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  },
+  "traits": {
+    "attributes": [
+      {
+        "label": "Strengths",
+        "name": "strengths"
+      },
+      {
+        "label": "Weaknesses",
+        "name": "weaknesses"
+      },
+      {
+        "label": "Conditions",
+        "name": "conditions"
+      }
+    ],
+    "icon": "fingerprint",
+    "label": "Traits"
+  }
+}

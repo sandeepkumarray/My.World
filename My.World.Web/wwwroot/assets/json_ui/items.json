@@ -1,0 +1,108 @@
+{
+  "abilities": {
+    "attributes": [
+      {
+        "label": "Magical effects",
+        "name": "magic"
+      },
+      {
+        "field_type": "link",
+        "label": "Magic",
+        "name": "magics"
+      }
+    ],
+    "icon": "flash_on",
+    "label": "Abilities"
+  },
+  "gallery": {
+    "icon": "photo_library",
+    "label": "Gallery"
+  },
+  "history": {
+    "attributes": [
+      {
+        "field_type": "link",
+        "label": "Original Owners",
+        "name": "original_owners"
+      },
+      {
+        "field_type": "link",
+        "label": "Past Owners",
+        "name": "past_owners"
+      },
+      {
+        "field_type": "link",
+        "label": "Current Owners",
+        "name": "current_owners"
+      },
+      {
+        "field_type": "link",
+        "label": "Makers",
+        "name": "makers"
+      },
+      {
+        "label": "Year it was made",
+        "name": "year_made"
+      }
+    ],
+    "icon": "date_range",
+    "label": "History"
+  },
+  "looks": {
+    "attributes": [
+      {
+        "label": "Materials",
+        "name": "materials"
+      },
+      {
+        "label": "Weight",
+        "name": "weight"
+      }
+    ],
+    "icon": "redeem",
+    "label": "Looks"
+  },
+  "notes": {
+    "attributes": [
+      {
+        "label": "Notes",
+        "name": "notes"
+      },
+      {
+        "label": "Private Notes",
+        "name": "private_notes"
+      }
+    ],
+    "icon": "edit",
+    "label": "Notes"
+  },
+  "overview": {
+    "attributes": [
+      {
+        "field_type": "name",
+        "label": "Name",
+        "name": "name"
+      },
+      {
+        "label": "Item Type",
+        "name": "item_type"
+      },
+      {
+        "label": "Description",
+        "name": "description"
+      },
+      {
+        "field_type": "universe",
+        "label": "Universe",
+        "name": "universe_id"
+      },
+      {
+        "field_type": "tags",
+        "label": "Tags",
+        "name": null
+      }
+    ],
+    "icon": "info",
+    "label": "Overview"
+  }
+}

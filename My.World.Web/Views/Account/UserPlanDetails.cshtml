@@ -1,0 +1,125 @@
+﻿@model My.World.Web.ViewModel.UserPlansViewModel
+
+@{
+    ViewData["Title"] = "UserPlanDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Breadcrumb"] = "Content Plans";
+}
+
+<h1>User Plan Details</h1>
+
+<div class="c-body">
+    <main class="c-main">
+        <div class="container-fluid">
+            <div class="fade-in">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong>Your Details</strong>
+                            </div>
+                            <div class="card-body">
+                                <form class="form-horizontal" action="" method="post">
+                                    <ul class="c-sidebar-nav">
+                                        <li class="c-sidebar-nav-item">
+                                            <a class="c-sidebar-nav-link" asp-area="" asp-controller="Account" asp-action="UserProfile">
+                                                Profile
+                                            </a>
+                                        </li>
+                                        <li class="c-sidebar-nav-item">
+                                            <a class="c-sidebar-nav-link active" asp-area="" asp-controller="Account" asp-action="AccountSetting">
+                                                Account
+                                            </a>
+                                        </li>
+                                        <li class="c-sidebar-nav-item">
+                                            <a class="c-sidebar-nav-link" asp-area="" asp-controller="Account" asp-action="Notification">
+                                                Notification
+                                            </a>
+                                        </li>
+                                        <li class="c-sidebar-nav-item">
+                                            <a class="c-sidebar-nav-link" asp-area="" asp-controller="Account" asp-action="ChangePassword">
+                                                Change Password
+                                            </a>
+                                        </li>
+                                        <li class="c-sidebar-nav-item">
+                                            <a class="c-sidebar-nav-link" asp-area="" asp-controller="Account" asp-action="UserPlanDetails">
+                                                Content Plans
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-header"><strong>Content Plans</strong></div>
+                            <div class="card-body">
+                                <div style="padding:20px">
+                                    <h2 style="text-align: center;">Current Content Plan</h2>
+                                    <div class="col-md-4 col-sm-6" style="margin: auto; width: 60%; padding: 10px;">
+                                        <div class="pricingTable">
+                                            <div class="pricingTable-header">
+                                                <h3 class="title">@Model.UsersPlan.name</h3>
+                                            </div>
+                                            <div class="price-value">
+                                                <span class="amount">$ 0.0</span>
+                                                <span class="duration">/month</span>
+                                            </div>
+                                            <div class="pricing-content">
+                                                <ul class="content-list list-group">
+                                                    @foreach (var desc in Model.UsersPlan.plan_description.Split(','))
+                                                    {
+                                                        <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">
+                                                            <span>@desc </span>
+                                                            <span><i class="far fa-circle"></i></span>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="padding:20px">
+                                    <h2 style="text-align: center;">Available Content Plans</h2>
+                                    <div class="card-group card-group-scroll" style="padding-top:5px">
+                                        @foreach (var item in Model.ContentPlans)
+                                        {
+                                            <div class="col-md-4 col-sm-6">
+                                                <div class="pricingTable">
+                                                    <div class="pricingTable-header">
+                                                        <h3 class="title">@item.name</h3>
+                                                    </div>
+                                                    <div class="price-value">
+                                                        <span class="amount">$ 9.99</span>
+                                                        <span class="duration">/month</span>
+                                                    </div>
+                                                    <div class="pricing-content">
+                                                        <ul class="content-list list-group">
+                                                            @foreach (var desc in @item.plan_description.Split(','))
+                                                            {
+                                                                <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">
+                                                                    <span>@desc </span>
+                                                                    <span><i class="fas fa-plus"></i></span>                                                                        
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                        <div class="pricingTable-signup">
+                                                            <a onclick="@("window.location.href='" + @Url.Action("UpgradePlan", "Account", new { plan_id = item.id}) + "'");">Upgrade</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="card-footer">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </main>
+</div>
