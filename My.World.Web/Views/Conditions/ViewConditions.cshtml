@@ -1,3 +1,6 @@
+@using Microsoft.AspNetCore.Http
+@using My.World.Web
+@inject IHttpContextAccessor HttpContextAccessor
 @model My.World.Web.ViewModel.ConditionsViewModel
 
 @{
@@ -112,7 +115,7 @@
                                                                                 else if (att.field_name.ToLower() == "universe")
                                                                                 {
                                                                                 <select id="ddlUniverseList" class="form-control" style="min-width:150px"
-                                                                                        asp-items="@(new SelectList(@Model.UniversesList, " id", "name" , Model.conditionsModel.Universe))"
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name" , Model.conditionsModel.Universe))"
                                                                                         onchange="UniverseSelected();">
                                                                                 </select>
                                                                                 }
@@ -168,17 +171,21 @@
                                                                                         <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
                                                                                             <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">
                                                                                                 <a class="remove-image" style="display: inline;"
-                                                                                                   asp-controller="buildings" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
+                                                                                                   asp-controller="conditions" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
                                                                                             </div>
                                                                                         </div>
                                                                                     }
                                                                                 </div>
                                                                             </div>
-
+                                                                            <div class="mb-3">
+                                                                                <div class="row">
+                                                                                    <h3><label class="form-label"> Only @Model.RemainingContentSize is left for content upload.</label></h3>
+                                                                                </div>
+                                                                            </div>
                                                                             <div class="mb-3">
                                                                                 <label class="form-label" for="exampleFormControlInput1">Upload Images...</label>
                                                                                 <div>
-                                                                                    @using (Html.BeginForm("UploadAttachment", "buildings", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
+                                                                                    @using (Html.BeginForm("UploadAttachment", "conditions", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
                                                                                     {
                                                                                     <div class="dz-message needsclick">
                                                                                         <button type="button" class="dz-button">Drop files here or click to upload.</button><br />
@@ -266,6 +273,25 @@
     </div>
 </div>
 
+<div id="contentsExceededModal" bsmodal="" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade" aria-modal="true" style="display: none;">
+    <div role="document" class="modal-dialog modal-danger modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Alert !</h4>
+                <button type="button" aria-label="Close" data-dismiss="modal" class="close">
+                    <span aria-hidden="true">�</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>You have Exceeded the maximum allowed size of @My.World.Web.Helpers.Utility.SizeSuffix(Convert.ToInt64(@HttpContextAccessor.HttpContext.Session.GetString("AllowedTotalContentSize"))) per content to upload images.</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script src="~/js/quill.js"></script>
     <script src="~/js/quill.mention.min.js"></script>
@@ -275,87 +301,10 @@
 
     <script type="text/javascript">
 
-        			function setAlternate_namesBody() {
-			    Alternate_names_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Alternate_names'));
-			    $('#Alternate_names').focusout(function () {
-			        postSaveEditorData('Alternate_names', Alternate_names_editor.root.innerHTML);
-			    });
-			};
-
-			function setDescriptionBody() {
-			    Description_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Description'));
-			    $('#Description').focusout(function () {
-			        postSaveEditorData('Description', Description_editor.root.innerHTML);
-			    });
-			};
-
-			function setDiagnostic_methodBody() {
-			    Diagnostic_method_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Diagnostic_method'));
-			    $('#Diagnostic_method').focusout(function () {
-			        postSaveEditorData('Diagnostic_method', Diagnostic_method_editor.root.innerHTML);
-			    });
-			};
-
-			function setDurationBody() {
-			    Duration_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Duration'));
-			    $('#Duration').focusout(function () {
-			        postSaveEditorData('Duration', Duration_editor.root.innerHTML);
-			    });
-			};
-
-			function setEnvironmental_factorsBody() {
-			    Environmental_factors_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Environmental_factors'));
-			    $('#Environmental_factors').focusout(function () {
-			        postSaveEditorData('Environmental_factors', Environmental_factors_editor.root.innerHTML);
-			    });
-			};
-
-			function setEpidemiologyBody() {
-			    Epidemiology_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Epidemiology'));
-			    $('#Epidemiology').focusout(function () {
-			        postSaveEditorData('Epidemiology', Epidemiology_editor.root.innerHTML);
-			    });
-			};
-
-			function setEvolutionBody() {
-			    Evolution_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Evolution'));
-			    $('#Evolution').focusout(function () {
-			        postSaveEditorData('Evolution', Evolution_editor.root.innerHTML);
-			    });
-			};
-
-			function setGenetic_factorsBody() {
-			    Genetic_factors_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Genetic_factors'));
-			    $('#Genetic_factors').focusout(function () {
-			        postSaveEditorData('Genetic_factors', Genetic_factors_editor.root.innerHTML);
-			    });
-			};
-
-			function setImmunizationBody() {
-			    Immunization_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Immunization'));
-			    $('#Immunization').focusout(function () {
-			        postSaveEditorData('Immunization', Immunization_editor.root.innerHTML);
-			    });
-			};
-
-			function setLifestyle_factorsBody() {
-			    Lifestyle_factors_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Lifestyle_factors'));
-			    $('#Lifestyle_factors').focusout(function () {
-			        postSaveEditorData('Lifestyle_factors', Lifestyle_factors_editor.root.innerHTML);
-			    });
-			};
-
-			function setMedicationBody() {
-			    Medication_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Medication'));
-			    $('#Medication').focusout(function () {
-			        postSaveEditorData('Medication', Medication_editor.root.innerHTML);
-			    });
-			};
-
-			function setMental_effectsBody() {
-			    Mental_effects_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Mental_effects'));
-			    $('#Mental_effects').focusout(function () {
-			        postSaveEditorData('Mental_effects', Mental_effects_editor.root.innerHTML);
+        			function setTagsBody() {
+			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Tags'));
+			    $('#Tags').focusout(function () {
+			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
 			    });
 			};
 
@@ -363,87 +312,14 @@
 			    $('#conditionsModel_Name').val('@Model.conditionsModel.Name');
 			};
 
-			function setNotesBody() {
-			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Notes'));
-			    $('#Notes').focusout(function () {
-			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
-			    });
+			function setUniverseBody() {
+			    $('#conditionsModel_Universe').val('@Model.conditionsModel.Universe');
 			};
 
-			function setOriginBody() {
-			    Origin_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Origin'));
-			    $('#Origin').focusout(function () {
-			        postSaveEditorData('Origin', Origin_editor.root.innerHTML);
-			    });
-			};
-
-			function setPreventionBody() {
-			    Prevention_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Prevention'));
-			    $('#Prevention').focusout(function () {
-			        postSaveEditorData('Prevention', Prevention_editor.root.innerHTML);
-			    });
-			};
-
-			function setPrivate_NotesBody() {
-			    Private_Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Private_Notes'));
-			    $('#Private_Notes').focusout(function () {
-			        postSaveEditorData('Private_Notes', Private_Notes_editor.root.innerHTML);
-			    });
-			};
-
-			function setPrognosisBody() {
-			    Prognosis_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Prognosis'));
-			    $('#Prognosis').focusout(function () {
-			        postSaveEditorData('Prognosis', Prognosis_editor.root.innerHTML);
-			    });
-			};
-
-			function setRarityBody() {
-			    Rarity_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Rarity'));
-			    $('#Rarity').focusout(function () {
-			        postSaveEditorData('Rarity', Rarity_editor.root.innerHTML);
-			    });
-			};
-
-			function setSpecialty_FieldBody() {
-			    Specialty_Field_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Specialty_Field'));
-			    $('#Specialty_Field').focusout(function () {
-			        postSaveEditorData('Specialty_Field', Specialty_Field_editor.root.innerHTML);
-			    });
-			};
-
-			function setSymbolismBody() {
-			    Symbolism_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Symbolism'));
-			    $('#Symbolism').focusout(function () {
-			        postSaveEditorData('Symbolism', Symbolism_editor.root.innerHTML);
-			    });
-			};
-
-			function setSymptomsBody() {
-			    Symptoms_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Symptoms'));
-			    $('#Symptoms').focusout(function () {
-			        postSaveEditorData('Symptoms', Symptoms_editor.root.innerHTML);
-			    });
-			};
-
-			function setTagsBody() {
-			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Tags'));
-			    $('#Tags').focusout(function () {
-			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
-			    });
-			};
-
-			function setTransmissionBody() {
-			    Transmission_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Transmission'));
-			    $('#Transmission').focusout(function () {
-			        postSaveEditorData('Transmission', Transmission_editor.root.innerHTML);
-			    });
-			};
-
-			function setTreatmentBody() {
-			    Treatment_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Treatment'));
-			    $('#Treatment').focusout(function () {
-			        postSaveEditorData('Treatment', Treatment_editor.root.innerHTML);
+			function setDescriptionBody() {
+			    Description_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Description'));
+			    $('#Description').focusout(function () {
+			        postSaveEditorData('Description', Description_editor.root.innerHTML);
 			    });
 			};
 
@@ -454,8 +330,53 @@
 			    });
 			};
 
-			function setUniverseBody() {
-			    $('#conditionsModel_Universe').val('@Model.conditionsModel.Universe');
+			function setAlternate_namesBody() {
+			    Alternate_names_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Alternate_names'));
+			    $('#Alternate_names').focusout(function () {
+			        postSaveEditorData('Alternate_names', Alternate_names_editor.root.innerHTML);
+			    });
+			};
+
+			function setTransmissionBody() {
+			    Transmission_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Transmission'));
+			    $('#Transmission').focusout(function () {
+			        postSaveEditorData('Transmission', Transmission_editor.root.innerHTML);
+			    });
+			};
+
+			function setGenetic_factorsBody() {
+			    Genetic_factors_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Genetic_factors'));
+			    $('#Genetic_factors').focusout(function () {
+			        postSaveEditorData('Genetic_factors', Genetic_factors_editor.root.innerHTML);
+			    });
+			};
+
+			function setEnvironmental_factorsBody() {
+			    Environmental_factors_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Environmental_factors'));
+			    $('#Environmental_factors').focusout(function () {
+			        postSaveEditorData('Environmental_factors', Environmental_factors_editor.root.innerHTML);
+			    });
+			};
+
+			function setLifestyle_factorsBody() {
+			    Lifestyle_factors_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Lifestyle_factors'));
+			    $('#Lifestyle_factors').focusout(function () {
+			        postSaveEditorData('Lifestyle_factors', Lifestyle_factors_editor.root.innerHTML);
+			    });
+			};
+
+			function setEpidemiologyBody() {
+			    Epidemiology_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Epidemiology'));
+			    $('#Epidemiology').focusout(function () {
+			        postSaveEditorData('Epidemiology', Epidemiology_editor.root.innerHTML);
+			    });
+			};
+
+			function setDurationBody() {
+			    Duration_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Duration'));
+			    $('#Duration').focusout(function () {
+			        postSaveEditorData('Duration', Duration_editor.root.innerHTML);
+			    });
 			};
 
 			function setVariationsBody() {
@@ -465,10 +386,115 @@
 			    });
 			};
 
+			function setPrognosisBody() {
+			    Prognosis_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Prognosis'));
+			    $('#Prognosis').focusout(function () {
+			        postSaveEditorData('Prognosis', Prognosis_editor.root.innerHTML);
+			    });
+			};
+
+			function setSymptomsBody() {
+			    Symptoms_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Symptoms'));
+			    $('#Symptoms').focusout(function () {
+			        postSaveEditorData('Symptoms', Symptoms_editor.root.innerHTML);
+			    });
+			};
+
+			function setMental_effectsBody() {
+			    Mental_effects_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Mental_effects'));
+			    $('#Mental_effects').focusout(function () {
+			        postSaveEditorData('Mental_effects', Mental_effects_editor.root.innerHTML);
+			    });
+			};
+
 			function setVisual_effectsBody() {
 			    Visual_effects_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Visual_effects'));
 			    $('#Visual_effects').focusout(function () {
 			        postSaveEditorData('Visual_effects', Visual_effects_editor.root.innerHTML);
+			    });
+			};
+
+			function setPreventionBody() {
+			    Prevention_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Prevention'));
+			    $('#Prevention').focusout(function () {
+			        postSaveEditorData('Prevention', Prevention_editor.root.innerHTML);
+			    });
+			};
+
+			function setTreatmentBody() {
+			    Treatment_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Treatment'));
+			    $('#Treatment').focusout(function () {
+			        postSaveEditorData('Treatment', Treatment_editor.root.innerHTML);
+			    });
+			};
+
+			function setMedicationBody() {
+			    Medication_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Medication'));
+			    $('#Medication').focusout(function () {
+			        postSaveEditorData('Medication', Medication_editor.root.innerHTML);
+			    });
+			};
+
+			function setImmunizationBody() {
+			    Immunization_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Immunization'));
+			    $('#Immunization').focusout(function () {
+			        postSaveEditorData('Immunization', Immunization_editor.root.innerHTML);
+			    });
+			};
+
+			function setDiagnostic_methodBody() {
+			    Diagnostic_method_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Diagnostic_method'));
+			    $('#Diagnostic_method').focusout(function () {
+			        postSaveEditorData('Diagnostic_method', Diagnostic_method_editor.root.innerHTML);
+			    });
+			};
+
+			function setSymbolismBody() {
+			    Symbolism_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Symbolism'));
+			    $('#Symbolism').focusout(function () {
+			        postSaveEditorData('Symbolism', Symbolism_editor.root.innerHTML);
+			    });
+			};
+
+			function setSpecialty_FieldBody() {
+			    Specialty_Field_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Specialty_Field'));
+			    $('#Specialty_Field').focusout(function () {
+			        postSaveEditorData('Specialty_Field', Specialty_Field_editor.root.innerHTML);
+			    });
+			};
+
+			function setRarityBody() {
+			    Rarity_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Rarity'));
+			    $('#Rarity').focusout(function () {
+			        postSaveEditorData('Rarity', Rarity_editor.root.innerHTML);
+			    });
+			};
+
+			function setEvolutionBody() {
+			    Evolution_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Evolution'));
+			    $('#Evolution').focusout(function () {
+			        postSaveEditorData('Evolution', Evolution_editor.root.innerHTML);
+			    });
+			};
+
+			function setOriginBody() {
+			    Origin_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Origin'));
+			    $('#Origin').focusout(function () {
+			        postSaveEditorData('Origin', Origin_editor.root.innerHTML);
+			    });
+			};
+
+			function setPrivate_NotesBody() {
+			    Private_Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Private_Notes'));
+			    $('#Private_Notes').focusout(function () {
+			        postSaveEditorData('Private_Notes', Private_Notes_editor.root.innerHTML);
+			    });
+			};
+
+			function setNotesBody() {
+			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.conditionsModel.Notes'));
+			    $('#Notes').focusout(function () {
+			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
 			    });
 			};
 
@@ -530,10 +556,18 @@
                         $('.roller').width(progress + '%');
                     });
 
-                    self.on("queuecomplete", function (progress) {
-                        $('.meter').delay(999).slideUp(999);
-                        console.log("Files uploaded");
-                        location.reload();
+                    self.on('error', function (file, response) {
+                        console.log("Files upload Error");
+                        showModal(response.message);
+                    });
+                    self.on('success', function () {
+                        self.on("queuecomplete", function () {
+                            $('.meter').delay(999).slideUp(999);
+                            console.log("Files uploaded");
+                            var locUrL = location.href.replace('#Gallery_panel', '') + "#Gallery_panel";
+                            window.location.href = locUrL;
+                            location.reload();
+                        });
                     });
                     self.on("complete", function (file) {
                         self.removeFile(file);

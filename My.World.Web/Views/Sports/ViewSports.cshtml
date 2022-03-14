@@ -1,3 +1,6 @@
+@using Microsoft.AspNetCore.Http
+@using My.World.Web
+@inject IHttpContextAccessor HttpContextAccessor
 @model My.World.Web.ViewModel.SportsViewModel
 
 @{
@@ -112,7 +115,7 @@
                                                                                 else if (att.field_name.ToLower() == "universe")
                                                                                 {
                                                                                 <select id="ddlUniverseList" class="form-control" style="min-width:150px"
-                                                                                        asp-items="@(new SelectList(@Model.UniversesList, " id", "name" , Model.sportsModel.Universe))"
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name" , Model.sportsModel.Universe))"
                                                                                         onchange="UniverseSelected();">
                                                                                 </select>
                                                                                 }
@@ -168,17 +171,21 @@
                                                                                         <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
                                                                                             <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">
                                                                                                 <a class="remove-image" style="display: inline;"
-                                                                                                   asp-controller="buildings" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
+                                                                                                   asp-controller="sports" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
                                                                                             </div>
                                                                                         </div>
                                                                                     }
                                                                                 </div>
                                                                             </div>
-
+                                                                            <div class="mb-3">
+                                                                                <div class="row">
+                                                                                    <h3><label class="form-label"> Only @Model.RemainingContentSize is left for content upload.</label></h3>
+                                                                                </div>
+                                                                            </div>
                                                                             <div class="mb-3">
                                                                                 <label class="form-label" for="exampleFormControlInput1">Upload Images...</label>
                                                                                 <div>
-                                                                                    @using (Html.BeginForm("UploadAttachment", "buildings", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
+                                                                                    @using (Html.BeginForm("UploadAttachment", "sports", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
                                                                                     {
                                                                                     <div class="dz-message needsclick">
                                                                                         <button type="button" class="dz-button">Drop files here or click to upload.</button><br />
@@ -266,6 +273,25 @@
     </div>
 </div>
 
+<div id="contentsExceededModal" bsmodal="" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade" aria-modal="true" style="display: none;">
+    <div role="document" class="modal-dialog modal-danger modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Alert !</h4>
+                <button type="button" aria-label="Close" data-dismiss="modal" class="close">
+                    <span aria-hidden="true">�</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>You have Exceeded the maximum allowed size of @My.World.Web.Helpers.Utility.SizeSuffix(Convert.ToInt64(@HttpContextAccessor.HttpContext.Session.GetString("AllowedTotalContentSize"))) per content to upload images.</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script src="~/js/quill.js"></script>
     <script src="~/js/quill.mention.min.js"></script>
@@ -275,24 +301,21 @@
 
     <script type="text/javascript">
 
-        			function setCommon_injuriesBody() {
-			    Common_injuries_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Common_injuries'));
-			    $('#Common_injuries').focusout(function () {
-			        postSaveEditorData('Common_injuries', Common_injuries_editor.root.innerHTML);
+        			function setTagsBody() {
+			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Tags'));
+			    $('#Tags').focusout(function () {
+			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
 			    });
 			};
 
-			function setCountriesBody() {
-			    Countries_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Countries'));
-			    $('#Countries').focusout(function () {
-			        postSaveEditorData('Countries', Countries_editor.root.innerHTML);
-			    });
+			function setUniverseBody() {
+			    $('#sportsModel_Universe').val('@Model.sportsModel.Universe');
 			};
 
-			function setCreatorsBody() {
-			    Creators_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Creators'));
-			    $('#Creators').focusout(function () {
-			        postSaveEditorData('Creators', Creators_editor.root.innerHTML);
+			function setNicknamesBody() {
+			    Nicknames_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Nicknames'));
+			    $('#Nicknames').focusout(function () {
+			        postSaveEditorData('Nicknames', Nicknames_editor.root.innerHTML);
 			    });
 			};
 
@@ -303,78 +326,14 @@
 			    });
 			};
 
-			function setEquipmentBody() {
-			    Equipment_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Equipment'));
-			    $('#Equipment').focusout(function () {
-			        postSaveEditorData('Equipment', Equipment_editor.root.innerHTML);
-			    });
-			};
-
-			function setEvolutionBody() {
-			    Evolution_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Evolution'));
-			    $('#Evolution').focusout(function () {
-			        postSaveEditorData('Evolution', Evolution_editor.root.innerHTML);
-			    });
-			};
-
-			function setFamous_gamesBody() {
-			    Famous_games_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Famous_games'));
-			    $('#Famous_games').focusout(function () {
-			        postSaveEditorData('Famous_games', Famous_games_editor.root.innerHTML);
-			    });
-			};
-
-			function setGame_timeBody() {
-			    $('#sportsModel_Game_time').val('@Model.sportsModel.Game_time');
+			function setNameBody() {
+			    $('#sportsModel_Name').val('@Model.sportsModel.Name');
 			};
 
 			function setHow_to_winBody() {
 			    How_to_win_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.How_to_win'));
 			    $('#How_to_win').focusout(function () {
 			        postSaveEditorData('How_to_win', How_to_win_editor.root.innerHTML);
-			    });
-			};
-
-			function setMerchandiseBody() {
-			    Merchandise_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Merchandise'));
-			    $('#Merchandise').focusout(function () {
-			        postSaveEditorData('Merchandise', Merchandise_editor.root.innerHTML);
-			    });
-			};
-
-			function setMost_important_musclesBody() {
-			    Most_important_muscles_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Most_important_muscles'));
-			    $('#Most_important_muscles').focusout(function () {
-			        postSaveEditorData('Most_important_muscles', Most_important_muscles_editor.root.innerHTML);
-			    });
-			};
-
-			function setNameBody() {
-			    $('#sportsModel_Name').val('@Model.sportsModel.Name');
-			};
-
-			function setNicknamesBody() {
-			    Nicknames_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Nicknames'));
-			    $('#Nicknames').focusout(function () {
-			        postSaveEditorData('Nicknames', Nicknames_editor.root.innerHTML);
-			    });
-			};
-
-			function setNotesBody() {
-			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Notes'));
-			    $('#Notes').focusout(function () {
-			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
-			    });
-			};
-
-			function setNumber_of_playersBody() {
-			    $('#sportsModel_Number_of_players').val('@Model.sportsModel.Number_of_players');
-			};
-
-			function setOrigin_storyBody() {
-			    Origin_story_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Origin_story'));
-			    $('#Origin_story').focusout(function () {
-			        postSaveEditorData('Origin_story', Origin_story_editor.root.innerHTML);
 			    });
 			};
 
@@ -385,10 +344,85 @@
 			    });
 			};
 
+			function setScoringBody() {
+			    Scoring_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Scoring'));
+			    $('#Scoring').focusout(function () {
+			        postSaveEditorData('Scoring', Scoring_editor.root.innerHTML);
+			    });
+			};
+
+			function setNumber_of_playersBody() {
+			    $('#sportsModel_Number_of_players').val('@Model.sportsModel.Number_of_players');
+			};
+
+			function setEquipmentBody() {
+			    Equipment_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Equipment'));
+			    $('#Equipment').focusout(function () {
+			        postSaveEditorData('Equipment', Equipment_editor.root.innerHTML);
+			    });
+			};
+
 			function setPlay_areaBody() {
 			    Play_area_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Play_area'));
 			    $('#Play_area').focusout(function () {
 			        postSaveEditorData('Play_area', Play_area_editor.root.innerHTML);
+			    });
+			};
+
+			function setMost_important_musclesBody() {
+			    Most_important_muscles_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Most_important_muscles'));
+			    $('#Most_important_muscles').focusout(function () {
+			        postSaveEditorData('Most_important_muscles', Most_important_muscles_editor.root.innerHTML);
+			    });
+			};
+
+			function setCommon_injuriesBody() {
+			    Common_injuries_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Common_injuries'));
+			    $('#Common_injuries').focusout(function () {
+			        postSaveEditorData('Common_injuries', Common_injuries_editor.root.innerHTML);
+			    });
+			};
+
+			function setStrategiesBody() {
+			    Strategies_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Strategies'));
+			    $('#Strategies').focusout(function () {
+			        postSaveEditorData('Strategies', Strategies_editor.root.innerHTML);
+			    });
+			};
+
+			function setPositionsBody() {
+			    $('#sportsModel_Positions').val('@Model.sportsModel.Positions');
+			};
+
+			function setGame_timeBody() {
+			    $('#sportsModel_Game_time').val('@Model.sportsModel.Game_time');
+			};
+
+			function setRulesBody() {
+			    Rules_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Rules'));
+			    $('#Rules').focusout(function () {
+			        postSaveEditorData('Rules', Rules_editor.root.innerHTML);
+			    });
+			};
+
+			function setTraditionsBody() {
+			    Traditions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Traditions'));
+			    $('#Traditions').focusout(function () {
+			        postSaveEditorData('Traditions', Traditions_editor.root.innerHTML);
+			    });
+			};
+
+			function setTeamsBody() {
+			    Teams_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Teams'));
+			    $('#Teams').focusout(function () {
+			        postSaveEditorData('Teams', Teams_editor.root.innerHTML);
+			    });
+			};
+
+			function setCountriesBody() {
+			    Countries_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Countries'));
+			    $('#Countries').focusout(function () {
+			        postSaveEditorData('Countries', Countries_editor.root.innerHTML);
 			    });
 			};
 
@@ -406,56 +440,10 @@
 			    });
 			};
 
-			function setPositionsBody() {
-			    $('#sportsModel_Positions').val('@Model.sportsModel.Positions');
-			};
-
-			function setPrivate_NotesBody() {
-			    Private_Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Private_Notes'));
-			    $('#Private_Notes').focusout(function () {
-			        postSaveEditorData('Private_Notes', Private_Notes_editor.root.innerHTML);
-			    });
-			};
-
-			function setRulesBody() {
-			    Rules_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Rules'));
-			    $('#Rules').focusout(function () {
-			        postSaveEditorData('Rules', Rules_editor.root.innerHTML);
-			    });
-			};
-
-			function setScoringBody() {
-			    Scoring_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Scoring'));
-			    $('#Scoring').focusout(function () {
-			        postSaveEditorData('Scoring', Scoring_editor.root.innerHTML);
-			    });
-			};
-
-			function setStrategiesBody() {
-			    Strategies_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Strategies'));
-			    $('#Strategies').focusout(function () {
-			        postSaveEditorData('Strategies', Strategies_editor.root.innerHTML);
-			    });
-			};
-
-			function setTagsBody() {
-			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Tags'));
-			    $('#Tags').focusout(function () {
-			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
-			    });
-			};
-
-			function setTeamsBody() {
-			    Teams_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Teams'));
-			    $('#Teams').focusout(function () {
-			        postSaveEditorData('Teams', Teams_editor.root.innerHTML);
-			    });
-			};
-
-			function setTraditionsBody() {
-			    Traditions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Traditions'));
-			    $('#Traditions').focusout(function () {
-			        postSaveEditorData('Traditions', Traditions_editor.root.innerHTML);
+			function setMerchandiseBody() {
+			    Merchandise_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Merchandise'));
+			    $('#Merchandise').focusout(function () {
+			        postSaveEditorData('Merchandise', Merchandise_editor.root.innerHTML);
 			    });
 			};
 
@@ -466,18 +454,52 @@
 			    });
 			};
 
-			function setUniverseBody() {
-			    $('#sportsModel_Universe').val('@Model.sportsModel.Universe');
+			function setFamous_gamesBody() {
+			    Famous_games_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Famous_games'));
+			    $('#Famous_games').focusout(function () {
+			        postSaveEditorData('Famous_games', Famous_games_editor.root.innerHTML);
+			    });
+			};
+
+			function setEvolutionBody() {
+			    Evolution_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Evolution'));
+			    $('#Evolution').focusout(function () {
+			        postSaveEditorData('Evolution', Evolution_editor.root.innerHTML);
+			    });
+			};
+
+			function setCreatorsBody() {
+			    Creators_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Creators'));
+			    $('#Creators').focusout(function () {
+			        postSaveEditorData('Creators', Creators_editor.root.innerHTML);
+			    });
+			};
+
+			function setOrigin_storyBody() {
+			    Origin_story_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Origin_story'));
+			    $('#Origin_story').focusout(function () {
+			        postSaveEditorData('Origin_story', Origin_story_editor.root.innerHTML);
+			    });
+			};
+
+			function setPrivate_NotesBody() {
+			    Private_Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Private_Notes'));
+			    $('#Private_Notes').focusout(function () {
+			        postSaveEditorData('Private_Notes', Private_Notes_editor.root.innerHTML);
+			    });
+			};
+
+			function setNotesBody() {
+			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.sportsModel.Notes'));
+			    $('#Notes').focusout(function () {
+			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
+			    });
 			};
 
 
 
         $(document).ready(function () {
-            			$('#sportsModel_Game_time').blur(function() {
-			    postSaveData('Game_time', $('#sportsModel_Game_time').val());
-			});
-
-			$('#sportsModel_Name').blur(function() {
+            			$('#sportsModel_Name').blur(function() {
 			    postSaveData('Name', $('#sportsModel_Name').val());
 			});
 
@@ -487,6 +509,10 @@
 
 			$('#sportsModel_Positions').blur(function() {
 			    postSaveData('Positions', $('#sportsModel_Positions').val());
+			});
+
+			$('#sportsModel_Game_time').blur(function() {
+			    postSaveData('Game_time', $('#sportsModel_Game_time').val());
 			});
 
 
@@ -540,10 +566,18 @@
                         $('.roller').width(progress + '%');
                     });
 
-                    self.on("queuecomplete", function (progress) {
-                        $('.meter').delay(999).slideUp(999);
-                        console.log("Files uploaded");
-                        location.reload();
+                    self.on('error', function (file, response) {
+                        console.log("Files upload Error");
+                        showModal(response.message);
+                    });
+                    self.on('success', function () {
+                        self.on("queuecomplete", function () {
+                            $('.meter').delay(999).slideUp(999);
+                            console.log("Files uploaded");
+                            var locUrL = location.href.replace('#Gallery_panel', '') + "#Gallery_panel";
+                            window.location.href = locUrL;
+                            location.reload();
+                        });
                     });
                     self.on("complete", function (file) {
                         self.removeFile(file);

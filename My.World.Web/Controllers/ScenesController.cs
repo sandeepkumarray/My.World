@@ -13,6 +13,7 @@ using My.World.Web.Services;
 using Newtonsoft.Json;
 using My.World.Web.ViewModel;
 using Microsoft.Extensions.Configuration;
+using System.Web;
 
 namespace My.World.Web.Controllers
 {
@@ -103,7 +104,17 @@ namespace My.World.Web.Controllers
 			scenesViewModel.headerBackgroundColor = contentTypesModel.sec_color;
 			_iObjectBucketApiService.SetObjectStorageSecrets(model.user_id);
 			scenesViewModel.ContentObjectModelList = _iObjectBucketApiService.GetAllContentObjectAttachments(Convert.ToInt64(Id), "scenes");
-			return View(scenesViewModel);
+			scenesViewModel.ContentObjectModelList.ForEach(o => 
+			{
+			    var publicUrl = "http://" + _iObjectBucketApiService.objectStorageKeysModel.endpoint
+			                + '/' + _iObjectBucketApiService.objectStorageKeysModel.bucketName + '/' + _config.GetValue<string>("BucketEnv") + '/' + o.object_name; 
+			    o.file_url = HttpUtility.UrlPathEncode(publicUrl); 
+			}); 
+			var existing_total_size = scenesViewModel.ContentObjectModelList.Sum(f => f.object_size);
+			var AllowedTotalContentSize = Convert.ToInt64(HttpContext.Session.GetString("AllowedTotalContentSize"));
+			var remainingSize = AllowedTotalContentSize - existing_total_size;
+			scenesViewModel.RemainingContentSize = Helpers.Utility.SizeSuffix(remainingSize);
+			return View(scenesViewModel); 
 
 		}
 
@@ -154,29 +165,29 @@ namespace My.World.Web.Controllers
 			if (model != null)
 			{
 				
-				model.Characters_in_scene  = model.Characters_in_scene == null ? model.Characters_in_scene : model.Characters_in_scene.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Description  = model.Description == null ? model.Description : model.Description.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Tags  = model.Tags == null ? model.Tags : model.Tags.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Summary  = model.Summary == null ? model.Summary : model.Summary.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Items_in_scene  = model.Items_in_scene == null ? model.Items_in_scene : model.Items_in_scene.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Locations_in_scene  = model.Locations_in_scene == null ? model.Locations_in_scene : model.Locations_in_scene.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Characters_in_scene  = model.Characters_in_scene == null ? model.Characters_in_scene : model.Characters_in_scene.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Description  = model.Description == null ? model.Description : model.Description.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Results  = model.Results == null ? model.Results : model.Results.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.What_caused_this  = model.What_caused_this == null ? model.What_caused_this : model.What_caused_this.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Notes  = model.Notes == null ? model.Notes : model.Notes.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Private_notes  = model.Private_notes == null ? model.Private_notes : model.Private_notes.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Results  = model.Results == null ? model.Results : model.Results.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Summary  = model.Summary == null ? model.Summary : model.Summary.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Tags  = model.Tags == null ? model.Tags : model.Tags.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.What_caused_this  = model.What_caused_this == null ? model.What_caused_this : model.What_caused_this.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 			}
 
 		}
 
 		#region Save Properties Methods
 		[HttpPost]
-		[Route("{id}/SaveCharacters_in_scene")]
-		public IActionResult SaveCharacters_in_scene(string id)
+		[Route("{id}/SaveTags")]
+		public IActionResult SaveTags(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Characters_in_scene";
+			var type = "Tags";
 			var SceneID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -191,15 +202,59 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveDescription")]
-		public IActionResult SaveDescription(string id)
+		[Route("SaveName")]
+		public IActionResult SaveName()
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Description";
+			var type = "Name";
+			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
+			var SceneID = Convert.ToInt64(obj["SceneID"].Value);
+			var value = Convert.ToString(obj["value"].Value);
+			
+			ScenesModel model = new ScenesModel();
+			model.id = SceneID;
+			model._id = SceneID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iScenesApiService.SaveScene(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveSummary")]
+		public IActionResult SaveSummary(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Summary";
 			var SceneID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
+			
+			ScenesModel model = new ScenesModel();
+			model.id = SceneID;
+			model._id = SceneID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iScenesApiService.SaveScene(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("SaveUniverse")]
+		public IActionResult SaveUniverse()
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Universe";
+			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
+			var SceneID = Convert.ToInt64(obj["SceneID"].Value);
+			var value = Convert.ToString(obj["value"].Value);
 			
 			ScenesModel model = new ScenesModel();
 			model.id = SceneID;
@@ -254,16 +309,78 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("SaveName")]
-		public IActionResult SaveName()
+		[Route("{id}/SaveCharacters_in_scene")]
+		public IActionResult SaveCharacters_in_scene(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Name";
-			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
-			var SceneID = Convert.ToInt64(obj["SceneID"].Value);
-			var value = Convert.ToString(obj["value"].Value);
+			var type = "Characters_in_scene";
+			var SceneID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			ScenesModel model = new ScenesModel();
+			model.id = SceneID;
+			model._id = SceneID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iScenesApiService.SaveScene(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveDescription")]
+		public IActionResult SaveDescription(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Description";
+			var SceneID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			ScenesModel model = new ScenesModel();
+			model.id = SceneID;
+			model._id = SceneID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iScenesApiService.SaveScene(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveResults")]
+		public IActionResult SaveResults(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Results";
+			var SceneID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			ScenesModel model = new ScenesModel();
+			model.id = SceneID;
+			model._id = SceneID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iScenesApiService.SaveScene(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveWhat_caused_this")]
+		public IActionResult SaveWhat_caused_this(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "What_caused_this";
+			var SceneID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
 			
 			ScenesModel model = new ScenesModel();
 			model.id = SceneID;
@@ -316,112 +433,6 @@ namespace My.World.Web.Controllers
 			return Json(response);
 
 		}
-
-		[HttpPost]
-		[Route("{id}/SaveResults")]
-		public IActionResult SaveResults(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Results";
-			var SceneID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			ScenesModel model = new ScenesModel();
-			model.id = SceneID;
-			model._id = SceneID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iScenesApiService.SaveScene(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveSummary")]
-		public IActionResult SaveSummary(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Summary";
-			var SceneID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			ScenesModel model = new ScenesModel();
-			model.id = SceneID;
-			model._id = SceneID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iScenesApiService.SaveScene(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveTags")]
-		public IActionResult SaveTags(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Tags";
-			var SceneID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			ScenesModel model = new ScenesModel();
-			model.id = SceneID;
-			model._id = SceneID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iScenesApiService.SaveScene(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("SaveUniverse")]
-		public IActionResult SaveUniverse()
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Universe";
-			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
-			var SceneID = Convert.ToInt64(obj["SceneID"].Value);
-			var value = Convert.ToString(obj["value"].Value);
-			
-			ScenesModel model = new ScenesModel();
-			model.id = SceneID;
-			model._id = SceneID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iScenesApiService.SaveScene(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveWhat_caused_this")]
-		public IActionResult SaveWhat_caused_this(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "What_caused_this";
-			var SceneID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			ScenesModel model = new ScenesModel();
-			model.id = SceneID;
-			model._id = SceneID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iScenesApiService.SaveScene(model);
-			return Json(response);
-
-		}
 		#endregion 
 
 		[HttpPost]
@@ -429,40 +440,53 @@ namespace My.World.Web.Controllers
 		public IActionResult UploadAttachment(List<IFormFile> files)
 		{
 			var accountID = Convert.ToInt64(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserID")?.Value);
-			string content_Id = HttpContext.Session.GetString("ScenesID");
+			string content_Id = HttpContext.Session.GetString("SceneID");
+			
+			var ContentObjectModelList = _iObjectBucketApiService.GetAllContentObjectAttachments(Convert.ToInt64(content_Id), "scenes");
+			var existing_total_size = ContentObjectModelList.Sum(f => f.object_size);
 			
 			var rq_files = Request.Form.Files;
+			var upload_file_size = rq_files.Sum(f => f.Length);
+			var total_size = upload_file_size + existing_total_size;
+			var AllowedTotalContentSize = Convert.ToInt64(HttpContext.Session.GetString("AllowedTotalContentSize"));
 			
-			if (rq_files != null)
+			if (total_size <= AllowedTotalContentSize)
 			{
-			    foreach (var file in rq_files)
-			    {
-			        using (var ms = new MemoryStream())
-			        {
-			            ContentObjectModel model = new ContentObjectModel();
-			            model.object_type = file.ContentType;
-			            model.object_name = file.FileName;
-			            model.object_size = file.Length;
+				if (rq_files != null)
+				{
+					foreach (var file in rq_files)
+					{
+						using (var ms = new MemoryStream())
+						{
+							ContentObjectModel model = new ContentObjectModel();
+							model.object_type = file.ContentType;
+							model.object_name = file.FileName;
+							model.object_size = file.Length;
+							model.bucket_folder = _config.GetValue<string>("BucketEnv");
 			
-			            file.CopyTo(ms);
-			            model.file = ms;
-			            model.file.Seek(0, 0);
-			            _iObjectBucketApiService.SetObjectStorageSecrets(accountID);
-			            var response = _iObjectBucketApiService.UploadObject(model).Result;
+							file.CopyTo(ms);
+							model.file = ms;
+							model.file.Seek(0, 0);
+							_iObjectBucketApiService.SetObjectStorageSecrets(accountID);
+							var response = _iObjectBucketApiService.UploadObject(model).Result;
 			
-			            if (!string.IsNullOrEmpty(response.Value))
-			            {
-			                ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
-			                contentObjectAttachmentModel.object_id = Convert.ToInt64(response.Value);
-			                contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
-			                contentObjectAttachmentModel.content_type = "scenes";
+							if (!string.IsNullOrEmpty(response.Value))
+							{
+								ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
+								contentObjectAttachmentModel.object_id = Convert.ToInt64(response.Value);
+								contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
+								contentObjectAttachmentModel.content_type = "scenes";
 			
-			                _iObjectBucketApiService.AddContentObjectAttachment(contentObjectAttachmentModel);
-			            }
-			        }
-			    }
+								_iObjectBucketApiService.AddContentObjectAttachment(contentObjectAttachmentModel);
+							}
+						}
+					}
+				}
 			}
-			
+			else
+			{
+				return BadRequest(new { message = "You have Exceeded the maximum allowed size of 50 MB per content to upload images." });
+			}
 			return Ok();
 
 		}
@@ -471,16 +495,17 @@ namespace My.World.Web.Controllers
 		public IActionResult DeleteAttachment(long objectId,string objectName)
 		{
 			var accountID = Convert.ToInt64(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserID")?.Value);
-			string content_Id = HttpContext.Session.GetString("ScenesID");
+			string content_Id = HttpContext.Session.GetString("SceneID");
 			
 			ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
 			contentObjectAttachmentModel.object_id = objectId;
 			contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
 			contentObjectAttachmentModel.content_type = "scenes";
 			
+			var bucket_folder = _config.GetValue<string>("BucketEnv");
 			ContentObjectModel contentObjectModel = new ContentObjectModel();
 			contentObjectModel.object_id = objectId;
-			contentObjectModel.object_name = objectName;
+			contentObjectModel.object_name = bucket_folder + " / " + objectName;
 			
 			_iObjectBucketApiService.SetObjectStorageSecrets(accountID);
 			_iObjectBucketApiService.DeleteObject(contentObjectModel);

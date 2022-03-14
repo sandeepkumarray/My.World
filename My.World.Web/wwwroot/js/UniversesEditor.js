@@ -5,7 +5,6 @@ var history_editor;
 var laws_of_physics_editor;
 var magic_system_editor;
 var notes_editor;
-var page_type_editor;
 var private_notes_editor;
 var technology_editor;
 
@@ -18,7 +17,6 @@ $(document).ready(function () {
 	laws_of_physics_editor = createEditor("#laws_of_physics");
 	magic_system_editor = createEditor("#magic_system");
 	notes_editor = createEditor("#notes");
-	page_type_editor = createEditor("#page_type");
 	private_notes_editor = createEditor("#private_notes");
 	technology_editor = createEditor("#technology");
 
@@ -31,7 +29,6 @@ $(document).ready(function () {
 	setmagic_systemBody();
 	setnameBody();
 	setnotesBody();
-	setpage_typeBody();
 	setprivacyBody();
 	setprivate_notesBody();
 	settechnologyBody();

@@ -13,6 +13,7 @@ using My.World.Web.Services;
 using Newtonsoft.Json;
 using My.World.Web.ViewModel;
 using Microsoft.Extensions.Configuration;
+using System.Web;
 
 namespace My.World.Web.Controllers
 {
@@ -103,7 +104,17 @@ namespace My.World.Web.Controllers
 			landmarksViewModel.headerBackgroundColor = contentTypesModel.sec_color;
 			_iObjectBucketApiService.SetObjectStorageSecrets(model.user_id);
 			landmarksViewModel.ContentObjectModelList = _iObjectBucketApiService.GetAllContentObjectAttachments(Convert.ToInt64(Id), "landmarks");
-			return View(landmarksViewModel);
+			landmarksViewModel.ContentObjectModelList.ForEach(o => 
+			{
+			    var publicUrl = "http://" + _iObjectBucketApiService.objectStorageKeysModel.endpoint
+			                + '/' + _iObjectBucketApiService.objectStorageKeysModel.bucketName + '/' + _config.GetValue<string>("BucketEnv") + '/' + o.object_name; 
+			    o.file_url = HttpUtility.UrlPathEncode(publicUrl); 
+			}); 
+			var existing_total_size = landmarksViewModel.ContentObjectModelList.Sum(f => f.object_size);
+			var AllowedTotalContentSize = Convert.ToInt64(HttpContext.Session.GetString("AllowedTotalContentSize"));
+			var remainingSize = AllowedTotalContentSize - existing_total_size;
+			landmarksViewModel.RemainingContentSize = Helpers.Utility.SizeSuffix(remainingSize);
+			return View(landmarksViewModel); 
 
 		}
 
@@ -154,34 +165,35 @@ namespace My.World.Web.Controllers
 			if (model != null)
 			{
 				
-				model.Colors  = model.Colors == null ? model.Colors : model.Colors.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Country  = model.Country == null ? model.Country : model.Country.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Creation_story  = model.Creation_story == null ? model.Creation_story : model.Creation_story.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Creatures  = model.Creatures == null ? model.Creatures : model.Creatures.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Description  = model.Description == null ? model.Description : model.Description.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Flora  = model.Flora == null ? model.Flora : model.Flora.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Materials  = model.Materials == null ? model.Materials : model.Materials.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Nearby_towns  = model.Nearby_towns == null ? model.Nearby_towns : model.Nearby_towns.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Notes  = model.Notes == null ? model.Notes : model.Notes.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Other_Names  = model.Other_Names == null ? model.Other_Names : model.Other_Names.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Private_Notes  = model.Private_Notes == null ? model.Private_Notes : model.Private_Notes.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Tags  = model.Tags == null ? model.Tags : model.Tags.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Description  = model.Description == null ? model.Description : model.Description.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Other_Names  = model.Other_Names == null ? model.Other_Names : model.Other_Names.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Type_of_landmark  = model.Type_of_landmark == null ? model.Type_of_landmark : model.Type_of_landmark.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Country  = model.Country == null ? model.Country : model.Country.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Nearby_towns  = model.Nearby_towns == null ? model.Nearby_towns : model.Nearby_towns.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Colors  = model.Colors == null ? model.Colors : model.Colors.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Materials  = model.Materials == null ? model.Materials : model.Materials.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Creatures  = model.Creatures == null ? model.Creatures : model.Creatures.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Flora  = model.Flora == null ? model.Flora : model.Flora.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Creation_story  = model.Creation_story == null ? model.Creation_story : model.Creation_story.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Notes  = model.Notes == null ? model.Notes : model.Notes.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Private_Notes  = model.Private_Notes == null ? model.Private_Notes : model.Private_Notes.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 			}
 
 		}
 
 		#region Save Properties Methods
 		[HttpPost]
-		[Route("{id}/SaveColors")]
-		public IActionResult SaveColors(string id)
+		[Route("SaveName")]
+		public IActionResult SaveName()
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Colors";
-			var LandmarkID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
+			var type = "Name";
+			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
+			var LandmarkID = Convert.ToInt64(obj["LandmarkID"].Value);
+			var value = Convert.ToString(obj["value"].Value);
 			
 			LandmarksModel model = new LandmarksModel();
 			model.id = LandmarkID;
@@ -194,55 +206,13 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveCountry")]
-		public IActionResult SaveCountry(string id)
+		[Route("{id}/SaveTags")]
+		public IActionResult SaveTags(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Country";
-			var LandmarkID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			LandmarksModel model = new LandmarksModel();
-			model.id = LandmarkID;
-			model._id = LandmarkID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iLandmarksApiService.SaveLandmark(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveCreation_story")]
-		public IActionResult SaveCreation_story(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Creation_story";
-			var LandmarkID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			LandmarksModel model = new LandmarksModel();
-			model.id = LandmarkID;
-			model._id = LandmarkID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iLandmarksApiService.SaveLandmark(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveCreatures")]
-		public IActionResult SaveCreatures(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Creatures";
+			var type = "Tags";
 			var LandmarkID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -278,134 +248,6 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("SaveEstablished_year")]
-		public IActionResult SaveEstablished_year()
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Established_year";
-			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
-			var LandmarkID = Convert.ToInt64(obj["LandmarkID"].Value);
-			var value = Convert.ToString(obj["value"].Value);
-			
-			LandmarksModel model = new LandmarksModel();
-			model.id = LandmarkID;
-			model._id = LandmarkID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iLandmarksApiService.SaveLandmark(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveFlora")]
-		public IActionResult SaveFlora(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Flora";
-			var LandmarkID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			LandmarksModel model = new LandmarksModel();
-			model.id = LandmarkID;
-			model._id = LandmarkID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iLandmarksApiService.SaveLandmark(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveMaterials")]
-		public IActionResult SaveMaterials(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Materials";
-			var LandmarkID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			LandmarksModel model = new LandmarksModel();
-			model.id = LandmarkID;
-			model._id = LandmarkID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iLandmarksApiService.SaveLandmark(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("SaveName")]
-		public IActionResult SaveName()
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Name";
-			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
-			var LandmarkID = Convert.ToInt64(obj["LandmarkID"].Value);
-			var value = Convert.ToString(obj["value"].Value);
-			
-			LandmarksModel model = new LandmarksModel();
-			model.id = LandmarkID;
-			model._id = LandmarkID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iLandmarksApiService.SaveLandmark(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveNearby_towns")]
-		public IActionResult SaveNearby_towns(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Nearby_towns";
-			var LandmarkID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			LandmarksModel model = new LandmarksModel();
-			model.id = LandmarkID;
-			model._id = LandmarkID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iLandmarksApiService.SaveLandmark(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveNotes")]
-		public IActionResult SaveNotes(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Notes";
-			var LandmarkID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			LandmarksModel model = new LandmarksModel();
-			model.id = LandmarkID;
-			model._id = LandmarkID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iLandmarksApiService.SaveLandmark(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
 		[Route("{id}/SaveOther_Names")]
 		public IActionResult SaveOther_Names(string id)
 		{
@@ -413,70 +255,6 @@ namespace My.World.Web.Controllers
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
 			var type = "Other_Names";
-			var LandmarkID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			LandmarksModel model = new LandmarksModel();
-			model.id = LandmarkID;
-			model._id = LandmarkID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iLandmarksApiService.SaveLandmark(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SavePrivate_Notes")]
-		public IActionResult SavePrivate_Notes(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Private_Notes";
-			var LandmarkID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			LandmarksModel model = new LandmarksModel();
-			model.id = LandmarkID;
-			model._id = LandmarkID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iLandmarksApiService.SaveLandmark(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("SaveSize")]
-		public IActionResult SaveSize()
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Size";
-			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
-			var LandmarkID = Convert.ToInt64(obj["LandmarkID"].Value);
-			var value = Convert.ToString(obj["value"].Value);
-			
-			LandmarksModel model = new LandmarksModel();
-			model.id = LandmarkID;
-			model._id = LandmarkID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iLandmarksApiService.SaveLandmark(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveTags")]
-		public IActionResult SaveTags(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Tags";
 			var LandmarkID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -532,6 +310,239 @@ namespace My.World.Web.Controllers
 			return Json(response);
 
 		}
+
+		[HttpPost]
+		[Route("{id}/SaveCountry")]
+		public IActionResult SaveCountry(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Country";
+			var LandmarkID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			LandmarksModel model = new LandmarksModel();
+			model.id = LandmarkID;
+			model._id = LandmarkID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iLandmarksApiService.SaveLandmark(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveNearby_towns")]
+		public IActionResult SaveNearby_towns(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Nearby_towns";
+			var LandmarkID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			LandmarksModel model = new LandmarksModel();
+			model.id = LandmarkID;
+			model._id = LandmarkID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iLandmarksApiService.SaveLandmark(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("SaveSize")]
+		public IActionResult SaveSize()
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Size";
+			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
+			var LandmarkID = Convert.ToInt64(obj["LandmarkID"].Value);
+			var value = Convert.ToString(obj["value"].Value);
+			
+			LandmarksModel model = new LandmarksModel();
+			model.id = LandmarkID;
+			model._id = LandmarkID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iLandmarksApiService.SaveLandmark(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveColors")]
+		public IActionResult SaveColors(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Colors";
+			var LandmarkID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			LandmarksModel model = new LandmarksModel();
+			model.id = LandmarkID;
+			model._id = LandmarkID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iLandmarksApiService.SaveLandmark(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveMaterials")]
+		public IActionResult SaveMaterials(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Materials";
+			var LandmarkID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			LandmarksModel model = new LandmarksModel();
+			model.id = LandmarkID;
+			model._id = LandmarkID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iLandmarksApiService.SaveLandmark(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveCreatures")]
+		public IActionResult SaveCreatures(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Creatures";
+			var LandmarkID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			LandmarksModel model = new LandmarksModel();
+			model.id = LandmarkID;
+			model._id = LandmarkID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iLandmarksApiService.SaveLandmark(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveFlora")]
+		public IActionResult SaveFlora(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Flora";
+			var LandmarkID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			LandmarksModel model = new LandmarksModel();
+			model.id = LandmarkID;
+			model._id = LandmarkID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iLandmarksApiService.SaveLandmark(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveCreation_story")]
+		public IActionResult SaveCreation_story(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Creation_story";
+			var LandmarkID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			LandmarksModel model = new LandmarksModel();
+			model.id = LandmarkID;
+			model._id = LandmarkID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iLandmarksApiService.SaveLandmark(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("SaveEstablished_year")]
+		public IActionResult SaveEstablished_year()
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Established_year";
+			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
+			var LandmarkID = Convert.ToInt64(obj["LandmarkID"].Value);
+			var value = Convert.ToString(obj["value"].Value);
+			
+			LandmarksModel model = new LandmarksModel();
+			model.id = LandmarkID;
+			model._id = LandmarkID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iLandmarksApiService.SaveLandmark(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveNotes")]
+		public IActionResult SaveNotes(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Notes";
+			var LandmarkID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			LandmarksModel model = new LandmarksModel();
+			model.id = LandmarkID;
+			model._id = LandmarkID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iLandmarksApiService.SaveLandmark(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SavePrivate_Notes")]
+		public IActionResult SavePrivate_Notes(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Private_Notes";
+			var LandmarkID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			LandmarksModel model = new LandmarksModel();
+			model.id = LandmarkID;
+			model._id = LandmarkID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iLandmarksApiService.SaveLandmark(model);
+			return Json(response);
+
+		}
 		#endregion 
 
 		[HttpPost]
@@ -539,40 +550,53 @@ namespace My.World.Web.Controllers
 		public IActionResult UploadAttachment(List<IFormFile> files)
 		{
 			var accountID = Convert.ToInt64(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserID")?.Value);
-			string content_Id = HttpContext.Session.GetString("LandmarksID");
+			string content_Id = HttpContext.Session.GetString("LandmarkID");
+			
+			var ContentObjectModelList = _iObjectBucketApiService.GetAllContentObjectAttachments(Convert.ToInt64(content_Id), "landmarks");
+			var existing_total_size = ContentObjectModelList.Sum(f => f.object_size);
 			
 			var rq_files = Request.Form.Files;
+			var upload_file_size = rq_files.Sum(f => f.Length);
+			var total_size = upload_file_size + existing_total_size;
+			var AllowedTotalContentSize = Convert.ToInt64(HttpContext.Session.GetString("AllowedTotalContentSize"));
 			
-			if (rq_files != null)
+			if (total_size <= AllowedTotalContentSize)
 			{
-			    foreach (var file in rq_files)
-			    {
-			        using (var ms = new MemoryStream())
-			        {
-			            ContentObjectModel model = new ContentObjectModel();
-			            model.object_type = file.ContentType;
-			            model.object_name = file.FileName;
-			            model.object_size = file.Length;
+				if (rq_files != null)
+				{
+					foreach (var file in rq_files)
+					{
+						using (var ms = new MemoryStream())
+						{
+							ContentObjectModel model = new ContentObjectModel();
+							model.object_type = file.ContentType;
+							model.object_name = file.FileName;
+							model.object_size = file.Length;
+							model.bucket_folder = _config.GetValue<string>("BucketEnv");
 			
-			            file.CopyTo(ms);
-			            model.file = ms;
-			            model.file.Seek(0, 0);
-			            _iObjectBucketApiService.SetObjectStorageSecrets(accountID);
-			            var response = _iObjectBucketApiService.UploadObject(model).Result;
+							file.CopyTo(ms);
+							model.file = ms;
+							model.file.Seek(0, 0);
+							_iObjectBucketApiService.SetObjectStorageSecrets(accountID);
+							var response = _iObjectBucketApiService.UploadObject(model).Result;
 			
-			            if (!string.IsNullOrEmpty(response.Value))
-			            {
-			                ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
-			                contentObjectAttachmentModel.object_id = Convert.ToInt64(response.Value);
-			                contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
-			                contentObjectAttachmentModel.content_type = "landmarks";
+							if (!string.IsNullOrEmpty(response.Value))
+							{
+								ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
+								contentObjectAttachmentModel.object_id = Convert.ToInt64(response.Value);
+								contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
+								contentObjectAttachmentModel.content_type = "landmarks";
 			
-			                _iObjectBucketApiService.AddContentObjectAttachment(contentObjectAttachmentModel);
-			            }
-			        }
-			    }
+								_iObjectBucketApiService.AddContentObjectAttachment(contentObjectAttachmentModel);
+							}
+						}
+					}
+				}
 			}
-			
+			else
+			{
+				return BadRequest(new { message = "You have Exceeded the maximum allowed size of 50 MB per content to upload images." });
+			}
 			return Ok();
 
 		}
@@ -581,16 +605,17 @@ namespace My.World.Web.Controllers
 		public IActionResult DeleteAttachment(long objectId,string objectName)
 		{
 			var accountID = Convert.ToInt64(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserID")?.Value);
-			string content_Id = HttpContext.Session.GetString("LandmarksID");
+			string content_Id = HttpContext.Session.GetString("LandmarkID");
 			
 			ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
 			contentObjectAttachmentModel.object_id = objectId;
 			contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
 			contentObjectAttachmentModel.content_type = "landmarks";
 			
+			var bucket_folder = _config.GetValue<string>("BucketEnv");
 			ContentObjectModel contentObjectModel = new ContentObjectModel();
 			contentObjectModel.object_id = objectId;
-			contentObjectModel.object_name = objectName;
+			contentObjectModel.object_name = bucket_folder + " / " + objectName;
 			
 			_iObjectBucketApiService.SetObjectStorageSecrets(accountID);
 			_iObjectBucketApiService.DeleteObject(contentObjectModel);

@@ -1,3 +1,6 @@
+@using Microsoft.AspNetCore.Http
+@using My.World.Web
+@inject IHttpContextAccessor HttpContextAccessor
 @model My.World.Web.ViewModel.FoodsViewModel
 
 @{
@@ -112,7 +115,7 @@
                                                                                 else if (att.field_name.ToLower() == "universe")
                                                                                 {
                                                                                 <select id="ddlUniverseList" class="form-control" style="min-width:150px"
-                                                                                        asp-items="@(new SelectList(@Model.UniversesList, " id", "name" , Model.foodsModel.Universe))"
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name" , Model.foodsModel.Universe))"
                                                                                         onchange="UniverseSelected();">
                                                                                 </select>
                                                                                 }
@@ -168,17 +171,21 @@
                                                                                         <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
                                                                                             <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">
                                                                                                 <a class="remove-image" style="display: inline;"
-                                                                                                   asp-controller="buildings" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
+                                                                                                   asp-controller="foods" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
                                                                                             </div>
                                                                                         </div>
                                                                                     }
                                                                                 </div>
                                                                             </div>
-
+                                                                            <div class="mb-3">
+                                                                                <div class="row">
+                                                                                    <h3><label class="form-label"> Only @Model.RemainingContentSize is left for content upload.</label></h3>
+                                                                                </div>
+                                                                            </div>
                                                                             <div class="mb-3">
                                                                                 <label class="form-label" for="exampleFormControlInput1">Upload Images...</label>
                                                                                 <div>
-                                                                                    @using (Html.BeginForm("UploadAttachment", "buildings", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
+                                                                                    @using (Html.BeginForm("UploadAttachment", "foods", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
                                                                                     {
                                                                                     <div class="dz-message needsclick">
                                                                                         <button type="button" class="dz-button">Drop files here or click to upload.</button><br />
@@ -266,6 +273,25 @@
     </div>
 </div>
 
+<div id="contentsExceededModal" bsmodal="" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade" aria-modal="true" style="display: none;">
+    <div role="document" class="modal-dialog modal-danger modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Alert !</h4>
+                <button type="button" aria-label="Close" data-dismiss="modal" class="close">
+                    <span aria-hidden="true">�</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>You have Exceeded the maximum allowed size of @My.World.Web.Helpers.Utility.SizeSuffix(Convert.ToInt64(@HttpContextAccessor.HttpContext.Session.GetString("AllowedTotalContentSize"))) per content to upload images.</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script src="~/js/quill.js"></script>
     <script src="~/js/quill.mention.min.js"></script>
@@ -275,84 +301,10 @@
 
     <script type="text/javascript">
 
-        			function setColorBody() {
-			    Color_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Color'));
-			    $('#Color').focusout(function () {
-			        postSaveEditorData('Color', Color_editor.root.innerHTML);
-			    });
-			};
-
-			function setConditionsBody() {
-			    Conditions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Conditions'));
-			    $('#Conditions').focusout(function () {
-			        postSaveEditorData('Conditions', Conditions_editor.root.innerHTML);
-			    });
-			};
-
-			function setCooking_methodBody() {
-			    Cooking_method_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Cooking_method'));
-			    $('#Cooking_method').focusout(function () {
-			        postSaveEditorData('Cooking_method', Cooking_method_editor.root.innerHTML);
-			    });
-			};
-
-			function setCostBody() {
-			    Cost_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Cost'));
-			    $('#Cost').focusout(function () {
-			        postSaveEditorData('Cost', Cost_editor.root.innerHTML);
-			    });
-			};
-
-			function setDescriptionBody() {
-			    Description_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Description'));
-			    $('#Description').focusout(function () {
-			        postSaveEditorData('Description', Description_editor.root.innerHTML);
-			    });
-			};
-
-			function setFlavorBody() {
-			    Flavor_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Flavor'));
-			    $('#Flavor').focusout(function () {
-			        postSaveEditorData('Flavor', Flavor_editor.root.innerHTML);
-			    });
-			};
-
-			function setIngredientsBody() {
-			    Ingredients_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Ingredients'));
-			    $('#Ingredients').focusout(function () {
-			        postSaveEditorData('Ingredients', Ingredients_editor.root.innerHTML);
-			    });
-			};
-
-			function setMealBody() {
-			    Meal_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Meal'));
-			    $('#Meal').focusout(function () {
-			        postSaveEditorData('Meal', Meal_editor.root.innerHTML);
-			    });
-			};
-
-			function setNameBody() {
-			    $('#foodsModel_Name').val('@Model.foodsModel.Name');
-			};
-
-			function setNotesBody() {
-			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Notes'));
-			    $('#Notes').focusout(function () {
-			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
-			    });
-			};
-
-			function setNutritionBody() {
-			    Nutrition_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Nutrition'));
-			    $('#Nutrition').focusout(function () {
-			        postSaveEditorData('Nutrition', Nutrition_editor.root.innerHTML);
-			    });
-			};
-
-			function setOrigin_storyBody() {
-			    Origin_story_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Origin_story'));
-			    $('#Origin_story').focusout(function () {
-			        postSaveEditorData('Origin_story', Origin_story_editor.root.innerHTML);
+        			function setType_of_foodBody() {
+			    Type_of_food_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Type_of_food'));
+			    $('#Type_of_food').focusout(function () {
+			        postSaveEditorData('Type_of_food', Type_of_food_editor.root.innerHTML);
 			    });
 			};
 
@@ -363,10 +315,57 @@
 			    });
 			};
 
-			function setPlace_of_originBody() {
-			    Place_of_origin_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Place_of_origin'));
-			    $('#Place_of_origin').focusout(function () {
-			        postSaveEditorData('Place_of_origin', Place_of_origin_editor.root.innerHTML);
+			function setUniverseBody() {
+			    $('#foodsModel_Universe').val('@Model.foodsModel.Universe');
+			};
+
+			function setTagsBody() {
+			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Tags'));
+			    $('#Tags').focusout(function () {
+			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
+			    });
+			};
+
+			function setNameBody() {
+			    $('#foodsModel_Name').val('@Model.foodsModel.Name');
+			};
+
+			function setDescriptionBody() {
+			    Description_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Description'));
+			    $('#Description').focusout(function () {
+			        postSaveEditorData('Description', Description_editor.root.innerHTML);
+			    });
+			};
+
+			function setColorBody() {
+			    Color_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Color'));
+			    $('#Color').focusout(function () {
+			        postSaveEditorData('Color', Color_editor.root.innerHTML);
+			    });
+			};
+
+			function setSizeBody() {
+			    $('#foodsModel_Size').val('@Model.foodsModel.Size');
+			};
+
+			function setVariationsBody() {
+			    Variations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Variations'));
+			    $('#Variations').focusout(function () {
+			        postSaveEditorData('Variations', Variations_editor.root.innerHTML);
+			    });
+			};
+
+			function setSmellBody() {
+			    Smell_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Smell'));
+			    $('#Smell').focusout(function () {
+			        postSaveEditorData('Smell', Smell_editor.root.innerHTML);
+			    });
+			};
+
+			function setIngredientsBody() {
+			    Ingredients_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Ingredients'));
+			    $('#Ingredients').focusout(function () {
+			        postSaveEditorData('Ingredients', Ingredients_editor.root.innerHTML);
 			    });
 			};
 
@@ -377,77 +376,10 @@
 			    });
 			};
 
-			function setPrivate_NotesBody() {
-			    Private_Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Private_Notes'));
-			    $('#Private_Notes').focusout(function () {
-			        postSaveEditorData('Private_Notes', Private_Notes_editor.root.innerHTML);
-			    });
-			};
-
-			function setRarityBody() {
-			    Rarity_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Rarity'));
-			    $('#Rarity').focusout(function () {
-			        postSaveEditorData('Rarity', Rarity_editor.root.innerHTML);
-			    });
-			};
-
-			function setRelated_foodsBody() {
-			    Related_foods_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Related_foods'));
-			    $('#Related_foods').focusout(function () {
-			        postSaveEditorData('Related_foods', Related_foods_editor.root.innerHTML);
-			    });
-			};
-
-			function setReputationBody() {
-			    Reputation_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Reputation'));
-			    $('#Reputation').focusout(function () {
-			        postSaveEditorData('Reputation', Reputation_editor.root.innerHTML);
-			    });
-			};
-
-			function setScentBody() {
-			    Scent_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Scent'));
-			    $('#Scent').focusout(function () {
-			        postSaveEditorData('Scent', Scent_editor.root.innerHTML);
-			    });
-			};
-
-			function setServingBody() {
-			    Serving_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Serving'));
-			    $('#Serving').focusout(function () {
-			        postSaveEditorData('Serving', Serving_editor.root.innerHTML);
-			    });
-			};
-
-			function setShelf_lifeBody() {
-			    Shelf_life_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Shelf_life'));
-			    $('#Shelf_life').focusout(function () {
-			        postSaveEditorData('Shelf_life', Shelf_life_editor.root.innerHTML);
-			    });
-			};
-
-			function setSide_effectsBody() {
-			    Side_effects_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Side_effects'));
-			    $('#Side_effects').focusout(function () {
-			        postSaveEditorData('Side_effects', Side_effects_editor.root.innerHTML);
-			    });
-			};
-
-			function setSizeBody() {
-			    $('#foodsModel_Size').val('@Model.foodsModel.Size');
-			};
-
-			function setSmellBody() {
-			    Smell_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Smell'));
-			    $('#Smell').focusout(function () {
-			        postSaveEditorData('Smell', Smell_editor.root.innerHTML);
-			    });
-			};
-
-			function setSold_byBody() {
-			    Sold_by_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Sold_by'));
-			    $('#Sold_by').focusout(function () {
-			        postSaveEditorData('Sold_by', Sold_by_editor.root.innerHTML);
+			function setCooking_methodBody() {
+			    Cooking_method_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Cooking_method'));
+			    $('#Cooking_method').focusout(function () {
+			        postSaveEditorData('Cooking_method', Cooking_method_editor.root.innerHTML);
 			    });
 			};
 
@@ -458,17 +390,66 @@
 			    });
 			};
 
-			function setSymbolismsBody() {
-			    Symbolisms_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Symbolisms'));
-			    $('#Symbolisms').focusout(function () {
-			        postSaveEditorData('Symbolisms', Symbolisms_editor.root.innerHTML);
+			function setYieldBody() {
+			    Yield_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Yield'));
+			    $('#Yield').focusout(function () {
+			        postSaveEditorData('Yield', Yield_editor.root.innerHTML);
 			    });
 			};
 
-			function setTagsBody() {
-			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Tags'));
-			    $('#Tags').focusout(function () {
-			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
+			function setShelf_lifeBody() {
+			    Shelf_life_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Shelf_life'));
+			    $('#Shelf_life').focusout(function () {
+			        postSaveEditorData('Shelf_life', Shelf_life_editor.root.innerHTML);
+			    });
+			};
+
+			function setRarityBody() {
+			    Rarity_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Rarity'));
+			    $('#Rarity').focusout(function () {
+			        postSaveEditorData('Rarity', Rarity_editor.root.innerHTML);
+			    });
+			};
+
+			function setSold_byBody() {
+			    Sold_by_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Sold_by'));
+			    $('#Sold_by').focusout(function () {
+			        postSaveEditorData('Sold_by', Sold_by_editor.root.innerHTML);
+			    });
+			};
+
+			function setCostBody() {
+			    Cost_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Cost'));
+			    $('#Cost').focusout(function () {
+			        postSaveEditorData('Cost', Cost_editor.root.innerHTML);
+			    });
+			};
+
+			function setFlavorBody() {
+			    Flavor_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Flavor'));
+			    $('#Flavor').focusout(function () {
+			        postSaveEditorData('Flavor', Flavor_editor.root.innerHTML);
+			    });
+			};
+
+			function setMealBody() {
+			    Meal_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Meal'));
+			    $('#Meal').focusout(function () {
+			        postSaveEditorData('Meal', Meal_editor.root.innerHTML);
+			    });
+			};
+
+			function setServingBody() {
+			    Serving_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Serving'));
+			    $('#Serving').focusout(function () {
+			        postSaveEditorData('Serving', Serving_editor.root.innerHTML);
+			    });
+			};
+
+			function setUtensils_neededBody() {
+			    Utensils_needed_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Utensils_needed'));
+			    $('#Utensils_needed').focusout(function () {
+			        postSaveEditorData('Utensils_needed', Utensils_needed_editor.root.innerHTML);
 			    });
 			};
 
@@ -479,6 +460,55 @@
 			    });
 			};
 
+			function setScentBody() {
+			    Scent_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Scent'));
+			    $('#Scent').focusout(function () {
+			        postSaveEditorData('Scent', Scent_editor.root.innerHTML);
+			    });
+			};
+
+			function setSide_effectsBody() {
+			    Side_effects_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Side_effects'));
+			    $('#Side_effects').focusout(function () {
+			        postSaveEditorData('Side_effects', Side_effects_editor.root.innerHTML);
+			    });
+			};
+
+			function setNutritionBody() {
+			    Nutrition_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Nutrition'));
+			    $('#Nutrition').focusout(function () {
+			        postSaveEditorData('Nutrition', Nutrition_editor.root.innerHTML);
+			    });
+			};
+
+			function setConditionsBody() {
+			    Conditions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Conditions'));
+			    $('#Conditions').focusout(function () {
+			        postSaveEditorData('Conditions', Conditions_editor.root.innerHTML);
+			    });
+			};
+
+			function setReputationBody() {
+			    Reputation_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Reputation'));
+			    $('#Reputation').focusout(function () {
+			        postSaveEditorData('Reputation', Reputation_editor.root.innerHTML);
+			    });
+			};
+
+			function setPlace_of_originBody() {
+			    Place_of_origin_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Place_of_origin'));
+			    $('#Place_of_origin').focusout(function () {
+			        postSaveEditorData('Place_of_origin', Place_of_origin_editor.root.innerHTML);
+			    });
+			};
+
+			function setOrigin_storyBody() {
+			    Origin_story_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Origin_story'));
+			    $('#Origin_story').focusout(function () {
+			        postSaveEditorData('Origin_story', Origin_story_editor.root.innerHTML);
+			    });
+			};
+
 			function setTraditionsBody() {
 			    Traditions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Traditions'));
 			    $('#Traditions').focusout(function () {
@@ -486,35 +516,31 @@
 			    });
 			};
 
-			function setType_of_foodBody() {
-			    Type_of_food_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Type_of_food'));
-			    $('#Type_of_food').focusout(function () {
-			        postSaveEditorData('Type_of_food', Type_of_food_editor.root.innerHTML);
+			function setSymbolismsBody() {
+			    Symbolisms_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Symbolisms'));
+			    $('#Symbolisms').focusout(function () {
+			        postSaveEditorData('Symbolisms', Symbolisms_editor.root.innerHTML);
 			    });
 			};
 
-			function setUniverseBody() {
-			    $('#foodsModel_Universe').val('@Model.foodsModel.Universe');
-			};
-
-			function setUtensils_neededBody() {
-			    Utensils_needed_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Utensils_needed'));
-			    $('#Utensils_needed').focusout(function () {
-			        postSaveEditorData('Utensils_needed', Utensils_needed_editor.root.innerHTML);
+			function setRelated_foodsBody() {
+			    Related_foods_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Related_foods'));
+			    $('#Related_foods').focusout(function () {
+			        postSaveEditorData('Related_foods', Related_foods_editor.root.innerHTML);
 			    });
 			};
 
-			function setVariationsBody() {
-			    Variations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Variations'));
-			    $('#Variations').focusout(function () {
-			        postSaveEditorData('Variations', Variations_editor.root.innerHTML);
+			function setNotesBody() {
+			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Notes'));
+			    $('#Notes').focusout(function () {
+			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
 			    });
 			};
 
-			function setYieldBody() {
-			    Yield_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Yield'));
-			    $('#Yield').focusout(function () {
-			        postSaveEditorData('Yield', Yield_editor.root.innerHTML);
+			function setPrivate_NotesBody() {
+			    Private_Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.foodsModel.Private_Notes'));
+			    $('#Private_Notes').focusout(function () {
+			        postSaveEditorData('Private_Notes', Private_Notes_editor.root.innerHTML);
 			    });
 			};
 
@@ -580,10 +606,18 @@
                         $('.roller').width(progress + '%');
                     });
 
-                    self.on("queuecomplete", function (progress) {
-                        $('.meter').delay(999).slideUp(999);
-                        console.log("Files uploaded");
-                        location.reload();
+                    self.on('error', function (file, response) {
+                        console.log("Files upload Error");
+                        showModal(response.message);
+                    });
+                    self.on('success', function () {
+                        self.on("queuecomplete", function () {
+                            $('.meter').delay(999).slideUp(999);
+                            console.log("Files uploaded");
+                            var locUrL = location.href.replace('#Gallery_panel', '') + "#Gallery_panel";
+                            window.location.href = locUrL;
+                            location.reload();
+                        });
                     });
                     self.on("complete", function (file) {
                         self.removeFile(file);

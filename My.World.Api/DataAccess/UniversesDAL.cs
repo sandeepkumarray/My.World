@@ -130,6 +130,14 @@ namespace My.World.Api.DataAccess
 					universes.archived_at = dr["archived_at"] == DBNull.Value ? default(DateTime) : Convert.ToDateTime(dr["archived_at"]);
 					universes.favorite = dr["favorite"] == DBNull.Value ? default(Boolean) : Convert.ToBoolean(dr["favorite"]);
 
+						var contentObjectList = new ContentObjectDAL(dbContext).GetAllContentObjectAttachments(universes.id, "universes");
+						if (contentObjectList != null && contentObjectList.Count > 0)
+						{
+							var first = contentObjectList[0];
+							universes.object_id = first.object_id;
+							universes.object_name = first.object_name;
+						}
+
 						_return_value.Add(universes);
 					}
 				}

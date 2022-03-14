@@ -13,7 +13,7 @@
                 @foreach (var item in Model)
                 {
                     <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
-                        <div class="card-body" style="height: 265px;background: linear-gradient( rgb(122 122 122), rgb(122 122 122 / 50%) ),  url('/assets/img/cards/Universes.png');background-size: cover;">
+                        <div class="card-body" style="height: 265px;background: linear-gradient( rgb(122 122 122 / 50%), rgb(122 122 122 / 50%) ),  url('@item.image_url');background-size: cover;">
                             <p class="card-text text-white text-value-lg" style="margin-top:10rem">@item.name</p>
                         </div>
                         <div class="card-footer">

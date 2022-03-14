@@ -1,3 +1,6 @@
+@using Microsoft.AspNetCore.Http
+@using My.World.Web
+@inject IHttpContextAccessor HttpContextAccessor
 @model My.World.Web.ViewModel.DeitiesViewModel
 
 @{
@@ -112,7 +115,7 @@
                                                                                 else if (att.field_name.ToLower() == "universe")
                                                                                 {
                                                                                 <select id="ddlUniverseList" class="form-control" style="min-width:150px"
-                                                                                        asp-items="@(new SelectList(@Model.UniversesList, " id", "name" , Model.deitiesModel.Universe))"
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name" , Model.deitiesModel.Universe))"
                                                                                         onchange="UniverseSelected();">
                                                                                 </select>
                                                                                 }
@@ -168,17 +171,21 @@
                                                                                         <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
                                                                                             <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">
                                                                                                 <a class="remove-image" style="display: inline;"
-                                                                                                   asp-controller="buildings" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
+                                                                                                   asp-controller="deities" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
                                                                                             </div>
                                                                                         </div>
                                                                                     }
                                                                                 </div>
                                                                             </div>
-
+                                                                            <div class="mb-3">
+                                                                                <div class="row">
+                                                                                    <h3><label class="form-label"> Only @Model.RemainingContentSize is left for content upload.</label></h3>
+                                                                                </div>
+                                                                            </div>
                                                                             <div class="mb-3">
                                                                                 <label class="form-label" for="exampleFormControlInput1">Upload Images...</label>
                                                                                 <div>
-                                                                                    @using (Html.BeginForm("UploadAttachment", "buildings", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
+                                                                                    @using (Html.BeginForm("UploadAttachment", "deities", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
                                                                                     {
                                                                                     <div class="dz-message needsclick">
                                                                                         <button type="button" class="dz-button">Drop files here or click to upload.</button><br />
@@ -266,6 +273,25 @@
     </div>
 </div>
 
+<div id="contentsExceededModal" bsmodal="" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade" aria-modal="true" style="display: none;">
+    <div role="document" class="modal-dialog modal-danger modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Alert !</h4>
+                <button type="button" aria-label="Close" data-dismiss="modal" class="close">
+                    <span aria-hidden="true">�</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>You have Exceeded the maximum allowed size of @My.World.Web.Helpers.Utility.SizeSuffix(Convert.ToInt64(@HttpContextAccessor.HttpContext.Session.GetString("AllowedTotalContentSize"))) per content to upload images.</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script src="~/js/quill.js"></script>
     <script src="~/js/quill.mention.min.js"></script>
@@ -275,32 +301,15 @@
 
     <script type="text/javascript">
 
-        			function setAbilitiesBody() {
-			    Abilities_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Abilities'));
-			    $('#Abilities').focusout(function () {
-			        postSaveEditorData('Abilities', Abilities_editor.root.innerHTML);
+        			function setTagsBody() {
+			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Tags'));
+			    $('#Tags').focusout(function () {
+			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
 			    });
 			};
 
-			function setChildrenBody() {
-			    Children_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Children'));
-			    $('#Children').focusout(function () {
-			        postSaveEditorData('Children', Children_editor.root.innerHTML);
-			    });
-			};
-
-			function setConditionsBody() {
-			    Conditions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Conditions'));
-			    $('#Conditions').focusout(function () {
-			        postSaveEditorData('Conditions', Conditions_editor.root.innerHTML);
-			    });
-			};
-
-			function setCreaturesBody() {
-			    Creatures_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Creatures'));
-			    $('#Creatures').focusout(function () {
-			        postSaveEditorData('Creatures', Creatures_editor.root.innerHTML);
-			    });
+			function setNameBody() {
+			    $('#deitiesModel_Name').val('@Model.deitiesModel.Name');
 			};
 
 			function setDescriptionBody() {
@@ -310,67 +319,36 @@
 			    });
 			};
 
-			function setElementsBody() {
-			    Elements_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Elements'));
-			    $('#Elements').focusout(function () {
-			        postSaveEditorData('Elements', Elements_editor.root.innerHTML);
+			function setOther_NamesBody() {
+			    Other_Names_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Other_Names'));
+			    $('#Other_Names').focusout(function () {
+			        postSaveEditorData('Other_Names', Other_Names_editor.root.innerHTML);
 			    });
 			};
 
-			function setFamily_HistoryBody() {
-			    Family_History_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Family_History'));
-			    $('#Family_History').focusout(function () {
-			        postSaveEditorData('Family_History', Family_History_editor.root.innerHTML);
-			    });
-			};
-
-			function setFlorasBody() {
-			    Floras_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Floras'));
-			    $('#Floras').focusout(function () {
-			        postSaveEditorData('Floras', Floras_editor.root.innerHTML);
-			    });
+			function setUniverseBody() {
+			    $('#deitiesModel_Universe').val('@Model.deitiesModel.Universe');
 			};
 
 			function setHeightBody() {
 			    $('#deitiesModel_Height').val('@Model.deitiesModel.Height');
 			};
 
-			function setHuman_InteractionBody() {
-			    Human_Interaction_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Human_Interaction'));
-			    $('#Human_Interaction').focusout(function () {
-			        postSaveEditorData('Human_Interaction', Human_Interaction_editor.root.innerHTML);
+			function setPhysical_DescriptionBody() {
+			    Physical_Description_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Physical_Description'));
+			    $('#Physical_Description').focusout(function () {
+			        postSaveEditorData('Physical_Description', Physical_Description_editor.root.innerHTML);
 			    });
 			};
 
-			function setLife_StoryBody() {
-			    Life_Story_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Life_Story'));
-			    $('#Life_Story').focusout(function () {
-			        postSaveEditorData('Life_Story', Life_Story_editor.root.innerHTML);
-			    });
+			function setWeightBody() {
+			    $('#deitiesModel_Weight').val('@Model.deitiesModel.Weight');
 			};
 
-			function setNameBody() {
-			    $('#deitiesModel_Name').val('@Model.deitiesModel.Name');
-			};
-
-			function setNotable_EventsBody() {
-			    Notable_Events_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Notable_Events'));
-			    $('#Notable_Events').focusout(function () {
-			        postSaveEditorData('Notable_Events', Notable_Events_editor.root.innerHTML);
-			    });
-			};
-
-			function setNotesBody() {
-			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Notes'));
-			    $('#Notes').focusout(function () {
-			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
-			    });
-			};
-
-			function setOther_NamesBody() {
-			    Other_Names_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Other_Names'));
-			    $('#Other_Names').focusout(function () {
-			        postSaveEditorData('Other_Names', Other_Names_editor.root.innerHTML);
+			function setChildrenBody() {
+			    Children_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Children'));
+			    $('#Children').focusout(function () {
+			        postSaveEditorData('Children', Children_editor.root.innerHTML);
 			    });
 			};
 
@@ -388,45 +366,17 @@
 			    });
 			};
 
-			function setPhysical_DescriptionBody() {
-			    Physical_Description_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Physical_Description'));
-			    $('#Physical_Description').focusout(function () {
-			        postSaveEditorData('Physical_Description', Physical_Description_editor.root.innerHTML);
+			function setSiblingsBody() {
+			    Siblings_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Siblings'));
+			    $('#Siblings').focusout(function () {
+			        postSaveEditorData('Siblings', Siblings_editor.root.innerHTML);
 			    });
 			};
 
-			function setPrayersBody() {
-			    Prayers_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Prayers'));
-			    $('#Prayers').focusout(function () {
-			        postSaveEditorData('Prayers', Prayers_editor.root.innerHTML);
-			    });
-			};
-
-			function setPrivate_NotesBody() {
-			    Private_Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Private_Notes'));
-			    $('#Private_Notes').focusout(function () {
-			        postSaveEditorData('Private_Notes', Private_Notes_editor.root.innerHTML);
-			    });
-			};
-
-			function setRelated_landmarksBody() {
-			    Related_landmarks_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Related_landmarks'));
-			    $('#Related_landmarks').focusout(function () {
-			        postSaveEditorData('Related_landmarks', Related_landmarks_editor.root.innerHTML);
-			    });
-			};
-
-			function setRelated_racesBody() {
-			    Related_races_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Related_races'));
-			    $('#Related_races').focusout(function () {
-			        postSaveEditorData('Related_races', Related_races_editor.root.innerHTML);
-			    });
-			};
-
-			function setRelated_townsBody() {
-			    Related_towns_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Related_towns'));
-			    $('#Related_towns').focusout(function () {
-			        postSaveEditorData('Related_towns', Related_towns_editor.root.innerHTML);
+			function setFlorasBody() {
+			    Floras_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Floras'));
+			    $('#Floras').focusout(function () {
+			        postSaveEditorData('Floras', Floras_editor.root.innerHTML);
 			    });
 			};
 
@@ -444,24 +394,17 @@
 			    });
 			};
 
-			function setRitualsBody() {
-			    Rituals_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Rituals'));
-			    $('#Rituals').focusout(function () {
-			        postSaveEditorData('Rituals', Rituals_editor.root.innerHTML);
+			function setCreaturesBody() {
+			    Creatures_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Creatures'));
+			    $('#Creatures').focusout(function () {
+			        postSaveEditorData('Creatures', Creatures_editor.root.innerHTML);
 			    });
 			};
 
-			function setSiblingsBody() {
-			    Siblings_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Siblings'));
-			    $('#Siblings').focusout(function () {
-			        postSaveEditorData('Siblings', Siblings_editor.root.innerHTML);
-			    });
-			};
-
-			function setStrengthsBody() {
-			    Strengths_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Strengths'));
-			    $('#Strengths').focusout(function () {
-			        postSaveEditorData('Strengths', Strengths_editor.root.innerHTML);
+			function setElementsBody() {
+			    Elements_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Elements'));
+			    $('#Elements').focusout(function () {
+			        postSaveEditorData('Elements', Elements_editor.root.innerHTML);
 			    });
 			};
 
@@ -472,10 +415,73 @@
 			    });
 			};
 
-			function setTagsBody() {
-			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Tags'));
-			    $('#Tags').focusout(function () {
-			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
+			function setAbilitiesBody() {
+			    Abilities_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Abilities'));
+			    $('#Abilities').focusout(function () {
+			        postSaveEditorData('Abilities', Abilities_editor.root.innerHTML);
+			    });
+			};
+
+			function setConditionsBody() {
+			    Conditions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Conditions'));
+			    $('#Conditions').focusout(function () {
+			        postSaveEditorData('Conditions', Conditions_editor.root.innerHTML);
+			    });
+			};
+
+			function setStrengthsBody() {
+			    Strengths_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Strengths'));
+			    $('#Strengths').focusout(function () {
+			        postSaveEditorData('Strengths', Strengths_editor.root.innerHTML);
+			    });
+			};
+
+			function setWeaknessesBody() {
+			    Weaknesses_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Weaknesses'));
+			    $('#Weaknesses').focusout(function () {
+			        postSaveEditorData('Weaknesses', Weaknesses_editor.root.innerHTML);
+			    });
+			};
+
+			function setHuman_InteractionBody() {
+			    Human_Interaction_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Human_Interaction'));
+			    $('#Human_Interaction').focusout(function () {
+			        postSaveEditorData('Human_Interaction', Human_Interaction_editor.root.innerHTML);
+			    });
+			};
+
+			function setRelated_townsBody() {
+			    Related_towns_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Related_towns'));
+			    $('#Related_towns').focusout(function () {
+			        postSaveEditorData('Related_towns', Related_towns_editor.root.innerHTML);
+			    });
+			};
+
+			function setRelated_racesBody() {
+			    Related_races_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Related_races'));
+			    $('#Related_races').focusout(function () {
+			        postSaveEditorData('Related_races', Related_races_editor.root.innerHTML);
+			    });
+			};
+
+			function setRelated_landmarksBody() {
+			    Related_landmarks_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Related_landmarks'));
+			    $('#Related_landmarks').focusout(function () {
+			        postSaveEditorData('Related_landmarks', Related_landmarks_editor.root.innerHTML);
+			    });
+			};
+
+			function setPrayersBody() {
+			    Prayers_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Prayers'));
+			    $('#Prayers').focusout(function () {
+			        postSaveEditorData('Prayers', Prayers_editor.root.innerHTML);
+			    });
+			};
+
+			function setRitualsBody() {
+			    Rituals_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Rituals'));
+			    $('#Rituals').focusout(function () {
+			        postSaveEditorData('Rituals', Rituals_editor.root.innerHTML);
 			    });
 			};
 
@@ -486,30 +492,50 @@
 			    });
 			};
 
-			function setUniverseBody() {
-			    $('#deitiesModel_Universe').val('@Model.deitiesModel.Universe');
-			};
-
-			function setWeaknessesBody() {
-			    Weaknesses_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Weaknesses'));
-			    $('#Weaknesses').focusout(function () {
-			        postSaveEditorData('Weaknesses', Weaknesses_editor.root.innerHTML);
+			function setFamily_HistoryBody() {
+			    Family_History_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Family_History'));
+			    $('#Family_History').focusout(function () {
+			        postSaveEditorData('Family_History', Family_History_editor.root.innerHTML);
 			    });
 			};
 
-			function setWeightBody() {
-			    $('#deitiesModel_Weight').val('@Model.deitiesModel.Weight');
+			function setNotable_EventsBody() {
+			    Notable_Events_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Notable_Events'));
+			    $('#Notable_Events').focusout(function () {
+			        postSaveEditorData('Notable_Events', Notable_Events_editor.root.innerHTML);
+			    });
+			};
+
+			function setLife_StoryBody() {
+			    Life_Story_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Life_Story'));
+			    $('#Life_Story').focusout(function () {
+			        postSaveEditorData('Life_Story', Life_Story_editor.root.innerHTML);
+			    });
+			};
+
+			function setPrivate_NotesBody() {
+			    Private_Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Private_Notes'));
+			    $('#Private_Notes').focusout(function () {
+			        postSaveEditorData('Private_Notes', Private_Notes_editor.root.innerHTML);
+			    });
+			};
+
+			function setNotesBody() {
+			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.deitiesModel.Notes'));
+			    $('#Notes').focusout(function () {
+			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
+			    });
 			};
 
 
 
         $(document).ready(function () {
-            			$('#deitiesModel_Height').blur(function() {
-			    postSaveData('Height', $('#deitiesModel_Height').val());
+            			$('#deitiesModel_Name').blur(function() {
+			    postSaveData('Name', $('#deitiesModel_Name').val());
 			});
 
-			$('#deitiesModel_Name').blur(function() {
-			    postSaveData('Name', $('#deitiesModel_Name').val());
+			$('#deitiesModel_Height').blur(function() {
+			    postSaveData('Height', $('#deitiesModel_Height').val());
 			});
 
 			$('#deitiesModel_Weight').blur(function() {
@@ -567,10 +593,18 @@
                         $('.roller').width(progress + '%');
                     });
 
-                    self.on("queuecomplete", function (progress) {
-                        $('.meter').delay(999).slideUp(999);
-                        console.log("Files uploaded");
-                        location.reload();
+                    self.on('error', function (file, response) {
+                        console.log("Files upload Error");
+                        showModal(response.message);
+                    });
+                    self.on('success', function () {
+                        self.on("queuecomplete", function () {
+                            $('.meter').delay(999).slideUp(999);
+                            console.log("Files uploaded");
+                            var locUrL = location.href.replace('#Gallery_panel', '') + "#Gallery_panel";
+                            window.location.href = locUrL;
+                            location.reload();
+                        });
                     });
                     self.on("complete", function (file) {
                         self.removeFile(file);

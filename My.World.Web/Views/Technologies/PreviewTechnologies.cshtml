@@ -145,33 +145,13 @@
    
     <script type="text/javascript">
     
-		function setCharactersBody() {
-		    html = htmlDecode('@Model.technologiesModel.Characters');
-		    $('#Characters').append(html);
+		function setTagsBody() {
+		    html = htmlDecode('@Model.technologiesModel.Tags');
+		    $('#Tags').append(html);
 		};
 
-		function setChild_technologiesBody() {
-		    html = htmlDecode('@Model.technologiesModel.Child_technologies');
-		    $('#Child_technologies').append(html);
-		};
-
-		function setColorsBody() {
-		    html = htmlDecode('@Model.technologiesModel.Colors');
-		    $('#Colors').append(html);
-		};
-
-		function setCostBody() {
-		    $('#technologiesModel_Cost').val('@Model.technologiesModel.Cost');
-		};
-
-		function setCountriesBody() {
-		    html = htmlDecode('@Model.technologiesModel.Countries');
-		    $('#Countries').append(html);
-		};
-
-		function setCreaturesBody() {
-		    html = htmlDecode('@Model.technologiesModel.Creatures');
-		    $('#Creatures').append(html);
+		function setNameBody() {
+		    $('#technologiesModel_Name').val('@Model.technologiesModel.Name');
 		};
 
 		function setDescriptionBody() {
@@ -179,83 +159,13 @@
 		    $('#Description').append(html);
 		};
 
-		function setGroupsBody() {
-		    html = htmlDecode('@Model.technologiesModel.Groups');
-		    $('#Groups').append(html);
-		};
-
-		function setHow_It_WorksBody() {
-		    html = htmlDecode('@Model.technologiesModel.How_It_Works');
-		    $('#How_It_Works').append(html);
-		};
-
-		function setMagic_effectsBody() {
-		    html = htmlDecode('@Model.technologiesModel.Magic_effects');
-		    $('#Magic_effects').append(html);
-		};
-
-		function setManufacturing_ProcessBody() {
-		    html = htmlDecode('@Model.technologiesModel.Manufacturing_Process');
-		    $('#Manufacturing_Process').append(html);
-		};
-
-		function setMaterialsBody() {
-		    html = htmlDecode('@Model.technologiesModel.Materials');
-		    $('#Materials').append(html);
-		};
-
-		function setNameBody() {
-		    $('#technologiesModel_Name').val('@Model.technologiesModel.Name');
-		};
-
-		function setNotesBody() {
-		    html = htmlDecode('@Model.technologiesModel.Notes');
-		    $('#Notes').append(html);
-		};
-
 		function setOther_NamesBody() {
 		    html = htmlDecode('@Model.technologiesModel.Other_Names');
 		    $('#Other_Names').append(html);
 		};
 
-		function setParent_technologiesBody() {
-		    html = htmlDecode('@Model.technologiesModel.Parent_technologies');
-		    $('#Parent_technologies').append(html);
-		};
-
-		function setPhysical_DescriptionBody() {
-		    html = htmlDecode('@Model.technologiesModel.Physical_Description');
-		    $('#Physical_Description').append(html);
-		};
-
-		function setPlanetsBody() {
-		    html = htmlDecode('@Model.technologiesModel.Planets');
-		    $('#Planets').append(html);
-		};
-
-		function setPrivate_NotesBody() {
-		    html = htmlDecode('@Model.technologiesModel.Private_Notes');
-		    $('#Private_Notes').append(html);
-		};
-
-		function setPurposeBody() {
-		    html = htmlDecode('@Model.technologiesModel.Purpose');
-		    $('#Purpose').append(html);
-		};
-
-		function setRarityBody() {
-		    html = htmlDecode('@Model.technologiesModel.Rarity');
-		    $('#Rarity').append(html);
-		};
-
-		function setRelated_technologiesBody() {
-		    html = htmlDecode('@Model.technologiesModel.Related_technologies');
-		    $('#Related_technologies').append(html);
-		};
-
-		function setResources_UsedBody() {
-		    html = htmlDecode('@Model.technologiesModel.Resources_Used');
-		    $('#Resources_Used').append(html);
+		function setUniverseBody() {
+		    $('#technologiesModel_Universe').val('@Model.technologiesModel.Universe');
 		};
 
 		function setSales_ProcessBody() {
@@ -263,13 +173,43 @@
 		    $('#Sales_Process').append(html);
 		};
 
-		function setSizeBody() {
-		    $('#technologiesModel_Size').val('@Model.technologiesModel.Size');
+		function setMaterialsBody() {
+		    html = htmlDecode('@Model.technologiesModel.Materials');
+		    $('#Materials').append(html);
 		};
 
-		function setTagsBody() {
-		    html = htmlDecode('@Model.technologiesModel.Tags');
-		    $('#Tags').append(html);
+		function setManufacturing_ProcessBody() {
+		    html = htmlDecode('@Model.technologiesModel.Manufacturing_Process');
+		    $('#Manufacturing_Process').append(html);
+		};
+
+		function setCostBody() {
+		    $('#technologiesModel_Cost').val('@Model.technologiesModel.Cost');
+		};
+
+		function setPlanetsBody() {
+		    html = htmlDecode('@Model.technologiesModel.Planets');
+		    $('#Planets').append(html);
+		};
+
+		function setRarityBody() {
+		    html = htmlDecode('@Model.technologiesModel.Rarity');
+		    $('#Rarity').append(html);
+		};
+
+		function setCreaturesBody() {
+		    html = htmlDecode('@Model.technologiesModel.Creatures');
+		    $('#Creatures').append(html);
+		};
+
+		function setGroupsBody() {
+		    html = htmlDecode('@Model.technologiesModel.Groups');
+		    $('#Groups').append(html);
+		};
+
+		function setCountriesBody() {
+		    html = htmlDecode('@Model.technologiesModel.Countries');
+		    $('#Countries').append(html);
 		};
 
 		function setTownsBody() {
@@ -277,45 +217,105 @@
 		    $('#Towns').append(html);
 		};
 
-		function setUniverseBody() {
-		    $('#technologiesModel_Universe').val('@Model.technologiesModel.Universe');
+		function setCharactersBody() {
+		    html = htmlDecode('@Model.technologiesModel.Characters');
+		    $('#Characters').append(html);
+		};
+
+		function setMagic_effectsBody() {
+		    html = htmlDecode('@Model.technologiesModel.Magic_effects');
+		    $('#Magic_effects').append(html);
+		};
+
+		function setResources_UsedBody() {
+		    html = htmlDecode('@Model.technologiesModel.Resources_Used');
+		    $('#Resources_Used').append(html);
+		};
+
+		function setHow_It_WorksBody() {
+		    html = htmlDecode('@Model.technologiesModel.How_It_Works');
+		    $('#How_It_Works').append(html);
+		};
+
+		function setPurposeBody() {
+		    html = htmlDecode('@Model.technologiesModel.Purpose');
+		    $('#Purpose').append(html);
 		};
 
 		function setWeightBody() {
 		    $('#technologiesModel_Weight').val('@Model.technologiesModel.Weight');
 		};
 
+		function setPhysical_DescriptionBody() {
+		    html = htmlDecode('@Model.technologiesModel.Physical_Description');
+		    $('#Physical_Description').append(html);
+		};
+
+		function setSizeBody() {
+		    $('#technologiesModel_Size').val('@Model.technologiesModel.Size');
+		};
+
+		function setColorsBody() {
+		    html = htmlDecode('@Model.technologiesModel.Colors');
+		    $('#Colors').append(html);
+		};
+
+		function setRelated_technologiesBody() {
+		    html = htmlDecode('@Model.technologiesModel.Related_technologies');
+		    $('#Related_technologies').append(html);
+		};
+
+		function setParent_technologiesBody() {
+		    html = htmlDecode('@Model.technologiesModel.Parent_technologies');
+		    $('#Parent_technologies').append(html);
+		};
+
+		function setChild_technologiesBody() {
+		    html = htmlDecode('@Model.technologiesModel.Child_technologies');
+		    $('#Child_technologies').append(html);
+		};
+
+		function setNotesBody() {
+		    html = htmlDecode('@Model.technologiesModel.Notes');
+		    $('#Notes').append(html);
+		};
+
+		function setPrivate_NotesBody() {
+		    html = htmlDecode('@Model.technologiesModel.Private_Notes');
+		    $('#Private_Notes').append(html);
+		};
+
 
 
         $(document).ready(function () {
-			setCharactersBody();
-			setChild_technologiesBody();
-			setColorsBody();
-			setCostBody();
-			setCountriesBody();
-			setCreaturesBody();
-			setDescriptionBody();
-			setGroupsBody();
-			setHow_It_WorksBody();
-			setMagic_effectsBody();
-			setManufacturing_ProcessBody();
-			setMaterialsBody();
-			setNameBody();
-			setNotesBody();
-			setOther_NamesBody();
-			setParent_technologiesBody();
-			setPhysical_DescriptionBody();
-			setPlanetsBody();
-			setPrivate_NotesBody();
-			setPurposeBody();
-			setRarityBody();
-			setRelated_technologiesBody();
-			setResources_UsedBody();
-			setSales_ProcessBody();
-			setSizeBody();
 			setTagsBody();
+			setNameBody();
+			setDescriptionBody();
+			setOther_NamesBody();
+			setSales_ProcessBody();
+			setMaterialsBody();
+			setManufacturing_ProcessBody();
+			setCostBody();
+			setPlanetsBody();
+			setRarityBody();
+			setCreaturesBody();
+			setGroupsBody();
+			setCountriesBody();
 			setTownsBody();
+			setCharactersBody();
+			setMagic_effectsBody();
+			setResources_UsedBody();
+			setHow_It_WorksBody();
+			setPurposeBody();
 			setWeightBody();
+			setPhysical_DescriptionBody();
+			setSizeBody();
+			setColorsBody();
+			setRelated_technologiesBody();
+			setParent_technologiesBody();
+			setChild_technologiesBody();
+			setNotesBody();
+			setPrivate_NotesBody();
 
         });
 

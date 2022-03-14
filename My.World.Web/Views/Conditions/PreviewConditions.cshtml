@@ -145,9 +145,17 @@
    
     <script type="text/javascript">
     
-		function setAlternate_namesBody() {
-		    html = htmlDecode('@Model.conditionsModel.Alternate_names');
-		    $('#Alternate_names').append(html);
+		function setTagsBody() {
+		    html = htmlDecode('@Model.conditionsModel.Tags');
+		    $('#Tags').append(html);
+		};
+
+		function setNameBody() {
+		    $('#conditionsModel_Name').val('@Model.conditionsModel.Name');
+		};
+
+		function setUniverseBody() {
+		    $('#conditionsModel_Universe').val('@Model.conditionsModel.Universe');
 		};
 
 		function setDescriptionBody() {
@@ -155,108 +163,14 @@
 		    $('#Description').append(html);
 		};
 
-		function setDiagnostic_methodBody() {
-		    html = htmlDecode('@Model.conditionsModel.Diagnostic_method');
-		    $('#Diagnostic_method').append(html);
+		function setType_of_conditionBody() {
+		    html = htmlDecode('@Model.conditionsModel.Type_of_condition');
+		    $('#Type_of_condition').append(html);
 		};
 
-		function setDurationBody() {
-		    html = htmlDecode('@Model.conditionsModel.Duration');
-		    $('#Duration').append(html);
-		};
-
-		function setEnvironmental_factorsBody() {
-		    html = htmlDecode('@Model.conditionsModel.Environmental_factors');
-		    $('#Environmental_factors').append(html);
-		};
-
-		function setEpidemiologyBody() {
-		    html = htmlDecode('@Model.conditionsModel.Epidemiology');
-		    $('#Epidemiology').append(html);
-		};
-
-		function setEvolutionBody() {
-		    html = htmlDecode('@Model.conditionsModel.Evolution');
-		    $('#Evolution').append(html);
-		};
-
-		function setGenetic_factorsBody() {
-		    html = htmlDecode('@Model.conditionsModel.Genetic_factors');
-		    $('#Genetic_factors').append(html);
-		};
-
-		function setImmunizationBody() {
-		    html = htmlDecode('@Model.conditionsModel.Immunization');
-		    $('#Immunization').append(html);
-		};
-
-		function setLifestyle_factorsBody() {
-		    html = htmlDecode('@Model.conditionsModel.Lifestyle_factors');
-		    $('#Lifestyle_factors').append(html);
-		};
-
-		function setMedicationBody() {
-		    html = htmlDecode('@Model.conditionsModel.Medication');
-		    $('#Medication').append(html);
-		};
-
-		function setMental_effectsBody() {
-		    html = htmlDecode('@Model.conditionsModel.Mental_effects');
-		    $('#Mental_effects').append(html);
-		};
-
-		function setNameBody() {
-		    $('#conditionsModel_Name').val('@Model.conditionsModel.Name');
-		};
-
-		function setNotesBody() {
-		    html = htmlDecode('@Model.conditionsModel.Notes');
-		    $('#Notes').append(html);
-		};
-
-		function setOriginBody() {
-		    html = htmlDecode('@Model.conditionsModel.Origin');
-		    $('#Origin').append(html);
-		};
-
-		function setPreventionBody() {
-		    html = htmlDecode('@Model.conditionsModel.Prevention');
-		    $('#Prevention').append(html);
-		};
-
-		function setPrivate_NotesBody() {
-		    html = htmlDecode('@Model.conditionsModel.Private_Notes');
-		    $('#Private_Notes').append(html);
-		};
-
-		function setPrognosisBody() {
-		    html = htmlDecode('@Model.conditionsModel.Prognosis');
-		    $('#Prognosis').append(html);
-		};
-
-		function setRarityBody() {
-		    html = htmlDecode('@Model.conditionsModel.Rarity');
-		    $('#Rarity').append(html);
-		};
-
-		function setSpecialty_FieldBody() {
-		    html = htmlDecode('@Model.conditionsModel.Specialty_Field');
-		    $('#Specialty_Field').append(html);
-		};
-
-		function setSymbolismBody() {
-		    html = htmlDecode('@Model.conditionsModel.Symbolism');
-		    $('#Symbolism').append(html);
-		};
-
-		function setSymptomsBody() {
-		    html = htmlDecode('@Model.conditionsModel.Symptoms');
-		    $('#Symptoms').append(html);
-		};
-
-		function setTagsBody() {
-		    html = htmlDecode('@Model.conditionsModel.Tags');
-		    $('#Tags').append(html);
+		function setAlternate_namesBody() {
+		    html = htmlDecode('@Model.conditionsModel.Alternate_names');
+		    $('#Alternate_names').append(html);
 		};
 
 		function setTransmissionBody() {
@@ -264,18 +178,29 @@
 		    $('#Transmission').append(html);
 		};
 
-		function setTreatmentBody() {
-		    html = htmlDecode('@Model.conditionsModel.Treatment');
-		    $('#Treatment').append(html);
+		function setGenetic_factorsBody() {
+		    html = htmlDecode('@Model.conditionsModel.Genetic_factors');
+		    $('#Genetic_factors').append(html);
 		};
 
-		function setType_of_conditionBody() {
-		    html = htmlDecode('@Model.conditionsModel.Type_of_condition');
-		    $('#Type_of_condition').append(html);
+		function setEnvironmental_factorsBody() {
+		    html = htmlDecode('@Model.conditionsModel.Environmental_factors');
+		    $('#Environmental_factors').append(html);
 		};
 
-		function setUniverseBody() {
-		    $('#conditionsModel_Universe').val('@Model.conditionsModel.Universe');
+		function setLifestyle_factorsBody() {
+		    html = htmlDecode('@Model.conditionsModel.Lifestyle_factors');
+		    $('#Lifestyle_factors').append(html);
+		};
+
+		function setEpidemiologyBody() {
+		    html = htmlDecode('@Model.conditionsModel.Epidemiology');
+		    $('#Epidemiology').append(html);
+		};
+
+		function setDurationBody() {
+		    html = htmlDecode('@Model.conditionsModel.Duration');
+		    $('#Duration').append(html);
 		};
 
 		function setVariationsBody() {
@@ -283,42 +208,117 @@
 		    $('#Variations').append(html);
 		};
 
+		function setPrognosisBody() {
+		    html = htmlDecode('@Model.conditionsModel.Prognosis');
+		    $('#Prognosis').append(html);
+		};
+
+		function setSymptomsBody() {
+		    html = htmlDecode('@Model.conditionsModel.Symptoms');
+		    $('#Symptoms').append(html);
+		};
+
+		function setMental_effectsBody() {
+		    html = htmlDecode('@Model.conditionsModel.Mental_effects');
+		    $('#Mental_effects').append(html);
+		};
+
 		function setVisual_effectsBody() {
 		    html = htmlDecode('@Model.conditionsModel.Visual_effects');
 		    $('#Visual_effects').append(html);
 		};
 
+		function setPreventionBody() {
+		    html = htmlDecode('@Model.conditionsModel.Prevention');
+		    $('#Prevention').append(html);
+		};
+
+		function setTreatmentBody() {
+		    html = htmlDecode('@Model.conditionsModel.Treatment');
+		    $('#Treatment').append(html);
+		};
+
+		function setMedicationBody() {
+		    html = htmlDecode('@Model.conditionsModel.Medication');
+		    $('#Medication').append(html);
+		};
+
+		function setImmunizationBody() {
+		    html = htmlDecode('@Model.conditionsModel.Immunization');
+		    $('#Immunization').append(html);
+		};
+
+		function setDiagnostic_methodBody() {
+		    html = htmlDecode('@Model.conditionsModel.Diagnostic_method');
+		    $('#Diagnostic_method').append(html);
+		};
+
+		function setSymbolismBody() {
+		    html = htmlDecode('@Model.conditionsModel.Symbolism');
+		    $('#Symbolism').append(html);
+		};
+
+		function setSpecialty_FieldBody() {
+		    html = htmlDecode('@Model.conditionsModel.Specialty_Field');
+		    $('#Specialty_Field').append(html);
+		};
+
+		function setRarityBody() {
+		    html = htmlDecode('@Model.conditionsModel.Rarity');
+		    $('#Rarity').append(html);
+		};
+
+		function setEvolutionBody() {
+		    html = htmlDecode('@Model.conditionsModel.Evolution');
+		    $('#Evolution').append(html);
+		};
+
+		function setOriginBody() {
+		    html = htmlDecode('@Model.conditionsModel.Origin');
+		    $('#Origin').append(html);
+		};
+
+		function setPrivate_NotesBody() {
+		    html = htmlDecode('@Model.conditionsModel.Private_Notes');
+		    $('#Private_Notes').append(html);
+		};
+
+		function setNotesBody() {
+		    html = htmlDecode('@Model.conditionsModel.Notes');
+		    $('#Notes').append(html);
+		};
+
 
 
         $(document).ready(function () {
-			setAlternate_namesBody();
-			setDescriptionBody();
-			setDiagnostic_methodBody();
-			setDurationBody();
-			setEnvironmental_factorsBody();
-			setEpidemiologyBody();
-			setEvolutionBody();
-			setGenetic_factorsBody();
-			setImmunizationBody();
-			setLifestyle_factorsBody();
-			setMedicationBody();
-			setMental_effectsBody();
-			setNameBody();
-			setNotesBody();
-			setOriginBody();
-			setPreventionBody();
-			setPrivate_NotesBody();
-			setPrognosisBody();
-			setRarityBody();
-			setSpecialty_FieldBody();
-			setSymbolismBody();
-			setSymptomsBody();
 			setTagsBody();
-			setTransmissionBody();
-			setTreatmentBody();
+			setNameBody();
+			setDescriptionBody();
 			setType_of_conditionBody();
+			setAlternate_namesBody();
+			setTransmissionBody();
+			setGenetic_factorsBody();
+			setEnvironmental_factorsBody();
+			setLifestyle_factorsBody();
+			setEpidemiologyBody();
+			setDurationBody();
 			setVariationsBody();
+			setPrognosisBody();
+			setSymptomsBody();
+			setMental_effectsBody();
 			setVisual_effectsBody();
+			setPreventionBody();
+			setTreatmentBody();
+			setMedicationBody();
+			setImmunizationBody();
+			setDiagnostic_methodBody();
+			setSymbolismBody();
+			setSpecialty_FieldBody();
+			setRarityBody();
+			setEvolutionBody();
+			setOriginBody();
+			setPrivate_NotesBody();
+			setNotesBody();
 
         });
 

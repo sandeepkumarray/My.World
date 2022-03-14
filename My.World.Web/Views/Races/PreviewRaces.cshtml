@@ -145,100 +145,13 @@
    
     <script type="text/javascript">
     
-		function setBeliefsBody() {
-		    html = htmlDecode('@Model.racesModel.Beliefs');
-		    $('#Beliefs').append(html);
-		};
-
-		function setBody_shapeBody() {
-		    $('#racesModel_Body_shape').val('@Model.racesModel.Body_shape');
-		};
-
-		function setConditionsBody() {
-		    html = htmlDecode('@Model.racesModel.Conditions');
-		    $('#Conditions').append(html);
-		};
-
-		function setDescriptionBody() {
-		    html = htmlDecode('@Model.racesModel.Description');
-		    $('#Description').append(html);
-		};
-
-		function setEconomicsBody() {
-		    html = htmlDecode('@Model.racesModel.Economics');
-		    $('#Economics').append(html);
-		};
-
-		function setFamous_figuresBody() {
-		    html = htmlDecode('@Model.racesModel.Famous_figures');
-		    $('#Famous_figures').append(html);
-		};
-
-		function setFavorite_foodsBody() {
-		    html = htmlDecode('@Model.racesModel.Favorite_foods');
-		    $('#Favorite_foods').append(html);
-		};
-
-		function setGeneral_heightBody() {
-		    $('#racesModel_General_height').val('@Model.racesModel.General_height');
-		};
-
-		function setGeneral_weightBody() {
-		    $('#racesModel_General_weight').val('@Model.racesModel.General_weight');
-		};
-
-		function setGovernmentsBody() {
-		    html = htmlDecode('@Model.racesModel.Governments');
-		    $('#Governments').append(html);
-		};
-
-		function setNameBody() {
-		    $('#racesModel_Name').val('@Model.racesModel.Name');
-		};
-
-		function setNotable_eventsBody() {
-		    html = htmlDecode('@Model.racesModel.Notable_events');
-		    $('#Notable_events').append(html);
-		};
-
-		function setNotable_featuresBody() {
-		    html = htmlDecode('@Model.racesModel.Notable_features');
-		    $('#Notable_features').append(html);
-		};
-
-		function setNotesBody() {
-		    html = htmlDecode('@Model.racesModel.Notes');
-		    $('#Notes').append(html);
-		};
-
-		function setOccupationsBody() {
-		    html = htmlDecode('@Model.racesModel.Occupations');
-		    $('#Occupations').append(html);
-		};
-
 		function setOther_NamesBody() {
 		    html = htmlDecode('@Model.racesModel.Other_Names');
 		    $('#Other_Names').append(html);
 		};
 
-		function setPhysical_varianceBody() {
-		    html = htmlDecode('@Model.racesModel.Physical_variance');
-		    $('#Physical_variance').append(html);
-		};
-
-		function setPrivate_notesBody() {
-		    html = htmlDecode('@Model.racesModel.Private_notes');
-		    $('#Private_notes').append(html);
-		};
-
-		function setSkin_colorsBody() {
-		    html = htmlDecode('@Model.racesModel.Skin_colors');
-		    $('#Skin_colors').append(html);
-		};
-
-		function setStrengthsBody() {
-		    html = htmlDecode('@Model.racesModel.Strengths');
-		    $('#Strengths').append(html);
+		function setUniverseBody() {
+		    $('#racesModel_Universe').val('@Model.racesModel.Universe');
 		};
 
 		function setTagsBody() {
@@ -246,14 +159,27 @@
 		    $('#Tags').append(html);
 		};
 
-		function setTechnologiesBody() {
-		    html = htmlDecode('@Model.racesModel.Technologies');
-		    $('#Technologies').append(html);
+		function setDescriptionBody() {
+		    html = htmlDecode('@Model.racesModel.Description');
+		    $('#Description').append(html);
 		};
 
-		function setTraditionsBody() {
-		    html = htmlDecode('@Model.racesModel.Traditions');
-		    $('#Traditions').append(html);
+		function setNameBody() {
+		    $('#racesModel_Name').val('@Model.racesModel.Name');
+		};
+
+		function setGeneral_weightBody() {
+		    $('#racesModel_General_weight').val('@Model.racesModel.General_weight');
+		};
+
+		function setNotable_featuresBody() {
+		    html = htmlDecode('@Model.racesModel.Notable_features');
+		    $('#Notable_features').append(html);
+		};
+
+		function setPhysical_varianceBody() {
+		    html = htmlDecode('@Model.racesModel.Physical_variance');
+		    $('#Physical_variance').append(html);
 		};
 
 		function setTypical_clothingBody() {
@@ -261,8 +187,17 @@
 		    $('#Typical_clothing').append(html);
 		};
 
-		function setUniverseBody() {
-		    $('#racesModel_Universe').val('@Model.racesModel.Universe');
+		function setBody_shapeBody() {
+		    $('#racesModel_Body_shape').val('@Model.racesModel.Body_shape');
+		};
+
+		function setSkin_colorsBody() {
+		    html = htmlDecode('@Model.racesModel.Skin_colors');
+		    $('#Skin_colors').append(html);
+		};
+
+		function setGeneral_heightBody() {
+		    $('#racesModel_General_height').val('@Model.racesModel.General_height');
 		};
 
 		function setWeaknessesBody() {
@@ -270,34 +205,99 @@
 		    $('#Weaknesses').append(html);
 		};
 
+		function setConditionsBody() {
+		    html = htmlDecode('@Model.racesModel.Conditions');
+		    $('#Conditions').append(html);
+		};
+
+		function setStrengthsBody() {
+		    html = htmlDecode('@Model.racesModel.Strengths');
+		    $('#Strengths').append(html);
+		};
+
+		function setFavorite_foodsBody() {
+		    html = htmlDecode('@Model.racesModel.Favorite_foods');
+		    $('#Favorite_foods').append(html);
+		};
+
+		function setFamous_figuresBody() {
+		    html = htmlDecode('@Model.racesModel.Famous_figures');
+		    $('#Famous_figures').append(html);
+		};
+
+		function setTraditionsBody() {
+		    html = htmlDecode('@Model.racesModel.Traditions');
+		    $('#Traditions').append(html);
+		};
+
+		function setBeliefsBody() {
+		    html = htmlDecode('@Model.racesModel.Beliefs');
+		    $('#Beliefs').append(html);
+		};
+
+		function setGovernmentsBody() {
+		    html = htmlDecode('@Model.racesModel.Governments');
+		    $('#Governments').append(html);
+		};
+
+		function setTechnologiesBody() {
+		    html = htmlDecode('@Model.racesModel.Technologies');
+		    $('#Technologies').append(html);
+		};
+
+		function setOccupationsBody() {
+		    html = htmlDecode('@Model.racesModel.Occupations');
+		    $('#Occupations').append(html);
+		};
+
+		function setEconomicsBody() {
+		    html = htmlDecode('@Model.racesModel.Economics');
+		    $('#Economics').append(html);
+		};
+
+		function setNotable_eventsBody() {
+		    html = htmlDecode('@Model.racesModel.Notable_events');
+		    $('#Notable_events').append(html);
+		};
+
+		function setNotesBody() {
+		    html = htmlDecode('@Model.racesModel.Notes');
+		    $('#Notes').append(html);
+		};
+
+		function setPrivate_notesBody() {
+		    html = htmlDecode('@Model.racesModel.Private_notes');
+		    $('#Private_notes').append(html);
+		};
+
 
 
         $(document).ready(function () {
-			setBeliefsBody();
-			setBody_shapeBody();
-			setConditionsBody();
-			setDescriptionBody();
-			setEconomicsBody();
-			setFamous_figuresBody();
-			setFavorite_foodsBody();
-			setGeneral_heightBody();
-			setGeneral_weightBody();
-			setGovernmentsBody();
-			setNameBody();
-			setNotable_eventsBody();
-			setNotable_featuresBody();
-			setNotesBody();
-			setOccupationsBody();
 			setOther_NamesBody();
-			setPhysical_varianceBody();
-			setPrivate_notesBody();
-			setSkin_colorsBody();
-			setStrengthsBody();
 			setTagsBody();
-			setTechnologiesBody();
-			setTraditionsBody();
+			setDescriptionBody();
+			setNameBody();
+			setGeneral_weightBody();
+			setNotable_featuresBody();
+			setPhysical_varianceBody();
 			setTypical_clothingBody();
+			setBody_shapeBody();
+			setSkin_colorsBody();
+			setGeneral_heightBody();
 			setWeaknessesBody();
+			setConditionsBody();
+			setStrengthsBody();
+			setFavorite_foodsBody();
+			setFamous_figuresBody();
+			setTraditionsBody();
+			setBeliefsBody();
+			setGovernmentsBody();
+			setTechnologiesBody();
+			setOccupationsBody();
+			setEconomicsBody();
+			setNotable_eventsBody();
+			setNotesBody();
+			setPrivate_notesBody();
 
         });
 

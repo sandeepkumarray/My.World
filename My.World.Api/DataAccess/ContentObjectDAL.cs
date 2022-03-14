@@ -174,7 +174,7 @@ namespace My.World.Api.DataAccess
 
         }
 
-        public List<ContentObjectModel> GetAllContentObjectAttachments(long content_id, string content_type)
+        public List<ContentObjectModel> GetAllContentObjectAttachments(double content_id, string content_type)
         {
             List<ContentObjectModel> _return_value = null;
             try

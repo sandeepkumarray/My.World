@@ -145,14 +145,13 @@
    
     <script type="text/javascript">
     
-		function setArtifactsBody() {
-		    html = htmlDecode('@Model.religionsModel.Artifacts');
-		    $('#Artifacts').append(html);
+		function setTagsBody() {
+		    html = htmlDecode('@Model.religionsModel.Tags');
+		    $('#Tags').append(html);
 		};
 
-		function setDeitiesBody() {
-		    html = htmlDecode('@Model.religionsModel.Deities');
-		    $('#Deities').append(html);
+		function setNameBody() {
+		    $('#religionsModel_Name').val('@Model.religionsModel.Name');
 		};
 
 		function setDescriptionBody() {
@@ -160,18 +159,13 @@
 		    $('#Description').append(html);
 		};
 
-		function setHolidaysBody() {
-		    html = htmlDecode('@Model.religionsModel.Holidays');
-		    $('#Holidays').append(html);
+		function setOther_NamesBody() {
+		    html = htmlDecode('@Model.religionsModel.Other_Names');
+		    $('#Other_Names').append(html);
 		};
 
-		function setInitiation_processBody() {
-		    html = htmlDecode('@Model.religionsModel.Initiation_process');
-		    $('#Initiation_process').append(html);
-		};
-
-		function setNameBody() {
-		    $('#religionsModel_Name').val('@Model.religionsModel.Name');
+		function setUniverseBody() {
+		    $('#religionsModel_Universe').val('@Model.religionsModel.Universe');
 		};
 
 		function setNotable_figuresBody() {
@@ -179,9 +173,24 @@
 		    $('#Notable_figures').append(html);
 		};
 
-		function setNotesBody() {
-		    html = htmlDecode('@Model.religionsModel.Notes');
-		    $('#Notes').append(html);
+		function setOrigin_storyBody() {
+		    html = htmlDecode('@Model.religionsModel.Origin_story');
+		    $('#Origin_story').append(html);
+		};
+
+		function setArtifactsBody() {
+		    html = htmlDecode('@Model.religionsModel.Artifacts');
+		    $('#Artifacts').append(html);
+		};
+
+		function setPlaces_of_worshipBody() {
+		    html = htmlDecode('@Model.religionsModel.Places_of_worship');
+		    $('#Places_of_worship').append(html);
+		};
+
+		function setVision_of_paradiseBody() {
+		    html = htmlDecode('@Model.religionsModel.Vision_of_paradise');
+		    $('#Vision_of_paradise').append(html);
 		};
 
 		function setObligationsBody() {
@@ -189,19 +198,44 @@
 		    $('#Obligations').append(html);
 		};
 
-		function setOrigin_storyBody() {
-		    html = htmlDecode('@Model.religionsModel.Origin_story');
-		    $('#Origin_story').append(html);
+		function setWorship_servicesBody() {
+		    html = htmlDecode('@Model.religionsModel.Worship_services');
+		    $('#Worship_services').append(html);
 		};
 
-		function setOther_NamesBody() {
-		    html = htmlDecode('@Model.religionsModel.Other_Names');
-		    $('#Other_Names').append(html);
+		function setPropheciesBody() {
+		    html = htmlDecode('@Model.religionsModel.Prophecies');
+		    $('#Prophecies').append(html);
 		};
 
-		function setPlaces_of_worshipBody() {
-		    html = htmlDecode('@Model.religionsModel.Places_of_worship');
-		    $('#Places_of_worship').append(html);
+		function setTeachingsBody() {
+		    html = htmlDecode('@Model.religionsModel.Teachings');
+		    $('#Teachings').append(html);
+		};
+
+		function setDeitiesBody() {
+		    html = htmlDecode('@Model.religionsModel.Deities');
+		    $('#Deities').append(html);
+		};
+
+		function setInitiation_processBody() {
+		    html = htmlDecode('@Model.religionsModel.Initiation_process');
+		    $('#Initiation_process').append(html);
+		};
+
+		function setRitualsBody() {
+		    html = htmlDecode('@Model.religionsModel.Rituals');
+		    $('#Rituals').append(html);
+		};
+
+		function setHolidaysBody() {
+		    html = htmlDecode('@Model.religionsModel.Holidays');
+		    $('#Holidays').append(html);
+		};
+
+		function setTraditionsBody() {
+		    html = htmlDecode('@Model.religionsModel.Traditions');
+		    $('#Traditions').append(html);
 		};
 
 		function setPracticing_locationsBody() {
@@ -219,70 +253,36 @@
 		    $('#Private_notes').append(html);
 		};
 
-		function setPropheciesBody() {
-		    html = htmlDecode('@Model.religionsModel.Prophecies');
-		    $('#Prophecies').append(html);
-		};
-
-		function setRitualsBody() {
-		    html = htmlDecode('@Model.religionsModel.Rituals');
-		    $('#Rituals').append(html);
-		};
-
-		function setTagsBody() {
-		    html = htmlDecode('@Model.religionsModel.Tags');
-		    $('#Tags').append(html);
-		};
-
-		function setTeachingsBody() {
-		    html = htmlDecode('@Model.religionsModel.Teachings');
-		    $('#Teachings').append(html);
-		};
-
-		function setTraditionsBody() {
-		    html = htmlDecode('@Model.religionsModel.Traditions');
-		    $('#Traditions').append(html);
-		};
-
-		function setUniverseBody() {
-		    $('#religionsModel_Universe').val('@Model.religionsModel.Universe');
-		};
-
-		function setVision_of_paradiseBody() {
-		    html = htmlDecode('@Model.religionsModel.Vision_of_paradise');
-		    $('#Vision_of_paradise').append(html);
-		};
-
-		function setWorship_servicesBody() {
-		    html = htmlDecode('@Model.religionsModel.Worship_services');
-		    $('#Worship_services').append(html);
+		function setNotesBody() {
+		    html = htmlDecode('@Model.religionsModel.Notes');
+		    $('#Notes').append(html);
 		};
 
 
 
         $(document).ready(function () {
-			setArtifactsBody();
-			setDeitiesBody();
-			setDescriptionBody();
-			setHolidaysBody();
-			setInitiation_processBody();
+			setTagsBody();
 			setNameBody();
-			setNotable_figuresBody();
-			setNotesBody();
-			setObligationsBody();
-			setOrigin_storyBody();
+			setDescriptionBody();
 			setOther_NamesBody();
+			setNotable_figuresBody();
+			setOrigin_storyBody();
+			setArtifactsBody();
 			setPlaces_of_worshipBody();
+			setVision_of_paradiseBody();
+			setObligationsBody();
+			setWorship_servicesBody();
+			setPropheciesBody();
+			setTeachingsBody();
+			setDeitiesBody();
+			setInitiation_processBody();
+			setRitualsBody();
+			setHolidaysBody();
+			setTraditionsBody();
 			setPracticing_locationsBody();
 			setPracticing_racesBody();
 			setPrivate_notesBody();
-			setPropheciesBody();
-			setRitualsBody();
-			setTagsBody();
-			setTeachingsBody();
-			setTraditionsBody();
-			setVision_of_paradiseBody();
-			setWorship_servicesBody();
+			setNotesBody();
 
         });
 

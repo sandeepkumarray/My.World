@@ -27,6 +27,14 @@ namespace My.World.Web.Controllers
             return View();
         }
 
+        // GET: api/<ValuesController>
+        [HttpGet("values")]
+        public IEnumerable<string> Get(
+        [FromServices] IWebHostEnvironment webHostEnvironment)
+        {
+            return new string[] { "value1", "value2", "Environment", webHostEnvironment.EnvironmentName };
+        }
+
         public IActionResult Privacy()
         {
             return View();
@@ -44,7 +52,7 @@ namespace My.World.Web.Controllers
             //return Problem(
             //    detail: context.Error.StackTrace,
             //    title: context.Error.Message);
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Environment = webHostEnvironment.EnvironmentName });
         }
     }
 }

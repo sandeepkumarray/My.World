@@ -1,3 +1,6 @@
+@using Microsoft.AspNetCore.Http
+@using My.World.Web
+@inject IHttpContextAccessor HttpContextAccessor
 @model My.World.Web.ViewModel.CharactersViewModel
 
 @{
@@ -112,7 +115,7 @@
                                                                                 else if (att.field_name.ToLower() == "universe")
                                                                                 {
                                                                                 <select id="ddlUniverseList" class="form-control" style="min-width:150px"
-                                                                                        asp-items="@(new SelectList(@Model.UniversesList, " id", "name" , Model.charactersModel.Universe))"
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name" , Model.charactersModel.Universe))"
                                                                                         onchange="UniverseSelected();">
                                                                                 </select>
                                                                                 }
@@ -168,17 +171,21 @@
                                                                                         <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
                                                                                             <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">
                                                                                                 <a class="remove-image" style="display: inline;"
-                                                                                                   asp-controller="buildings" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
+                                                                                                   asp-controller="characters" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
                                                                                             </div>
                                                                                         </div>
                                                                                     }
                                                                                 </div>
                                                                             </div>
-
+                                                                            <div class="mb-3">
+                                                                                <div class="row">
+                                                                                    <h3><label class="form-label"> Only @Model.RemainingContentSize is left for content upload.</label></h3>
+                                                                                </div>
+                                                                            </div>
                                                                             <div class="mb-3">
                                                                                 <label class="form-label" for="exampleFormControlInput1">Upload Images...</label>
                                                                                 <div>
-                                                                                    @using (Html.BeginForm("UploadAttachment", "buildings", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
+                                                                                    @using (Html.BeginForm("UploadAttachment", "characters", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
                                                                                     {
                                                                                     <div class="dz-message needsclick">
                                                                                         <button type="button" class="dz-button">Drop files here or click to upload.</button><br />
@@ -266,6 +273,25 @@
     </div>
 </div>
 
+<div id="contentsExceededModal" bsmodal="" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade" aria-modal="true" style="display: none;">
+    <div role="document" class="modal-dialog modal-danger modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Alert !</h4>
+                <button type="button" aria-label="Close" data-dismiss="modal" class="close">
+                    <span aria-hidden="true">�</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>You have Exceeded the maximum allowed size of @My.World.Web.Helpers.Utility.SizeSuffix(Convert.ToInt64(@HttpContextAccessor.HttpContext.Session.GetString("AllowedTotalContentSize"))) per content to upload images.</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script src="~/js/quill.js"></script>
     <script src="~/js/quill.mention.min.js"></script>
@@ -275,24 +301,140 @@
 
     <script type="text/javascript">
 
-        			function setAgeBody() {
+        			function setNameBody() {
+			    $('#charactersModel_Name').val('@Model.charactersModel.Name');
+			};
+
+			function setRoleBody() {
+			    Role_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Role'));
+			    $('#Role').focusout(function () {
+			        postSaveEditorData('Role', Role_editor.root.innerHTML);
+			    });
+			};
+
+			function setGenderBody() {
+			    Gender_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Gender'));
+			    $('#Gender').focusout(function () {
+			        postSaveEditorData('Gender', Gender_editor.root.innerHTML);
+			    });
+			};
+
+			function setAgeBody() {
 			    Age_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Age'));
 			    $('#Age').focusout(function () {
 			        postSaveEditorData('Age', Age_editor.root.innerHTML);
 			    });
 			};
 
-			function setAliasesBody() {
-			    Aliases_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Aliases'));
-			    $('#Aliases').focusout(function () {
-			        postSaveEditorData('Aliases', Aliases_editor.root.innerHTML);
+			function setHeightBody() {
+			    Height_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Height'));
+			    $('#Height').focusout(function () {
+			        postSaveEditorData('Height', Height_editor.root.innerHTML);
 			    });
 			};
 
-			function setBackgroundBody() {
-			    Background_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Background'));
-			    $('#Background').focusout(function () {
-			        postSaveEditorData('Background', Background_editor.root.innerHTML);
+			function setWeightBody() {
+			    Weight_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Weight'));
+			    $('#Weight').focusout(function () {
+			        postSaveEditorData('Weight', Weight_editor.root.innerHTML);
+			    });
+			};
+
+			function setHaircolorBody() {
+			    Haircolor_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Haircolor'));
+			    $('#Haircolor').focusout(function () {
+			        postSaveEditorData('Haircolor', Haircolor_editor.root.innerHTML);
+			    });
+			};
+
+			function setHairstyleBody() {
+			    Hairstyle_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Hairstyle'));
+			    $('#Hairstyle').focusout(function () {
+			        postSaveEditorData('Hairstyle', Hairstyle_editor.root.innerHTML);
+			    });
+			};
+
+			function setFacialhairBody() {
+			    Facialhair_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Facialhair'));
+			    $('#Facialhair').focusout(function () {
+			        postSaveEditorData('Facialhair', Facialhair_editor.root.innerHTML);
+			    });
+			};
+
+			function setEyecolorBody() {
+			    Eyecolor_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Eyecolor'));
+			    $('#Eyecolor').focusout(function () {
+			        postSaveEditorData('Eyecolor', Eyecolor_editor.root.innerHTML);
+			    });
+			};
+
+			function setRaceBody() {
+			    Race_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Race'));
+			    $('#Race').focusout(function () {
+			        postSaveEditorData('Race', Race_editor.root.innerHTML);
+			    });
+			};
+
+			function setSkintoneBody() {
+			    Skintone_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Skintone'));
+			    $('#Skintone').focusout(function () {
+			        postSaveEditorData('Skintone', Skintone_editor.root.innerHTML);
+			    });
+			};
+
+			function setBodytypeBody() {
+			    Bodytype_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Bodytype'));
+			    $('#Bodytype').focusout(function () {
+			        postSaveEditorData('Bodytype', Bodytype_editor.root.innerHTML);
+			    });
+			};
+
+			function setIdentmarksBody() {
+			    Identmarks_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Identmarks'));
+			    $('#Identmarks').focusout(function () {
+			        postSaveEditorData('Identmarks', Identmarks_editor.root.innerHTML);
+			    });
+			};
+
+			function setReligionBody() {
+			    Religion_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Religion'));
+			    $('#Religion').focusout(function () {
+			        postSaveEditorData('Religion', Religion_editor.root.innerHTML);
+			    });
+			};
+
+			function setPoliticsBody() {
+			    Politics_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Politics'));
+			    $('#Politics').focusout(function () {
+			        postSaveEditorData('Politics', Politics_editor.root.innerHTML);
+			    });
+			};
+
+			function setPrejudicesBody() {
+			    Prejudices_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Prejudices'));
+			    $('#Prejudices').focusout(function () {
+			        postSaveEditorData('Prejudices', Prejudices_editor.root.innerHTML);
+			    });
+			};
+
+			function setOccupationBody() {
+			    Occupation_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Occupation'));
+			    $('#Occupation').focusout(function () {
+			        postSaveEditorData('Occupation', Occupation_editor.root.innerHTML);
+			    });
+			};
+
+			function setPetsBody() {
+			    Pets_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Pets'));
+			    $('#Pets').focusout(function () {
+			        postSaveEditorData('Pets', Pets_editor.root.innerHTML);
+			    });
+			};
+
+			function setMannerismsBody() {
+			    Mannerisms_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Mannerisms'));
+			    $('#Mannerisms').focusout(function () {
+			        postSaveEditorData('Mannerisms', Mannerisms_editor.root.innerHTML);
 			    });
 			};
 
@@ -310,13 +452,6 @@
 			    });
 			};
 
-			function setBodytypeBody() {
-			    Bodytype_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Bodytype'));
-			    $('#Bodytype').focusout(function () {
-			        postSaveEditorData('Bodytype', Bodytype_editor.root.innerHTML);
-			    });
-			};
-
 			function setEducationBody() {
 			    Education_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Education'));
 			    $('#Education').focusout(function () {
@@ -324,24 +459,10 @@
 			    });
 			};
 
-			function setEyecolorBody() {
-			    Eyecolor_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Eyecolor'));
-			    $('#Eyecolor').focusout(function () {
-			        postSaveEditorData('Eyecolor', Eyecolor_editor.root.innerHTML);
-			    });
-			};
-
-			function setFacialhairBody() {
-			    Facialhair_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Facialhair'));
-			    $('#Facialhair').focusout(function () {
-			        postSaveEditorData('Facialhair', Facialhair_editor.root.innerHTML);
-			    });
-			};
-
-			function setFave_animalBody() {
-			    Fave_animal_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Fave_animal'));
-			    $('#Fave_animal').focusout(function () {
-			        postSaveEditorData('Fave_animal', Fave_animal_editor.root.innerHTML);
+			function setBackgroundBody() {
+			    Background_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Background'));
+			    $('#Background').focusout(function () {
+			        postSaveEditorData('Background', Background_editor.root.innerHTML);
 			    });
 			};
 
@@ -373,123 +494,17 @@
 			    });
 			};
 
-			function setFavoriteBody() {
-			    $('#charactersModel_Favorite').val('@Model.charactersModel.Favorite');
-			};
-
-			function setFlawsBody() {
-			    Flaws_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Flaws'));
-			    $('#Flaws').focusout(function () {
-			        postSaveEditorData('Flaws', Flaws_editor.root.innerHTML);
+			function setFave_animalBody() {
+			    Fave_animal_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Fave_animal'));
+			    $('#Fave_animal').focusout(function () {
+			        postSaveEditorData('Fave_animal', Fave_animal_editor.root.innerHTML);
 			    });
-			};
-
-			function setGenderBody() {
-			    Gender_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Gender'));
-			    $('#Gender').focusout(function () {
-			        postSaveEditorData('Gender', Gender_editor.root.innerHTML);
-			    });
-			};
-
-			function setHaircolorBody() {
-			    Haircolor_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Haircolor'));
-			    $('#Haircolor').focusout(function () {
-			        postSaveEditorData('Haircolor', Haircolor_editor.root.innerHTML);
-			    });
-			};
-
-			function setHairstyleBody() {
-			    Hairstyle_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Hairstyle'));
-			    $('#Hairstyle').focusout(function () {
-			        postSaveEditorData('Hairstyle', Hairstyle_editor.root.innerHTML);
-			    });
-			};
-
-			function setHeightBody() {
-			    Height_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Height'));
-			    $('#Height').focusout(function () {
-			        postSaveEditorData('Height', Height_editor.root.innerHTML);
-			    });
-			};
-
-			function setHobbiesBody() {
-			    Hobbies_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Hobbies'));
-			    $('#Hobbies').focusout(function () {
-			        postSaveEditorData('Hobbies', Hobbies_editor.root.innerHTML);
-			    });
-			};
-
-			function setIdentmarksBody() {
-			    Identmarks_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Identmarks'));
-			    $('#Identmarks').focusout(function () {
-			        postSaveEditorData('Identmarks', Identmarks_editor.root.innerHTML);
-			    });
-			};
-
-			function setMannerismsBody() {
-			    Mannerisms_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Mannerisms'));
-			    $('#Mannerisms').focusout(function () {
-			        postSaveEditorData('Mannerisms', Mannerisms_editor.root.innerHTML);
-			    });
-			};
-
-			function setMotivationsBody() {
-			    Motivations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Motivations'));
-			    $('#Motivations').focusout(function () {
-			        postSaveEditorData('Motivations', Motivations_editor.root.innerHTML);
-			    });
-			};
-
-			function setNameBody() {
-			    $('#charactersModel_Name').val('@Model.charactersModel.Name');
 			};
 
 			function setNotesBody() {
 			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Notes'));
 			    $('#Notes').focusout(function () {
 			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
-			    });
-			};
-
-			function setOccupationBody() {
-			    Occupation_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Occupation'));
-			    $('#Occupation').focusout(function () {
-			        postSaveEditorData('Occupation', Occupation_editor.root.innerHTML);
-			    });
-			};
-
-			function setPersonality_typeBody() {
-			    Personality_type_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Personality_type'));
-			    $('#Personality_type').focusout(function () {
-			        postSaveEditorData('Personality_type', Personality_type_editor.root.innerHTML);
-			    });
-			};
-
-			function setPetsBody() {
-			    Pets_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Pets'));
-			    $('#Pets').focusout(function () {
-			        postSaveEditorData('Pets', Pets_editor.root.innerHTML);
-			    });
-			};
-
-			function setPoliticsBody() {
-			    Politics_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Politics'));
-			    $('#Politics').focusout(function () {
-			        postSaveEditorData('Politics', Politics_editor.root.innerHTML);
-			    });
-			};
-
-			function setPrejudicesBody() {
-			    Prejudices_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Prejudices'));
-			    $('#Prejudices').focusout(function () {
-			        postSaveEditorData('Prejudices', Prejudices_editor.root.innerHTML);
-			    });
-			};
-
-			function setPrivacyBody() {
-			    Privacy_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Privacy'));
-			    $('#Privacy').focusout(function () {
-			        postSaveEditorData('Privacy', Privacy_editor.root.innerHTML);
 			    });
 			};
 
@@ -500,31 +515,35 @@
 			    });
 			};
 
-			function setRaceBody() {
-			    Race_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Race'));
-			    $('#Race').focusout(function () {
-			        postSaveEditorData('Race', Race_editor.root.innerHTML);
+			function setUniverseBody() {
+			    $('#charactersModel_Universe').val('@Model.charactersModel.Universe');
+			};
+
+			function setPrivacyBody() {
+			    Privacy_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Privacy'));
+			    $('#Privacy').focusout(function () {
+			        postSaveEditorData('Privacy', Privacy_editor.root.innerHTML);
 			    });
 			};
 
-			function setReligionBody() {
-			    Religion_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Religion'));
-			    $('#Religion').focusout(function () {
-			        postSaveEditorData('Religion', Religion_editor.root.innerHTML);
+			function setAliasesBody() {
+			    Aliases_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Aliases'));
+			    $('#Aliases').focusout(function () {
+			        postSaveEditorData('Aliases', Aliases_editor.root.innerHTML);
 			    });
 			};
 
-			function setRoleBody() {
-			    Role_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Role'));
-			    $('#Role').focusout(function () {
-			        postSaveEditorData('Role', Role_editor.root.innerHTML);
+			function setMotivationsBody() {
+			    Motivations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Motivations'));
+			    $('#Motivations').focusout(function () {
+			        postSaveEditorData('Motivations', Motivations_editor.root.innerHTML);
 			    });
 			};
 
-			function setSkintoneBody() {
-			    Skintone_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Skintone'));
-			    $('#Skintone').focusout(function () {
-			        postSaveEditorData('Skintone', Skintone_editor.root.innerHTML);
+			function setFlawsBody() {
+			    Flaws_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Flaws'));
+			    $('#Flaws').focusout(function () {
+			        postSaveEditorData('Flaws', Flaws_editor.root.innerHTML);
 			    });
 			};
 
@@ -535,26 +554,33 @@
 			    });
 			};
 
-			function setUniverseBody() {
-			    $('#charactersModel_Universe').val('@Model.charactersModel.Universe');
+			function setHobbiesBody() {
+			    Hobbies_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Hobbies'));
+			    $('#Hobbies').focusout(function () {
+			        postSaveEditorData('Hobbies', Hobbies_editor.root.innerHTML);
+			    });
 			};
 
-			function setWeightBody() {
-			    Weight_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Weight'));
-			    $('#Weight').focusout(function () {
-			        postSaveEditorData('Weight', Weight_editor.root.innerHTML);
+			function setPersonality_typeBody() {
+			    Personality_type_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.charactersModel.Personality_type'));
+			    $('#Personality_type').focusout(function () {
+			        postSaveEditorData('Personality_type', Personality_type_editor.root.innerHTML);
 			    });
+			};
+
+			function setFavoriteBody() {
+			    $('#charactersModel_Favorite').val('@Model.charactersModel.Favorite');
 			};
 
 
 
         $(document).ready(function () {
-            			$('#charactersModel_Favorite').blur(function() {
-			    postSaveData('Favorite', $('#charactersModel_Favorite').val());
+            			$('#charactersModel_Name').blur(function() {
+			    postSaveData('Name', $('#charactersModel_Name').val());
 			});
 
-			$('#charactersModel_Name').blur(function() {
-			    postSaveData('Name', $('#charactersModel_Name').val());
+			$('#charactersModel_Favorite').blur(function() {
+			    postSaveData('Favorite', $('#charactersModel_Favorite').val());
 			});
 
 
@@ -608,10 +634,18 @@
                         $('.roller').width(progress + '%');
                     });
 
-                    self.on("queuecomplete", function (progress) {
-                        $('.meter').delay(999).slideUp(999);
-                        console.log("Files uploaded");
-                        location.reload();
+                    self.on('error', function (file, response) {
+                        console.log("Files upload Error");
+                        showModal(response.message);
+                    });
+                    self.on('success', function () {
+                        self.on("queuecomplete", function () {
+                            $('.meter').delay(999).slideUp(999);
+                            console.log("Files uploaded");
+                            var locUrL = location.href.replace('#Gallery_panel', '') + "#Gallery_panel";
+                            window.location.href = locUrL;
+                            location.reload();
+                        });
                     });
                     self.on("complete", function (file) {
                         self.removeFile(file);

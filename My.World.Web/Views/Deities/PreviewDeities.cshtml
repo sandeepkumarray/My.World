@@ -145,24 +145,13 @@
    
     <script type="text/javascript">
     
-		function setAbilitiesBody() {
-		    html = htmlDecode('@Model.deitiesModel.Abilities');
-		    $('#Abilities').append(html);
+		function setTagsBody() {
+		    html = htmlDecode('@Model.deitiesModel.Tags');
+		    $('#Tags').append(html);
 		};
 
-		function setChildrenBody() {
-		    html = htmlDecode('@Model.deitiesModel.Children');
-		    $('#Children').append(html);
-		};
-
-		function setConditionsBody() {
-		    html = htmlDecode('@Model.deitiesModel.Conditions');
-		    $('#Conditions').append(html);
-		};
-
-		function setCreaturesBody() {
-		    html = htmlDecode('@Model.deitiesModel.Creatures');
-		    $('#Creatures').append(html);
+		function setNameBody() {
+		    $('#deitiesModel_Name').val('@Model.deitiesModel.Name');
 		};
 
 		function setDescriptionBody() {
@@ -170,52 +159,31 @@
 		    $('#Description').append(html);
 		};
 
-		function setElementsBody() {
-		    html = htmlDecode('@Model.deitiesModel.Elements');
-		    $('#Elements').append(html);
+		function setOther_NamesBody() {
+		    html = htmlDecode('@Model.deitiesModel.Other_Names');
+		    $('#Other_Names').append(html);
 		};
 
-		function setFamily_HistoryBody() {
-		    html = htmlDecode('@Model.deitiesModel.Family_History');
-		    $('#Family_History').append(html);
-		};
-
-		function setFlorasBody() {
-		    html = htmlDecode('@Model.deitiesModel.Floras');
-		    $('#Floras').append(html);
+		function setUniverseBody() {
+		    $('#deitiesModel_Universe').val('@Model.deitiesModel.Universe');
 		};
 
 		function setHeightBody() {
 		    $('#deitiesModel_Height').val('@Model.deitiesModel.Height');
 		};
 
-		function setHuman_InteractionBody() {
-		    html = htmlDecode('@Model.deitiesModel.Human_Interaction');
-		    $('#Human_Interaction').append(html);
+		function setPhysical_DescriptionBody() {
+		    html = htmlDecode('@Model.deitiesModel.Physical_Description');
+		    $('#Physical_Description').append(html);
 		};
 
-		function setLife_StoryBody() {
-		    html = htmlDecode('@Model.deitiesModel.Life_Story');
-		    $('#Life_Story').append(html);
+		function setWeightBody() {
+		    $('#deitiesModel_Weight').val('@Model.deitiesModel.Weight');
 		};
 
-		function setNameBody() {
-		    $('#deitiesModel_Name').val('@Model.deitiesModel.Name');
-		};
-
-		function setNotable_EventsBody() {
-		    html = htmlDecode('@Model.deitiesModel.Notable_Events');
-		    $('#Notable_Events').append(html);
-		};
-
-		function setNotesBody() {
-		    html = htmlDecode('@Model.deitiesModel.Notes');
-		    $('#Notes').append(html);
-		};
-
-		function setOther_NamesBody() {
-		    html = htmlDecode('@Model.deitiesModel.Other_Names');
-		    $('#Other_Names').append(html);
+		function setChildrenBody() {
+		    html = htmlDecode('@Model.deitiesModel.Children');
+		    $('#Children').append(html);
 		};
 
 		function setParentsBody() {
@@ -228,34 +196,14 @@
 		    $('#Partners').append(html);
 		};
 
-		function setPhysical_DescriptionBody() {
-		    html = htmlDecode('@Model.deitiesModel.Physical_Description');
-		    $('#Physical_Description').append(html);
+		function setSiblingsBody() {
+		    html = htmlDecode('@Model.deitiesModel.Siblings');
+		    $('#Siblings').append(html);
 		};
 
-		function setPrayersBody() {
-		    html = htmlDecode('@Model.deitiesModel.Prayers');
-		    $('#Prayers').append(html);
-		};
-
-		function setPrivate_NotesBody() {
-		    html = htmlDecode('@Model.deitiesModel.Private_Notes');
-		    $('#Private_Notes').append(html);
-		};
-
-		function setRelated_landmarksBody() {
-		    html = htmlDecode('@Model.deitiesModel.Related_landmarks');
-		    $('#Related_landmarks').append(html);
-		};
-
-		function setRelated_racesBody() {
-		    html = htmlDecode('@Model.deitiesModel.Related_races');
-		    $('#Related_races').append(html);
-		};
-
-		function setRelated_townsBody() {
-		    html = htmlDecode('@Model.deitiesModel.Related_towns');
-		    $('#Related_towns').append(html);
+		function setFlorasBody() {
+		    html = htmlDecode('@Model.deitiesModel.Floras');
+		    $('#Floras').append(html);
 		};
 
 		function setRelicsBody() {
@@ -268,19 +216,14 @@
 		    $('#Religions').append(html);
 		};
 
-		function setRitualsBody() {
-		    html = htmlDecode('@Model.deitiesModel.Rituals');
-		    $('#Rituals').append(html);
+		function setCreaturesBody() {
+		    html = htmlDecode('@Model.deitiesModel.Creatures');
+		    $('#Creatures').append(html);
 		};
 
-		function setSiblingsBody() {
-		    html = htmlDecode('@Model.deitiesModel.Siblings');
-		    $('#Siblings').append(html);
-		};
-
-		function setStrengthsBody() {
-		    html = htmlDecode('@Model.deitiesModel.Strengths');
-		    $('#Strengths').append(html);
+		function setElementsBody() {
+		    html = htmlDecode('@Model.deitiesModel.Elements');
+		    $('#Elements').append(html);
 		};
 
 		function setSymbolsBody() {
@@ -288,18 +231,19 @@
 		    $('#Symbols').append(html);
 		};
 
-		function setTagsBody() {
-		    html = htmlDecode('@Model.deitiesModel.Tags');
-		    $('#Tags').append(html);
+		function setAbilitiesBody() {
+		    html = htmlDecode('@Model.deitiesModel.Abilities');
+		    $('#Abilities').append(html);
 		};
 
-		function setTraditionsBody() {
-		    html = htmlDecode('@Model.deitiesModel.Traditions');
-		    $('#Traditions').append(html);
+		function setConditionsBody() {
+		    html = htmlDecode('@Model.deitiesModel.Conditions');
+		    $('#Conditions').append(html);
 		};
 
-		function setUniverseBody() {
-		    $('#deitiesModel_Universe').val('@Model.deitiesModel.Universe');
+		function setStrengthsBody() {
+		    html = htmlDecode('@Model.deitiesModel.Strengths');
+		    $('#Strengths').append(html);
 		};
 
 		function setWeaknessesBody() {
@@ -307,46 +251,102 @@
 		    $('#Weaknesses').append(html);
 		};
 
-		function setWeightBody() {
-		    $('#deitiesModel_Weight').val('@Model.deitiesModel.Weight');
+		function setHuman_InteractionBody() {
+		    html = htmlDecode('@Model.deitiesModel.Human_Interaction');
+		    $('#Human_Interaction').append(html);
+		};
+
+		function setRelated_townsBody() {
+		    html = htmlDecode('@Model.deitiesModel.Related_towns');
+		    $('#Related_towns').append(html);
+		};
+
+		function setRelated_racesBody() {
+		    html = htmlDecode('@Model.deitiesModel.Related_races');
+		    $('#Related_races').append(html);
+		};
+
+		function setRelated_landmarksBody() {
+		    html = htmlDecode('@Model.deitiesModel.Related_landmarks');
+		    $('#Related_landmarks').append(html);
+		};
+
+		function setPrayersBody() {
+		    html = htmlDecode('@Model.deitiesModel.Prayers');
+		    $('#Prayers').append(html);
+		};
+
+		function setRitualsBody() {
+		    html = htmlDecode('@Model.deitiesModel.Rituals');
+		    $('#Rituals').append(html);
+		};
+
+		function setTraditionsBody() {
+		    html = htmlDecode('@Model.deitiesModel.Traditions');
+		    $('#Traditions').append(html);
+		};
+
+		function setFamily_HistoryBody() {
+		    html = htmlDecode('@Model.deitiesModel.Family_History');
+		    $('#Family_History').append(html);
+		};
+
+		function setNotable_EventsBody() {
+		    html = htmlDecode('@Model.deitiesModel.Notable_Events');
+		    $('#Notable_Events').append(html);
+		};
+
+		function setLife_StoryBody() {
+		    html = htmlDecode('@Model.deitiesModel.Life_Story');
+		    $('#Life_Story').append(html);
+		};
+
+		function setPrivate_NotesBody() {
+		    html = htmlDecode('@Model.deitiesModel.Private_Notes');
+		    $('#Private_Notes').append(html);
+		};
+
+		function setNotesBody() {
+		    html = htmlDecode('@Model.deitiesModel.Notes');
+		    $('#Notes').append(html);
 		};
 
 
 
         $(document).ready(function () {
-			setAbilitiesBody();
-			setChildrenBody();
-			setConditionsBody();
-			setCreaturesBody();
-			setDescriptionBody();
-			setElementsBody();
-			setFamily_HistoryBody();
-			setFlorasBody();
-			setHeightBody();
-			setHuman_InteractionBody();
-			setLife_StoryBody();
+			setTagsBody();
 			setNameBody();
-			setNotable_EventsBody();
-			setNotesBody();
+			setDescriptionBody();
 			setOther_NamesBody();
+			setHeightBody();
+			setPhysical_DescriptionBody();
+			setWeightBody();
+			setChildrenBody();
 			setParentsBody();
 			setPartnersBody();
-			setPhysical_DescriptionBody();
-			setPrayersBody();
-			setPrivate_NotesBody();
-			setRelated_landmarksBody();
-			setRelated_racesBody();
-			setRelated_townsBody();
+			setSiblingsBody();
+			setFlorasBody();
 			setRelicsBody();
 			setReligionsBody();
-			setRitualsBody();
-			setSiblingsBody();
-			setStrengthsBody();
+			setCreaturesBody();
+			setElementsBody();
 			setSymbolsBody();
-			setTagsBody();
-			setTraditionsBody();
+			setAbilitiesBody();
+			setConditionsBody();
+			setStrengthsBody();
 			setWeaknessesBody();
-			setWeightBody();
+			setHuman_InteractionBody();
+			setRelated_townsBody();
+			setRelated_racesBody();
+			setRelated_landmarksBody();
+			setPrayersBody();
+			setRitualsBody();
+			setTraditionsBody();
+			setFamily_HistoryBody();
+			setNotable_EventsBody();
+			setLife_StoryBody();
+			setPrivate_NotesBody();
+			setNotesBody();
 
         });
 

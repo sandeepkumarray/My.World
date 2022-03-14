@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,11 +13,17 @@ namespace My.World.Api.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        public ValuesController()
+        {
+
+        }
+
         // GET: api/<ValuesController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<string> Get(
+        [FromServices] IWebHostEnvironment webHostEnvironment)
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "value1", "value2", "Environment" , webHostEnvironment.EnvironmentName };
         }
         [HttpPost]
         [Route("Fields/{data}")]

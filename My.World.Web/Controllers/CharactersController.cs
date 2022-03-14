@@ -13,6 +13,7 @@ using My.World.Web.Services;
 using Newtonsoft.Json;
 using My.World.Web.ViewModel;
 using Microsoft.Extensions.Configuration;
+using System.Web;
 
 namespace My.World.Web.Controllers
 {
@@ -103,7 +104,17 @@ namespace My.World.Web.Controllers
 			charactersViewModel.headerBackgroundColor = contentTypesModel.sec_color;
 			_iObjectBucketApiService.SetObjectStorageSecrets(model.user_id);
 			charactersViewModel.ContentObjectModelList = _iObjectBucketApiService.GetAllContentObjectAttachments(Convert.ToInt64(Id), "characters");
-			return View(charactersViewModel);
+			charactersViewModel.ContentObjectModelList.ForEach(o => 
+			{
+			    var publicUrl = "http://" + _iObjectBucketApiService.objectStorageKeysModel.endpoint
+			                + '/' + _iObjectBucketApiService.objectStorageKeysModel.bucketName + '/' + _config.GetValue<string>("BucketEnv") + '/' + o.object_name; 
+			    o.file_url = HttpUtility.UrlPathEncode(publicUrl); 
+			}); 
+			var existing_total_size = charactersViewModel.ContentObjectModelList.Sum(f => f.object_size);
+			var AllowedTotalContentSize = Convert.ToInt64(HttpContext.Session.GetString("AllowedTotalContentSize"));
+			var remainingSize = AllowedTotalContentSize - existing_total_size;
+			charactersViewModel.RemainingContentSize = Helpers.Utility.SizeSuffix(remainingSize);
+			return View(charactersViewModel); 
 
 		}
 
@@ -154,48 +165,112 @@ namespace My.World.Web.Controllers
 			if (model != null)
 			{
 				
+				model.Role  = model.Role == null ? model.Role : model.Role.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Gender  = model.Gender == null ? model.Gender : model.Gender.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Age  = model.Age == null ? model.Age : model.Age.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Aliases  = model.Aliases == null ? model.Aliases : model.Aliases.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Background  = model.Background == null ? model.Background : model.Background.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Height  = model.Height == null ? model.Height : model.Height.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Weight  = model.Weight == null ? model.Weight : model.Weight.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Haircolor  = model.Haircolor == null ? model.Haircolor : model.Haircolor.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Hairstyle  = model.Hairstyle == null ? model.Hairstyle : model.Hairstyle.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Facialhair  = model.Facialhair == null ? model.Facialhair : model.Facialhair.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Eyecolor  = model.Eyecolor == null ? model.Eyecolor : model.Eyecolor.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Race  = model.Race == null ? model.Race : model.Race.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Skintone  = model.Skintone == null ? model.Skintone : model.Skintone.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Bodytype  = model.Bodytype == null ? model.Bodytype : model.Bodytype.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Identmarks  = model.Identmarks == null ? model.Identmarks : model.Identmarks.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Religion  = model.Religion == null ? model.Religion : model.Religion.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Politics  = model.Politics == null ? model.Politics : model.Politics.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Prejudices  = model.Prejudices == null ? model.Prejudices : model.Prejudices.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Occupation  = model.Occupation == null ? model.Occupation : model.Occupation.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Pets  = model.Pets == null ? model.Pets : model.Pets.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Mannerisms  = model.Mannerisms == null ? model.Mannerisms : model.Mannerisms.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Birthday  = model.Birthday == null ? model.Birthday : model.Birthday.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Birthplace  = model.Birthplace == null ? model.Birthplace : model.Birthplace.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Bodytype  = model.Bodytype == null ? model.Bodytype : model.Bodytype.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Education  = model.Education == null ? model.Education : model.Education.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Eyecolor  = model.Eyecolor == null ? model.Eyecolor : model.Eyecolor.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Facialhair  = model.Facialhair == null ? model.Facialhair : model.Facialhair.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Fave_animal  = model.Fave_animal == null ? model.Fave_animal : model.Fave_animal.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Background  = model.Background == null ? model.Background : model.Background.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Fave_color  = model.Fave_color == null ? model.Fave_color : model.Fave_color.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Fave_food  = model.Fave_food == null ? model.Fave_food : model.Fave_food.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Fave_possession  = model.Fave_possession == null ? model.Fave_possession : model.Fave_possession.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Fave_weapon  = model.Fave_weapon == null ? model.Fave_weapon : model.Fave_weapon.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Flaws  = model.Flaws == null ? model.Flaws : model.Flaws.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Gender  = model.Gender == null ? model.Gender : model.Gender.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Haircolor  = model.Haircolor == null ? model.Haircolor : model.Haircolor.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Hairstyle  = model.Hairstyle == null ? model.Hairstyle : model.Hairstyle.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Height  = model.Height == null ? model.Height : model.Height.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Hobbies  = model.Hobbies == null ? model.Hobbies : model.Hobbies.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Identmarks  = model.Identmarks == null ? model.Identmarks : model.Identmarks.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Mannerisms  = model.Mannerisms == null ? model.Mannerisms : model.Mannerisms.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Motivations  = model.Motivations == null ? model.Motivations : model.Motivations.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Fave_animal  = model.Fave_animal == null ? model.Fave_animal : model.Fave_animal.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Notes  = model.Notes == null ? model.Notes : model.Notes.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Occupation  = model.Occupation == null ? model.Occupation : model.Occupation.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Personality_type  = model.Personality_type == null ? model.Personality_type : model.Personality_type.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Pets  = model.Pets == null ? model.Pets : model.Pets.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Politics  = model.Politics == null ? model.Politics : model.Politics.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Prejudices  = model.Prejudices == null ? model.Prejudices : model.Prejudices.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Privacy  = model.Privacy == null ? model.Privacy : model.Privacy.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Private_notes  = model.Private_notes == null ? model.Private_notes : model.Private_notes.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Race  = model.Race == null ? model.Race : model.Race.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Religion  = model.Religion == null ? model.Religion : model.Religion.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Role  = model.Role == null ? model.Role : model.Role.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Skintone  = model.Skintone == null ? model.Skintone : model.Skintone.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Privacy  = model.Privacy == null ? model.Privacy : model.Privacy.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Aliases  = model.Aliases == null ? model.Aliases : model.Aliases.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Motivations  = model.Motivations == null ? model.Motivations : model.Motivations.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Flaws  = model.Flaws == null ? model.Flaws : model.Flaws.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Talents  = model.Talents == null ? model.Talents : model.Talents.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Weight  = model.Weight == null ? model.Weight : model.Weight.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Hobbies  = model.Hobbies == null ? model.Hobbies : model.Hobbies.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Personality_type  = model.Personality_type == null ? model.Personality_type : model.Personality_type.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 			}
 
 		}
 
 		#region Save Properties Methods
+		[HttpPost]
+		[Route("SaveName")]
+		public IActionResult SaveName()
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Name";
+			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
+			var CharacterID = Convert.ToInt64(obj["CharacterID"].Value);
+			var value = Convert.ToString(obj["value"].Value);
+			
+			CharactersModel model = new CharactersModel();
+			model.id = CharacterID;
+			model._id = CharacterID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCharactersApiService.SaveCharacter(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveRole")]
+		public IActionResult SaveRole(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Role";
+			var CharacterID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CharactersModel model = new CharactersModel();
+			model.id = CharacterID;
+			model._id = CharacterID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCharactersApiService.SaveCharacter(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveGender")]
+		public IActionResult SaveGender(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Gender";
+			var CharacterID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CharactersModel model = new CharactersModel();
+			model.id = CharacterID;
+			model._id = CharacterID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCharactersApiService.SaveCharacter(model);
+			return Json(response);
+
+		}
+
 		[HttpPost]
 		[Route("{id}/SaveAge")]
 		public IActionResult SaveAge(string id)
@@ -218,13 +293,13 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveAliases")]
-		public IActionResult SaveAliases(string id)
+		[Route("{id}/SaveHeight")]
+		public IActionResult SaveHeight(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Aliases";
+			var type = "Height";
 			var CharacterID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -239,13 +314,307 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveBackground")]
-		public IActionResult SaveBackground(string id)
+		[Route("{id}/SaveWeight")]
+		public IActionResult SaveWeight(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Background";
+			var type = "Weight";
+			var CharacterID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CharactersModel model = new CharactersModel();
+			model.id = CharacterID;
+			model._id = CharacterID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCharactersApiService.SaveCharacter(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveHaircolor")]
+		public IActionResult SaveHaircolor(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Haircolor";
+			var CharacterID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CharactersModel model = new CharactersModel();
+			model.id = CharacterID;
+			model._id = CharacterID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCharactersApiService.SaveCharacter(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveHairstyle")]
+		public IActionResult SaveHairstyle(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Hairstyle";
+			var CharacterID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CharactersModel model = new CharactersModel();
+			model.id = CharacterID;
+			model._id = CharacterID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCharactersApiService.SaveCharacter(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveFacialhair")]
+		public IActionResult SaveFacialhair(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Facialhair";
+			var CharacterID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CharactersModel model = new CharactersModel();
+			model.id = CharacterID;
+			model._id = CharacterID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCharactersApiService.SaveCharacter(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveEyecolor")]
+		public IActionResult SaveEyecolor(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Eyecolor";
+			var CharacterID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CharactersModel model = new CharactersModel();
+			model.id = CharacterID;
+			model._id = CharacterID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCharactersApiService.SaveCharacter(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveRace")]
+		public IActionResult SaveRace(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Race";
+			var CharacterID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CharactersModel model = new CharactersModel();
+			model.id = CharacterID;
+			model._id = CharacterID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCharactersApiService.SaveCharacter(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveSkintone")]
+		public IActionResult SaveSkintone(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Skintone";
+			var CharacterID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CharactersModel model = new CharactersModel();
+			model.id = CharacterID;
+			model._id = CharacterID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCharactersApiService.SaveCharacter(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveBodytype")]
+		public IActionResult SaveBodytype(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Bodytype";
+			var CharacterID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CharactersModel model = new CharactersModel();
+			model.id = CharacterID;
+			model._id = CharacterID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCharactersApiService.SaveCharacter(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveIdentmarks")]
+		public IActionResult SaveIdentmarks(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Identmarks";
+			var CharacterID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CharactersModel model = new CharactersModel();
+			model.id = CharacterID;
+			model._id = CharacterID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCharactersApiService.SaveCharacter(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveReligion")]
+		public IActionResult SaveReligion(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Religion";
+			var CharacterID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CharactersModel model = new CharactersModel();
+			model.id = CharacterID;
+			model._id = CharacterID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCharactersApiService.SaveCharacter(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SavePolitics")]
+		public IActionResult SavePolitics(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Politics";
+			var CharacterID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CharactersModel model = new CharactersModel();
+			model.id = CharacterID;
+			model._id = CharacterID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCharactersApiService.SaveCharacter(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SavePrejudices")]
+		public IActionResult SavePrejudices(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Prejudices";
+			var CharacterID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CharactersModel model = new CharactersModel();
+			model.id = CharacterID;
+			model._id = CharacterID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCharactersApiService.SaveCharacter(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveOccupation")]
+		public IActionResult SaveOccupation(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Occupation";
+			var CharacterID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CharactersModel model = new CharactersModel();
+			model.id = CharacterID;
+			model._id = CharacterID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCharactersApiService.SaveCharacter(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SavePets")]
+		public IActionResult SavePets(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Pets";
+			var CharacterID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CharactersModel model = new CharactersModel();
+			model.id = CharacterID;
+			model._id = CharacterID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCharactersApiService.SaveCharacter(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveMannerisms")]
+		public IActionResult SaveMannerisms(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Mannerisms";
 			var CharacterID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -302,27 +671,6 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveBodytype")]
-		public IActionResult SaveBodytype(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Bodytype";
-			var CharacterID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CharactersModel model = new CharactersModel();
-			model.id = CharacterID;
-			model._id = CharacterID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCharactersApiService.SaveCharacter(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
 		[Route("{id}/SaveEducation")]
 		public IActionResult SaveEducation(string id)
 		{
@@ -344,55 +692,13 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveEyecolor")]
-		public IActionResult SaveEyecolor(string id)
+		[Route("{id}/SaveBackground")]
+		public IActionResult SaveBackground(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Eyecolor";
-			var CharacterID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CharactersModel model = new CharactersModel();
-			model.id = CharacterID;
-			model._id = CharacterID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCharactersApiService.SaveCharacter(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveFacialhair")]
-		public IActionResult SaveFacialhair(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Facialhair";
-			var CharacterID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CharactersModel model = new CharactersModel();
-			model.id = CharacterID;
-			model._id = CharacterID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCharactersApiService.SaveCharacter(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveFave_animal")]
-		public IActionResult SaveFave_animal(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Fave_animal";
+			var type = "Background";
 			var CharacterID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -491,227 +797,15 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("SaveFavorite")]
-		public IActionResult SaveFavorite()
+		[Route("{id}/SaveFave_animal")]
+		public IActionResult SaveFave_animal(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Favorite";
-			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
-			var CharacterID = Convert.ToInt64(obj["CharacterID"].Value);
-			var value = Convert.ToBoolean(obj["value"].Value);
-			
-			CharactersModel model = new CharactersModel();
-			model.id = CharacterID;
-			model._id = CharacterID;
-			model.column_type = type;
-			model.column_value = Convert.ToInt32(value);
-			response = _iCharactersApiService.SaveCharacter(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveFlaws")]
-		public IActionResult SaveFlaws(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Flaws";
+			var type = "Fave_animal";
 			var CharacterID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
-			
-			CharactersModel model = new CharactersModel();
-			model.id = CharacterID;
-			model._id = CharacterID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCharactersApiService.SaveCharacter(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveGender")]
-		public IActionResult SaveGender(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Gender";
-			var CharacterID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CharactersModel model = new CharactersModel();
-			model.id = CharacterID;
-			model._id = CharacterID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCharactersApiService.SaveCharacter(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveHaircolor")]
-		public IActionResult SaveHaircolor(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Haircolor";
-			var CharacterID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CharactersModel model = new CharactersModel();
-			model.id = CharacterID;
-			model._id = CharacterID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCharactersApiService.SaveCharacter(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveHairstyle")]
-		public IActionResult SaveHairstyle(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Hairstyle";
-			var CharacterID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CharactersModel model = new CharactersModel();
-			model.id = CharacterID;
-			model._id = CharacterID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCharactersApiService.SaveCharacter(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveHeight")]
-		public IActionResult SaveHeight(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Height";
-			var CharacterID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CharactersModel model = new CharactersModel();
-			model.id = CharacterID;
-			model._id = CharacterID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCharactersApiService.SaveCharacter(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveHobbies")]
-		public IActionResult SaveHobbies(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Hobbies";
-			var CharacterID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CharactersModel model = new CharactersModel();
-			model.id = CharacterID;
-			model._id = CharacterID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCharactersApiService.SaveCharacter(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveIdentmarks")]
-		public IActionResult SaveIdentmarks(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Identmarks";
-			var CharacterID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CharactersModel model = new CharactersModel();
-			model.id = CharacterID;
-			model._id = CharacterID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCharactersApiService.SaveCharacter(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveMannerisms")]
-		public IActionResult SaveMannerisms(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Mannerisms";
-			var CharacterID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CharactersModel model = new CharactersModel();
-			model.id = CharacterID;
-			model._id = CharacterID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCharactersApiService.SaveCharacter(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveMotivations")]
-		public IActionResult SaveMotivations(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Motivations";
-			var CharacterID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CharactersModel model = new CharactersModel();
-			model.id = CharacterID;
-			model._id = CharacterID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCharactersApiService.SaveCharacter(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("SaveName")]
-		public IActionResult SaveName()
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Name";
-			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
-			var CharacterID = Convert.ToInt64(obj["CharacterID"].Value);
-			var value = Convert.ToString(obj["value"].Value);
 			
 			CharactersModel model = new CharactersModel();
 			model.id = CharacterID;
@@ -745,132 +839,6 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveOccupation")]
-		public IActionResult SaveOccupation(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Occupation";
-			var CharacterID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CharactersModel model = new CharactersModel();
-			model.id = CharacterID;
-			model._id = CharacterID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCharactersApiService.SaveCharacter(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SavePersonality_type")]
-		public IActionResult SavePersonality_type(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Personality_type";
-			var CharacterID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CharactersModel model = new CharactersModel();
-			model.id = CharacterID;
-			model._id = CharacterID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCharactersApiService.SaveCharacter(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SavePets")]
-		public IActionResult SavePets(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Pets";
-			var CharacterID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CharactersModel model = new CharactersModel();
-			model.id = CharacterID;
-			model._id = CharacterID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCharactersApiService.SaveCharacter(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SavePolitics")]
-		public IActionResult SavePolitics(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Politics";
-			var CharacterID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CharactersModel model = new CharactersModel();
-			model.id = CharacterID;
-			model._id = CharacterID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCharactersApiService.SaveCharacter(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SavePrejudices")]
-		public IActionResult SavePrejudices(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Prejudices";
-			var CharacterID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CharactersModel model = new CharactersModel();
-			model.id = CharacterID;
-			model._id = CharacterID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCharactersApiService.SaveCharacter(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SavePrivacy")]
-		public IActionResult SavePrivacy(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Privacy";
-			var CharacterID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CharactersModel model = new CharactersModel();
-			model.id = CharacterID;
-			model._id = CharacterID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCharactersApiService.SaveCharacter(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
 		[Route("{id}/SavePrivate_notes")]
 		public IActionResult SavePrivate_notes(string id)
 		{
@@ -878,111 +846,6 @@ namespace My.World.Web.Controllers
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
 			var type = "Private_notes";
-			var CharacterID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CharactersModel model = new CharactersModel();
-			model.id = CharacterID;
-			model._id = CharacterID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCharactersApiService.SaveCharacter(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveRace")]
-		public IActionResult SaveRace(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Race";
-			var CharacterID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CharactersModel model = new CharactersModel();
-			model.id = CharacterID;
-			model._id = CharacterID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCharactersApiService.SaveCharacter(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveReligion")]
-		public IActionResult SaveReligion(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Religion";
-			var CharacterID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CharactersModel model = new CharactersModel();
-			model.id = CharacterID;
-			model._id = CharacterID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCharactersApiService.SaveCharacter(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveRole")]
-		public IActionResult SaveRole(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Role";
-			var CharacterID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CharactersModel model = new CharactersModel();
-			model.id = CharacterID;
-			model._id = CharacterID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCharactersApiService.SaveCharacter(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveSkintone")]
-		public IActionResult SaveSkintone(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Skintone";
-			var CharacterID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CharactersModel model = new CharactersModel();
-			model.id = CharacterID;
-			model._id = CharacterID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCharactersApiService.SaveCharacter(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveTalents")]
-		public IActionResult SaveTalents(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Talents";
 			var CharacterID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -1019,13 +882,13 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveWeight")]
-		public IActionResult SaveWeight(string id)
+		[Route("{id}/SavePrivacy")]
+		public IActionResult SavePrivacy(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Weight";
+			var type = "Privacy";
 			var CharacterID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -1038,6 +901,154 @@ namespace My.World.Web.Controllers
 			return Json(response);
 
 		}
+
+		[HttpPost]
+		[Route("{id}/SaveAliases")]
+		public IActionResult SaveAliases(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Aliases";
+			var CharacterID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CharactersModel model = new CharactersModel();
+			model.id = CharacterID;
+			model._id = CharacterID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCharactersApiService.SaveCharacter(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveMotivations")]
+		public IActionResult SaveMotivations(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Motivations";
+			var CharacterID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CharactersModel model = new CharactersModel();
+			model.id = CharacterID;
+			model._id = CharacterID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCharactersApiService.SaveCharacter(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveFlaws")]
+		public IActionResult SaveFlaws(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Flaws";
+			var CharacterID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CharactersModel model = new CharactersModel();
+			model.id = CharacterID;
+			model._id = CharacterID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCharactersApiService.SaveCharacter(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveTalents")]
+		public IActionResult SaveTalents(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Talents";
+			var CharacterID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CharactersModel model = new CharactersModel();
+			model.id = CharacterID;
+			model._id = CharacterID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCharactersApiService.SaveCharacter(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveHobbies")]
+		public IActionResult SaveHobbies(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Hobbies";
+			var CharacterID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CharactersModel model = new CharactersModel();
+			model.id = CharacterID;
+			model._id = CharacterID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCharactersApiService.SaveCharacter(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SavePersonality_type")]
+		public IActionResult SavePersonality_type(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Personality_type";
+			var CharacterID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CharactersModel model = new CharactersModel();
+			model.id = CharacterID;
+			model._id = CharacterID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCharactersApiService.SaveCharacter(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("SaveFavorite")]
+		public IActionResult SaveFavorite()
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Favorite";
+			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
+			var CharacterID = Convert.ToInt64(obj["CharacterID"].Value);
+			var value = Convert.ToBoolean(obj["value"].Value);
+			
+			CharactersModel model = new CharactersModel();
+			model.id = CharacterID;
+			model._id = CharacterID;
+			model.column_type = type;
+			model.column_value = Convert.ToInt32(value);
+			response = _iCharactersApiService.SaveCharacter(model);
+			return Json(response);
+
+		}
 		#endregion 
 
 		[HttpPost]
@@ -1045,40 +1056,53 @@ namespace My.World.Web.Controllers
 		public IActionResult UploadAttachment(List<IFormFile> files)
 		{
 			var accountID = Convert.ToInt64(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserID")?.Value);
-			string content_Id = HttpContext.Session.GetString("CharactersID");
+			string content_Id = HttpContext.Session.GetString("CharacterID");
+			
+			var ContentObjectModelList = _iObjectBucketApiService.GetAllContentObjectAttachments(Convert.ToInt64(content_Id), "characters");
+			var existing_total_size = ContentObjectModelList.Sum(f => f.object_size);
 			
 			var rq_files = Request.Form.Files;
+			var upload_file_size = rq_files.Sum(f => f.Length);
+			var total_size = upload_file_size + existing_total_size;
+			var AllowedTotalContentSize = Convert.ToInt64(HttpContext.Session.GetString("AllowedTotalContentSize"));
 			
-			if (rq_files != null)
+			if (total_size <= AllowedTotalContentSize)
 			{
-			    foreach (var file in rq_files)
-			    {
-			        using (var ms = new MemoryStream())
-			        {
-			            ContentObjectModel model = new ContentObjectModel();
-			            model.object_type = file.ContentType;
-			            model.object_name = file.FileName;
-			            model.object_size = file.Length;
+				if (rq_files != null)
+				{
+					foreach (var file in rq_files)
+					{
+						using (var ms = new MemoryStream())
+						{
+							ContentObjectModel model = new ContentObjectModel();
+							model.object_type = file.ContentType;
+							model.object_name = file.FileName;
+							model.object_size = file.Length;
+							model.bucket_folder = _config.GetValue<string>("BucketEnv");
 			
-			            file.CopyTo(ms);
-			            model.file = ms;
-			            model.file.Seek(0, 0);
-			            _iObjectBucketApiService.SetObjectStorageSecrets(accountID);
-			            var response = _iObjectBucketApiService.UploadObject(model).Result;
+							file.CopyTo(ms);
+							model.file = ms;
+							model.file.Seek(0, 0);
+							_iObjectBucketApiService.SetObjectStorageSecrets(accountID);
+							var response = _iObjectBucketApiService.UploadObject(model).Result;
 			
-			            if (!string.IsNullOrEmpty(response.Value))
-			            {
-			                ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
-			                contentObjectAttachmentModel.object_id = Convert.ToInt64(response.Value);
-			                contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
-			                contentObjectAttachmentModel.content_type = "characters";
+							if (!string.IsNullOrEmpty(response.Value))
+							{
+								ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
+								contentObjectAttachmentModel.object_id = Convert.ToInt64(response.Value);
+								contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
+								contentObjectAttachmentModel.content_type = "characters";
 			
-			                _iObjectBucketApiService.AddContentObjectAttachment(contentObjectAttachmentModel);
-			            }
-			        }
-			    }
+								_iObjectBucketApiService.AddContentObjectAttachment(contentObjectAttachmentModel);
+							}
+						}
+					}
+				}
 			}
-			
+			else
+			{
+				return BadRequest(new { message = "You have Exceeded the maximum allowed size of 50 MB per content to upload images." });
+			}
 			return Ok();
 
 		}
@@ -1087,16 +1111,17 @@ namespace My.World.Web.Controllers
 		public IActionResult DeleteAttachment(long objectId,string objectName)
 		{
 			var accountID = Convert.ToInt64(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserID")?.Value);
-			string content_Id = HttpContext.Session.GetString("CharactersID");
+			string content_Id = HttpContext.Session.GetString("CharacterID");
 			
 			ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
 			contentObjectAttachmentModel.object_id = objectId;
 			contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
 			contentObjectAttachmentModel.content_type = "characters";
 			
+			var bucket_folder = _config.GetValue<string>("BucketEnv");
 			ContentObjectModel contentObjectModel = new ContentObjectModel();
 			contentObjectModel.object_id = objectId;
-			contentObjectModel.object_name = objectName;
+			contentObjectModel.object_name = bucket_folder + " / " + objectName;
 			
 			_iObjectBucketApiService.SetObjectStorageSecrets(accountID);
 			_iObjectBucketApiService.DeleteObject(contentObjectModel);

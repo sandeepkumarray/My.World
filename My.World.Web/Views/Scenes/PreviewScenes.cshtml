@@ -145,14 +145,22 @@
    
     <script type="text/javascript">
     
-		function setCharacters_in_sceneBody() {
-		    html = htmlDecode('@Model.scenesModel.Characters_in_scene');
-		    $('#Characters_in_scene').append(html);
+		function setTagsBody() {
+		    html = htmlDecode('@Model.scenesModel.Tags');
+		    $('#Tags').append(html);
 		};
 
-		function setDescriptionBody() {
-		    html = htmlDecode('@Model.scenesModel.Description');
-		    $('#Description').append(html);
+		function setNameBody() {
+		    $('#scenesModel_Name').val('@Model.scenesModel.Name');
+		};
+
+		function setSummaryBody() {
+		    html = htmlDecode('@Model.scenesModel.Summary');
+		    $('#Summary').append(html);
+		};
+
+		function setUniverseBody() {
+		    $('#scenesModel_Universe').val('@Model.scenesModel.Universe');
 		};
 
 		function setItems_in_sceneBody() {
@@ -165,8 +173,24 @@
 		    $('#Locations_in_scene').append(html);
 		};
 
-		function setNameBody() {
-		    $('#scenesModel_Name').val('@Model.scenesModel.Name');
+		function setCharacters_in_sceneBody() {
+		    html = htmlDecode('@Model.scenesModel.Characters_in_scene');
+		    $('#Characters_in_scene').append(html);
+		};
+
+		function setDescriptionBody() {
+		    html = htmlDecode('@Model.scenesModel.Description');
+		    $('#Description').append(html);
+		};
+
+		function setResultsBody() {
+		    html = htmlDecode('@Model.scenesModel.Results');
+		    $('#Results').append(html);
+		};
+
+		function setWhat_caused_thisBody() {
+		    html = htmlDecode('@Model.scenesModel.What_caused_this');
+		    $('#What_caused_this').append(html);
 		};
 
 		function setNotesBody() {
@@ -179,44 +203,20 @@
 		    $('#Private_notes').append(html);
 		};
 
-		function setResultsBody() {
-		    html = htmlDecode('@Model.scenesModel.Results');
-		    $('#Results').append(html);
-		};
-
-		function setSummaryBody() {
-		    html = htmlDecode('@Model.scenesModel.Summary');
-		    $('#Summary').append(html);
-		};
-
-		function setTagsBody() {
-		    html = htmlDecode('@Model.scenesModel.Tags');
-		    $('#Tags').append(html);
-		};
-
-		function setUniverseBody() {
-		    $('#scenesModel_Universe').val('@Model.scenesModel.Universe');
-		};
-
-		function setWhat_caused_thisBody() {
-		    html = htmlDecode('@Model.scenesModel.What_caused_this');
-		    $('#What_caused_this').append(html);
-		};
-
 
 
         $(document).ready(function () {
-			setCharacters_in_sceneBody();
-			setDescriptionBody();
+			setTagsBody();
+			setNameBody();
+			setSummaryBody();
 			setItems_in_sceneBody();
 			setLocations_in_sceneBody();
-			setNameBody();
+			setCharacters_in_sceneBody();
+			setDescriptionBody();
+			setResultsBody();
+			setWhat_caused_thisBody();
 			setNotesBody();
 			setPrivate_notesBody();
-			setResultsBody();
-			setSummaryBody();
-			setTagsBody();
-			setWhat_caused_thisBody();
 
         });
 

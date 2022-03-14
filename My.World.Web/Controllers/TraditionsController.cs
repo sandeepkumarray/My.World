@@ -13,6 +13,7 @@ using My.World.Web.Services;
 using Newtonsoft.Json;
 using My.World.Web.ViewModel;
 using Microsoft.Extensions.Configuration;
+using System.Web;
 
 namespace My.World.Web.Controllers
 {
@@ -103,7 +104,17 @@ namespace My.World.Web.Controllers
 			traditionsViewModel.headerBackgroundColor = contentTypesModel.sec_color;
 			_iObjectBucketApiService.SetObjectStorageSecrets(model.user_id);
 			traditionsViewModel.ContentObjectModelList = _iObjectBucketApiService.GetAllContentObjectAttachments(Convert.ToInt64(Id), "traditions");
-			return View(traditionsViewModel);
+			traditionsViewModel.ContentObjectModelList.ForEach(o => 
+			{
+			    var publicUrl = "http://" + _iObjectBucketApiService.objectStorageKeysModel.endpoint
+			                + '/' + _iObjectBucketApiService.objectStorageKeysModel.bucketName + '/' + _config.GetValue<string>("BucketEnv") + '/' + o.object_name; 
+			    o.file_url = HttpUtility.UrlPathEncode(publicUrl); 
+			}); 
+			var existing_total_size = traditionsViewModel.ContentObjectModelList.Sum(f => f.object_size);
+			var AllowedTotalContentSize = Convert.ToInt64(HttpContext.Session.GetString("AllowedTotalContentSize"));
+			var remainingSize = AllowedTotalContentSize - existing_total_size;
+			traditionsViewModel.RemainingContentSize = Helpers.Utility.SizeSuffix(remainingSize);
+			return View(traditionsViewModel); 
 
 		}
 
@@ -154,41 +165,42 @@ namespace My.World.Web.Controllers
 			if (model != null)
 			{
 				
-				model.Activities  = model.Activities == null ? model.Activities : model.Activities.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Alternate_names  = model.Alternate_names == null ? model.Alternate_names : model.Alternate_names.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Tags  = model.Tags == null ? model.Tags : model.Tags.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Description  = model.Description == null ? model.Description : model.Description.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Type_of_tradition  = model.Type_of_tradition == null ? model.Type_of_tradition : model.Type_of_tradition.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Countries  = model.Countries == null ? model.Countries : model.Countries.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Dates  = model.Dates == null ? model.Dates : model.Dates.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Description  = model.Description == null ? model.Description : model.Description.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Etymology  = model.Etymology == null ? model.Etymology : model.Etymology.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Food  = model.Food == null ? model.Food : model.Food.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Games  = model.Games == null ? model.Games : model.Games.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Gifts  = model.Gifts == null ? model.Gifts : model.Gifts.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Groups  = model.Groups == null ? model.Groups : model.Groups.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Towns  = model.Towns == null ? model.Towns : model.Towns.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Gifts  = model.Gifts == null ? model.Gifts : model.Gifts.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Food  = model.Food == null ? model.Food : model.Food.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Symbolism  = model.Symbolism == null ? model.Symbolism : model.Symbolism.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Games  = model.Games == null ? model.Games : model.Games.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Activities  = model.Activities == null ? model.Activities : model.Activities.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Etymology  = model.Etymology == null ? model.Etymology : model.Etymology.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Origin  = model.Origin == null ? model.Origin : model.Origin.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Significance  = model.Significance == null ? model.Significance : model.Significance.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Religions  = model.Religions == null ? model.Religions : model.Religions.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Notable_events  = model.Notable_events == null ? model.Notable_events : model.Notable_events.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Notes  = model.Notes == null ? model.Notes : model.Notes.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Origin  = model.Origin == null ? model.Origin : model.Origin.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Private_Notes  = model.Private_Notes == null ? model.Private_Notes : model.Private_Notes.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Religions  = model.Religions == null ? model.Religions : model.Religions.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Significance  = model.Significance == null ? model.Significance : model.Significance.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Symbolism  = model.Symbolism == null ? model.Symbolism : model.Symbolism.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Tags  = model.Tags == null ? model.Tags : model.Tags.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Towns  = model.Towns == null ? model.Towns : model.Towns.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Type_of_tradition  = model.Type_of_tradition == null ? model.Type_of_tradition : model.Type_of_tradition.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 			}
 
 		}
 
 		#region Save Properties Methods
 		[HttpPost]
-		[Route("{id}/SaveActivities")]
-		public IActionResult SaveActivities(string id)
+		[Route("SaveUniverse")]
+		public IActionResult SaveUniverse()
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Activities";
-			var TraditionID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
+			var type = "Universe";
+			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
+			var TraditionID = Convert.ToInt64(obj["TraditionID"].Value);
+			var value = Convert.ToString(obj["value"].Value);
 			
 			TraditionsModel model = new TraditionsModel();
 			model.id = TraditionID;
@@ -208,6 +220,91 @@ namespace My.World.Web.Controllers
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
 			var type = "Alternate_names";
+			var TraditionID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TraditionsModel model = new TraditionsModel();
+			model.id = TraditionID;
+			model._id = TraditionID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTraditionsApiService.SaveTradition(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveTags")]
+		public IActionResult SaveTags(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Tags";
+			var TraditionID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TraditionsModel model = new TraditionsModel();
+			model.id = TraditionID;
+			model._id = TraditionID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTraditionsApiService.SaveTradition(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("SaveName")]
+		public IActionResult SaveName()
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Name";
+			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
+			var TraditionID = Convert.ToInt64(obj["TraditionID"].Value);
+			var value = Convert.ToString(obj["value"].Value);
+			
+			TraditionsModel model = new TraditionsModel();
+			model.id = TraditionID;
+			model._id = TraditionID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTraditionsApiService.SaveTradition(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveDescription")]
+		public IActionResult SaveDescription(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Description";
+			var TraditionID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TraditionsModel model = new TraditionsModel();
+			model.id = TraditionID;
+			model._id = TraditionID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTraditionsApiService.SaveTradition(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveType_of_tradition")]
+		public IActionResult SaveType_of_tradition(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Type_of_tradition";
 			var TraditionID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -264,13 +361,13 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveDescription")]
-		public IActionResult SaveDescription(string id)
+		[Route("{id}/SaveGroups")]
+		public IActionResult SaveGroups(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Description";
+			var type = "Groups";
 			var TraditionID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -285,55 +382,13 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveEtymology")]
-		public IActionResult SaveEtymology(string id)
+		[Route("{id}/SaveTowns")]
+		public IActionResult SaveTowns(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Etymology";
-			var TraditionID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TraditionsModel model = new TraditionsModel();
-			model.id = TraditionID;
-			model._id = TraditionID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTraditionsApiService.SaveTradition(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveFood")]
-		public IActionResult SaveFood(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Food";
-			var TraditionID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TraditionsModel model = new TraditionsModel();
-			model.id = TraditionID;
-			model._id = TraditionID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTraditionsApiService.SaveTradition(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveGames")]
-		public IActionResult SaveGames(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Games";
+			var type = "Towns";
 			var TraditionID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -369,13 +424,13 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveGroups")]
-		public IActionResult SaveGroups(string id)
+		[Route("{id}/SaveFood")]
+		public IActionResult SaveFood(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Groups";
+			var type = "Food";
 			var TraditionID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -390,16 +445,141 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("SaveName")]
-		public IActionResult SaveName()
+		[Route("{id}/SaveSymbolism")]
+		public IActionResult SaveSymbolism(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Name";
-			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
-			var TraditionID = Convert.ToInt64(obj["TraditionID"].Value);
-			var value = Convert.ToString(obj["value"].Value);
+			var type = "Symbolism";
+			var TraditionID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TraditionsModel model = new TraditionsModel();
+			model.id = TraditionID;
+			model._id = TraditionID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTraditionsApiService.SaveTradition(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveGames")]
+		public IActionResult SaveGames(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Games";
+			var TraditionID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TraditionsModel model = new TraditionsModel();
+			model.id = TraditionID;
+			model._id = TraditionID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTraditionsApiService.SaveTradition(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveActivities")]
+		public IActionResult SaveActivities(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Activities";
+			var TraditionID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TraditionsModel model = new TraditionsModel();
+			model.id = TraditionID;
+			model._id = TraditionID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTraditionsApiService.SaveTradition(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveEtymology")]
+		public IActionResult SaveEtymology(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Etymology";
+			var TraditionID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TraditionsModel model = new TraditionsModel();
+			model.id = TraditionID;
+			model._id = TraditionID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTraditionsApiService.SaveTradition(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveOrigin")]
+		public IActionResult SaveOrigin(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Origin";
+			var TraditionID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TraditionsModel model = new TraditionsModel();
+			model.id = TraditionID;
+			model._id = TraditionID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTraditionsApiService.SaveTradition(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveSignificance")]
+		public IActionResult SaveSignificance(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Significance";
+			var TraditionID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TraditionsModel model = new TraditionsModel();
+			model.id = TraditionID;
+			model._id = TraditionID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTraditionsApiService.SaveTradition(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveReligions")]
+		public IActionResult SaveReligions(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Religions";
+			var TraditionID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
 			
 			TraditionsModel model = new TraditionsModel();
 			model.id = TraditionID;
@@ -454,27 +634,6 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveOrigin")]
-		public IActionResult SaveOrigin(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Origin";
-			var TraditionID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TraditionsModel model = new TraditionsModel();
-			model.id = TraditionID;
-			model._id = TraditionID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTraditionsApiService.SaveTradition(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
 		[Route("{id}/SavePrivate_Notes")]
 		public IActionResult SavePrivate_Notes(string id)
 		{
@@ -494,154 +653,6 @@ namespace My.World.Web.Controllers
 			return Json(response);
 
 		}
-
-		[HttpPost]
-		[Route("{id}/SaveReligions")]
-		public IActionResult SaveReligions(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Religions";
-			var TraditionID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TraditionsModel model = new TraditionsModel();
-			model.id = TraditionID;
-			model._id = TraditionID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTraditionsApiService.SaveTradition(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveSignificance")]
-		public IActionResult SaveSignificance(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Significance";
-			var TraditionID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TraditionsModel model = new TraditionsModel();
-			model.id = TraditionID;
-			model._id = TraditionID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTraditionsApiService.SaveTradition(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveSymbolism")]
-		public IActionResult SaveSymbolism(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Symbolism";
-			var TraditionID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TraditionsModel model = new TraditionsModel();
-			model.id = TraditionID;
-			model._id = TraditionID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTraditionsApiService.SaveTradition(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveTags")]
-		public IActionResult SaveTags(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Tags";
-			var TraditionID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TraditionsModel model = new TraditionsModel();
-			model.id = TraditionID;
-			model._id = TraditionID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTraditionsApiService.SaveTradition(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveTowns")]
-		public IActionResult SaveTowns(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Towns";
-			var TraditionID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TraditionsModel model = new TraditionsModel();
-			model.id = TraditionID;
-			model._id = TraditionID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTraditionsApiService.SaveTradition(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveType_of_tradition")]
-		public IActionResult SaveType_of_tradition(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Type_of_tradition";
-			var TraditionID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TraditionsModel model = new TraditionsModel();
-			model.id = TraditionID;
-			model._id = TraditionID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTraditionsApiService.SaveTradition(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("SaveUniverse")]
-		public IActionResult SaveUniverse()
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Universe";
-			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
-			var TraditionID = Convert.ToInt64(obj["TraditionID"].Value);
-			var value = Convert.ToString(obj["value"].Value);
-			
-			TraditionsModel model = new TraditionsModel();
-			model.id = TraditionID;
-			model._id = TraditionID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTraditionsApiService.SaveTradition(model);
-			return Json(response);
-
-		}
 		#endregion 
 
 		[HttpPost]
@@ -649,40 +660,53 @@ namespace My.World.Web.Controllers
 		public IActionResult UploadAttachment(List<IFormFile> files)
 		{
 			var accountID = Convert.ToInt64(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserID")?.Value);
-			string content_Id = HttpContext.Session.GetString("TraditionsID");
+			string content_Id = HttpContext.Session.GetString("TraditionID");
+			
+			var ContentObjectModelList = _iObjectBucketApiService.GetAllContentObjectAttachments(Convert.ToInt64(content_Id), "traditions");
+			var existing_total_size = ContentObjectModelList.Sum(f => f.object_size);
 			
 			var rq_files = Request.Form.Files;
+			var upload_file_size = rq_files.Sum(f => f.Length);
+			var total_size = upload_file_size + existing_total_size;
+			var AllowedTotalContentSize = Convert.ToInt64(HttpContext.Session.GetString("AllowedTotalContentSize"));
 			
-			if (rq_files != null)
+			if (total_size <= AllowedTotalContentSize)
 			{
-			    foreach (var file in rq_files)
-			    {
-			        using (var ms = new MemoryStream())
-			        {
-			            ContentObjectModel model = new ContentObjectModel();
-			            model.object_type = file.ContentType;
-			            model.object_name = file.FileName;
-			            model.object_size = file.Length;
+				if (rq_files != null)
+				{
+					foreach (var file in rq_files)
+					{
+						using (var ms = new MemoryStream())
+						{
+							ContentObjectModel model = new ContentObjectModel();
+							model.object_type = file.ContentType;
+							model.object_name = file.FileName;
+							model.object_size = file.Length;
+							model.bucket_folder = _config.GetValue<string>("BucketEnv");
 			
-			            file.CopyTo(ms);
-			            model.file = ms;
-			            model.file.Seek(0, 0);
-			            _iObjectBucketApiService.SetObjectStorageSecrets(accountID);
-			            var response = _iObjectBucketApiService.UploadObject(model).Result;
+							file.CopyTo(ms);
+							model.file = ms;
+							model.file.Seek(0, 0);
+							_iObjectBucketApiService.SetObjectStorageSecrets(accountID);
+							var response = _iObjectBucketApiService.UploadObject(model).Result;
 			
-			            if (!string.IsNullOrEmpty(response.Value))
-			            {
-			                ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
-			                contentObjectAttachmentModel.object_id = Convert.ToInt64(response.Value);
-			                contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
-			                contentObjectAttachmentModel.content_type = "traditions";
+							if (!string.IsNullOrEmpty(response.Value))
+							{
+								ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
+								contentObjectAttachmentModel.object_id = Convert.ToInt64(response.Value);
+								contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
+								contentObjectAttachmentModel.content_type = "traditions";
 			
-			                _iObjectBucketApiService.AddContentObjectAttachment(contentObjectAttachmentModel);
-			            }
-			        }
-			    }
+								_iObjectBucketApiService.AddContentObjectAttachment(contentObjectAttachmentModel);
+							}
+						}
+					}
+				}
 			}
-			
+			else
+			{
+				return BadRequest(new { message = "You have Exceeded the maximum allowed size of 50 MB per content to upload images." });
+			}
 			return Ok();
 
 		}
@@ -691,16 +715,17 @@ namespace My.World.Web.Controllers
 		public IActionResult DeleteAttachment(long objectId,string objectName)
 		{
 			var accountID = Convert.ToInt64(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserID")?.Value);
-			string content_Id = HttpContext.Session.GetString("TraditionsID");
+			string content_Id = HttpContext.Session.GetString("TraditionID");
 			
 			ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
 			contentObjectAttachmentModel.object_id = objectId;
 			contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
 			contentObjectAttachmentModel.content_type = "traditions";
 			
+			var bucket_folder = _config.GetValue<string>("BucketEnv");
 			ContentObjectModel contentObjectModel = new ContentObjectModel();
 			contentObjectModel.object_id = objectId;
-			contentObjectModel.object_name = objectName;
+			contentObjectModel.object_name = bucket_folder + " / " + objectName;
 			
 			_iObjectBucketApiService.SetObjectStorageSecrets(accountID);
 			_iObjectBucketApiService.DeleteObject(contentObjectModel);

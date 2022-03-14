@@ -13,6 +13,7 @@ using My.World.Web.Services;
 using Newtonsoft.Json;
 using My.World.Web.ViewModel;
 using Microsoft.Extensions.Configuration;
+using System.Web;
 
 namespace My.World.Web.Controllers
 {
@@ -103,7 +104,17 @@ namespace My.World.Web.Controllers
 			technologiesViewModel.headerBackgroundColor = contentTypesModel.sec_color;
 			_iObjectBucketApiService.SetObjectStorageSecrets(model.user_id);
 			technologiesViewModel.ContentObjectModelList = _iObjectBucketApiService.GetAllContentObjectAttachments(Convert.ToInt64(Id), "technologies");
-			return View(technologiesViewModel);
+			technologiesViewModel.ContentObjectModelList.ForEach(o => 
+			{
+			    var publicUrl = "http://" + _iObjectBucketApiService.objectStorageKeysModel.endpoint
+			                + '/' + _iObjectBucketApiService.objectStorageKeysModel.bucketName + '/' + _config.GetValue<string>("BucketEnv") + '/' + o.object_name; 
+			    o.file_url = HttpUtility.UrlPathEncode(publicUrl); 
+			}); 
+			var existing_total_size = technologiesViewModel.ContentObjectModelList.Sum(f => f.object_size);
+			var AllowedTotalContentSize = Convert.ToInt64(HttpContext.Session.GetString("AllowedTotalContentSize"));
+			var remainingSize = AllowedTotalContentSize - existing_total_size;
+			technologiesViewModel.RemainingContentSize = Helpers.Utility.SizeSuffix(remainingSize);
+			return View(technologiesViewModel); 
 
 		}
 
@@ -154,275 +165,43 @@ namespace My.World.Web.Controllers
 			if (model != null)
 			{
 				
-				model.Characters  = model.Characters == null ? model.Characters : model.Characters.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Child_technologies  = model.Child_technologies == null ? model.Child_technologies : model.Child_technologies.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Colors  = model.Colors == null ? model.Colors : model.Colors.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Countries  = model.Countries == null ? model.Countries : model.Countries.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Creatures  = model.Creatures == null ? model.Creatures : model.Creatures.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Description  = model.Description == null ? model.Description : model.Description.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Groups  = model.Groups == null ? model.Groups : model.Groups.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.How_It_Works  = model.How_It_Works == null ? model.How_It_Works : model.How_It_Works.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Magic_effects  = model.Magic_effects == null ? model.Magic_effects : model.Magic_effects.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Manufacturing_Process  = model.Manufacturing_Process == null ? model.Manufacturing_Process : model.Manufacturing_Process.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Materials  = model.Materials == null ? model.Materials : model.Materials.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Notes  = model.Notes == null ? model.Notes : model.Notes.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Other_Names  = model.Other_Names == null ? model.Other_Names : model.Other_Names.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Parent_technologies  = model.Parent_technologies == null ? model.Parent_technologies : model.Parent_technologies.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Physical_Description  = model.Physical_Description == null ? model.Physical_Description : model.Physical_Description.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Planets  = model.Planets == null ? model.Planets : model.Planets.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Private_Notes  = model.Private_Notes == null ? model.Private_Notes : model.Private_Notes.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Purpose  = model.Purpose == null ? model.Purpose : model.Purpose.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Rarity  = model.Rarity == null ? model.Rarity : model.Rarity.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Related_technologies  = model.Related_technologies == null ? model.Related_technologies : model.Related_technologies.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Resources_Used  = model.Resources_Used == null ? model.Resources_Used : model.Resources_Used.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Sales_Process  = model.Sales_Process == null ? model.Sales_Process : model.Sales_Process.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Tags  = model.Tags == null ? model.Tags : model.Tags.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Description  = model.Description == null ? model.Description : model.Description.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Other_Names  = model.Other_Names == null ? model.Other_Names : model.Other_Names.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Sales_Process  = model.Sales_Process == null ? model.Sales_Process : model.Sales_Process.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Materials  = model.Materials == null ? model.Materials : model.Materials.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Manufacturing_Process  = model.Manufacturing_Process == null ? model.Manufacturing_Process : model.Manufacturing_Process.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Planets  = model.Planets == null ? model.Planets : model.Planets.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Rarity  = model.Rarity == null ? model.Rarity : model.Rarity.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Creatures  = model.Creatures == null ? model.Creatures : model.Creatures.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Groups  = model.Groups == null ? model.Groups : model.Groups.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Countries  = model.Countries == null ? model.Countries : model.Countries.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Towns  = model.Towns == null ? model.Towns : model.Towns.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Characters  = model.Characters == null ? model.Characters : model.Characters.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Magic_effects  = model.Magic_effects == null ? model.Magic_effects : model.Magic_effects.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Resources_Used  = model.Resources_Used == null ? model.Resources_Used : model.Resources_Used.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.How_It_Works  = model.How_It_Works == null ? model.How_It_Works : model.How_It_Works.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Purpose  = model.Purpose == null ? model.Purpose : model.Purpose.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Physical_Description  = model.Physical_Description == null ? model.Physical_Description : model.Physical_Description.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Colors  = model.Colors == null ? model.Colors : model.Colors.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Related_technologies  = model.Related_technologies == null ? model.Related_technologies : model.Related_technologies.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Parent_technologies  = model.Parent_technologies == null ? model.Parent_technologies : model.Parent_technologies.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Child_technologies  = model.Child_technologies == null ? model.Child_technologies : model.Child_technologies.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Notes  = model.Notes == null ? model.Notes : model.Notes.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Private_Notes  = model.Private_Notes == null ? model.Private_Notes : model.Private_Notes.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 			}
 
 		}
 
 		#region Save Properties Methods
 		[HttpPost]
-		[Route("{id}/SaveCharacters")]
-		public IActionResult SaveCharacters(string id)
+		[Route("{id}/SaveTags")]
+		public IActionResult SaveTags(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Characters";
-			var TechnologieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TechnologiesModel model = new TechnologiesModel();
-			model.id = TechnologieID;
-			model._id = TechnologieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTechnologiesApiService.SaveTechnologie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveChild_technologies")]
-		public IActionResult SaveChild_technologies(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Child_technologies";
-			var TechnologieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TechnologiesModel model = new TechnologiesModel();
-			model.id = TechnologieID;
-			model._id = TechnologieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTechnologiesApiService.SaveTechnologie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveColors")]
-		public IActionResult SaveColors(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Colors";
-			var TechnologieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TechnologiesModel model = new TechnologiesModel();
-			model.id = TechnologieID;
-			model._id = TechnologieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTechnologiesApiService.SaveTechnologie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("SaveCost")]
-		public IActionResult SaveCost()
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Cost";
-			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
-			var TechnologieID = Convert.ToInt64(obj["TechnologieID"].Value);
-			var value = Convert.ToString(obj["value"].Value);
-			
-			TechnologiesModel model = new TechnologiesModel();
-			model.id = TechnologieID;
-			model._id = TechnologieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTechnologiesApiService.SaveTechnologie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveCountries")]
-		public IActionResult SaveCountries(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Countries";
-			var TechnologieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TechnologiesModel model = new TechnologiesModel();
-			model.id = TechnologieID;
-			model._id = TechnologieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTechnologiesApiService.SaveTechnologie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveCreatures")]
-		public IActionResult SaveCreatures(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Creatures";
-			var TechnologieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TechnologiesModel model = new TechnologiesModel();
-			model.id = TechnologieID;
-			model._id = TechnologieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTechnologiesApiService.SaveTechnologie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveDescription")]
-		public IActionResult SaveDescription(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Description";
-			var TechnologieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TechnologiesModel model = new TechnologiesModel();
-			model.id = TechnologieID;
-			model._id = TechnologieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTechnologiesApiService.SaveTechnologie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveGroups")]
-		public IActionResult SaveGroups(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Groups";
-			var TechnologieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TechnologiesModel model = new TechnologiesModel();
-			model.id = TechnologieID;
-			model._id = TechnologieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTechnologiesApiService.SaveTechnologie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveHow_It_Works")]
-		public IActionResult SaveHow_It_Works(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "How_It_Works";
-			var TechnologieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TechnologiesModel model = new TechnologiesModel();
-			model.id = TechnologieID;
-			model._id = TechnologieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTechnologiesApiService.SaveTechnologie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveMagic_effects")]
-		public IActionResult SaveMagic_effects(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Magic_effects";
-			var TechnologieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TechnologiesModel model = new TechnologiesModel();
-			model.id = TechnologieID;
-			model._id = TechnologieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTechnologiesApiService.SaveTechnologie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveManufacturing_Process")]
-		public IActionResult SaveManufacturing_Process(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Manufacturing_Process";
-			var TechnologieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TechnologiesModel model = new TechnologiesModel();
-			model.id = TechnologieID;
-			model._id = TechnologieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTechnologiesApiService.SaveTechnologie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveMaterials")]
-		public IActionResult SaveMaterials(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Materials";
+			var type = "Tags";
 			var TechnologieID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -459,13 +238,13 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveNotes")]
-		public IActionResult SaveNotes(string id)
+		[Route("{id}/SaveDescription")]
+		public IActionResult SaveDescription(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Notes";
+			var type = "Description";
 			var TechnologieID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -487,259 +266,6 @@ namespace My.World.Web.Controllers
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
 			var type = "Other_Names";
-			var TechnologieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TechnologiesModel model = new TechnologiesModel();
-			model.id = TechnologieID;
-			model._id = TechnologieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTechnologiesApiService.SaveTechnologie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveParent_technologies")]
-		public IActionResult SaveParent_technologies(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Parent_technologies";
-			var TechnologieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TechnologiesModel model = new TechnologiesModel();
-			model.id = TechnologieID;
-			model._id = TechnologieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTechnologiesApiService.SaveTechnologie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SavePhysical_Description")]
-		public IActionResult SavePhysical_Description(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Physical_Description";
-			var TechnologieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TechnologiesModel model = new TechnologiesModel();
-			model.id = TechnologieID;
-			model._id = TechnologieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTechnologiesApiService.SaveTechnologie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SavePlanets")]
-		public IActionResult SavePlanets(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Planets";
-			var TechnologieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TechnologiesModel model = new TechnologiesModel();
-			model.id = TechnologieID;
-			model._id = TechnologieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTechnologiesApiService.SaveTechnologie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SavePrivate_Notes")]
-		public IActionResult SavePrivate_Notes(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Private_Notes";
-			var TechnologieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TechnologiesModel model = new TechnologiesModel();
-			model.id = TechnologieID;
-			model._id = TechnologieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTechnologiesApiService.SaveTechnologie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SavePurpose")]
-		public IActionResult SavePurpose(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Purpose";
-			var TechnologieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TechnologiesModel model = new TechnologiesModel();
-			model.id = TechnologieID;
-			model._id = TechnologieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTechnologiesApiService.SaveTechnologie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveRarity")]
-		public IActionResult SaveRarity(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Rarity";
-			var TechnologieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TechnologiesModel model = new TechnologiesModel();
-			model.id = TechnologieID;
-			model._id = TechnologieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTechnologiesApiService.SaveTechnologie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveRelated_technologies")]
-		public IActionResult SaveRelated_technologies(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Related_technologies";
-			var TechnologieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TechnologiesModel model = new TechnologiesModel();
-			model.id = TechnologieID;
-			model._id = TechnologieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTechnologiesApiService.SaveTechnologie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveResources_Used")]
-		public IActionResult SaveResources_Used(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Resources_Used";
-			var TechnologieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TechnologiesModel model = new TechnologiesModel();
-			model.id = TechnologieID;
-			model._id = TechnologieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTechnologiesApiService.SaveTechnologie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveSales_Process")]
-		public IActionResult SaveSales_Process(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Sales_Process";
-			var TechnologieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TechnologiesModel model = new TechnologiesModel();
-			model.id = TechnologieID;
-			model._id = TechnologieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTechnologiesApiService.SaveTechnologie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("SaveSize")]
-		public IActionResult SaveSize()
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Size";
-			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
-			var TechnologieID = Convert.ToInt64(obj["TechnologieID"].Value);
-			var value = Convert.ToString(obj["value"].Value);
-			
-			TechnologiesModel model = new TechnologiesModel();
-			model.id = TechnologieID;
-			model._id = TechnologieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTechnologiesApiService.SaveTechnologie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveTags")]
-		public IActionResult SaveTags(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Tags";
-			var TechnologieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			TechnologiesModel model = new TechnologiesModel();
-			model.id = TechnologieID;
-			model._id = TechnologieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iTechnologiesApiService.SaveTechnologie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveTowns")]
-		public IActionResult SaveTowns(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Towns";
 			var TechnologieID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -776,6 +302,322 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
+		[Route("{id}/SaveSales_Process")]
+		public IActionResult SaveSales_Process(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Sales_Process";
+			var TechnologieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TechnologiesModel model = new TechnologiesModel();
+			model.id = TechnologieID;
+			model._id = TechnologieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTechnologiesApiService.SaveTechnologie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveMaterials")]
+		public IActionResult SaveMaterials(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Materials";
+			var TechnologieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TechnologiesModel model = new TechnologiesModel();
+			model.id = TechnologieID;
+			model._id = TechnologieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTechnologiesApiService.SaveTechnologie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveManufacturing_Process")]
+		public IActionResult SaveManufacturing_Process(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Manufacturing_Process";
+			var TechnologieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TechnologiesModel model = new TechnologiesModel();
+			model.id = TechnologieID;
+			model._id = TechnologieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTechnologiesApiService.SaveTechnologie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("SaveCost")]
+		public IActionResult SaveCost()
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Cost";
+			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
+			var TechnologieID = Convert.ToInt64(obj["TechnologieID"].Value);
+			var value = Convert.ToString(obj["value"].Value);
+			
+			TechnologiesModel model = new TechnologiesModel();
+			model.id = TechnologieID;
+			model._id = TechnologieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTechnologiesApiService.SaveTechnologie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SavePlanets")]
+		public IActionResult SavePlanets(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Planets";
+			var TechnologieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TechnologiesModel model = new TechnologiesModel();
+			model.id = TechnologieID;
+			model._id = TechnologieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTechnologiesApiService.SaveTechnologie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveRarity")]
+		public IActionResult SaveRarity(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Rarity";
+			var TechnologieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TechnologiesModel model = new TechnologiesModel();
+			model.id = TechnologieID;
+			model._id = TechnologieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTechnologiesApiService.SaveTechnologie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveCreatures")]
+		public IActionResult SaveCreatures(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Creatures";
+			var TechnologieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TechnologiesModel model = new TechnologiesModel();
+			model.id = TechnologieID;
+			model._id = TechnologieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTechnologiesApiService.SaveTechnologie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveGroups")]
+		public IActionResult SaveGroups(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Groups";
+			var TechnologieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TechnologiesModel model = new TechnologiesModel();
+			model.id = TechnologieID;
+			model._id = TechnologieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTechnologiesApiService.SaveTechnologie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveCountries")]
+		public IActionResult SaveCountries(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Countries";
+			var TechnologieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TechnologiesModel model = new TechnologiesModel();
+			model.id = TechnologieID;
+			model._id = TechnologieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTechnologiesApiService.SaveTechnologie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveTowns")]
+		public IActionResult SaveTowns(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Towns";
+			var TechnologieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TechnologiesModel model = new TechnologiesModel();
+			model.id = TechnologieID;
+			model._id = TechnologieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTechnologiesApiService.SaveTechnologie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveCharacters")]
+		public IActionResult SaveCharacters(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Characters";
+			var TechnologieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TechnologiesModel model = new TechnologiesModel();
+			model.id = TechnologieID;
+			model._id = TechnologieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTechnologiesApiService.SaveTechnologie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveMagic_effects")]
+		public IActionResult SaveMagic_effects(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Magic_effects";
+			var TechnologieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TechnologiesModel model = new TechnologiesModel();
+			model.id = TechnologieID;
+			model._id = TechnologieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTechnologiesApiService.SaveTechnologie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveResources_Used")]
+		public IActionResult SaveResources_Used(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Resources_Used";
+			var TechnologieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TechnologiesModel model = new TechnologiesModel();
+			model.id = TechnologieID;
+			model._id = TechnologieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTechnologiesApiService.SaveTechnologie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveHow_It_Works")]
+		public IActionResult SaveHow_It_Works(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "How_It_Works";
+			var TechnologieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TechnologiesModel model = new TechnologiesModel();
+			model.id = TechnologieID;
+			model._id = TechnologieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTechnologiesApiService.SaveTechnologie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SavePurpose")]
+		public IActionResult SavePurpose(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Purpose";
+			var TechnologieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TechnologiesModel model = new TechnologiesModel();
+			model.id = TechnologieID;
+			model._id = TechnologieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTechnologiesApiService.SaveTechnologie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
 		[Route("SaveWeight")]
 		public IActionResult SaveWeight()
 		{
@@ -796,6 +638,175 @@ namespace My.World.Web.Controllers
 			return Json(response);
 
 		}
+
+		[HttpPost]
+		[Route("{id}/SavePhysical_Description")]
+		public IActionResult SavePhysical_Description(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Physical_Description";
+			var TechnologieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TechnologiesModel model = new TechnologiesModel();
+			model.id = TechnologieID;
+			model._id = TechnologieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTechnologiesApiService.SaveTechnologie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("SaveSize")]
+		public IActionResult SaveSize()
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Size";
+			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
+			var TechnologieID = Convert.ToInt64(obj["TechnologieID"].Value);
+			var value = Convert.ToString(obj["value"].Value);
+			
+			TechnologiesModel model = new TechnologiesModel();
+			model.id = TechnologieID;
+			model._id = TechnologieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTechnologiesApiService.SaveTechnologie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveColors")]
+		public IActionResult SaveColors(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Colors";
+			var TechnologieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TechnologiesModel model = new TechnologiesModel();
+			model.id = TechnologieID;
+			model._id = TechnologieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTechnologiesApiService.SaveTechnologie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveRelated_technologies")]
+		public IActionResult SaveRelated_technologies(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Related_technologies";
+			var TechnologieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TechnologiesModel model = new TechnologiesModel();
+			model.id = TechnologieID;
+			model._id = TechnologieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTechnologiesApiService.SaveTechnologie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveParent_technologies")]
+		public IActionResult SaveParent_technologies(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Parent_technologies";
+			var TechnologieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TechnologiesModel model = new TechnologiesModel();
+			model.id = TechnologieID;
+			model._id = TechnologieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTechnologiesApiService.SaveTechnologie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveChild_technologies")]
+		public IActionResult SaveChild_technologies(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Child_technologies";
+			var TechnologieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TechnologiesModel model = new TechnologiesModel();
+			model.id = TechnologieID;
+			model._id = TechnologieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTechnologiesApiService.SaveTechnologie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveNotes")]
+		public IActionResult SaveNotes(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Notes";
+			var TechnologieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TechnologiesModel model = new TechnologiesModel();
+			model.id = TechnologieID;
+			model._id = TechnologieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTechnologiesApiService.SaveTechnologie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SavePrivate_Notes")]
+		public IActionResult SavePrivate_Notes(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Private_Notes";
+			var TechnologieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			TechnologiesModel model = new TechnologiesModel();
+			model.id = TechnologieID;
+			model._id = TechnologieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iTechnologiesApiService.SaveTechnologie(model);
+			return Json(response);
+
+		}
 		#endregion 
 
 		[HttpPost]
@@ -803,40 +814,53 @@ namespace My.World.Web.Controllers
 		public IActionResult UploadAttachment(List<IFormFile> files)
 		{
 			var accountID = Convert.ToInt64(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserID")?.Value);
-			string content_Id = HttpContext.Session.GetString("TechnologiesID");
+			string content_Id = HttpContext.Session.GetString("TechnologieID");
+			
+			var ContentObjectModelList = _iObjectBucketApiService.GetAllContentObjectAttachments(Convert.ToInt64(content_Id), "technologies");
+			var existing_total_size = ContentObjectModelList.Sum(f => f.object_size);
 			
 			var rq_files = Request.Form.Files;
+			var upload_file_size = rq_files.Sum(f => f.Length);
+			var total_size = upload_file_size + existing_total_size;
+			var AllowedTotalContentSize = Convert.ToInt64(HttpContext.Session.GetString("AllowedTotalContentSize"));
 			
-			if (rq_files != null)
+			if (total_size <= AllowedTotalContentSize)
 			{
-			    foreach (var file in rq_files)
-			    {
-			        using (var ms = new MemoryStream())
-			        {
-			            ContentObjectModel model = new ContentObjectModel();
-			            model.object_type = file.ContentType;
-			            model.object_name = file.FileName;
-			            model.object_size = file.Length;
+				if (rq_files != null)
+				{
+					foreach (var file in rq_files)
+					{
+						using (var ms = new MemoryStream())
+						{
+							ContentObjectModel model = new ContentObjectModel();
+							model.object_type = file.ContentType;
+							model.object_name = file.FileName;
+							model.object_size = file.Length;
+							model.bucket_folder = _config.GetValue<string>("BucketEnv");
 			
-			            file.CopyTo(ms);
-			            model.file = ms;
-			            model.file.Seek(0, 0);
-			            _iObjectBucketApiService.SetObjectStorageSecrets(accountID);
-			            var response = _iObjectBucketApiService.UploadObject(model).Result;
+							file.CopyTo(ms);
+							model.file = ms;
+							model.file.Seek(0, 0);
+							_iObjectBucketApiService.SetObjectStorageSecrets(accountID);
+							var response = _iObjectBucketApiService.UploadObject(model).Result;
 			
-			            if (!string.IsNullOrEmpty(response.Value))
-			            {
-			                ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
-			                contentObjectAttachmentModel.object_id = Convert.ToInt64(response.Value);
-			                contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
-			                contentObjectAttachmentModel.content_type = "technologies";
+							if (!string.IsNullOrEmpty(response.Value))
+							{
+								ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
+								contentObjectAttachmentModel.object_id = Convert.ToInt64(response.Value);
+								contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
+								contentObjectAttachmentModel.content_type = "technologies";
 			
-			                _iObjectBucketApiService.AddContentObjectAttachment(contentObjectAttachmentModel);
-			            }
-			        }
-			    }
+								_iObjectBucketApiService.AddContentObjectAttachment(contentObjectAttachmentModel);
+							}
+						}
+					}
+				}
 			}
-			
+			else
+			{
+				return BadRequest(new { message = "You have Exceeded the maximum allowed size of 50 MB per content to upload images." });
+			}
 			return Ok();
 
 		}
@@ -845,16 +869,17 @@ namespace My.World.Web.Controllers
 		public IActionResult DeleteAttachment(long objectId,string objectName)
 		{
 			var accountID = Convert.ToInt64(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserID")?.Value);
-			string content_Id = HttpContext.Session.GetString("TechnologiesID");
+			string content_Id = HttpContext.Session.GetString("TechnologieID");
 			
 			ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
 			contentObjectAttachmentModel.object_id = objectId;
 			contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
 			contentObjectAttachmentModel.content_type = "technologies";
 			
+			var bucket_folder = _config.GetValue<string>("BucketEnv");
 			ContentObjectModel contentObjectModel = new ContentObjectModel();
 			contentObjectModel.object_id = objectId;
-			contentObjectModel.object_name = objectName;
+			contentObjectModel.object_name = bucket_folder + " / " + objectName;
 			
 			_iObjectBucketApiService.SetObjectStorageSecrets(accountID);
 			_iObjectBucketApiService.DeleteObject(contentObjectModel);

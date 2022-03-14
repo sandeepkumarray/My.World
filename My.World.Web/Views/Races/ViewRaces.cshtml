@@ -1,3 +1,6 @@
+@using Microsoft.AspNetCore.Http
+@using My.World.Web
+@inject IHttpContextAccessor HttpContextAccessor
 @model My.World.Web.ViewModel.RacesViewModel
 
 @{
@@ -112,7 +115,7 @@
                                                                                 else if (att.field_name.ToLower() == "universe")
                                                                                 {
                                                                                 <select id="ddlUniverseList" class="form-control" style="min-width:150px"
-                                                                                        asp-items="@(new SelectList(@Model.UniversesList, " id", "name" , Model.racesModel.Universe))"
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name" , Model.racesModel.Universe))"
                                                                                         onchange="UniverseSelected();">
                                                                                 </select>
                                                                                 }
@@ -168,17 +171,21 @@
                                                                                         <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
                                                                                             <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">
                                                                                                 <a class="remove-image" style="display: inline;"
-                                                                                                   asp-controller="buildings" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
+                                                                                                   asp-controller="races" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
                                                                                             </div>
                                                                                         </div>
                                                                                     }
                                                                                 </div>
                                                                             </div>
-
+                                                                            <div class="mb-3">
+                                                                                <div class="row">
+                                                                                    <h3><label class="form-label"> Only @Model.RemainingContentSize is left for content upload.</label></h3>
+                                                                                </div>
+                                                                            </div>
                                                                             <div class="mb-3">
                                                                                 <label class="form-label" for="exampleFormControlInput1">Upload Images...</label>
                                                                                 <div>
-                                                                                    @using (Html.BeginForm("UploadAttachment", "buildings", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
+                                                                                    @using (Html.BeginForm("UploadAttachment", "races", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
                                                                                     {
                                                                                     <div class="dz-message needsclick">
                                                                                         <button type="button" class="dz-button">Drop files here or click to upload.</button><br />
@@ -266,6 +273,25 @@
     </div>
 </div>
 
+<div id="contentsExceededModal" bsmodal="" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade" aria-modal="true" style="display: none;">
+    <div role="document" class="modal-dialog modal-danger modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Alert !</h4>
+                <button type="button" aria-label="Close" data-dismiss="modal" class="close">
+                    <span aria-hidden="true">�</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>You have Exceeded the maximum allowed size of @My.World.Web.Helpers.Utility.SizeSuffix(Convert.ToInt64(@HttpContextAccessor.HttpContext.Session.GetString("AllowedTotalContentSize"))) per content to upload images.</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script src="~/js/quill.js"></script>
     <script src="~/js/quill.mention.min.js"></script>
@@ -275,21 +301,21 @@
 
     <script type="text/javascript">
 
-        			function setBeliefsBody() {
-			    Beliefs_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Beliefs'));
-			    $('#Beliefs').focusout(function () {
-			        postSaveEditorData('Beliefs', Beliefs_editor.root.innerHTML);
+        			function setOther_NamesBody() {
+			    Other_Names_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Other_Names'));
+			    $('#Other_Names').focusout(function () {
+			        postSaveEditorData('Other_Names', Other_Names_editor.root.innerHTML);
 			    });
 			};
 
-			function setBody_shapeBody() {
-			    $('#racesModel_Body_shape').val('@Model.racesModel.Body_shape');
+			function setUniverseBody() {
+			    $('#racesModel_Universe').val('@Model.racesModel.Universe');
 			};
 
-			function setConditionsBody() {
-			    Conditions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Conditions'));
-			    $('#Conditions').focusout(function () {
-			        postSaveEditorData('Conditions', Conditions_editor.root.innerHTML);
+			function setTagsBody() {
+			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Tags'));
+			    $('#Tags').focusout(function () {
+			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
 			    });
 			};
 
@@ -300,78 +326,18 @@
 			    });
 			};
 
-			function setEconomicsBody() {
-			    Economics_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Economics'));
-			    $('#Economics').focusout(function () {
-			        postSaveEditorData('Economics', Economics_editor.root.innerHTML);
-			    });
-			};
-
-			function setFamous_figuresBody() {
-			    Famous_figures_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Famous_figures'));
-			    $('#Famous_figures').focusout(function () {
-			        postSaveEditorData('Famous_figures', Famous_figures_editor.root.innerHTML);
-			    });
-			};
-
-			function setFavorite_foodsBody() {
-			    Favorite_foods_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Favorite_foods'));
-			    $('#Favorite_foods').focusout(function () {
-			        postSaveEditorData('Favorite_foods', Favorite_foods_editor.root.innerHTML);
-			    });
-			};
-
-			function setGeneral_heightBody() {
-			    $('#racesModel_General_height').val('@Model.racesModel.General_height');
+			function setNameBody() {
+			    $('#racesModel_Name').val('@Model.racesModel.Name');
 			};
 
 			function setGeneral_weightBody() {
 			    $('#racesModel_General_weight').val('@Model.racesModel.General_weight');
 			};
 
-			function setGovernmentsBody() {
-			    Governments_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Governments'));
-			    $('#Governments').focusout(function () {
-			        postSaveEditorData('Governments', Governments_editor.root.innerHTML);
-			    });
-			};
-
-			function setNameBody() {
-			    $('#racesModel_Name').val('@Model.racesModel.Name');
-			};
-
-			function setNotable_eventsBody() {
-			    Notable_events_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Notable_events'));
-			    $('#Notable_events').focusout(function () {
-			        postSaveEditorData('Notable_events', Notable_events_editor.root.innerHTML);
-			    });
-			};
-
 			function setNotable_featuresBody() {
 			    Notable_features_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Notable_features'));
 			    $('#Notable_features').focusout(function () {
 			        postSaveEditorData('Notable_features', Notable_features_editor.root.innerHTML);
-			    });
-			};
-
-			function setNotesBody() {
-			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Notes'));
-			    $('#Notes').focusout(function () {
-			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
-			    });
-			};
-
-			function setOccupationsBody() {
-			    Occupations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Occupations'));
-			    $('#Occupations').focusout(function () {
-			        postSaveEditorData('Occupations', Occupations_editor.root.innerHTML);
-			    });
-			};
-
-			function setOther_NamesBody() {
-			    Other_Names_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Other_Names'));
-			    $('#Other_Names').focusout(function () {
-			        postSaveEditorData('Other_Names', Other_Names_editor.root.innerHTML);
 			    });
 			};
 
@@ -382,17 +348,39 @@
 			    });
 			};
 
-			function setPrivate_notesBody() {
-			    Private_notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Private_notes'));
-			    $('#Private_notes').focusout(function () {
-			        postSaveEditorData('Private_notes', Private_notes_editor.root.innerHTML);
+			function setTypical_clothingBody() {
+			    Typical_clothing_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Typical_clothing'));
+			    $('#Typical_clothing').focusout(function () {
+			        postSaveEditorData('Typical_clothing', Typical_clothing_editor.root.innerHTML);
 			    });
+			};
+
+			function setBody_shapeBody() {
+			    $('#racesModel_Body_shape').val('@Model.racesModel.Body_shape');
 			};
 
 			function setSkin_colorsBody() {
 			    Skin_colors_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Skin_colors'));
 			    $('#Skin_colors').focusout(function () {
 			        postSaveEditorData('Skin_colors', Skin_colors_editor.root.innerHTML);
+			    });
+			};
+
+			function setGeneral_heightBody() {
+			    $('#racesModel_General_height').val('@Model.racesModel.General_height');
+			};
+
+			function setWeaknessesBody() {
+			    Weaknesses_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Weaknesses'));
+			    $('#Weaknesses').focusout(function () {
+			        postSaveEditorData('Weaknesses', Weaknesses_editor.root.innerHTML);
+			    });
+			};
+
+			function setConditionsBody() {
+			    Conditions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Conditions'));
+			    $('#Conditions').focusout(function () {
+			        postSaveEditorData('Conditions', Conditions_editor.root.innerHTML);
 			    });
 			};
 
@@ -403,17 +391,17 @@
 			    });
 			};
 
-			function setTagsBody() {
-			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Tags'));
-			    $('#Tags').focusout(function () {
-			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
+			function setFavorite_foodsBody() {
+			    Favorite_foods_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Favorite_foods'));
+			    $('#Favorite_foods').focusout(function () {
+			        postSaveEditorData('Favorite_foods', Favorite_foods_editor.root.innerHTML);
 			    });
 			};
 
-			function setTechnologiesBody() {
-			    Technologies_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Technologies'));
-			    $('#Technologies').focusout(function () {
-			        postSaveEditorData('Technologies', Technologies_editor.root.innerHTML);
+			function setFamous_figuresBody() {
+			    Famous_figures_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Famous_figures'));
+			    $('#Famous_figures').focusout(function () {
+			        postSaveEditorData('Famous_figures', Famous_figures_editor.root.innerHTML);
 			    });
 			};
 
@@ -424,41 +412,79 @@
 			    });
 			};
 
-			function setTypical_clothingBody() {
-			    Typical_clothing_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Typical_clothing'));
-			    $('#Typical_clothing').focusout(function () {
-			        postSaveEditorData('Typical_clothing', Typical_clothing_editor.root.innerHTML);
+			function setBeliefsBody() {
+			    Beliefs_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Beliefs'));
+			    $('#Beliefs').focusout(function () {
+			        postSaveEditorData('Beliefs', Beliefs_editor.root.innerHTML);
 			    });
 			};
 
-			function setUniverseBody() {
-			    $('#racesModel_Universe').val('@Model.racesModel.Universe');
+			function setGovernmentsBody() {
+			    Governments_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Governments'));
+			    $('#Governments').focusout(function () {
+			        postSaveEditorData('Governments', Governments_editor.root.innerHTML);
+			    });
 			};
 
-			function setWeaknessesBody() {
-			    Weaknesses_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Weaknesses'));
-			    $('#Weaknesses').focusout(function () {
-			        postSaveEditorData('Weaknesses', Weaknesses_editor.root.innerHTML);
+			function setTechnologiesBody() {
+			    Technologies_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Technologies'));
+			    $('#Technologies').focusout(function () {
+			        postSaveEditorData('Technologies', Technologies_editor.root.innerHTML);
+			    });
+			};
+
+			function setOccupationsBody() {
+			    Occupations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Occupations'));
+			    $('#Occupations').focusout(function () {
+			        postSaveEditorData('Occupations', Occupations_editor.root.innerHTML);
+			    });
+			};
+
+			function setEconomicsBody() {
+			    Economics_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Economics'));
+			    $('#Economics').focusout(function () {
+			        postSaveEditorData('Economics', Economics_editor.root.innerHTML);
+			    });
+			};
+
+			function setNotable_eventsBody() {
+			    Notable_events_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Notable_events'));
+			    $('#Notable_events').focusout(function () {
+			        postSaveEditorData('Notable_events', Notable_events_editor.root.innerHTML);
+			    });
+			};
+
+			function setNotesBody() {
+			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Notes'));
+			    $('#Notes').focusout(function () {
+			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
+			    });
+			};
+
+			function setPrivate_notesBody() {
+			    Private_notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.racesModel.Private_notes'));
+			    $('#Private_notes').focusout(function () {
+			        postSaveEditorData('Private_notes', Private_notes_editor.root.innerHTML);
 			    });
 			};
 
 
 
         $(document).ready(function () {
-            			$('#racesModel_Body_shape').blur(function() {
-			    postSaveData('Body_shape', $('#racesModel_Body_shape').val());
-			});
-
-			$('#racesModel_General_height').blur(function() {
-			    postSaveData('General_height', $('#racesModel_General_height').val());
+            			$('#racesModel_Name').blur(function() {
+			    postSaveData('Name', $('#racesModel_Name').val());
 			});
 
 			$('#racesModel_General_weight').blur(function() {
 			    postSaveData('General_weight', $('#racesModel_General_weight').val());
 			});
 
-			$('#racesModel_Name').blur(function() {
-			    postSaveData('Name', $('#racesModel_Name').val());
+			$('#racesModel_Body_shape').blur(function() {
+			    postSaveData('Body_shape', $('#racesModel_Body_shape').val());
+			});
+
+			$('#racesModel_General_height').blur(function() {
+			    postSaveData('General_height', $('#racesModel_General_height').val());
 			});
 
 
@@ -512,10 +538,18 @@
                         $('.roller').width(progress + '%');
                     });
 
-                    self.on("queuecomplete", function (progress) {
-                        $('.meter').delay(999).slideUp(999);
-                        console.log("Files uploaded");
-                        location.reload();
+                    self.on('error', function (file, response) {
+                        console.log("Files upload Error");
+                        showModal(response.message);
+                    });
+                    self.on('success', function () {
+                        self.on("queuecomplete", function () {
+                            $('.meter').delay(999).slideUp(999);
+                            console.log("Files uploaded");
+                            var locUrL = location.href.replace('#Gallery_panel', '') + "#Gallery_panel";
+                            window.location.href = locUrL;
+                            location.reload();
+                        });
                     });
                     self.on("complete", function (file) {
                         self.removeFile(file);

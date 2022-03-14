@@ -21,6 +21,7 @@ $(document).ready(function () {
             mention: {
                 allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
                 mentionDenotationChars: ["@"],
+                showDenotationChar: false,
                 source: async function (searchTerm, renderList) {
                     var url = '/Document/GetMentions/' + searchTerm;
 

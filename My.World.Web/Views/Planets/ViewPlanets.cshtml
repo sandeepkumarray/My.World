@@ -1,3 +1,6 @@
+@using Microsoft.AspNetCore.Http
+@using My.World.Web
+@inject IHttpContextAccessor HttpContextAccessor
 @model My.World.Web.ViewModel.PlanetsViewModel
 
 @{
@@ -112,7 +115,7 @@
                                                                                 else if (att.field_name.ToLower() == "universe")
                                                                                 {
                                                                                 <select id="ddlUniverseList" class="form-control" style="min-width:150px"
-                                                                                        asp-items="@(new SelectList(@Model.UniversesList, " id", "name" , Model.planetsModel.Universe))"
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name" , Model.planetsModel.Universe))"
                                                                                         onchange="UniverseSelected();">
                                                                                 </select>
                                                                                 }
@@ -168,17 +171,21 @@
                                                                                         <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
                                                                                             <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">
                                                                                                 <a class="remove-image" style="display: inline;"
-                                                                                                   asp-controller="buildings" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
+                                                                                                   asp-controller="planets" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
                                                                                             </div>
                                                                                         </div>
                                                                                     }
                                                                                 </div>
                                                                             </div>
-
+                                                                            <div class="mb-3">
+                                                                                <div class="row">
+                                                                                    <h3><label class="form-label"> Only @Model.RemainingContentSize is left for content upload.</label></h3>
+                                                                                </div>
+                                                                            </div>
                                                                             <div class="mb-3">
                                                                                 <label class="form-label" for="exampleFormControlInput1">Upload Images...</label>
                                                                                 <div>
-                                                                                    @using (Html.BeginForm("UploadAttachment", "buildings", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
+                                                                                    @using (Html.BeginForm("UploadAttachment", "planets", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
                                                                                     {
                                                                                     <div class="dz-message needsclick">
                                                                                         <button type="button" class="dz-button">Drop files here or click to upload.</button><br />
@@ -266,6 +273,25 @@
     </div>
 </div>
 
+<div id="contentsExceededModal" bsmodal="" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade" aria-modal="true" style="display: none;">
+    <div role="document" class="modal-dialog modal-danger modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Alert !</h4>
+                <button type="button" aria-label="Close" data-dismiss="modal" class="close">
+                    <span aria-hidden="true">�</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>You have Exceeded the maximum allowed size of @My.World.Web.Helpers.Utility.SizeSuffix(Convert.ToInt64(@HttpContextAccessor.HttpContext.Session.GetString("AllowedTotalContentSize"))) per content to upload images.</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script src="~/js/quill.js"></script>
     <script src="~/js/quill.mention.min.js"></script>
@@ -275,24 +301,43 @@
 
     <script type="text/javascript">
 
-        			function setAtmosphereBody() {
-			    Atmosphere_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Atmosphere'));
-			    $('#Atmosphere').focusout(function () {
-			        postSaveEditorData('Atmosphere', Atmosphere_editor.root.innerHTML);
+        			function setDescriptionBody() {
+			    Description_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Description'));
+			    $('#Description').focusout(function () {
+			        postSaveEditorData('Description', Description_editor.root.innerHTML);
 			    });
 			};
 
-			function setCalendar_SystemBody() {
-			    Calendar_System_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Calendar_System'));
-			    $('#Calendar_System').focusout(function () {
-			        postSaveEditorData('Calendar_System', Calendar_System_editor.root.innerHTML);
+			function setUniverseBody() {
+			    $('#planetsModel_Universe').val('@Model.planetsModel.Universe');
+			};
+
+			function setTagsBody() {
+			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Tags'));
+			    $('#Tags').focusout(function () {
+			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
 			    });
 			};
 
-			function setClimateBody() {
-			    Climate_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Climate'));
-			    $('#Climate').focusout(function () {
-			        postSaveEditorData('Climate', Climate_editor.root.innerHTML);
+			function setNameBody() {
+			    $('#planetsModel_Name').val('@Model.planetsModel.Name');
+			};
+
+			function setWeatherBody() {
+			    Weather_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Weather'));
+			    $('#Weather').focusout(function () {
+			        postSaveEditorData('Weather', Weather_editor.root.innerHTML);
+			    });
+			};
+
+			function setWater_ContentBody() {
+			    $('#planetsModel_Water_Content').val('@Model.planetsModel.Water_Content');
+			};
+
+			function setNatural_ResourcesBody() {
+			    Natural_Resources_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Natural_Resources'));
+			    $('#Natural_Resources').focusout(function () {
+			        postSaveEditorData('Natural_Resources', Natural_Resources_editor.root.innerHTML);
 			    });
 			};
 
@@ -310,52 +355,10 @@
 			    });
 			};
 
-			function setCreaturesBody() {
-			    Creatures_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Creatures'));
-			    $('#Creatures').focusout(function () {
-			        postSaveEditorData('Creatures', Creatures_editor.root.innerHTML);
-			    });
-			};
-
-			function setDay_skyBody() {
-			    Day_sky_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Day_sky'));
-			    $('#Day_sky').focusout(function () {
-			        postSaveEditorData('Day_sky', Day_sky_editor.root.innerHTML);
-			    });
-			};
-
-			function setDeitiesBody() {
-			    Deities_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Deities'));
-			    $('#Deities').focusout(function () {
-			        postSaveEditorData('Deities', Deities_editor.root.innerHTML);
-			    });
-			};
-
-			function setDescriptionBody() {
-			    Description_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Description'));
-			    $('#Description').focusout(function () {
-			        postSaveEditorData('Description', Description_editor.root.innerHTML);
-			    });
-			};
-
-			function setFirst_Inhabitants_StoryBody() {
-			    First_Inhabitants_Story_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.First_Inhabitants_Story'));
-			    $('#First_Inhabitants_Story').focusout(function () {
-			        postSaveEditorData('First_Inhabitants_Story', First_Inhabitants_Story_editor.root.innerHTML);
-			    });
-			};
-
-			function setFloraBody() {
-			    Flora_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Flora'));
-			    $('#Flora').focusout(function () {
-			        postSaveEditorData('Flora', Flora_editor.root.innerHTML);
-			    });
-			};
-
-			function setGroupsBody() {
-			    Groups_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Groups'));
-			    $('#Groups').focusout(function () {
-			        postSaveEditorData('Groups', Groups_editor.root.innerHTML);
+			function setLocationsBody() {
+			    Locations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Locations'));
+			    $('#Locations').focusout(function () {
+			        postSaveEditorData('Locations', Locations_editor.root.innerHTML);
 			    });
 			};
 
@@ -366,103 +369,25 @@
 			    });
 			};
 
-			function setLanguagesBody() {
-			    Languages_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Languages'));
-			    $('#Languages').focusout(function () {
-			        postSaveEditorData('Languages', Languages_editor.root.innerHTML);
+			function setSizeBody() {
+			    $('#planetsModel_Size').val('@Model.planetsModel.Size');
+			};
+
+			function setSurfaceBody() {
+			    $('#planetsModel_Surface').val('@Model.planetsModel.Surface');
+			};
+
+			function setClimateBody() {
+			    Climate_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Climate'));
+			    $('#Climate').focusout(function () {
+			        postSaveEditorData('Climate', Climate_editor.root.innerHTML);
 			    });
 			};
 
-			function setLength_Of_DayBody() {
-			    $('#planetsModel_Length_Of_Day').val('@Model.planetsModel.Length_Of_Day');
-			};
-
-			function setLength_Of_NightBody() {
-			    $('#planetsModel_Length_Of_Night').val('@Model.planetsModel.Length_Of_Night');
-			};
-
-			function setLocationsBody() {
-			    Locations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Locations'));
-			    $('#Locations').focusout(function () {
-			        postSaveEditorData('Locations', Locations_editor.root.innerHTML);
-			    });
-			};
-
-			function setMoonsBody() {
-			    Moons_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Moons'));
-			    $('#Moons').focusout(function () {
-			        postSaveEditorData('Moons', Moons_editor.root.innerHTML);
-			    });
-			};
-
-			function setNameBody() {
-			    $('#planetsModel_Name').val('@Model.planetsModel.Name');
-			};
-
-			function setNatural_diastersBody() {
-			    Natural_diasters_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Natural_diasters'));
-			    $('#Natural_diasters').focusout(function () {
-			        postSaveEditorData('Natural_diasters', Natural_diasters_editor.root.innerHTML);
-			    });
-			};
-
-			function setNatural_ResourcesBody() {
-			    Natural_Resources_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Natural_Resources'));
-			    $('#Natural_Resources').focusout(function () {
-			        postSaveEditorData('Natural_Resources', Natural_Resources_editor.root.innerHTML);
-			    });
-			};
-
-			function setNearby_planetsBody() {
-			    Nearby_planets_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Nearby_planets'));
-			    $('#Nearby_planets').focusout(function () {
-			        postSaveEditorData('Nearby_planets', Nearby_planets_editor.root.innerHTML);
-			    });
-			};
-
-			function setNight_skyBody() {
-			    Night_sky_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Night_sky'));
-			    $('#Night_sky').focusout(function () {
-			        postSaveEditorData('Night_sky', Night_sky_editor.root.innerHTML);
-			    });
-			};
-
-			function setNotesBody() {
-			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Notes'));
-			    $('#Notes').focusout(function () {
-			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
-			    });
-			};
-
-			function setOrbitBody() {
-			    Orbit_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Orbit'));
-			    $('#Orbit').focusout(function () {
-			        postSaveEditorData('Orbit', Orbit_editor.root.innerHTML);
-			    });
-			};
-
-			function setPopulationBody() {
-			    $('#planetsModel_Population').val('@Model.planetsModel.Population');
-			};
-
-			function setPrivate_NotesBody() {
-			    Private_Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Private_Notes'));
-			    $('#Private_Notes').focusout(function () {
-			        postSaveEditorData('Private_Notes', Private_Notes_editor.root.innerHTML);
-			    });
-			};
-
-			function setRacesBody() {
-			    Races_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Races'));
-			    $('#Races').focusout(function () {
-			        postSaveEditorData('Races', Races_editor.root.innerHTML);
-			    });
-			};
-
-			function setReligionsBody() {
-			    Religions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Religions'));
-			    $('#Religions').focusout(function () {
-			        postSaveEditorData('Religions', Religions_editor.root.innerHTML);
+			function setAtmosphereBody() {
+			    Atmosphere_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Atmosphere'));
+			    $('#Atmosphere').focusout(function () {
+			        postSaveEditorData('Atmosphere', Atmosphere_editor.root.innerHTML);
 			    });
 			};
 
@@ -473,30 +398,44 @@
 			    });
 			};
 
-			function setSizeBody() {
-			    $('#planetsModel_Size').val('@Model.planetsModel.Size');
-			};
-
-			function setSunsBody() {
-			    Suns_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Suns'));
-			    $('#Suns').focusout(function () {
-			        postSaveEditorData('Suns', Suns_editor.root.innerHTML);
-			    });
-			};
-
-			function setSurfaceBody() {
-			    $('#planetsModel_Surface').val('@Model.planetsModel.Surface');
-			};
-
-			function setTagsBody() {
-			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Tags'));
-			    $('#Tags').focusout(function () {
-			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
-			    });
-			};
-
 			function setTemperatureBody() {
 			    $('#planetsModel_Temperature').val('@Model.planetsModel.Temperature');
+			};
+
+			function setNatural_diastersBody() {
+			    Natural_diasters_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Natural_diasters'));
+			    $('#Natural_diasters').focusout(function () {
+			        postSaveEditorData('Natural_diasters', Natural_diasters_editor.root.innerHTML);
+			    });
+			};
+
+			function setCalendar_SystemBody() {
+			    Calendar_System_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Calendar_System'));
+			    $('#Calendar_System').focusout(function () {
+			        postSaveEditorData('Calendar_System', Calendar_System_editor.root.innerHTML);
+			    });
+			};
+
+			function setDay_skyBody() {
+			    Day_sky_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Day_sky'));
+			    $('#Day_sky').focusout(function () {
+			        postSaveEditorData('Day_sky', Day_sky_editor.root.innerHTML);
+			    });
+			};
+
+			function setNight_skyBody() {
+			    Night_sky_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Night_sky'));
+			    $('#Night_sky').focusout(function () {
+			        postSaveEditorData('Night_sky', Night_sky_editor.root.innerHTML);
+			    });
+			};
+
+			function setLength_Of_NightBody() {
+			    $('#planetsModel_Length_Of_Night').val('@Model.planetsModel.Length_Of_Night');
+			};
+
+			function setLength_Of_DayBody() {
+			    $('#planetsModel_Length_Of_Day').val('@Model.planetsModel.Length_Of_Day');
 			};
 
 			function setTownsBody() {
@@ -506,8 +445,57 @@
 			    });
 			};
 
-			function setUniverseBody() {
-			    $('#planetsModel_Universe').val('@Model.planetsModel.Universe');
+			function setPopulationBody() {
+			    $('#planetsModel_Population').val('@Model.planetsModel.Population');
+			};
+
+			function setRacesBody() {
+			    Races_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Races'));
+			    $('#Races').focusout(function () {
+			        postSaveEditorData('Races', Races_editor.root.innerHTML);
+			    });
+			};
+
+			function setFloraBody() {
+			    Flora_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Flora'));
+			    $('#Flora').focusout(function () {
+			        postSaveEditorData('Flora', Flora_editor.root.innerHTML);
+			    });
+			};
+
+			function setCreaturesBody() {
+			    Creatures_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Creatures'));
+			    $('#Creatures').focusout(function () {
+			        postSaveEditorData('Creatures', Creatures_editor.root.innerHTML);
+			    });
+			};
+
+			function setReligionsBody() {
+			    Religions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Religions'));
+			    $('#Religions').focusout(function () {
+			        postSaveEditorData('Religions', Religions_editor.root.innerHTML);
+			    });
+			};
+
+			function setDeitiesBody() {
+			    Deities_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Deities'));
+			    $('#Deities').focusout(function () {
+			        postSaveEditorData('Deities', Deities_editor.root.innerHTML);
+			    });
+			};
+
+			function setGroupsBody() {
+			    Groups_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Groups'));
+			    $('#Groups').focusout(function () {
+			        postSaveEditorData('Groups', Groups_editor.root.innerHTML);
+			    });
+			};
+
+			function setLanguagesBody() {
+			    Languages_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Languages'));
+			    $('#Languages').focusout(function () {
+			        postSaveEditorData('Languages', Languages_editor.root.innerHTML);
+			    });
 			};
 
 			function setVisible_ConstellationsBody() {
@@ -517,14 +505,38 @@
 			    });
 			};
 
-			function setWater_ContentBody() {
-			    $('#planetsModel_Water_Content').val('@Model.planetsModel.Water_Content');
+			function setSunsBody() {
+			    Suns_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Suns'));
+			    $('#Suns').focusout(function () {
+			        postSaveEditorData('Suns', Suns_editor.root.innerHTML);
+			    });
 			};
 
-			function setWeatherBody() {
-			    Weather_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Weather'));
-			    $('#Weather').focusout(function () {
-			        postSaveEditorData('Weather', Weather_editor.root.innerHTML);
+			function setMoonsBody() {
+			    Moons_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Moons'));
+			    $('#Moons').focusout(function () {
+			        postSaveEditorData('Moons', Moons_editor.root.innerHTML);
+			    });
+			};
+
+			function setOrbitBody() {
+			    Orbit_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Orbit'));
+			    $('#Orbit').focusout(function () {
+			        postSaveEditorData('Orbit', Orbit_editor.root.innerHTML);
+			    });
+			};
+
+			function setNearby_planetsBody() {
+			    Nearby_planets_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Nearby_planets'));
+			    $('#Nearby_planets').focusout(function () {
+			        postSaveEditorData('Nearby_planets', Nearby_planets_editor.root.innerHTML);
+			    });
+			};
+
+			function setFirst_Inhabitants_StoryBody() {
+			    First_Inhabitants_Story_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.First_Inhabitants_Story'));
+			    $('#First_Inhabitants_Story').focusout(function () {
+			        postSaveEditorData('First_Inhabitants_Story', First_Inhabitants_Story_editor.root.innerHTML);
 			    });
 			};
 
@@ -535,23 +547,29 @@
 			    });
 			};
 
+			function setPrivate_NotesBody() {
+			    Private_Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Private_Notes'));
+			    $('#Private_Notes').focusout(function () {
+			        postSaveEditorData('Private_Notes', Private_Notes_editor.root.innerHTML);
+			    });
+			};
+
+			function setNotesBody() {
+			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.planetsModel.Notes'));
+			    $('#Notes').focusout(function () {
+			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
+			    });
+			};
+
 
 
         $(document).ready(function () {
-            			$('#planetsModel_Length_Of_Day').blur(function() {
-			    postSaveData('Length_Of_Day', $('#planetsModel_Length_Of_Day').val());
-			});
-
-			$('#planetsModel_Length_Of_Night').blur(function() {
-			    postSaveData('Length_Of_Night', $('#planetsModel_Length_Of_Night').val());
-			});
-
-			$('#planetsModel_Name').blur(function() {
+            			$('#planetsModel_Name').blur(function() {
 			    postSaveData('Name', $('#planetsModel_Name').val());
 			});
 
-			$('#planetsModel_Population').blur(function() {
-			    postSaveData('Population', $('#planetsModel_Population').val());
+			$('#planetsModel_Water_Content').blur(function() {
+			    postSaveData('Water_Content', $('#planetsModel_Water_Content').val());
 			});
 
 			$('#planetsModel_Size').blur(function() {
@@ -566,8 +584,16 @@
 			    postSaveData('Temperature', $('#planetsModel_Temperature').val());
 			});
 
-			$('#planetsModel_Water_Content').blur(function() {
-			    postSaveData('Water_Content', $('#planetsModel_Water_Content').val());
+			$('#planetsModel_Length_Of_Night').blur(function() {
+			    postSaveData('Length_Of_Night', $('#planetsModel_Length_Of_Night').val());
+			});
+
+			$('#planetsModel_Length_Of_Day').blur(function() {
+			    postSaveData('Length_Of_Day', $('#planetsModel_Length_Of_Day').val());
+			});
+
+			$('#planetsModel_Population').blur(function() {
+			    postSaveData('Population', $('#planetsModel_Population').val());
 			});
 
 
@@ -621,10 +647,18 @@
                         $('.roller').width(progress + '%');
                     });
 
-                    self.on("queuecomplete", function (progress) {
-                        $('.meter').delay(999).slideUp(999);
-                        console.log("Files uploaded");
-                        location.reload();
+                    self.on('error', function (file, response) {
+                        console.log("Files upload Error");
+                        showModal(response.message);
+                    });
+                    self.on('success', function () {
+                        self.on("queuecomplete", function () {
+                            $('.meter').delay(999).slideUp(999);
+                            console.log("Files uploaded");
+                            var locUrL = location.href.replace('#Gallery_panel', '') + "#Gallery_panel";
+                            window.location.href = locUrL;
+                            location.reload();
+                        });
                     });
                     self.on("complete", function (file) {
                         self.removeFile(file);

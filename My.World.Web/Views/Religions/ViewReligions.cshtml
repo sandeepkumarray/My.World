@@ -1,3 +1,6 @@
+@using Microsoft.AspNetCore.Http
+@using My.World.Web
+@inject IHttpContextAccessor HttpContextAccessor
 @model My.World.Web.ViewModel.ReligionsViewModel
 
 @{
@@ -112,7 +115,7 @@
                                                                                 else if (att.field_name.ToLower() == "universe")
                                                                                 {
                                                                                 <select id="ddlUniverseList" class="form-control" style="min-width:150px"
-                                                                                        asp-items="@(new SelectList(@Model.UniversesList, " id", "name" , Model.religionsModel.Universe))"
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name" , Model.religionsModel.Universe))"
                                                                                         onchange="UniverseSelected();">
                                                                                 </select>
                                                                                 }
@@ -168,17 +171,21 @@
                                                                                         <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
                                                                                             <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">
                                                                                                 <a class="remove-image" style="display: inline;"
-                                                                                                   asp-controller="buildings" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
+                                                                                                   asp-controller="religions" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
                                                                                             </div>
                                                                                         </div>
                                                                                     }
                                                                                 </div>
                                                                             </div>
-
+                                                                            <div class="mb-3">
+                                                                                <div class="row">
+                                                                                    <h3><label class="form-label"> Only @Model.RemainingContentSize is left for content upload.</label></h3>
+                                                                                </div>
+                                                                            </div>
                                                                             <div class="mb-3">
                                                                                 <label class="form-label" for="exampleFormControlInput1">Upload Images...</label>
                                                                                 <div>
-                                                                                    @using (Html.BeginForm("UploadAttachment", "buildings", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
+                                                                                    @using (Html.BeginForm("UploadAttachment", "religions", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
                                                                                     {
                                                                                     <div class="dz-message needsclick">
                                                                                         <button type="button" class="dz-button">Drop files here or click to upload.</button><br />
@@ -266,6 +273,25 @@
     </div>
 </div>
 
+<div id="contentsExceededModal" bsmodal="" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade" aria-modal="true" style="display: none;">
+    <div role="document" class="modal-dialog modal-danger modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Alert !</h4>
+                <button type="button" aria-label="Close" data-dismiss="modal" class="close">
+                    <span aria-hidden="true">�</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>You have Exceeded the maximum allowed size of @My.World.Web.Helpers.Utility.SizeSuffix(Convert.ToInt64(@HttpContextAccessor.HttpContext.Session.GetString("AllowedTotalContentSize"))) per content to upload images.</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script src="~/js/quill.js"></script>
     <script src="~/js/quill.mention.min.js"></script>
@@ -275,38 +301,10 @@
 
     <script type="text/javascript">
 
-        			function setArtifactsBody() {
-			    Artifacts_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Artifacts'));
-			    $('#Artifacts').focusout(function () {
-			        postSaveEditorData('Artifacts', Artifacts_editor.root.innerHTML);
-			    });
-			};
-
-			function setDeitiesBody() {
-			    Deities_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Deities'));
-			    $('#Deities').focusout(function () {
-			        postSaveEditorData('Deities', Deities_editor.root.innerHTML);
-			    });
-			};
-
-			function setDescriptionBody() {
-			    Description_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Description'));
-			    $('#Description').focusout(function () {
-			        postSaveEditorData('Description', Description_editor.root.innerHTML);
-			    });
-			};
-
-			function setHolidaysBody() {
-			    Holidays_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Holidays'));
-			    $('#Holidays').focusout(function () {
-			        postSaveEditorData('Holidays', Holidays_editor.root.innerHTML);
-			    });
-			};
-
-			function setInitiation_processBody() {
-			    Initiation_process_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Initiation_process'));
-			    $('#Initiation_process').focusout(function () {
-			        postSaveEditorData('Initiation_process', Initiation_process_editor.root.innerHTML);
+        			function setTagsBody() {
+			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Tags'));
+			    $('#Tags').focusout(function () {
+			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
 			    });
 			};
 
@@ -314,31 +312,10 @@
 			    $('#religionsModel_Name').val('@Model.religionsModel.Name');
 			};
 
-			function setNotable_figuresBody() {
-			    Notable_figures_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Notable_figures'));
-			    $('#Notable_figures').focusout(function () {
-			        postSaveEditorData('Notable_figures', Notable_figures_editor.root.innerHTML);
-			    });
-			};
-
-			function setNotesBody() {
-			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Notes'));
-			    $('#Notes').focusout(function () {
-			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
-			    });
-			};
-
-			function setObligationsBody() {
-			    Obligations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Obligations'));
-			    $('#Obligations').focusout(function () {
-			        postSaveEditorData('Obligations', Obligations_editor.root.innerHTML);
-			    });
-			};
-
-			function setOrigin_storyBody() {
-			    Origin_story_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Origin_story'));
-			    $('#Origin_story').focusout(function () {
-			        postSaveEditorData('Origin_story', Origin_story_editor.root.innerHTML);
+			function setDescriptionBody() {
+			    Description_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Description'));
+			    $('#Description').focusout(function () {
+			        postSaveEditorData('Description', Description_editor.root.innerHTML);
 			    });
 			};
 
@@ -349,10 +326,105 @@
 			    });
 			};
 
+			function setUniverseBody() {
+			    $('#religionsModel_Universe').val('@Model.religionsModel.Universe');
+			};
+
+			function setNotable_figuresBody() {
+			    Notable_figures_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Notable_figures'));
+			    $('#Notable_figures').focusout(function () {
+			        postSaveEditorData('Notable_figures', Notable_figures_editor.root.innerHTML);
+			    });
+			};
+
+			function setOrigin_storyBody() {
+			    Origin_story_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Origin_story'));
+			    $('#Origin_story').focusout(function () {
+			        postSaveEditorData('Origin_story', Origin_story_editor.root.innerHTML);
+			    });
+			};
+
+			function setArtifactsBody() {
+			    Artifacts_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Artifacts'));
+			    $('#Artifacts').focusout(function () {
+			        postSaveEditorData('Artifacts', Artifacts_editor.root.innerHTML);
+			    });
+			};
+
 			function setPlaces_of_worshipBody() {
 			    Places_of_worship_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Places_of_worship'));
 			    $('#Places_of_worship').focusout(function () {
 			        postSaveEditorData('Places_of_worship', Places_of_worship_editor.root.innerHTML);
+			    });
+			};
+
+			function setVision_of_paradiseBody() {
+			    Vision_of_paradise_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Vision_of_paradise'));
+			    $('#Vision_of_paradise').focusout(function () {
+			        postSaveEditorData('Vision_of_paradise', Vision_of_paradise_editor.root.innerHTML);
+			    });
+			};
+
+			function setObligationsBody() {
+			    Obligations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Obligations'));
+			    $('#Obligations').focusout(function () {
+			        postSaveEditorData('Obligations', Obligations_editor.root.innerHTML);
+			    });
+			};
+
+			function setWorship_servicesBody() {
+			    Worship_services_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Worship_services'));
+			    $('#Worship_services').focusout(function () {
+			        postSaveEditorData('Worship_services', Worship_services_editor.root.innerHTML);
+			    });
+			};
+
+			function setPropheciesBody() {
+			    Prophecies_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Prophecies'));
+			    $('#Prophecies').focusout(function () {
+			        postSaveEditorData('Prophecies', Prophecies_editor.root.innerHTML);
+			    });
+			};
+
+			function setTeachingsBody() {
+			    Teachings_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Teachings'));
+			    $('#Teachings').focusout(function () {
+			        postSaveEditorData('Teachings', Teachings_editor.root.innerHTML);
+			    });
+			};
+
+			function setDeitiesBody() {
+			    Deities_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Deities'));
+			    $('#Deities').focusout(function () {
+			        postSaveEditorData('Deities', Deities_editor.root.innerHTML);
+			    });
+			};
+
+			function setInitiation_processBody() {
+			    Initiation_process_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Initiation_process'));
+			    $('#Initiation_process').focusout(function () {
+			        postSaveEditorData('Initiation_process', Initiation_process_editor.root.innerHTML);
+			    });
+			};
+
+			function setRitualsBody() {
+			    Rituals_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Rituals'));
+			    $('#Rituals').focusout(function () {
+			        postSaveEditorData('Rituals', Rituals_editor.root.innerHTML);
+			    });
+			};
+
+			function setHolidaysBody() {
+			    Holidays_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Holidays'));
+			    $('#Holidays').focusout(function () {
+			        postSaveEditorData('Holidays', Holidays_editor.root.innerHTML);
+			    });
+			};
+
+			function setTraditionsBody() {
+			    Traditions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Traditions'));
+			    $('#Traditions').focusout(function () {
+			        postSaveEditorData('Traditions', Traditions_editor.root.innerHTML);
 			    });
 			};
 
@@ -377,56 +449,10 @@
 			    });
 			};
 
-			function setPropheciesBody() {
-			    Prophecies_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Prophecies'));
-			    $('#Prophecies').focusout(function () {
-			        postSaveEditorData('Prophecies', Prophecies_editor.root.innerHTML);
-			    });
-			};
-
-			function setRitualsBody() {
-			    Rituals_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Rituals'));
-			    $('#Rituals').focusout(function () {
-			        postSaveEditorData('Rituals', Rituals_editor.root.innerHTML);
-			    });
-			};
-
-			function setTagsBody() {
-			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Tags'));
-			    $('#Tags').focusout(function () {
-			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
-			    });
-			};
-
-			function setTeachingsBody() {
-			    Teachings_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Teachings'));
-			    $('#Teachings').focusout(function () {
-			        postSaveEditorData('Teachings', Teachings_editor.root.innerHTML);
-			    });
-			};
-
-			function setTraditionsBody() {
-			    Traditions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Traditions'));
-			    $('#Traditions').focusout(function () {
-			        postSaveEditorData('Traditions', Traditions_editor.root.innerHTML);
-			    });
-			};
-
-			function setUniverseBody() {
-			    $('#religionsModel_Universe').val('@Model.religionsModel.Universe');
-			};
-
-			function setVision_of_paradiseBody() {
-			    Vision_of_paradise_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Vision_of_paradise'));
-			    $('#Vision_of_paradise').focusout(function () {
-			        postSaveEditorData('Vision_of_paradise', Vision_of_paradise_editor.root.innerHTML);
-			    });
-			};
-
-			function setWorship_servicesBody() {
-			    Worship_services_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Worship_services'));
-			    $('#Worship_services').focusout(function () {
-			        postSaveEditorData('Worship_services', Worship_services_editor.root.innerHTML);
+			function setNotesBody() {
+			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.religionsModel.Notes'));
+			    $('#Notes').focusout(function () {
+			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
 			    });
 			};
 
@@ -488,10 +514,18 @@
                         $('.roller').width(progress + '%');
                     });
 
-                    self.on("queuecomplete", function (progress) {
-                        $('.meter').delay(999).slideUp(999);
-                        console.log("Files uploaded");
-                        location.reload();
+                    self.on('error', function (file, response) {
+                        console.log("Files upload Error");
+                        showModal(response.message);
+                    });
+                    self.on('success', function () {
+                        self.on("queuecomplete", function () {
+                            $('.meter').delay(999).slideUp(999);
+                            console.log("Files uploaded");
+                            var locUrL = location.href.replace('#Gallery_panel', '') + "#Gallery_panel";
+                            window.location.href = locUrL;
+                            location.reload();
+                        });
                     });
                     self.on("complete", function (file) {
                         self.removeFile(file);

@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "My.World.Web", "My.World.Web\My.World.Web.csproj", "{FA44A2AB-0607-47E3-B6B9-175EADE1B5E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "My.World.Api", "My.World.Api\My.World.Api.csproj", "{D3D98968-D901-4092-81B5-9BF825B0140E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "My.World.Api", "My.World.Api\My.World.Api.csproj", "{D3D98968-D901-4092-81B5-9BF825B0140E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "My.World.Models", "My.World.Models\My.World.Models.csproj", "{2B794FA5-1C04-455E-8578-5C2E6EC0E4A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "My.World.Models", "My.World.Models\My.World.Models.csproj", "{2B794FA5-1C04-455E-8578-5C2E6EC0E4A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

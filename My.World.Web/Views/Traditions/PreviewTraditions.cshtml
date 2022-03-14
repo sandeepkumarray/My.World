@@ -145,14 +145,32 @@
    
     <script type="text/javascript">
     
-		function setActivitiesBody() {
-		    html = htmlDecode('@Model.traditionsModel.Activities');
-		    $('#Activities').append(html);
+		function setUniverseBody() {
+		    $('#traditionsModel_Universe').val('@Model.traditionsModel.Universe');
 		};
 
 		function setAlternate_namesBody() {
 		    html = htmlDecode('@Model.traditionsModel.Alternate_names');
 		    $('#Alternate_names').append(html);
+		};
+
+		function setTagsBody() {
+		    html = htmlDecode('@Model.traditionsModel.Tags');
+		    $('#Tags').append(html);
+		};
+
+		function setNameBody() {
+		    $('#traditionsModel_Name').val('@Model.traditionsModel.Name');
+		};
+
+		function setDescriptionBody() {
+		    html = htmlDecode('@Model.traditionsModel.Description');
+		    $('#Description').append(html);
+		};
+
+		function setType_of_traditionBody() {
+		    html = htmlDecode('@Model.traditionsModel.Type_of_tradition');
+		    $('#Type_of_tradition').append(html);
 		};
 
 		function setCountriesBody() {
@@ -165,24 +183,14 @@
 		    $('#Dates').append(html);
 		};
 
-		function setDescriptionBody() {
-		    html = htmlDecode('@Model.traditionsModel.Description');
-		    $('#Description').append(html);
+		function setGroupsBody() {
+		    html = htmlDecode('@Model.traditionsModel.Groups');
+		    $('#Groups').append(html);
 		};
 
-		function setEtymologyBody() {
-		    html = htmlDecode('@Model.traditionsModel.Etymology');
-		    $('#Etymology').append(html);
-		};
-
-		function setFoodBody() {
-		    html = htmlDecode('@Model.traditionsModel.Food');
-		    $('#Food').append(html);
-		};
-
-		function setGamesBody() {
-		    html = htmlDecode('@Model.traditionsModel.Games');
-		    $('#Games').append(html);
+		function setTownsBody() {
+		    html = htmlDecode('@Model.traditionsModel.Towns');
+		    $('#Towns').append(html);
 		};
 
 		function setGiftsBody() {
@@ -190,13 +198,44 @@
 		    $('#Gifts').append(html);
 		};
 
-		function setGroupsBody() {
-		    html = htmlDecode('@Model.traditionsModel.Groups');
-		    $('#Groups').append(html);
+		function setFoodBody() {
+		    html = htmlDecode('@Model.traditionsModel.Food');
+		    $('#Food').append(html);
 		};
 
-		function setNameBody() {
-		    $('#traditionsModel_Name').val('@Model.traditionsModel.Name');
+		function setSymbolismBody() {
+		    html = htmlDecode('@Model.traditionsModel.Symbolism');
+		    $('#Symbolism').append(html);
+		};
+
+		function setGamesBody() {
+		    html = htmlDecode('@Model.traditionsModel.Games');
+		    $('#Games').append(html);
+		};
+
+		function setActivitiesBody() {
+		    html = htmlDecode('@Model.traditionsModel.Activities');
+		    $('#Activities').append(html);
+		};
+
+		function setEtymologyBody() {
+		    html = htmlDecode('@Model.traditionsModel.Etymology');
+		    $('#Etymology').append(html);
+		};
+
+		function setOriginBody() {
+		    html = htmlDecode('@Model.traditionsModel.Origin');
+		    $('#Origin').append(html);
+		};
+
+		function setSignificanceBody() {
+		    html = htmlDecode('@Model.traditionsModel.Significance');
+		    $('#Significance').append(html);
+		};
+
+		function setReligionsBody() {
+		    html = htmlDecode('@Model.traditionsModel.Religions');
+		    $('#Religions').append(html);
 		};
 
 		function setNotable_eventsBody() {
@@ -209,74 +248,35 @@
 		    $('#Notes').append(html);
 		};
 
-		function setOriginBody() {
-		    html = htmlDecode('@Model.traditionsModel.Origin');
-		    $('#Origin').append(html);
-		};
-
 		function setPrivate_NotesBody() {
 		    html = htmlDecode('@Model.traditionsModel.Private_Notes');
 		    $('#Private_Notes').append(html);
 		};
 
-		function setReligionsBody() {
-		    html = htmlDecode('@Model.traditionsModel.Religions');
-		    $('#Religions').append(html);
-		};
-
-		function setSignificanceBody() {
-		    html = htmlDecode('@Model.traditionsModel.Significance');
-		    $('#Significance').append(html);
-		};
-
-		function setSymbolismBody() {
-		    html = htmlDecode('@Model.traditionsModel.Symbolism');
-		    $('#Symbolism').append(html);
-		};
-
-		function setTagsBody() {
-		    html = htmlDecode('@Model.traditionsModel.Tags');
-		    $('#Tags').append(html);
-		};
-
-		function setTownsBody() {
-		    html = htmlDecode('@Model.traditionsModel.Towns');
-		    $('#Towns').append(html);
-		};
-
-		function setType_of_traditionBody() {
-		    html = htmlDecode('@Model.traditionsModel.Type_of_tradition');
-		    $('#Type_of_tradition').append(html);
-		};
-
-		function setUniverseBody() {
-		    $('#traditionsModel_Universe').val('@Model.traditionsModel.Universe');
-		};
-
 
 
         $(document).ready(function () {
-			setActivitiesBody();
 			setAlternate_namesBody();
+			setTagsBody();
+			setNameBody();
+			setDescriptionBody();
+			setType_of_traditionBody();
 			setCountriesBody();
 			setDatesBody();
-			setDescriptionBody();
-			setEtymologyBody();
-			setFoodBody();
-			setGamesBody();
-			setGiftsBody();
 			setGroupsBody();
-			setNameBody();
+			setTownsBody();
+			setGiftsBody();
+			setFoodBody();
+			setSymbolismBody();
+			setGamesBody();
+			setActivitiesBody();
+			setEtymologyBody();
+			setOriginBody();
+			setSignificanceBody();
+			setReligionsBody();
 			setNotable_eventsBody();
 			setNotesBody();
-			setOriginBody();
 			setPrivate_NotesBody();
-			setReligionsBody();
-			setSignificanceBody();
-			setSymbolismBody();
-			setTagsBody();
-			setTownsBody();
-			setType_of_traditionBody();
 
         });
 

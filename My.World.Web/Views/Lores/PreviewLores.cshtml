@@ -145,19 +145,52 @@
    
     <script type="text/javascript">
     
-		function setBackground_informationBody() {
-		    html = htmlDecode('@Model.loresModel.Background_information');
-		    $('#Background_information').append(html);
+		function setTagsBody() {
+		    html = htmlDecode('@Model.loresModel.Tags');
+		    $('#Tags').append(html);
 		};
 
-		function setBelievabilityBody() {
-		    html = htmlDecode('@Model.loresModel.Believability');
-		    $('#Believability').append(html);
+		function setNameBody() {
+		    $('#loresModel_Name').val('@Model.loresModel.Name');
 		};
 
-		function setBelieversBody() {
-		    html = htmlDecode('@Model.loresModel.Believers');
-		    $('#Believers').append(html);
+		function setSummaryBody() {
+		    html = htmlDecode('@Model.loresModel.Summary');
+		    $('#Summary').append(html);
+		};
+
+		function setTypeBody() {
+		    html = htmlDecode('@Model.loresModel.Type');
+		    $('#Type').append(html);
+		};
+
+		function setUniverseBody() {
+		    $('#loresModel_Universe').val('@Model.loresModel.Universe');
+		};
+
+		function setToneBody() {
+		    html = htmlDecode('@Model.loresModel.Tone');
+		    $('#Tone').append(html);
+		};
+
+		function setFull_textBody() {
+		    html = htmlDecode('@Model.loresModel.Full_text');
+		    $('#Full_text').append(html);
+		};
+
+		function setDialectBody() {
+		    html = htmlDecode('@Model.loresModel.Dialect');
+		    $('#Dialect').append(html);
+		};
+
+		function setStructureBody() {
+		    html = htmlDecode('@Model.loresModel.Structure');
+		    $('#Structure').append(html);
+		};
+
+		function setGenreBody() {
+		    html = htmlDecode('@Model.loresModel.Genre');
+		    $('#Genre').append(html);
 		};
 
 		function setBuildingsBody() {
@@ -165,14 +198,14 @@
 		    $('#Buildings').append(html);
 		};
 
-		function setCharactersBody() {
-		    html = htmlDecode('@Model.loresModel.Characters');
-		    $('#Characters').append(html);
+		function setTime_periodBody() {
+		    html = htmlDecode('@Model.loresModel.Time_period');
+		    $('#Time_period').append(html);
 		};
 
-		function setConditionsBody() {
-		    html = htmlDecode('@Model.loresModel.Conditions');
-		    $('#Conditions').append(html);
+		function setPlanetsBody() {
+		    html = htmlDecode('@Model.loresModel.Planets');
+		    $('#Planets').append(html);
 		};
 
 		function setContinentsBody() {
@@ -185,54 +218,29 @@
 		    $('#Countries').append(html);
 		};
 
-		function setCreated_phrasesBody() {
-		    html = htmlDecode('@Model.loresModel.Created_phrases');
-		    $('#Created_phrases').append(html);
+		function setLandmarksBody() {
+		    html = htmlDecode('@Model.loresModel.Landmarks');
+		    $('#Landmarks').append(html);
 		};
 
-		function setCreated_traditionsBody() {
-		    html = htmlDecode('@Model.loresModel.Created_traditions');
-		    $('#Created_traditions').append(html);
+		function setTownsBody() {
+		    html = htmlDecode('@Model.loresModel.Towns');
+		    $('#Towns').append(html);
 		};
 
-		function setCreaturesBody() {
-		    html = htmlDecode('@Model.loresModel.Creatures');
-		    $('#Creatures').append(html);
+		function setSchoolsBody() {
+		    html = htmlDecode('@Model.loresModel.Schools');
+		    $('#Schools').append(html);
 		};
 
-		function setCriticismBody() {
-		    html = htmlDecode('@Model.loresModel.Criticism');
-		    $('#Criticism').append(html);
+		function setConditionsBody() {
+		    html = htmlDecode('@Model.loresModel.Conditions');
+		    $('#Conditions').append(html);
 		};
 
-		function setDate_recordedBody() {
-		    html = htmlDecode('@Model.loresModel.Date_recorded');
-		    $('#Date_recorded').append(html);
-		};
-
-		function setDeitiesBody() {
-		    html = htmlDecode('@Model.loresModel.Deities');
-		    $('#Deities').append(html);
-		};
-
-		function setDialectBody() {
-		    html = htmlDecode('@Model.loresModel.Dialect');
-		    $('#Dialect').append(html);
-		};
-
-		function setEvolution_over_timeBody() {
-		    html = htmlDecode('@Model.loresModel.Evolution_over_time');
-		    $('#Evolution_over_time').append(html);
-		};
-
-		function setFalse_partsBody() {
-		    html = htmlDecode('@Model.loresModel.False_parts');
-		    $('#False_parts').append(html);
-		};
-
-		function setFlorasBody() {
-		    html = htmlDecode('@Model.loresModel.Floras');
-		    $('#Floras').append(html);
+		function setSportsBody() {
+		    html = htmlDecode('@Model.loresModel.Sports');
+		    $('#Sports').append(html);
 		};
 
 		function setFoodsBody() {
@@ -240,24 +248,9 @@
 		    $('#Foods').append(html);
 		};
 
-		function setFull_textBody() {
-		    html = htmlDecode('@Model.loresModel.Full_text');
-		    $('#Full_text').append(html);
-		};
-
-		function setGenreBody() {
-		    html = htmlDecode('@Model.loresModel.Genre');
-		    $('#Genre').append(html);
-		};
-
-		function setGeographical_variationsBody() {
-		    html = htmlDecode('@Model.loresModel.Geographical_variations');
-		    $('#Geographical_variations').append(html);
-		};
-
-		function setGovernmentsBody() {
-		    html = htmlDecode('@Model.loresModel.Governments');
-		    $('#Governments').append(html);
+		function setTraditionsBody() {
+		    html = htmlDecode('@Model.loresModel.Traditions');
+		    $('#Traditions').append(html);
 		};
 
 		function setGroupsBody() {
@@ -265,49 +258,9 @@
 		    $('#Groups').append(html);
 		};
 
-		function setHistorical_contextBody() {
-		    html = htmlDecode('@Model.loresModel.Historical_context');
-		    $('#Historical_context').append(html);
-		};
-
-		function setHoaxesBody() {
-		    html = htmlDecode('@Model.loresModel.Hoaxes');
-		    $('#Hoaxes').append(html);
-		};
-
-		function setImpactBody() {
-		    html = htmlDecode('@Model.loresModel.Impact');
-		    $('#Impact').append(html);
-		};
-
-		function setImportant_translationsBody() {
-		    html = htmlDecode('@Model.loresModel.Important_translations');
-		    $('#Important_translations').append(html);
-		};
-
-		function setInfluence_on_modern_timesBody() {
-		    html = htmlDecode('@Model.loresModel.Influence_on_modern_times');
-		    $('#Influence_on_modern_times').append(html);
-		};
-
-		function setInspirationsBody() {
-		    html = htmlDecode('@Model.loresModel.Inspirations');
-		    $('#Inspirations').append(html);
-		};
-
-		function setInterpretationsBody() {
-		    html = htmlDecode('@Model.loresModel.Interpretations');
-		    $('#Interpretations').append(html);
-		};
-
-		function setJobsBody() {
-		    html = htmlDecode('@Model.loresModel.Jobs');
-		    $('#Jobs').append(html);
-		};
-
-		function setLandmarksBody() {
-		    html = htmlDecode('@Model.loresModel.Landmarks');
-		    $('#Landmarks').append(html);
+		function setGovernmentsBody() {
+		    html = htmlDecode('@Model.loresModel.Governments');
+		    $('#Governments').append(html);
 		};
 
 		function setMagicBody() {
@@ -315,9 +268,79 @@
 		    $('#Magic').append(html);
 		};
 
-		function setMedia_adaptationsBody() {
-		    html = htmlDecode('@Model.loresModel.Media_adaptations');
-		    $('#Media_adaptations').append(html);
+		function setReligionsBody() {
+		    html = htmlDecode('@Model.loresModel.Religions');
+		    $('#Religions').append(html);
+		};
+
+		function setRacesBody() {
+		    html = htmlDecode('@Model.loresModel.Races');
+		    $('#Races').append(html);
+		};
+
+		function setVehiclesBody() {
+		    html = htmlDecode('@Model.loresModel.Vehicles');
+		    $('#Vehicles').append(html);
+		};
+
+		function setTechnologiesBody() {
+		    html = htmlDecode('@Model.loresModel.Technologies');
+		    $('#Technologies').append(html);
+		};
+
+		function setJobsBody() {
+		    html = htmlDecode('@Model.loresModel.Jobs');
+		    $('#Jobs').append(html);
+		};
+
+		function setFlorasBody() {
+		    html = htmlDecode('@Model.loresModel.Floras');
+		    $('#Floras').append(html);
+		};
+
+		function setCreaturesBody() {
+		    html = htmlDecode('@Model.loresModel.Creatures');
+		    $('#Creatures').append(html);
+		};
+
+		function setDeitiesBody() {
+		    html = htmlDecode('@Model.loresModel.Deities');
+		    $('#Deities').append(html);
+		};
+
+		function setCharactersBody() {
+		    html = htmlDecode('@Model.loresModel.Characters');
+		    $('#Characters').append(html);
+		};
+
+		function setSubjectsBody() {
+		    html = htmlDecode('@Model.loresModel.Subjects');
+		    $('#Subjects').append(html);
+		};
+
+		function setBelieversBody() {
+		    html = htmlDecode('@Model.loresModel.Believers');
+		    $('#Believers').append(html);
+		};
+
+		function setHoaxesBody() {
+		    html = htmlDecode('@Model.loresModel.Hoaxes');
+		    $('#Hoaxes').append(html);
+		};
+
+		function setTrue_partsBody() {
+		    html = htmlDecode('@Model.loresModel.True_parts');
+		    $('#True_parts').append(html);
+		};
+
+		function setFalse_partsBody() {
+		    html = htmlDecode('@Model.loresModel.False_parts');
+		    $('#False_parts').append(html);
+		};
+
+		function setBelievabilityBody() {
+		    html = htmlDecode('@Model.loresModel.Believability');
+		    $('#Believability').append(html);
 		};
 
 		function setMoralsBody() {
@@ -325,18 +348,64 @@
 		    $('#Morals').append(html);
 		};
 
+		function setSymbolismsBody() {
+		    html = htmlDecode('@Model.loresModel.Symbolisms');
+		    $('#Symbolisms').append(html);
+		};
+
 		function setMotivationsBody() {
 		    html = htmlDecode('@Model.loresModel.Motivations');
 		    $('#Motivations').append(html);
 		};
 
-		function setNameBody() {
-		    $('#loresModel_Name').val('@Model.loresModel.Name');
+		function setCreated_phrasesBody() {
+		    html = htmlDecode('@Model.loresModel.Created_phrases');
+		    $('#Created_phrases').append(html);
 		};
 
-		function setNotesBody() {
-		    html = htmlDecode('@Model.loresModel.Notes');
-		    $('#Notes').append(html);
+		function setReceptionBody() {
+		    html = htmlDecode('@Model.loresModel.Reception');
+		    $('#Reception').append(html);
+		};
+
+		function setCriticismBody() {
+		    html = htmlDecode('@Model.loresModel.Criticism');
+		    $('#Criticism').append(html);
+		};
+
+		function setMedia_adaptationsBody() {
+		    html = htmlDecode('@Model.loresModel.Media_adaptations');
+		    $('#Media_adaptations').append(html);
+		};
+
+		function setInterpretationsBody() {
+		    html = htmlDecode('@Model.loresModel.Interpretations');
+		    $('#Interpretations').append(html);
+		};
+
+		function setImpactBody() {
+		    html = htmlDecode('@Model.loresModel.Impact');
+		    $('#Impact').append(html);
+		};
+
+		function setCreated_traditionsBody() {
+		    html = htmlDecode('@Model.loresModel.Created_traditions');
+		    $('#Created_traditions').append(html);
+		};
+
+		function setInfluence_on_modern_timesBody() {
+		    html = htmlDecode('@Model.loresModel.Influence_on_modern_times');
+		    $('#Influence_on_modern_times').append(html);
+		};
+
+		function setOriginal_tellingBody() {
+		    html = htmlDecode('@Model.loresModel.Original_telling');
+		    $('#Original_telling').append(html);
+		};
+
+		function setInspirationsBody() {
+		    html = htmlDecode('@Model.loresModel.Inspirations');
+		    $('#Inspirations').append(html);
 		};
 
 		function setOriginal_authorBody() {
@@ -349,19 +418,19 @@
 		    $('#Original_languages').append(html);
 		};
 
-		function setOriginal_tellingBody() {
-		    html = htmlDecode('@Model.loresModel.Original_telling');
-		    $('#Original_telling').append(html);
+		function setSourceBody() {
+		    html = htmlDecode('@Model.loresModel.Source');
+		    $('#Source').append(html);
 		};
 
-		function setPlanetsBody() {
-		    html = htmlDecode('@Model.loresModel.Planets');
-		    $('#Planets').append(html);
+		function setDate_recordedBody() {
+		    html = htmlDecode('@Model.loresModel.Date_recorded');
+		    $('#Date_recorded').append(html);
 		};
 
-		function setPrivate_NotesBody() {
-		    html = htmlDecode('@Model.loresModel.Private_Notes');
-		    $('#Private_Notes').append(html);
+		function setBackground_informationBody() {
+		    html = htmlDecode('@Model.loresModel.Background_information');
+		    $('#Background_information').append(html);
 		};
 
 		function setPropagation_methodBody() {
@@ -369,14 +438,24 @@
 		    $('#Propagation_method').append(html);
 		};
 
-		function setRacesBody() {
-		    html = htmlDecode('@Model.loresModel.Races');
-		    $('#Races').append(html);
+		function setHistorical_contextBody() {
+		    html = htmlDecode('@Model.loresModel.Historical_context');
+		    $('#Historical_context').append(html);
 		};
 
-		function setReceptionBody() {
-		    html = htmlDecode('@Model.loresModel.Reception');
-		    $('#Reception').append(html);
+		function setImportant_translationsBody() {
+		    html = htmlDecode('@Model.loresModel.Important_translations');
+		    $('#Important_translations').append(html);
+		};
+
+		function setEvolution_over_timeBody() {
+		    html = htmlDecode('@Model.loresModel.Evolution_over_time');
+		    $('#Evolution_over_time').append(html);
+		};
+
+		function setGeographical_variationsBody() {
+		    html = htmlDecode('@Model.loresModel.Geographical_variations');
+		    $('#Geographical_variations').append(html);
 		};
 
 		function setRelated_loresBody() {
@@ -384,74 +463,9 @@
 		    $('#Related_lores').append(html);
 		};
 
-		function setReligionsBody() {
-		    html = htmlDecode('@Model.loresModel.Religions');
-		    $('#Religions').append(html);
-		};
-
-		function setSchoolsBody() {
-		    html = htmlDecode('@Model.loresModel.Schools');
-		    $('#Schools').append(html);
-		};
-
-		function setSourceBody() {
-		    html = htmlDecode('@Model.loresModel.Source');
-		    $('#Source').append(html);
-		};
-
-		function setSportsBody() {
-		    html = htmlDecode('@Model.loresModel.Sports');
-		    $('#Sports').append(html);
-		};
-
-		function setStructureBody() {
-		    html = htmlDecode('@Model.loresModel.Structure');
-		    $('#Structure').append(html);
-		};
-
-		function setSubjectsBody() {
-		    html = htmlDecode('@Model.loresModel.Subjects');
-		    $('#Subjects').append(html);
-		};
-
-		function setSummaryBody() {
-		    html = htmlDecode('@Model.loresModel.Summary');
-		    $('#Summary').append(html);
-		};
-
-		function setSymbolismsBody() {
-		    html = htmlDecode('@Model.loresModel.Symbolisms');
-		    $('#Symbolisms').append(html);
-		};
-
-		function setTagsBody() {
-		    html = htmlDecode('@Model.loresModel.Tags');
-		    $('#Tags').append(html);
-		};
-
-		function setTechnologiesBody() {
-		    html = htmlDecode('@Model.loresModel.Technologies');
-		    $('#Technologies').append(html);
-		};
-
-		function setTime_periodBody() {
-		    html = htmlDecode('@Model.loresModel.Time_period');
-		    $('#Time_period').append(html);
-		};
-
-		function setToneBody() {
-		    html = htmlDecode('@Model.loresModel.Tone');
-		    $('#Tone').append(html);
-		};
-
-		function setTownsBody() {
-		    html = htmlDecode('@Model.loresModel.Towns');
-		    $('#Towns').append(html);
-		};
-
-		function setTraditionsBody() {
-		    html = htmlDecode('@Model.loresModel.Traditions');
-		    $('#Traditions').append(html);
+		function setVariationsBody() {
+		    html = htmlDecode('@Model.loresModel.Variations');
+		    $('#Variations').append(html);
 		};
 
 		function setTranslation_variationsBody() {
@@ -459,100 +473,86 @@
 		    $('#Translation_variations').append(html);
 		};
 
-		function setTrue_partsBody() {
-		    html = htmlDecode('@Model.loresModel.True_parts');
-		    $('#True_parts').append(html);
+		function setPrivate_NotesBody() {
+		    html = htmlDecode('@Model.loresModel.Private_Notes');
+		    $('#Private_Notes').append(html);
 		};
 
-		function setTypeBody() {
-		    html = htmlDecode('@Model.loresModel.Type');
-		    $('#Type').append(html);
-		};
-
-		function setUniverseBody() {
-		    $('#loresModel_Universe').val('@Model.loresModel.Universe');
-		};
-
-		function setVariationsBody() {
-		    html = htmlDecode('@Model.loresModel.Variations');
-		    $('#Variations').append(html);
-		};
-
-		function setVehiclesBody() {
-		    html = htmlDecode('@Model.loresModel.Vehicles');
-		    $('#Vehicles').append(html);
+		function setNotesBody() {
+		    html = htmlDecode('@Model.loresModel.Notes');
+		    $('#Notes').append(html);
 		};
 
 
 
         $(document).ready(function () {
-			setBackground_informationBody();
-			setBelievabilityBody();
-			setBelieversBody();
+			setTagsBody();
+			setNameBody();
+			setSummaryBody();
+			setTypeBody();
+			setToneBody();
+			setFull_textBody();
+			setDialectBody();
+			setStructureBody();
+			setGenreBody();
 			setBuildingsBody();
-			setCharactersBody();
-			setConditionsBody();
+			setTime_periodBody();
+			setPlanetsBody();
 			setContinentsBody();
 			setCountriesBody();
-			setCreated_phrasesBody();
-			setCreated_traditionsBody();
-			setCreaturesBody();
-			setCriticismBody();
-			setDate_recordedBody();
-			setDeitiesBody();
-			setDialectBody();
-			setEvolution_over_timeBody();
-			setFalse_partsBody();
-			setFlorasBody();
-			setFoodsBody();
-			setFull_textBody();
-			setGenreBody();
-			setGeographical_variationsBody();
-			setGovernmentsBody();
-			setGroupsBody();
-			setHistorical_contextBody();
-			setHoaxesBody();
-			setImpactBody();
-			setImportant_translationsBody();
-			setInfluence_on_modern_timesBody();
-			setInspirationsBody();
-			setInterpretationsBody();
-			setJobsBody();
 			setLandmarksBody();
+			setTownsBody();
+			setSchoolsBody();
+			setConditionsBody();
+			setSportsBody();
+			setFoodsBody();
+			setTraditionsBody();
+			setGroupsBody();
+			setGovernmentsBody();
 			setMagicBody();
-			setMedia_adaptationsBody();
+			setReligionsBody();
+			setRacesBody();
+			setVehiclesBody();
+			setTechnologiesBody();
+			setJobsBody();
+			setFlorasBody();
+			setCreaturesBody();
+			setDeitiesBody();
+			setCharactersBody();
+			setSubjectsBody();
+			setBelieversBody();
+			setHoaxesBody();
+			setTrue_partsBody();
+			setFalse_partsBody();
+			setBelievabilityBody();
 			setMoralsBody();
+			setSymbolismsBody();
 			setMotivationsBody();
-			setNameBody();
-			setNotesBody();
+			setCreated_phrasesBody();
+			setReceptionBody();
+			setCriticismBody();
+			setMedia_adaptationsBody();
+			setInterpretationsBody();
+			setImpactBody();
+			setCreated_traditionsBody();
+			setInfluence_on_modern_timesBody();
+			setOriginal_tellingBody();
+			setInspirationsBody();
 			setOriginal_authorBody();
 			setOriginal_languagesBody();
-			setOriginal_tellingBody();
-			setPlanetsBody();
-			setPrivate_NotesBody();
-			setPropagation_methodBody();
-			setRacesBody();
-			setReceptionBody();
-			setRelated_loresBody();
-			setReligionsBody();
-			setSchoolsBody();
 			setSourceBody();
-			setSportsBody();
-			setStructureBody();
-			setSubjectsBody();
-			setSummaryBody();
-			setSymbolismsBody();
-			setTagsBody();
-			setTechnologiesBody();
-			setTime_periodBody();
-			setToneBody();
-			setTownsBody();
-			setTraditionsBody();
-			setTranslation_variationsBody();
-			setTrue_partsBody();
-			setTypeBody();
+			setDate_recordedBody();
+			setBackground_informationBody();
+			setPropagation_methodBody();
+			setHistorical_contextBody();
+			setImportant_translationsBody();
+			setEvolution_over_timeBody();
+			setGeographical_variationsBody();
+			setRelated_loresBody();
 			setVariationsBody();
-			setVehiclesBody();
+			setTranslation_variationsBody();
+			setPrivate_NotesBody();
+			setNotesBody();
 
         });
 

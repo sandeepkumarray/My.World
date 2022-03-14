@@ -13,6 +13,7 @@ using My.World.Web.Services;
 using Newtonsoft.Json;
 using My.World.Web.ViewModel;
 using Microsoft.Extensions.Configuration;
+using System.Web;
 
 namespace My.World.Web.Controllers
 {
@@ -103,7 +104,17 @@ namespace My.World.Web.Controllers
 			planetsViewModel.headerBackgroundColor = contentTypesModel.sec_color;
 			_iObjectBucketApiService.SetObjectStorageSecrets(model.user_id);
 			planetsViewModel.ContentObjectModelList = _iObjectBucketApiService.GetAllContentObjectAttachments(Convert.ToInt64(Id), "planets");
-			return View(planetsViewModel);
+			planetsViewModel.ContentObjectModelList.ForEach(o => 
+			{
+			    var publicUrl = "http://" + _iObjectBucketApiService.objectStorageKeysModel.endpoint
+			                + '/' + _iObjectBucketApiService.objectStorageKeysModel.bucketName + '/' + _config.GetValue<string>("BucketEnv") + '/' + o.object_name; 
+			    o.file_url = HttpUtility.UrlPathEncode(publicUrl); 
+			}); 
+			var existing_total_size = planetsViewModel.ContentObjectModelList.Sum(f => f.object_size);
+			var AllowedTotalContentSize = Convert.ToInt64(HttpContext.Session.GetString("AllowedTotalContentSize"));
+			var remainingSize = AllowedTotalContentSize - existing_total_size;
+			planetsViewModel.RemainingContentSize = Helpers.Utility.SizeSuffix(remainingSize);
+			return View(planetsViewModel); 
 
 		}
 
@@ -154,51 +165,51 @@ namespace My.World.Web.Controllers
 			if (model != null)
 			{
 				
-				model.Atmosphere  = model.Atmosphere == null ? model.Atmosphere : model.Atmosphere.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Calendar_System  = model.Calendar_System == null ? model.Calendar_System : model.Calendar_System.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Climate  = model.Climate == null ? model.Climate : model.Climate.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Description  = model.Description == null ? model.Description : model.Description.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Tags  = model.Tags == null ? model.Tags : model.Tags.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Weather  = model.Weather == null ? model.Weather : model.Weather.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Natural_Resources  = model.Natural_Resources == null ? model.Natural_Resources : model.Natural_Resources.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Continents  = model.Continents == null ? model.Continents : model.Continents.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Countries  = model.Countries == null ? model.Countries : model.Countries.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Creatures  = model.Creatures == null ? model.Creatures : model.Creatures.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Day_sky  = model.Day_sky == null ? model.Day_sky : model.Day_sky.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Deities  = model.Deities == null ? model.Deities : model.Deities.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Description  = model.Description == null ? model.Description : model.Description.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.First_Inhabitants_Story  = model.First_Inhabitants_Story == null ? model.First_Inhabitants_Story : model.First_Inhabitants_Story.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Flora  = model.Flora == null ? model.Flora : model.Flora.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Groups  = model.Groups == null ? model.Groups : model.Groups.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Landmarks  = model.Landmarks == null ? model.Landmarks : model.Landmarks.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Languages  = model.Languages == null ? model.Languages : model.Languages.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Locations  = model.Locations == null ? model.Locations : model.Locations.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Moons  = model.Moons == null ? model.Moons : model.Moons.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Natural_diasters  = model.Natural_diasters == null ? model.Natural_diasters : model.Natural_diasters.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Natural_Resources  = model.Natural_Resources == null ? model.Natural_Resources : model.Natural_Resources.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Nearby_planets  = model.Nearby_planets == null ? model.Nearby_planets : model.Nearby_planets.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Night_sky  = model.Night_sky == null ? model.Night_sky : model.Night_sky.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Notes  = model.Notes == null ? model.Notes : model.Notes.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Orbit  = model.Orbit == null ? model.Orbit : model.Orbit.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Private_Notes  = model.Private_Notes == null ? model.Private_Notes : model.Private_Notes.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Races  = model.Races == null ? model.Races : model.Races.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Religions  = model.Religions == null ? model.Religions : model.Religions.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Landmarks  = model.Landmarks == null ? model.Landmarks : model.Landmarks.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Climate  = model.Climate == null ? model.Climate : model.Climate.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Atmosphere  = model.Atmosphere == null ? model.Atmosphere : model.Atmosphere.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Seasons  = model.Seasons == null ? model.Seasons : model.Seasons.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Suns  = model.Suns == null ? model.Suns : model.Suns.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Tags  = model.Tags == null ? model.Tags : model.Tags.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Natural_diasters  = model.Natural_diasters == null ? model.Natural_diasters : model.Natural_diasters.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Calendar_System  = model.Calendar_System == null ? model.Calendar_System : model.Calendar_System.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Day_sky  = model.Day_sky == null ? model.Day_sky : model.Day_sky.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Night_sky  = model.Night_sky == null ? model.Night_sky : model.Night_sky.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Towns  = model.Towns == null ? model.Towns : model.Towns.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Races  = model.Races == null ? model.Races : model.Races.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Flora  = model.Flora == null ? model.Flora : model.Flora.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Creatures  = model.Creatures == null ? model.Creatures : model.Creatures.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Religions  = model.Religions == null ? model.Religions : model.Religions.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Deities  = model.Deities == null ? model.Deities : model.Deities.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Groups  = model.Groups == null ? model.Groups : model.Groups.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Languages  = model.Languages == null ? model.Languages : model.Languages.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Visible_Constellations  = model.Visible_Constellations == null ? model.Visible_Constellations : model.Visible_Constellations.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Weather  = model.Weather == null ? model.Weather : model.Weather.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Suns  = model.Suns == null ? model.Suns : model.Suns.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Moons  = model.Moons == null ? model.Moons : model.Moons.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Orbit  = model.Orbit == null ? model.Orbit : model.Orbit.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Nearby_planets  = model.Nearby_planets == null ? model.Nearby_planets : model.Nearby_planets.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.First_Inhabitants_Story  = model.First_Inhabitants_Story == null ? model.First_Inhabitants_Story : model.First_Inhabitants_Story.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.World_History  = model.World_History == null ? model.World_History : model.World_History.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Private_Notes  = model.Private_Notes == null ? model.Private_Notes : model.Private_Notes.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Notes  = model.Notes == null ? model.Notes : model.Notes.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 			}
 
 		}
 
 		#region Save Properties Methods
 		[HttpPost]
-		[Route("{id}/SaveAtmosphere")]
-		public IActionResult SaveAtmosphere(string id)
+		[Route("{id}/SaveDescription")]
+		public IActionResult SaveDescription(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Atmosphere";
+			var type = "Description";
 			var PlanetID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -213,13 +224,35 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveCalendar_System")]
-		public IActionResult SaveCalendar_System(string id)
+		[Route("SaveUniverse")]
+		public IActionResult SaveUniverse()
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Calendar_System";
+			var type = "Universe";
+			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
+			var PlanetID = Convert.ToInt64(obj["PlanetID"].Value);
+			var value = Convert.ToString(obj["value"].Value);
+			
+			PlanetsModel model = new PlanetsModel();
+			model.id = PlanetID;
+			model._id = PlanetID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iPlanetsApiService.SavePlanet(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveTags")]
+		public IActionResult SaveTags(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Tags";
 			var PlanetID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -234,13 +267,78 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveClimate")]
-		public IActionResult SaveClimate(string id)
+		[Route("SaveName")]
+		public IActionResult SaveName()
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Climate";
+			var type = "Name";
+			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
+			var PlanetID = Convert.ToInt64(obj["PlanetID"].Value);
+			var value = Convert.ToString(obj["value"].Value);
+			
+			PlanetsModel model = new PlanetsModel();
+			model.id = PlanetID;
+			model._id = PlanetID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iPlanetsApiService.SavePlanet(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveWeather")]
+		public IActionResult SaveWeather(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Weather";
+			var PlanetID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			PlanetsModel model = new PlanetsModel();
+			model.id = PlanetID;
+			model._id = PlanetID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iPlanetsApiService.SavePlanet(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("SaveWater_Content")]
+		public IActionResult SaveWater_Content()
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Water_Content";
+			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
+			var PlanetID = Convert.ToInt64(obj["PlanetID"].Value);
+			var value = Convert.ToString(obj["value"].Value);
+			
+			PlanetsModel model = new PlanetsModel();
+			model.id = PlanetID;
+			model._id = PlanetID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iPlanetsApiService.SavePlanet(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveNatural_Resources")]
+		public IActionResult SaveNatural_Resources(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Natural_Resources";
 			var PlanetID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -297,239 +395,6 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveCreatures")]
-		public IActionResult SaveCreatures(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Creatures";
-			var PlanetID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			PlanetsModel model = new PlanetsModel();
-			model.id = PlanetID;
-			model._id = PlanetID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iPlanetsApiService.SavePlanet(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveDay_sky")]
-		public IActionResult SaveDay_sky(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Day_sky";
-			var PlanetID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			PlanetsModel model = new PlanetsModel();
-			model.id = PlanetID;
-			model._id = PlanetID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iPlanetsApiService.SavePlanet(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveDeities")]
-		public IActionResult SaveDeities(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Deities";
-			var PlanetID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			PlanetsModel model = new PlanetsModel();
-			model.id = PlanetID;
-			model._id = PlanetID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iPlanetsApiService.SavePlanet(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveDescription")]
-		public IActionResult SaveDescription(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Description";
-			var PlanetID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			PlanetsModel model = new PlanetsModel();
-			model.id = PlanetID;
-			model._id = PlanetID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iPlanetsApiService.SavePlanet(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveFirst_Inhabitants_Story")]
-		public IActionResult SaveFirst_Inhabitants_Story(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "First_Inhabitants_Story";
-			var PlanetID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			PlanetsModel model = new PlanetsModel();
-			model.id = PlanetID;
-			model._id = PlanetID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iPlanetsApiService.SavePlanet(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveFlora")]
-		public IActionResult SaveFlora(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Flora";
-			var PlanetID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			PlanetsModel model = new PlanetsModel();
-			model.id = PlanetID;
-			model._id = PlanetID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iPlanetsApiService.SavePlanet(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveGroups")]
-		public IActionResult SaveGroups(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Groups";
-			var PlanetID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			PlanetsModel model = new PlanetsModel();
-			model.id = PlanetID;
-			model._id = PlanetID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iPlanetsApiService.SavePlanet(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveLandmarks")]
-		public IActionResult SaveLandmarks(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Landmarks";
-			var PlanetID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			PlanetsModel model = new PlanetsModel();
-			model.id = PlanetID;
-			model._id = PlanetID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iPlanetsApiService.SavePlanet(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveLanguages")]
-		public IActionResult SaveLanguages(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Languages";
-			var PlanetID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			PlanetsModel model = new PlanetsModel();
-			model.id = PlanetID;
-			model._id = PlanetID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iPlanetsApiService.SavePlanet(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("SaveLength_Of_Day")]
-		public IActionResult SaveLength_Of_Day()
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Length_Of_Day";
-			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
-			var PlanetID = Convert.ToInt64(obj["PlanetID"].Value);
-			var value = Convert.ToString(obj["value"].Value);
-			
-			PlanetsModel model = new PlanetsModel();
-			model.id = PlanetID;
-			model._id = PlanetID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iPlanetsApiService.SavePlanet(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("SaveLength_Of_Night")]
-		public IActionResult SaveLength_Of_Night()
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Length_Of_Night";
-			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
-			var PlanetID = Convert.ToInt64(obj["PlanetID"].Value);
-			var value = Convert.ToString(obj["value"].Value);
-			
-			PlanetsModel model = new PlanetsModel();
-			model.id = PlanetID;
-			model._id = PlanetID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iPlanetsApiService.SavePlanet(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
 		[Route("{id}/SaveLocations")]
 		public IActionResult SaveLocations(string id)
 		{
@@ -551,267 +416,13 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveMoons")]
-		public IActionResult SaveMoons(string id)
+		[Route("{id}/SaveLandmarks")]
+		public IActionResult SaveLandmarks(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Moons";
-			var PlanetID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			PlanetsModel model = new PlanetsModel();
-			model.id = PlanetID;
-			model._id = PlanetID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iPlanetsApiService.SavePlanet(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("SaveName")]
-		public IActionResult SaveName()
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Name";
-			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
-			var PlanetID = Convert.ToInt64(obj["PlanetID"].Value);
-			var value = Convert.ToString(obj["value"].Value);
-			
-			PlanetsModel model = new PlanetsModel();
-			model.id = PlanetID;
-			model._id = PlanetID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iPlanetsApiService.SavePlanet(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveNatural_diasters")]
-		public IActionResult SaveNatural_diasters(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Natural_diasters";
-			var PlanetID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			PlanetsModel model = new PlanetsModel();
-			model.id = PlanetID;
-			model._id = PlanetID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iPlanetsApiService.SavePlanet(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveNatural_Resources")]
-		public IActionResult SaveNatural_Resources(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Natural_Resources";
-			var PlanetID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			PlanetsModel model = new PlanetsModel();
-			model.id = PlanetID;
-			model._id = PlanetID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iPlanetsApiService.SavePlanet(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveNearby_planets")]
-		public IActionResult SaveNearby_planets(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Nearby_planets";
-			var PlanetID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			PlanetsModel model = new PlanetsModel();
-			model.id = PlanetID;
-			model._id = PlanetID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iPlanetsApiService.SavePlanet(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveNight_sky")]
-		public IActionResult SaveNight_sky(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Night_sky";
-			var PlanetID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			PlanetsModel model = new PlanetsModel();
-			model.id = PlanetID;
-			model._id = PlanetID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iPlanetsApiService.SavePlanet(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveNotes")]
-		public IActionResult SaveNotes(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Notes";
-			var PlanetID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			PlanetsModel model = new PlanetsModel();
-			model.id = PlanetID;
-			model._id = PlanetID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iPlanetsApiService.SavePlanet(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveOrbit")]
-		public IActionResult SaveOrbit(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Orbit";
-			var PlanetID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			PlanetsModel model = new PlanetsModel();
-			model.id = PlanetID;
-			model._id = PlanetID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iPlanetsApiService.SavePlanet(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("SavePopulation")]
-		public IActionResult SavePopulation()
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Population";
-			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
-			var PlanetID = Convert.ToInt64(obj["PlanetID"].Value);
-			var value = Convert.ToString(obj["value"].Value);
-			
-			PlanetsModel model = new PlanetsModel();
-			model.id = PlanetID;
-			model._id = PlanetID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iPlanetsApiService.SavePlanet(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SavePrivate_Notes")]
-		public IActionResult SavePrivate_Notes(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Private_Notes";
-			var PlanetID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			PlanetsModel model = new PlanetsModel();
-			model.id = PlanetID;
-			model._id = PlanetID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iPlanetsApiService.SavePlanet(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveRaces")]
-		public IActionResult SaveRaces(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Races";
-			var PlanetID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			PlanetsModel model = new PlanetsModel();
-			model.id = PlanetID;
-			model._id = PlanetID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iPlanetsApiService.SavePlanet(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveReligions")]
-		public IActionResult SaveReligions(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Religions";
-			var PlanetID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			PlanetsModel model = new PlanetsModel();
-			model.id = PlanetID;
-			model._id = PlanetID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iPlanetsApiService.SavePlanet(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveSeasons")]
-		public IActionResult SaveSeasons(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Seasons";
+			var type = "Landmarks";
 			var PlanetID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -848,27 +459,6 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveSuns")]
-		public IActionResult SaveSuns(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Suns";
-			var PlanetID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			PlanetsModel model = new PlanetsModel();
-			model.id = PlanetID;
-			model._id = PlanetID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iPlanetsApiService.SavePlanet(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
 		[Route("SaveSurface")]
 		public IActionResult SaveSurface()
 		{
@@ -891,13 +481,55 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveTags")]
-		public IActionResult SaveTags(string id)
+		[Route("{id}/SaveClimate")]
+		public IActionResult SaveClimate(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Tags";
+			var type = "Climate";
+			var PlanetID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			PlanetsModel model = new PlanetsModel();
+			model.id = PlanetID;
+			model._id = PlanetID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iPlanetsApiService.SavePlanet(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveAtmosphere")]
+		public IActionResult SaveAtmosphere(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Atmosphere";
+			var PlanetID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			PlanetsModel model = new PlanetsModel();
+			model.id = PlanetID;
+			model._id = PlanetID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iPlanetsApiService.SavePlanet(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveSeasons")]
+		public IActionResult SaveSeasons(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Seasons";
 			var PlanetID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -934,6 +566,134 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
+		[Route("{id}/SaveNatural_diasters")]
+		public IActionResult SaveNatural_diasters(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Natural_diasters";
+			var PlanetID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			PlanetsModel model = new PlanetsModel();
+			model.id = PlanetID;
+			model._id = PlanetID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iPlanetsApiService.SavePlanet(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveCalendar_System")]
+		public IActionResult SaveCalendar_System(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Calendar_System";
+			var PlanetID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			PlanetsModel model = new PlanetsModel();
+			model.id = PlanetID;
+			model._id = PlanetID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iPlanetsApiService.SavePlanet(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveDay_sky")]
+		public IActionResult SaveDay_sky(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Day_sky";
+			var PlanetID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			PlanetsModel model = new PlanetsModel();
+			model.id = PlanetID;
+			model._id = PlanetID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iPlanetsApiService.SavePlanet(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveNight_sky")]
+		public IActionResult SaveNight_sky(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Night_sky";
+			var PlanetID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			PlanetsModel model = new PlanetsModel();
+			model.id = PlanetID;
+			model._id = PlanetID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iPlanetsApiService.SavePlanet(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("SaveLength_Of_Night")]
+		public IActionResult SaveLength_Of_Night()
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Length_Of_Night";
+			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
+			var PlanetID = Convert.ToInt64(obj["PlanetID"].Value);
+			var value = Convert.ToString(obj["value"].Value);
+			
+			PlanetsModel model = new PlanetsModel();
+			model.id = PlanetID;
+			model._id = PlanetID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iPlanetsApiService.SavePlanet(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("SaveLength_Of_Day")]
+		public IActionResult SaveLength_Of_Day()
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Length_Of_Day";
+			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
+			var PlanetID = Convert.ToInt64(obj["PlanetID"].Value);
+			var value = Convert.ToString(obj["value"].Value);
+			
+			PlanetsModel model = new PlanetsModel();
+			model.id = PlanetID;
+			model._id = PlanetID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iPlanetsApiService.SavePlanet(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
 		[Route("{id}/SaveTowns")]
 		public IActionResult SaveTowns(string id)
 		{
@@ -955,16 +715,163 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("SaveUniverse")]
-		public IActionResult SaveUniverse()
+		[Route("SavePopulation")]
+		public IActionResult SavePopulation()
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Universe";
+			var type = "Population";
 			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
 			var PlanetID = Convert.ToInt64(obj["PlanetID"].Value);
 			var value = Convert.ToString(obj["value"].Value);
+			
+			PlanetsModel model = new PlanetsModel();
+			model.id = PlanetID;
+			model._id = PlanetID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iPlanetsApiService.SavePlanet(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveRaces")]
+		public IActionResult SaveRaces(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Races";
+			var PlanetID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			PlanetsModel model = new PlanetsModel();
+			model.id = PlanetID;
+			model._id = PlanetID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iPlanetsApiService.SavePlanet(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveFlora")]
+		public IActionResult SaveFlora(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Flora";
+			var PlanetID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			PlanetsModel model = new PlanetsModel();
+			model.id = PlanetID;
+			model._id = PlanetID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iPlanetsApiService.SavePlanet(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveCreatures")]
+		public IActionResult SaveCreatures(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Creatures";
+			var PlanetID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			PlanetsModel model = new PlanetsModel();
+			model.id = PlanetID;
+			model._id = PlanetID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iPlanetsApiService.SavePlanet(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveReligions")]
+		public IActionResult SaveReligions(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Religions";
+			var PlanetID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			PlanetsModel model = new PlanetsModel();
+			model.id = PlanetID;
+			model._id = PlanetID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iPlanetsApiService.SavePlanet(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveDeities")]
+		public IActionResult SaveDeities(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Deities";
+			var PlanetID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			PlanetsModel model = new PlanetsModel();
+			model.id = PlanetID;
+			model._id = PlanetID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iPlanetsApiService.SavePlanet(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveGroups")]
+		public IActionResult SaveGroups(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Groups";
+			var PlanetID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			PlanetsModel model = new PlanetsModel();
+			model.id = PlanetID;
+			model._id = PlanetID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iPlanetsApiService.SavePlanet(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveLanguages")]
+		public IActionResult SaveLanguages(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Languages";
+			var PlanetID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
 			
 			PlanetsModel model = new PlanetsModel();
 			model.id = PlanetID;
@@ -998,16 +905,15 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("SaveWater_Content")]
-		public IActionResult SaveWater_Content()
+		[Route("{id}/SaveSuns")]
+		public IActionResult SaveSuns(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Water_Content";
-			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
-			var PlanetID = Convert.ToInt64(obj["PlanetID"].Value);
-			var value = Convert.ToString(obj["value"].Value);
+			var type = "Suns";
+			var PlanetID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
 			
 			PlanetsModel model = new PlanetsModel();
 			model.id = PlanetID;
@@ -1020,13 +926,76 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveWeather")]
-		public IActionResult SaveWeather(string id)
+		[Route("{id}/SaveMoons")]
+		public IActionResult SaveMoons(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Weather";
+			var type = "Moons";
+			var PlanetID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			PlanetsModel model = new PlanetsModel();
+			model.id = PlanetID;
+			model._id = PlanetID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iPlanetsApiService.SavePlanet(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveOrbit")]
+		public IActionResult SaveOrbit(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Orbit";
+			var PlanetID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			PlanetsModel model = new PlanetsModel();
+			model.id = PlanetID;
+			model._id = PlanetID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iPlanetsApiService.SavePlanet(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveNearby_planets")]
+		public IActionResult SaveNearby_planets(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Nearby_planets";
+			var PlanetID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			PlanetsModel model = new PlanetsModel();
+			model.id = PlanetID;
+			model._id = PlanetID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iPlanetsApiService.SavePlanet(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveFirst_Inhabitants_Story")]
+		public IActionResult SaveFirst_Inhabitants_Story(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "First_Inhabitants_Story";
 			var PlanetID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -1060,6 +1029,48 @@ namespace My.World.Web.Controllers
 			return Json(response);
 
 		}
+
+		[HttpPost]
+		[Route("{id}/SavePrivate_Notes")]
+		public IActionResult SavePrivate_Notes(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Private_Notes";
+			var PlanetID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			PlanetsModel model = new PlanetsModel();
+			model.id = PlanetID;
+			model._id = PlanetID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iPlanetsApiService.SavePlanet(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveNotes")]
+		public IActionResult SaveNotes(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Notes";
+			var PlanetID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			PlanetsModel model = new PlanetsModel();
+			model.id = PlanetID;
+			model._id = PlanetID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iPlanetsApiService.SavePlanet(model);
+			return Json(response);
+
+		}
 		#endregion 
 
 		[HttpPost]
@@ -1067,40 +1078,53 @@ namespace My.World.Web.Controllers
 		public IActionResult UploadAttachment(List<IFormFile> files)
 		{
 			var accountID = Convert.ToInt64(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserID")?.Value);
-			string content_Id = HttpContext.Session.GetString("PlanetsID");
+			string content_Id = HttpContext.Session.GetString("PlanetID");
+			
+			var ContentObjectModelList = _iObjectBucketApiService.GetAllContentObjectAttachments(Convert.ToInt64(content_Id), "planets");
+			var existing_total_size = ContentObjectModelList.Sum(f => f.object_size);
 			
 			var rq_files = Request.Form.Files;
+			var upload_file_size = rq_files.Sum(f => f.Length);
+			var total_size = upload_file_size + existing_total_size;
+			var AllowedTotalContentSize = Convert.ToInt64(HttpContext.Session.GetString("AllowedTotalContentSize"));
 			
-			if (rq_files != null)
+			if (total_size <= AllowedTotalContentSize)
 			{
-			    foreach (var file in rq_files)
-			    {
-			        using (var ms = new MemoryStream())
-			        {
-			            ContentObjectModel model = new ContentObjectModel();
-			            model.object_type = file.ContentType;
-			            model.object_name = file.FileName;
-			            model.object_size = file.Length;
+				if (rq_files != null)
+				{
+					foreach (var file in rq_files)
+					{
+						using (var ms = new MemoryStream())
+						{
+							ContentObjectModel model = new ContentObjectModel();
+							model.object_type = file.ContentType;
+							model.object_name = file.FileName;
+							model.object_size = file.Length;
+							model.bucket_folder = _config.GetValue<string>("BucketEnv");
 			
-			            file.CopyTo(ms);
-			            model.file = ms;
-			            model.file.Seek(0, 0);
-			            _iObjectBucketApiService.SetObjectStorageSecrets(accountID);
-			            var response = _iObjectBucketApiService.UploadObject(model).Result;
+							file.CopyTo(ms);
+							model.file = ms;
+							model.file.Seek(0, 0);
+							_iObjectBucketApiService.SetObjectStorageSecrets(accountID);
+							var response = _iObjectBucketApiService.UploadObject(model).Result;
 			
-			            if (!string.IsNullOrEmpty(response.Value))
-			            {
-			                ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
-			                contentObjectAttachmentModel.object_id = Convert.ToInt64(response.Value);
-			                contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
-			                contentObjectAttachmentModel.content_type = "planets";
+							if (!string.IsNullOrEmpty(response.Value))
+							{
+								ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
+								contentObjectAttachmentModel.object_id = Convert.ToInt64(response.Value);
+								contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
+								contentObjectAttachmentModel.content_type = "planets";
 			
-			                _iObjectBucketApiService.AddContentObjectAttachment(contentObjectAttachmentModel);
-			            }
-			        }
-			    }
+								_iObjectBucketApiService.AddContentObjectAttachment(contentObjectAttachmentModel);
+							}
+						}
+					}
+				}
 			}
-			
+			else
+			{
+				return BadRequest(new { message = "You have Exceeded the maximum allowed size of 50 MB per content to upload images." });
+			}
 			return Ok();
 
 		}
@@ -1109,16 +1133,17 @@ namespace My.World.Web.Controllers
 		public IActionResult DeleteAttachment(long objectId,string objectName)
 		{
 			var accountID = Convert.ToInt64(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserID")?.Value);
-			string content_Id = HttpContext.Session.GetString("PlanetsID");
+			string content_Id = HttpContext.Session.GetString("PlanetID");
 			
 			ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
 			contentObjectAttachmentModel.object_id = objectId;
 			contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
 			contentObjectAttachmentModel.content_type = "planets";
 			
+			var bucket_folder = _config.GetValue<string>("BucketEnv");
 			ContentObjectModel contentObjectModel = new ContentObjectModel();
 			contentObjectModel.object_id = objectId;
-			contentObjectModel.object_name = objectName;
+			contentObjectModel.object_name = bucket_folder + " / " + objectName;
 			
 			_iObjectBucketApiService.SetObjectStorageSecrets(accountID);
 			_iObjectBucketApiService.DeleteObject(contentObjectModel);

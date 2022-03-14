@@ -145,33 +145,22 @@
    
     <script type="text/javascript">
     
-		function setAggressivenessBody() {
-		    html = htmlDecode('@Model.creaturesModel.Aggressiveness');
-		    $('#Aggressiveness').append(html);
+		function setType_of_creatureBody() {
+		    html = htmlDecode('@Model.creaturesModel.Type_of_creature');
+		    $('#Type_of_creature').append(html);
 		};
 
-		function setAncestorsBody() {
-		    html = htmlDecode('@Model.creaturesModel.Ancestors');
-		    $('#Ancestors').append(html);
+		function setUniverseBody() {
+		    $('#creaturesModel_Universe').val('@Model.creaturesModel.Universe');
 		};
 
-		function setClassBody() {
-		    html = htmlDecode('@Model.creaturesModel.Class');
-		    $('#Class').append(html);
+		function setTagsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Tags');
+		    $('#Tags').append(html);
 		};
 
-		function setColorBody() {
-		    $('#creaturesModel_Color').val('@Model.creaturesModel.Color');
-		};
-
-		function setCompetitorsBody() {
-		    html = htmlDecode('@Model.creaturesModel.Competitors');
-		    $('#Competitors').append(html);
-		};
-
-		function setConditionsBody() {
-		    html = htmlDecode('@Model.creaturesModel.Conditions');
-		    $('#Conditions').append(html);
+		function setNameBody() {
+		    $('#creaturesModel_Name').val('@Model.creaturesModel.Name');
 		};
 
 		function setDescriptionBody() {
@@ -179,38 +168,13 @@
 		    $('#Description').append(html);
 		};
 
-		function setEvolutionary_driveBody() {
-		    html = htmlDecode('@Model.creaturesModel.Evolutionary_drive');
-		    $('#Evolutionary_drive').append(html);
+		function setWeightBody() {
+		    $('#creaturesModel_Weight').val('@Model.creaturesModel.Weight');
 		};
 
-		function setFamilyBody() {
-		    html = htmlDecode('@Model.creaturesModel.Family');
-		    $('#Family').append(html);
-		};
-
-		function setFood_sourcesBody() {
-		    html = htmlDecode('@Model.creaturesModel.Food_sources');
-		    $('#Food_sources').append(html);
-		};
-
-		function setGenusBody() {
-		    html = htmlDecode('@Model.creaturesModel.Genus');
-		    $('#Genus').append(html);
-		};
-
-		function setHabitatsBody() {
-		    html = htmlDecode('@Model.creaturesModel.Habitats');
-		    $('#Habitats').append(html);
-		};
-
-		function setHeightBody() {
-		    $('#creaturesModel_Height').val('@Model.creaturesModel.Height');
-		};
-
-		function setHerding_patternsBody() {
-		    html = htmlDecode('@Model.creaturesModel.Herding_patterns');
-		    $('#Herding_patterns').append(html);
+		function setNotable_featuresBody() {
+		    html = htmlDecode('@Model.creaturesModel.Notable_features');
+		    $('#Notable_features').append(html);
 		};
 
 		function setMaterialsBody() {
@@ -218,13 +182,36 @@
 		    $('#Materials').append(html);
 		};
 
-		function setMating_ritualBody() {
-		    html = htmlDecode('@Model.creaturesModel.Mating_ritual');
-		    $('#Mating_ritual').append(html);
+		function setVestigial_featuresBody() {
+		    html = htmlDecode('@Model.creaturesModel.Vestigial_features');
+		    $('#Vestigial_features').append(html);
 		};
 
-		function setMaximum_speedBody() {
-		    $('#creaturesModel_Maximum_speed').val('@Model.creaturesModel.Maximum_speed');
+		function setColorBody() {
+		    $('#creaturesModel_Color').val('@Model.creaturesModel.Color');
+		};
+
+		function setShapeBody() {
+		    html = htmlDecode('@Model.creaturesModel.Shape');
+		    $('#Shape').append(html);
+		};
+
+		function setSizeBody() {
+		    $('#creaturesModel_Size').val('@Model.creaturesModel.Size');
+		};
+
+		function setHeightBody() {
+		    $('#creaturesModel_Height').val('@Model.creaturesModel.Height');
+		};
+
+		function setStrongest_senseBody() {
+		    html = htmlDecode('@Model.creaturesModel.Strongest_sense');
+		    $('#Strongest_sense').append(html);
+		};
+
+		function setAggressivenessBody() {
+		    html = htmlDecode('@Model.creaturesModel.Aggressiveness');
+		    $('#Aggressiveness').append(html);
 		};
 
 		function setMethod_of_attackBody() {
@@ -237,126 +224,8 @@
 		    $('#Methods_of_defense').append(html);
 		};
 
-		function setMigratory_patternsBody() {
-		    html = htmlDecode('@Model.creaturesModel.Migratory_patterns');
-		    $('#Migratory_patterns').append(html);
-		};
-
-		function setMortality_rateBody() {
-		    html = htmlDecode('@Model.creaturesModel.Mortality_rate');
-		    $('#Mortality_rate').append(html);
-		};
-
-		function setNameBody() {
-		    $('#creaturesModel_Name').val('@Model.creaturesModel.Name');
-		};
-
-		function setNotable_featuresBody() {
-		    html = htmlDecode('@Model.creaturesModel.Notable_features');
-		    $('#Notable_features').append(html);
-		};
-
-		function setNotesBody() {
-		    html = htmlDecode('@Model.creaturesModel.Notes');
-		    $('#Notes').append(html);
-		};
-
-		function setOffspring_careBody() {
-		    html = htmlDecode('@Model.creaturesModel.Offspring_care');
-		    $('#Offspring_care').append(html);
-		};
-
-		function setOrderBody() {
-		    html = htmlDecode('@Model.creaturesModel.Order');
-		    $('#Order').append(html);
-		};
-
-		function setParental_instinctsBody() {
-		    html = htmlDecode('@Model.creaturesModel.Parental_instincts');
-		    $('#Parental_instincts').append(html);
-		};
-
-		function setPhylumBody() {
-		    html = htmlDecode('@Model.creaturesModel.Phylum');
-		    $('#Phylum').append(html);
-		};
-
-		function setPredatorsBody() {
-		    html = htmlDecode('@Model.creaturesModel.Predators');
-		    $('#Predators').append(html);
-		};
-
-		function setPredictionsBody() {
-		    html = htmlDecode('@Model.creaturesModel.Predictions');
-		    $('#Predictions').append(html);
-		};
-
-		function setPreferred_habitatBody() {
-		    html = htmlDecode('@Model.creaturesModel.Preferred_habitat');
-		    $('#Preferred_habitat').append(html);
-		};
-
-		function setPreyBody() {
-		    html = htmlDecode('@Model.creaturesModel.Prey');
-		    $('#Prey').append(html);
-		};
-
-		function setPrivate_notesBody() {
-		    html = htmlDecode('@Model.creaturesModel.Private_notes');
-		    $('#Private_notes').append(html);
-		};
-
-		function setRelated_creaturesBody() {
-		    html = htmlDecode('@Model.creaturesModel.Related_creatures');
-		    $('#Related_creatures').append(html);
-		};
-
-		function setReproductionBody() {
-		    html = htmlDecode('@Model.creaturesModel.Reproduction');
-		    $('#Reproduction').append(html);
-		};
-
-		function setReproduction_ageBody() {
-		    $('#creaturesModel_Reproduction_age').val('@Model.creaturesModel.Reproduction_age');
-		};
-
-		function setReproduction_frequencyBody() {
-		    html = htmlDecode('@Model.creaturesModel.Reproduction_frequency');
-		    $('#Reproduction_frequency').append(html);
-		};
-
-		function setRequirementsBody() {
-		    html = htmlDecode('@Model.creaturesModel.Requirements');
-		    $('#Requirements').append(html);
-		};
-
-		function setShapeBody() {
-		    html = htmlDecode('@Model.creaturesModel.Shape');
-		    $('#Shape').append(html);
-		};
-
-		function setSimilar_creaturesBody() {
-		    html = htmlDecode('@Model.creaturesModel.Similar_creatures');
-		    $('#Similar_creatures').append(html);
-		};
-
-		function setSizeBody() {
-		    $('#creaturesModel_Size').val('@Model.creaturesModel.Size');
-		};
-
-		function setSoundsBody() {
-		    html = htmlDecode('@Model.creaturesModel.Sounds');
-		    $('#Sounds').append(html);
-		};
-
-		function setSpeciesBody() {
-		    html = htmlDecode('@Model.creaturesModel.Species');
-		    $('#Species').append(html);
-		};
-
-		function setSpoilsBody() {
-		    html = htmlDecode('@Model.creaturesModel.Spoils');
-		    $('#Spoils').append(html);
+		function setMaximum_speedBody() {
+		    $('#creaturesModel_Maximum_speed').val('@Model.creaturesModel.Maximum_speed');
 		};
 
 		function setStrengthsBody() {
@@ -364,43 +233,24 @@
 		    $('#Strengths').append(html);
 		};
 
-		function setStrongest_senseBody() {
-		    html = htmlDecode('@Model.creaturesModel.Strongest_sense');
-		    $('#Strongest_sense').append(html);
+		function setWeaknessesBody() {
+		    html = htmlDecode('@Model.creaturesModel.Weaknesses');
+		    $('#Weaknesses').append(html);
 		};
 
-		function setSymbolismsBody() {
-		    html = htmlDecode('@Model.creaturesModel.Symbolisms');
-		    $('#Symbolisms').append(html);
+		function setSoundsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Sounds');
+		    $('#Sounds').append(html);
 		};
 
-		function setTagsBody() {
-		    html = htmlDecode('@Model.creaturesModel.Tags');
-		    $('#Tags').append(html);
+		function setSpoilsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Spoils');
+		    $('#Spoils').append(html);
 		};
 
-		function setTradeoffsBody() {
-		    html = htmlDecode('@Model.creaturesModel.Tradeoffs');
-		    $('#Tradeoffs').append(html);
-		};
-
-		function setType_of_creatureBody() {
-		    html = htmlDecode('@Model.creaturesModel.Type_of_creature');
-		    $('#Type_of_creature').append(html);
-		};
-
-		function setUniverseBody() {
-		    $('#creaturesModel_Universe').val('@Model.creaturesModel.Universe');
-		};
-
-		function setVariationsBody() {
-		    html = htmlDecode('@Model.creaturesModel.Variations');
-		    $('#Variations').append(html);
-		};
-
-		function setVestigial_featuresBody() {
-		    html = htmlDecode('@Model.creaturesModel.Vestigial_features');
-		    $('#Vestigial_features').append(html);
+		function setConditionsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Conditions');
+		    $('#Conditions').append(html);
 		};
 
 		function setWeakest_senseBody() {
@@ -408,73 +258,223 @@
 		    $('#Weakest_sense').append(html);
 		};
 
-		function setWeaknessesBody() {
-		    html = htmlDecode('@Model.creaturesModel.Weaknesses');
-		    $('#Weaknesses').append(html);
+		function setHerding_patternsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Herding_patterns');
+		    $('#Herding_patterns').append(html);
 		};
 
-		function setWeightBody() {
-		    $('#creaturesModel_Weight').val('@Model.creaturesModel.Weight');
+		function setPreyBody() {
+		    html = htmlDecode('@Model.creaturesModel.Prey');
+		    $('#Prey').append(html);
+		};
+
+		function setPredatorsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Predators');
+		    $('#Predators').append(html);
+		};
+
+		function setCompetitorsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Competitors');
+		    $('#Competitors').append(html);
+		};
+
+		function setMigratory_patternsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Migratory_patterns');
+		    $('#Migratory_patterns').append(html);
+		};
+
+		function setFood_sourcesBody() {
+		    html = htmlDecode('@Model.creaturesModel.Food_sources');
+		    $('#Food_sources').append(html);
+		};
+
+		function setHabitatsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Habitats');
+		    $('#Habitats').append(html);
+		};
+
+		function setPreferred_habitatBody() {
+		    html = htmlDecode('@Model.creaturesModel.Preferred_habitat');
+		    $('#Preferred_habitat').append(html);
+		};
+
+		function setSimilar_creaturesBody() {
+		    html = htmlDecode('@Model.creaturesModel.Similar_creatures');
+		    $('#Similar_creatures').append(html);
+		};
+
+		function setSymbolismsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Symbolisms');
+		    $('#Symbolisms').append(html);
+		};
+
+		function setRelated_creaturesBody() {
+		    html = htmlDecode('@Model.creaturesModel.Related_creatures');
+		    $('#Related_creatures').append(html);
+		};
+
+		function setAncestorsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Ancestors');
+		    $('#Ancestors').append(html);
+		};
+
+		function setEvolutionary_driveBody() {
+		    html = htmlDecode('@Model.creaturesModel.Evolutionary_drive');
+		    $('#Evolutionary_drive').append(html);
+		};
+
+		function setTradeoffsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Tradeoffs');
+		    $('#Tradeoffs').append(html);
+		};
+
+		function setPredictionsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Predictions');
+		    $('#Predictions').append(html);
+		};
+
+		function setMortality_rateBody() {
+		    html = htmlDecode('@Model.creaturesModel.Mortality_rate');
+		    $('#Mortality_rate').append(html);
+		};
+
+		function setOffspring_careBody() {
+		    html = htmlDecode('@Model.creaturesModel.Offspring_care');
+		    $('#Offspring_care').append(html);
+		};
+
+		function setReproduction_ageBody() {
+		    $('#creaturesModel_Reproduction_age').val('@Model.creaturesModel.Reproduction_age');
+		};
+
+		function setRequirementsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Requirements');
+		    $('#Requirements').append(html);
+		};
+
+		function setMating_ritualBody() {
+		    html = htmlDecode('@Model.creaturesModel.Mating_ritual');
+		    $('#Mating_ritual').append(html);
+		};
+
+		function setReproductionBody() {
+		    html = htmlDecode('@Model.creaturesModel.Reproduction');
+		    $('#Reproduction').append(html);
+		};
+
+		function setReproduction_frequencyBody() {
+		    html = htmlDecode('@Model.creaturesModel.Reproduction_frequency');
+		    $('#Reproduction_frequency').append(html);
+		};
+
+		function setParental_instinctsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Parental_instincts');
+		    $('#Parental_instincts').append(html);
+		};
+
+		function setVariationsBody() {
+		    html = htmlDecode('@Model.creaturesModel.Variations');
+		    $('#Variations').append(html);
+		};
+
+		function setPhylumBody() {
+		    html = htmlDecode('@Model.creaturesModel.Phylum');
+		    $('#Phylum').append(html);
+		};
+
+		function setClassBody() {
+		    html = htmlDecode('@Model.creaturesModel.Class');
+		    $('#Class').append(html);
+		};
+
+		function setOrderBody() {
+		    html = htmlDecode('@Model.creaturesModel.Order');
+		    $('#Order').append(html);
+		};
+
+		function setFamilyBody() {
+		    html = htmlDecode('@Model.creaturesModel.Family');
+		    $('#Family').append(html);
+		};
+
+		function setGenusBody() {
+		    html = htmlDecode('@Model.creaturesModel.Genus');
+		    $('#Genus').append(html);
+		};
+
+		function setSpeciesBody() {
+		    html = htmlDecode('@Model.creaturesModel.Species');
+		    $('#Species').append(html);
+		};
+
+		function setPrivate_notesBody() {
+		    html = htmlDecode('@Model.creaturesModel.Private_notes');
+		    $('#Private_notes').append(html);
+		};
+
+		function setNotesBody() {
+		    html = htmlDecode('@Model.creaturesModel.Notes');
+		    $('#Notes').append(html);
 		};
 
 
 
         $(document).ready(function () {
-			setAggressivenessBody();
-			setAncestorsBody();
-			setClassBody();
-			setColorBody();
-			setCompetitorsBody();
-			setConditionsBody();
+			setType_of_creatureBody();
+			setTagsBody();
+			setNameBody();
 			setDescriptionBody();
-			setEvolutionary_driveBody();
-			setFamilyBody();
-			setFood_sourcesBody();
-			setGenusBody();
-			setHabitatsBody();
-			setHeightBody();
-			setHerding_patternsBody();
+			setWeightBody();
+			setNotable_featuresBody();
 			setMaterialsBody();
-			setMating_ritualBody();
-			setMaximum_speedBody();
+			setVestigial_featuresBody();
+			setColorBody();
+			setShapeBody();
+			setSizeBody();
+			setHeightBody();
+			setStrongest_senseBody();
+			setAggressivenessBody();
 			setMethod_of_attackBody();
 			setMethods_of_defenseBody();
-			setMigratory_patternsBody();
-			setMortality_rateBody();
-			setNameBody();
-			setNotable_featuresBody();
-			setNotesBody();
-			setOffspring_careBody();
-			setOrderBody();
-			setParental_instinctsBody();
-			setPhylumBody();
-			setPredatorsBody();
-			setPredictionsBody();
-			setPreferred_habitatBody();
-			setPreyBody();
-			setPrivate_notesBody();
-			setRelated_creaturesBody();
-			setReproductionBody();
-			setReproduction_ageBody();
-			setReproduction_frequencyBody();
-			setRequirementsBody();
-			setShapeBody();
-			setSimilar_creaturesBody();
-			setSizeBody();
-			setSoundsBody();
-			setSpeciesBody();
-			setSpoilsBody();
+			setMaximum_speedBody();
 			setStrengthsBody();
-			setStrongest_senseBody();
-			setSymbolismsBody();
-			setTagsBody();
-			setTradeoffsBody();
-			setType_of_creatureBody();
-			setVariationsBody();
-			setVestigial_featuresBody();
-			setWeakest_senseBody();
 			setWeaknessesBody();
-			setWeightBody();
+			setSoundsBody();
+			setSpoilsBody();
+			setConditionsBody();
+			setWeakest_senseBody();
+			setHerding_patternsBody();
+			setPreyBody();
+			setPredatorsBody();
+			setCompetitorsBody();
+			setMigratory_patternsBody();
+			setFood_sourcesBody();
+			setHabitatsBody();
+			setPreferred_habitatBody();
+			setSimilar_creaturesBody();
+			setSymbolismsBody();
+			setRelated_creaturesBody();
+			setAncestorsBody();
+			setEvolutionary_driveBody();
+			setTradeoffsBody();
+			setPredictionsBody();
+			setMortality_rateBody();
+			setOffspring_careBody();
+			setReproduction_ageBody();
+			setRequirementsBody();
+			setMating_ritualBody();
+			setReproductionBody();
+			setReproduction_frequencyBody();
+			setParental_instinctsBody();
+			setVariationsBody();
+			setPhylumBody();
+			setClassBody();
+			setOrderBody();
+			setFamilyBody();
+			setGenusBody();
+			setSpeciesBody();
+			setPrivate_notesBody();
+			setNotesBody();
 
         });
 

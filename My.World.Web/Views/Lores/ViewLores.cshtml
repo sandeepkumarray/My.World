@@ -1,3 +1,6 @@
+@using Microsoft.AspNetCore.Http
+@using My.World.Web
+@inject IHttpContextAccessor HttpContextAccessor
 @model My.World.Web.ViewModel.LoresViewModel
 
 @{
@@ -112,7 +115,7 @@
                                                                                 else if (att.field_name.ToLower() == "universe")
                                                                                 {
                                                                                 <select id="ddlUniverseList" class="form-control" style="min-width:150px"
-                                                                                        asp-items="@(new SelectList(@Model.UniversesList, " id", "name" , Model.loresModel.Universe))"
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name" , Model.loresModel.Universe))"
                                                                                         onchange="UniverseSelected();">
                                                                                 </select>
                                                                                 }
@@ -168,17 +171,21 @@
                                                                                         <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
                                                                                             <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">
                                                                                                 <a class="remove-image" style="display: inline;"
-                                                                                                   asp-controller="buildings" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
+                                                                                                   asp-controller="lores" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
                                                                                             </div>
                                                                                         </div>
                                                                                     }
                                                                                 </div>
                                                                             </div>
-
+                                                                            <div class="mb-3">
+                                                                                <div class="row">
+                                                                                    <h3><label class="form-label"> Only @Model.RemainingContentSize is left for content upload.</label></h3>
+                                                                                </div>
+                                                                            </div>
                                                                             <div class="mb-3">
                                                                                 <label class="form-label" for="exampleFormControlInput1">Upload Images...</label>
                                                                                 <div>
-                                                                                    @using (Html.BeginForm("UploadAttachment", "buildings", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
+                                                                                    @using (Html.BeginForm("UploadAttachment", "lores", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
                                                                                     {
                                                                                     <div class="dz-message needsclick">
                                                                                         <button type="button" class="dz-button">Drop files here or click to upload.</button><br />
@@ -266,6 +273,25 @@
     </div>
 </div>
 
+<div id="contentsExceededModal" bsmodal="" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade" aria-modal="true" style="display: none;">
+    <div role="document" class="modal-dialog modal-danger modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Alert !</h4>
+                <button type="button" aria-label="Close" data-dismiss="modal" class="close">
+                    <span aria-hidden="true">�</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>You have Exceeded the maximum allowed size of @My.World.Web.Helpers.Utility.SizeSuffix(Convert.ToInt64(@HttpContextAccessor.HttpContext.Session.GetString("AllowedTotalContentSize"))) per content to upload images.</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script src="~/js/quill.js"></script>
     <script src="~/js/quill.mention.min.js"></script>
@@ -275,24 +301,67 @@
 
     <script type="text/javascript">
 
-        			function setBackground_informationBody() {
-			    Background_information_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Background_information'));
-			    $('#Background_information').focusout(function () {
-			        postSaveEditorData('Background_information', Background_information_editor.root.innerHTML);
+        			function setTagsBody() {
+			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Tags'));
+			    $('#Tags').focusout(function () {
+			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
 			    });
 			};
 
-			function setBelievabilityBody() {
-			    Believability_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Believability'));
-			    $('#Believability').focusout(function () {
-			        postSaveEditorData('Believability', Believability_editor.root.innerHTML);
+			function setNameBody() {
+			    $('#loresModel_Name').val('@Model.loresModel.Name');
+			};
+
+			function setSummaryBody() {
+			    Summary_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Summary'));
+			    $('#Summary').focusout(function () {
+			        postSaveEditorData('Summary', Summary_editor.root.innerHTML);
 			    });
 			};
 
-			function setBelieversBody() {
-			    Believers_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Believers'));
-			    $('#Believers').focusout(function () {
-			        postSaveEditorData('Believers', Believers_editor.root.innerHTML);
+			function setTypeBody() {
+			    Type_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Type'));
+			    $('#Type').focusout(function () {
+			        postSaveEditorData('Type', Type_editor.root.innerHTML);
+			    });
+			};
+
+			function setUniverseBody() {
+			    $('#loresModel_Universe').val('@Model.loresModel.Universe');
+			};
+
+			function setToneBody() {
+			    Tone_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Tone'));
+			    $('#Tone').focusout(function () {
+			        postSaveEditorData('Tone', Tone_editor.root.innerHTML);
+			    });
+			};
+
+			function setFull_textBody() {
+			    Full_text_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Full_text'));
+			    $('#Full_text').focusout(function () {
+			        postSaveEditorData('Full_text', Full_text_editor.root.innerHTML);
+			    });
+			};
+
+			function setDialectBody() {
+			    Dialect_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Dialect'));
+			    $('#Dialect').focusout(function () {
+			        postSaveEditorData('Dialect', Dialect_editor.root.innerHTML);
+			    });
+			};
+
+			function setStructureBody() {
+			    Structure_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Structure'));
+			    $('#Structure').focusout(function () {
+			        postSaveEditorData('Structure', Structure_editor.root.innerHTML);
+			    });
+			};
+
+			function setGenreBody() {
+			    Genre_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Genre'));
+			    $('#Genre').focusout(function () {
+			        postSaveEditorData('Genre', Genre_editor.root.innerHTML);
 			    });
 			};
 
@@ -303,17 +372,17 @@
 			    });
 			};
 
-			function setCharactersBody() {
-			    Characters_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Characters'));
-			    $('#Characters').focusout(function () {
-			        postSaveEditorData('Characters', Characters_editor.root.innerHTML);
+			function setTime_periodBody() {
+			    Time_period_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Time_period'));
+			    $('#Time_period').focusout(function () {
+			        postSaveEditorData('Time_period', Time_period_editor.root.innerHTML);
 			    });
 			};
 
-			function setConditionsBody() {
-			    Conditions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Conditions'));
-			    $('#Conditions').focusout(function () {
-			        postSaveEditorData('Conditions', Conditions_editor.root.innerHTML);
+			function setPlanetsBody() {
+			    Planets_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Planets'));
+			    $('#Planets').focusout(function () {
+			        postSaveEditorData('Planets', Planets_editor.root.innerHTML);
 			    });
 			};
 
@@ -331,73 +400,38 @@
 			    });
 			};
 
-			function setCreated_phrasesBody() {
-			    Created_phrases_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Created_phrases'));
-			    $('#Created_phrases').focusout(function () {
-			        postSaveEditorData('Created_phrases', Created_phrases_editor.root.innerHTML);
+			function setLandmarksBody() {
+			    Landmarks_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Landmarks'));
+			    $('#Landmarks').focusout(function () {
+			        postSaveEditorData('Landmarks', Landmarks_editor.root.innerHTML);
 			    });
 			};
 
-			function setCreated_traditionsBody() {
-			    Created_traditions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Created_traditions'));
-			    $('#Created_traditions').focusout(function () {
-			        postSaveEditorData('Created_traditions', Created_traditions_editor.root.innerHTML);
+			function setTownsBody() {
+			    Towns_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Towns'));
+			    $('#Towns').focusout(function () {
+			        postSaveEditorData('Towns', Towns_editor.root.innerHTML);
 			    });
 			};
 
-			function setCreaturesBody() {
-			    Creatures_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Creatures'));
-			    $('#Creatures').focusout(function () {
-			        postSaveEditorData('Creatures', Creatures_editor.root.innerHTML);
+			function setSchoolsBody() {
+			    Schools_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Schools'));
+			    $('#Schools').focusout(function () {
+			        postSaveEditorData('Schools', Schools_editor.root.innerHTML);
 			    });
 			};
 
-			function setCriticismBody() {
-			    Criticism_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Criticism'));
-			    $('#Criticism').focusout(function () {
-			        postSaveEditorData('Criticism', Criticism_editor.root.innerHTML);
+			function setConditionsBody() {
+			    Conditions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Conditions'));
+			    $('#Conditions').focusout(function () {
+			        postSaveEditorData('Conditions', Conditions_editor.root.innerHTML);
 			    });
 			};
 
-			function setDate_recordedBody() {
-			    Date_recorded_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Date_recorded'));
-			    $('#Date_recorded').focusout(function () {
-			        postSaveEditorData('Date_recorded', Date_recorded_editor.root.innerHTML);
-			    });
-			};
-
-			function setDeitiesBody() {
-			    Deities_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Deities'));
-			    $('#Deities').focusout(function () {
-			        postSaveEditorData('Deities', Deities_editor.root.innerHTML);
-			    });
-			};
-
-			function setDialectBody() {
-			    Dialect_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Dialect'));
-			    $('#Dialect').focusout(function () {
-			        postSaveEditorData('Dialect', Dialect_editor.root.innerHTML);
-			    });
-			};
-
-			function setEvolution_over_timeBody() {
-			    Evolution_over_time_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Evolution_over_time'));
-			    $('#Evolution_over_time').focusout(function () {
-			        postSaveEditorData('Evolution_over_time', Evolution_over_time_editor.root.innerHTML);
-			    });
-			};
-
-			function setFalse_partsBody() {
-			    False_parts_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.False_parts'));
-			    $('#False_parts').focusout(function () {
-			        postSaveEditorData('False_parts', False_parts_editor.root.innerHTML);
-			    });
-			};
-
-			function setFlorasBody() {
-			    Floras_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Floras'));
-			    $('#Floras').focusout(function () {
-			        postSaveEditorData('Floras', Floras_editor.root.innerHTML);
+			function setSportsBody() {
+			    Sports_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Sports'));
+			    $('#Sports').focusout(function () {
+			        postSaveEditorData('Sports', Sports_editor.root.innerHTML);
 			    });
 			};
 
@@ -408,31 +442,10 @@
 			    });
 			};
 
-			function setFull_textBody() {
-			    Full_text_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Full_text'));
-			    $('#Full_text').focusout(function () {
-			        postSaveEditorData('Full_text', Full_text_editor.root.innerHTML);
-			    });
-			};
-
-			function setGenreBody() {
-			    Genre_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Genre'));
-			    $('#Genre').focusout(function () {
-			        postSaveEditorData('Genre', Genre_editor.root.innerHTML);
-			    });
-			};
-
-			function setGeographical_variationsBody() {
-			    Geographical_variations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Geographical_variations'));
-			    $('#Geographical_variations').focusout(function () {
-			        postSaveEditorData('Geographical_variations', Geographical_variations_editor.root.innerHTML);
-			    });
-			};
-
-			function setGovernmentsBody() {
-			    Governments_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Governments'));
-			    $('#Governments').focusout(function () {
-			        postSaveEditorData('Governments', Governments_editor.root.innerHTML);
+			function setTraditionsBody() {
+			    Traditions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Traditions'));
+			    $('#Traditions').focusout(function () {
+			        postSaveEditorData('Traditions', Traditions_editor.root.innerHTML);
 			    });
 			};
 
@@ -443,66 +456,10 @@
 			    });
 			};
 
-			function setHistorical_contextBody() {
-			    Historical_context_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Historical_context'));
-			    $('#Historical_context').focusout(function () {
-			        postSaveEditorData('Historical_context', Historical_context_editor.root.innerHTML);
-			    });
-			};
-
-			function setHoaxesBody() {
-			    Hoaxes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Hoaxes'));
-			    $('#Hoaxes').focusout(function () {
-			        postSaveEditorData('Hoaxes', Hoaxes_editor.root.innerHTML);
-			    });
-			};
-
-			function setImpactBody() {
-			    Impact_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Impact'));
-			    $('#Impact').focusout(function () {
-			        postSaveEditorData('Impact', Impact_editor.root.innerHTML);
-			    });
-			};
-
-			function setImportant_translationsBody() {
-			    Important_translations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Important_translations'));
-			    $('#Important_translations').focusout(function () {
-			        postSaveEditorData('Important_translations', Important_translations_editor.root.innerHTML);
-			    });
-			};
-
-			function setInfluence_on_modern_timesBody() {
-			    Influence_on_modern_times_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Influence_on_modern_times'));
-			    $('#Influence_on_modern_times').focusout(function () {
-			        postSaveEditorData('Influence_on_modern_times', Influence_on_modern_times_editor.root.innerHTML);
-			    });
-			};
-
-			function setInspirationsBody() {
-			    Inspirations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Inspirations'));
-			    $('#Inspirations').focusout(function () {
-			        postSaveEditorData('Inspirations', Inspirations_editor.root.innerHTML);
-			    });
-			};
-
-			function setInterpretationsBody() {
-			    Interpretations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Interpretations'));
-			    $('#Interpretations').focusout(function () {
-			        postSaveEditorData('Interpretations', Interpretations_editor.root.innerHTML);
-			    });
-			};
-
-			function setJobsBody() {
-			    Jobs_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Jobs'));
-			    $('#Jobs').focusout(function () {
-			        postSaveEditorData('Jobs', Jobs_editor.root.innerHTML);
-			    });
-			};
-
-			function setLandmarksBody() {
-			    Landmarks_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Landmarks'));
-			    $('#Landmarks').focusout(function () {
-			        postSaveEditorData('Landmarks', Landmarks_editor.root.innerHTML);
+			function setGovernmentsBody() {
+			    Governments_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Governments'));
+			    $('#Governments').focusout(function () {
+			        postSaveEditorData('Governments', Governments_editor.root.innerHTML);
 			    });
 			};
 
@@ -513,10 +470,108 @@
 			    });
 			};
 
-			function setMedia_adaptationsBody() {
-			    Media_adaptations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Media_adaptations'));
-			    $('#Media_adaptations').focusout(function () {
-			        postSaveEditorData('Media_adaptations', Media_adaptations_editor.root.innerHTML);
+			function setReligionsBody() {
+			    Religions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Religions'));
+			    $('#Religions').focusout(function () {
+			        postSaveEditorData('Religions', Religions_editor.root.innerHTML);
+			    });
+			};
+
+			function setRacesBody() {
+			    Races_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Races'));
+			    $('#Races').focusout(function () {
+			        postSaveEditorData('Races', Races_editor.root.innerHTML);
+			    });
+			};
+
+			function setVehiclesBody() {
+			    Vehicles_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Vehicles'));
+			    $('#Vehicles').focusout(function () {
+			        postSaveEditorData('Vehicles', Vehicles_editor.root.innerHTML);
+			    });
+			};
+
+			function setTechnologiesBody() {
+			    Technologies_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Technologies'));
+			    $('#Technologies').focusout(function () {
+			        postSaveEditorData('Technologies', Technologies_editor.root.innerHTML);
+			    });
+			};
+
+			function setJobsBody() {
+			    Jobs_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Jobs'));
+			    $('#Jobs').focusout(function () {
+			        postSaveEditorData('Jobs', Jobs_editor.root.innerHTML);
+			    });
+			};
+
+			function setFlorasBody() {
+			    Floras_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Floras'));
+			    $('#Floras').focusout(function () {
+			        postSaveEditorData('Floras', Floras_editor.root.innerHTML);
+			    });
+			};
+
+			function setCreaturesBody() {
+			    Creatures_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Creatures'));
+			    $('#Creatures').focusout(function () {
+			        postSaveEditorData('Creatures', Creatures_editor.root.innerHTML);
+			    });
+			};
+
+			function setDeitiesBody() {
+			    Deities_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Deities'));
+			    $('#Deities').focusout(function () {
+			        postSaveEditorData('Deities', Deities_editor.root.innerHTML);
+			    });
+			};
+
+			function setCharactersBody() {
+			    Characters_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Characters'));
+			    $('#Characters').focusout(function () {
+			        postSaveEditorData('Characters', Characters_editor.root.innerHTML);
+			    });
+			};
+
+			function setSubjectsBody() {
+			    Subjects_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Subjects'));
+			    $('#Subjects').focusout(function () {
+			        postSaveEditorData('Subjects', Subjects_editor.root.innerHTML);
+			    });
+			};
+
+			function setBelieversBody() {
+			    Believers_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Believers'));
+			    $('#Believers').focusout(function () {
+			        postSaveEditorData('Believers', Believers_editor.root.innerHTML);
+			    });
+			};
+
+			function setHoaxesBody() {
+			    Hoaxes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Hoaxes'));
+			    $('#Hoaxes').focusout(function () {
+			        postSaveEditorData('Hoaxes', Hoaxes_editor.root.innerHTML);
+			    });
+			};
+
+			function setTrue_partsBody() {
+			    True_parts_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.True_parts'));
+			    $('#True_parts').focusout(function () {
+			        postSaveEditorData('True_parts', True_parts_editor.root.innerHTML);
+			    });
+			};
+
+			function setFalse_partsBody() {
+			    False_parts_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.False_parts'));
+			    $('#False_parts').focusout(function () {
+			        postSaveEditorData('False_parts', False_parts_editor.root.innerHTML);
+			    });
+			};
+
+			function setBelievabilityBody() {
+			    Believability_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Believability'));
+			    $('#Believability').focusout(function () {
+			        postSaveEditorData('Believability', Believability_editor.root.innerHTML);
 			    });
 			};
 
@@ -527,6 +582,13 @@
 			    });
 			};
 
+			function setSymbolismsBody() {
+			    Symbolisms_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Symbolisms'));
+			    $('#Symbolisms').focusout(function () {
+			        postSaveEditorData('Symbolisms', Symbolisms_editor.root.innerHTML);
+			    });
+			};
+
 			function setMotivationsBody() {
 			    Motivations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Motivations'));
 			    $('#Motivations').focusout(function () {
@@ -534,14 +596,73 @@
 			    });
 			};
 
-			function setNameBody() {
-			    $('#loresModel_Name').val('@Model.loresModel.Name');
+			function setCreated_phrasesBody() {
+			    Created_phrases_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Created_phrases'));
+			    $('#Created_phrases').focusout(function () {
+			        postSaveEditorData('Created_phrases', Created_phrases_editor.root.innerHTML);
+			    });
 			};
 
-			function setNotesBody() {
-			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Notes'));
-			    $('#Notes').focusout(function () {
-			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
+			function setReceptionBody() {
+			    Reception_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Reception'));
+			    $('#Reception').focusout(function () {
+			        postSaveEditorData('Reception', Reception_editor.root.innerHTML);
+			    });
+			};
+
+			function setCriticismBody() {
+			    Criticism_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Criticism'));
+			    $('#Criticism').focusout(function () {
+			        postSaveEditorData('Criticism', Criticism_editor.root.innerHTML);
+			    });
+			};
+
+			function setMedia_adaptationsBody() {
+			    Media_adaptations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Media_adaptations'));
+			    $('#Media_adaptations').focusout(function () {
+			        postSaveEditorData('Media_adaptations', Media_adaptations_editor.root.innerHTML);
+			    });
+			};
+
+			function setInterpretationsBody() {
+			    Interpretations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Interpretations'));
+			    $('#Interpretations').focusout(function () {
+			        postSaveEditorData('Interpretations', Interpretations_editor.root.innerHTML);
+			    });
+			};
+
+			function setImpactBody() {
+			    Impact_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Impact'));
+			    $('#Impact').focusout(function () {
+			        postSaveEditorData('Impact', Impact_editor.root.innerHTML);
+			    });
+			};
+
+			function setCreated_traditionsBody() {
+			    Created_traditions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Created_traditions'));
+			    $('#Created_traditions').focusout(function () {
+			        postSaveEditorData('Created_traditions', Created_traditions_editor.root.innerHTML);
+			    });
+			};
+
+			function setInfluence_on_modern_timesBody() {
+			    Influence_on_modern_times_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Influence_on_modern_times'));
+			    $('#Influence_on_modern_times').focusout(function () {
+			        postSaveEditorData('Influence_on_modern_times', Influence_on_modern_times_editor.root.innerHTML);
+			    });
+			};
+
+			function setOriginal_tellingBody() {
+			    Original_telling_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Original_telling'));
+			    $('#Original_telling').focusout(function () {
+			        postSaveEditorData('Original_telling', Original_telling_editor.root.innerHTML);
+			    });
+			};
+
+			function setInspirationsBody() {
+			    Inspirations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Inspirations'));
+			    $('#Inspirations').focusout(function () {
+			        postSaveEditorData('Inspirations', Inspirations_editor.root.innerHTML);
 			    });
 			};
 
@@ -559,24 +680,24 @@
 			    });
 			};
 
-			function setOriginal_tellingBody() {
-			    Original_telling_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Original_telling'));
-			    $('#Original_telling').focusout(function () {
-			        postSaveEditorData('Original_telling', Original_telling_editor.root.innerHTML);
+			function setSourceBody() {
+			    Source_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Source'));
+			    $('#Source').focusout(function () {
+			        postSaveEditorData('Source', Source_editor.root.innerHTML);
 			    });
 			};
 
-			function setPlanetsBody() {
-			    Planets_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Planets'));
-			    $('#Planets').focusout(function () {
-			        postSaveEditorData('Planets', Planets_editor.root.innerHTML);
+			function setDate_recordedBody() {
+			    Date_recorded_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Date_recorded'));
+			    $('#Date_recorded').focusout(function () {
+			        postSaveEditorData('Date_recorded', Date_recorded_editor.root.innerHTML);
 			    });
 			};
 
-			function setPrivate_NotesBody() {
-			    Private_Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Private_Notes'));
-			    $('#Private_Notes').focusout(function () {
-			        postSaveEditorData('Private_Notes', Private_Notes_editor.root.innerHTML);
+			function setBackground_informationBody() {
+			    Background_information_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Background_information'));
+			    $('#Background_information').focusout(function () {
+			        postSaveEditorData('Background_information', Background_information_editor.root.innerHTML);
 			    });
 			};
 
@@ -587,17 +708,31 @@
 			    });
 			};
 
-			function setRacesBody() {
-			    Races_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Races'));
-			    $('#Races').focusout(function () {
-			        postSaveEditorData('Races', Races_editor.root.innerHTML);
+			function setHistorical_contextBody() {
+			    Historical_context_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Historical_context'));
+			    $('#Historical_context').focusout(function () {
+			        postSaveEditorData('Historical_context', Historical_context_editor.root.innerHTML);
 			    });
 			};
 
-			function setReceptionBody() {
-			    Reception_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Reception'));
-			    $('#Reception').focusout(function () {
-			        postSaveEditorData('Reception', Reception_editor.root.innerHTML);
+			function setImportant_translationsBody() {
+			    Important_translations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Important_translations'));
+			    $('#Important_translations').focusout(function () {
+			        postSaveEditorData('Important_translations', Important_translations_editor.root.innerHTML);
+			    });
+			};
+
+			function setEvolution_over_timeBody() {
+			    Evolution_over_time_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Evolution_over_time'));
+			    $('#Evolution_over_time').focusout(function () {
+			        postSaveEditorData('Evolution_over_time', Evolution_over_time_editor.root.innerHTML);
+			    });
+			};
+
+			function setGeographical_variationsBody() {
+			    Geographical_variations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Geographical_variations'));
+			    $('#Geographical_variations').focusout(function () {
+			        postSaveEditorData('Geographical_variations', Geographical_variations_editor.root.innerHTML);
 			    });
 			};
 
@@ -608,101 +743,10 @@
 			    });
 			};
 
-			function setReligionsBody() {
-			    Religions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Religions'));
-			    $('#Religions').focusout(function () {
-			        postSaveEditorData('Religions', Religions_editor.root.innerHTML);
-			    });
-			};
-
-			function setSchoolsBody() {
-			    Schools_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Schools'));
-			    $('#Schools').focusout(function () {
-			        postSaveEditorData('Schools', Schools_editor.root.innerHTML);
-			    });
-			};
-
-			function setSourceBody() {
-			    Source_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Source'));
-			    $('#Source').focusout(function () {
-			        postSaveEditorData('Source', Source_editor.root.innerHTML);
-			    });
-			};
-
-			function setSportsBody() {
-			    Sports_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Sports'));
-			    $('#Sports').focusout(function () {
-			        postSaveEditorData('Sports', Sports_editor.root.innerHTML);
-			    });
-			};
-
-			function setStructureBody() {
-			    Structure_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Structure'));
-			    $('#Structure').focusout(function () {
-			        postSaveEditorData('Structure', Structure_editor.root.innerHTML);
-			    });
-			};
-
-			function setSubjectsBody() {
-			    Subjects_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Subjects'));
-			    $('#Subjects').focusout(function () {
-			        postSaveEditorData('Subjects', Subjects_editor.root.innerHTML);
-			    });
-			};
-
-			function setSummaryBody() {
-			    Summary_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Summary'));
-			    $('#Summary').focusout(function () {
-			        postSaveEditorData('Summary', Summary_editor.root.innerHTML);
-			    });
-			};
-
-			function setSymbolismsBody() {
-			    Symbolisms_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Symbolisms'));
-			    $('#Symbolisms').focusout(function () {
-			        postSaveEditorData('Symbolisms', Symbolisms_editor.root.innerHTML);
-			    });
-			};
-
-			function setTagsBody() {
-			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Tags'));
-			    $('#Tags').focusout(function () {
-			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
-			    });
-			};
-
-			function setTechnologiesBody() {
-			    Technologies_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Technologies'));
-			    $('#Technologies').focusout(function () {
-			        postSaveEditorData('Technologies', Technologies_editor.root.innerHTML);
-			    });
-			};
-
-			function setTime_periodBody() {
-			    Time_period_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Time_period'));
-			    $('#Time_period').focusout(function () {
-			        postSaveEditorData('Time_period', Time_period_editor.root.innerHTML);
-			    });
-			};
-
-			function setToneBody() {
-			    Tone_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Tone'));
-			    $('#Tone').focusout(function () {
-			        postSaveEditorData('Tone', Tone_editor.root.innerHTML);
-			    });
-			};
-
-			function setTownsBody() {
-			    Towns_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Towns'));
-			    $('#Towns').focusout(function () {
-			        postSaveEditorData('Towns', Towns_editor.root.innerHTML);
-			    });
-			};
-
-			function setTraditionsBody() {
-			    Traditions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Traditions'));
-			    $('#Traditions').focusout(function () {
-			        postSaveEditorData('Traditions', Traditions_editor.root.innerHTML);
+			function setVariationsBody() {
+			    Variations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Variations'));
+			    $('#Variations').focusout(function () {
+			        postSaveEditorData('Variations', Variations_editor.root.innerHTML);
 			    });
 			};
 
@@ -713,35 +757,17 @@
 			    });
 			};
 
-			function setTrue_partsBody() {
-			    True_parts_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.True_parts'));
-			    $('#True_parts').focusout(function () {
-			        postSaveEditorData('True_parts', True_parts_editor.root.innerHTML);
+			function setPrivate_NotesBody() {
+			    Private_Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Private_Notes'));
+			    $('#Private_Notes').focusout(function () {
+			        postSaveEditorData('Private_Notes', Private_Notes_editor.root.innerHTML);
 			    });
 			};
 
-			function setTypeBody() {
-			    Type_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Type'));
-			    $('#Type').focusout(function () {
-			        postSaveEditorData('Type', Type_editor.root.innerHTML);
-			    });
-			};
-
-			function setUniverseBody() {
-			    $('#loresModel_Universe').val('@Model.loresModel.Universe');
-			};
-
-			function setVariationsBody() {
-			    Variations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Variations'));
-			    $('#Variations').focusout(function () {
-			        postSaveEditorData('Variations', Variations_editor.root.innerHTML);
-			    });
-			};
-
-			function setVehiclesBody() {
-			    Vehicles_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Vehicles'));
-			    $('#Vehicles').focusout(function () {
-			        postSaveEditorData('Vehicles', Vehicles_editor.root.innerHTML);
+			function setNotesBody() {
+			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.loresModel.Notes'));
+			    $('#Notes').focusout(function () {
+			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
 			    });
 			};
 
@@ -803,10 +829,18 @@
                         $('.roller').width(progress + '%');
                     });
 
-                    self.on("queuecomplete", function (progress) {
-                        $('.meter').delay(999).slideUp(999);
-                        console.log("Files uploaded");
-                        location.reload();
+                    self.on('error', function (file, response) {
+                        console.log("Files upload Error");
+                        showModal(response.message);
+                    });
+                    self.on('success', function () {
+                        self.on("queuecomplete", function () {
+                            $('.meter').delay(999).slideUp(999);
+                            console.log("Files uploaded");
+                            var locUrL = location.href.replace('#Gallery_panel', '') + "#Gallery_panel";
+                            window.location.href = locUrL;
+                            location.reload();
+                        });
                     });
                     self.on("complete", function (file) {
                         self.removeFile(file);

@@ -145,113 +145,8 @@
    
     <script type="text/javascript">
     
-		function setBuildingsBody() {
-		    $('#townsModel_Buildings').val('@Model.townsModel.Buildings');
-		};
-
-		function setBusy_areasBody() {
-		    html = htmlDecode('@Model.townsModel.Busy_areas');
-		    $('#Busy_areas').append(html);
-		};
-
-		function setCitizensBody() {
-		    $('#townsModel_Citizens').val('@Model.townsModel.Citizens');
-		};
-
-		function setCountryBody() {
-		    $('#townsModel_Country').val('@Model.townsModel.Country');
-		};
-
-		function setCreaturesBody() {
-		    html = htmlDecode('@Model.townsModel.Creatures');
-		    $('#Creatures').append(html);
-		};
-
-		function setDescriptionBody() {
-		    html = htmlDecode('@Model.townsModel.Description');
-		    $('#Description').append(html);
-		};
-
-		function setEnergy_sourcesBody() {
-		    html = htmlDecode('@Model.townsModel.Energy_sources');
-		    $('#Energy_sources').append(html);
-		};
-
-		function setEstablished_yearBody() {
-		    $('#townsModel_Established_year').val('@Model.townsModel.Established_year');
-		};
-
-		function setFloraBody() {
-		    html = htmlDecode('@Model.townsModel.Flora');
-		    $('#Flora').append(html);
-		};
-
-		function setFood_sourcesBody() {
-		    html = htmlDecode('@Model.townsModel.Food_sources');
-		    $('#Food_sources').append(html);
-		};
-
-		function setFounding_storyBody() {
-		    html = htmlDecode('@Model.townsModel.Founding_story');
-		    $('#Founding_story').append(html);
-		};
-
-		function setGroupsBody() {
-		    html = htmlDecode('@Model.townsModel.Groups');
-		    $('#Groups').append(html);
-		};
-
-		function setLandmarksBody() {
-		    html = htmlDecode('@Model.townsModel.Landmarks');
-		    $('#Landmarks').append(html);
-		};
-
-		function setLanguagesBody() {
-		    html = htmlDecode('@Model.townsModel.Languages');
-		    $('#Languages').append(html);
-		};
-
-		function setLawsBody() {
-		    html = htmlDecode('@Model.townsModel.Laws');
-		    $('#Laws').append(html);
-		};
-
-		function setNameBody() {
-		    $('#townsModel_Name').val('@Model.townsModel.Name');
-		};
-
-		function setNeighborhoodsBody() {
-		    $('#townsModel_Neighborhoods').val('@Model.townsModel.Neighborhoods');
-		};
-
-		function setNotesBody() {
-		    html = htmlDecode('@Model.townsModel.Notes');
-		    $('#Notes').append(html);
-		};
-
-		function setOther_namesBody() {
-		    html = htmlDecode('@Model.townsModel.Other_names');
-		    $('#Other_names').append(html);
-		};
-
-		function setPoliticsBody() {
-		    html = htmlDecode('@Model.townsModel.Politics');
-		    $('#Politics').append(html);
-		};
-
-		function setPrivate_NotesBody() {
-		    html = htmlDecode('@Model.townsModel.Private_Notes');
-		    $('#Private_Notes').append(html);
-		};
-
-		function setRecyclingBody() {
-		    html = htmlDecode('@Model.townsModel.Recycling');
-		    $('#Recycling').append(html);
-		};
-
-		function setSportsBody() {
-		    html = htmlDecode('@Model.townsModel.Sports');
-		    $('#Sports').append(html);
+		function setUniverseBody() {
+		    $('#townsModel_Universe').val('@Model.townsModel.Universe');
 		};
 
 		function setTagsBody() {
@@ -259,8 +154,93 @@
 		    $('#Tags').append(html);
 		};
 
-		function setUniverseBody() {
-		    $('#townsModel_Universe').val('@Model.townsModel.Universe');
+		function setNameBody() {
+		    $('#townsModel_Name').val('@Model.townsModel.Name');
+		};
+
+		function setDescriptionBody() {
+		    html = htmlDecode('@Model.townsModel.Description');
+		    $('#Description').append(html);
+		};
+
+		function setOther_namesBody() {
+		    html = htmlDecode('@Model.townsModel.Other_names');
+		    $('#Other_names').append(html);
+		};
+
+		function setCountryBody() {
+		    $('#townsModel_Country').val('@Model.townsModel.Country');
+		};
+
+		function setGroupsBody() {
+		    html = htmlDecode('@Model.townsModel.Groups');
+		    $('#Groups').append(html);
+		};
+
+		function setCitizensBody() {
+		    $('#townsModel_Citizens').val('@Model.townsModel.Citizens');
+		};
+
+		function setBuildingsBody() {
+		    $('#townsModel_Buildings').val('@Model.townsModel.Buildings');
+		};
+
+		function setNeighborhoodsBody() {
+		    $('#townsModel_Neighborhoods').val('@Model.townsModel.Neighborhoods');
+		};
+
+		function setBusy_areasBody() {
+		    html = htmlDecode('@Model.townsModel.Busy_areas');
+		    $('#Busy_areas').append(html);
+		};
+
+		function setLandmarksBody() {
+		    html = htmlDecode('@Model.townsModel.Landmarks');
+		    $('#Landmarks').append(html);
+		};
+
+		function setLawsBody() {
+		    html = htmlDecode('@Model.townsModel.Laws');
+		    $('#Laws').append(html);
+		};
+
+		function setLanguagesBody() {
+		    html = htmlDecode('@Model.townsModel.Languages');
+		    $('#Languages').append(html);
+		};
+
+		function setFloraBody() {
+		    html = htmlDecode('@Model.townsModel.Flora');
+		    $('#Flora').append(html);
+		};
+
+		function setCreaturesBody() {
+		    html = htmlDecode('@Model.townsModel.Creatures');
+		    $('#Creatures').append(html);
+		};
+
+		function setPoliticsBody() {
+		    html = htmlDecode('@Model.townsModel.Politics');
+		    $('#Politics').append(html);
+		};
+
+		function setSportsBody() {
+		    html = htmlDecode('@Model.townsModel.Sports');
+		    $('#Sports').append(html);
+		};
+
+		function setEstablished_yearBody() {
+		    $('#townsModel_Established_year').val('@Model.townsModel.Established_year');
+		};
+
+		function setFounding_storyBody() {
+		    html = htmlDecode('@Model.townsModel.Founding_story');
+		    $('#Founding_story').append(html);
+		};
+
+		function setFood_sourcesBody() {
+		    html = htmlDecode('@Model.townsModel.Food_sources');
+		    $('#Food_sources').append(html);
 		};
 
 		function setWasteBody() {
@@ -268,34 +248,54 @@
 		    $('#Waste').append(html);
 		};
 
+		function setEnergy_sourcesBody() {
+		    html = htmlDecode('@Model.townsModel.Energy_sources');
+		    $('#Energy_sources').append(html);
+		};
+
+		function setRecyclingBody() {
+		    html = htmlDecode('@Model.townsModel.Recycling');
+		    $('#Recycling').append(html);
+		};
+
+		function setNotesBody() {
+		    html = htmlDecode('@Model.townsModel.Notes');
+		    $('#Notes').append(html);
+		};
+
+		function setPrivate_NotesBody() {
+		    html = htmlDecode('@Model.townsModel.Private_Notes');
+		    $('#Private_Notes').append(html);
+		};
+
 
 
         $(document).ready(function () {
-			setBuildingsBody();
-			setBusy_areasBody();
-			setCitizensBody();
-			setCountryBody();
-			setCreaturesBody();
-			setDescriptionBody();
-			setEnergy_sourcesBody();
-			setEstablished_yearBody();
-			setFloraBody();
-			setFood_sourcesBody();
-			setFounding_storyBody();
-			setGroupsBody();
-			setLandmarksBody();
-			setLanguagesBody();
-			setLawsBody();
-			setNameBody();
-			setNeighborhoodsBody();
-			setNotesBody();
-			setOther_namesBody();
-			setPoliticsBody();
-			setPrivate_NotesBody();
-			setRecyclingBody();
-			setSportsBody();
 			setTagsBody();
+			setNameBody();
+			setDescriptionBody();
+			setOther_namesBody();
+			setCountryBody();
+			setGroupsBody();
+			setCitizensBody();
+			setBuildingsBody();
+			setNeighborhoodsBody();
+			setBusy_areasBody();
+			setLandmarksBody();
+			setLawsBody();
+			setLanguagesBody();
+			setFloraBody();
+			setCreaturesBody();
+			setPoliticsBody();
+			setSportsBody();
+			setEstablished_yearBody();
+			setFounding_storyBody();
+			setFood_sourcesBody();
 			setWasteBody();
+			setEnergy_sourcesBody();
+			setRecyclingBody();
+			setNotesBody();
+			setPrivate_NotesBody();
 
         });
 

@@ -6,7 +6,10 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using My.World.Api.DataAccess;
 using My.World.Api.Models;
 using My.World.Api.Services;
@@ -22,9 +25,12 @@ namespace My.World.Api.Controllers
     {
         DBContext _dbContext = null;
 
-        public MyWorldController(IServiceProvider services)
+        private readonly ILogger<MyWorldController> _logger;
+
+        public MyWorldController(IServiceProvider services, ILogger<MyWorldController> logger)
         {
             _dbContext = services.GetService(typeof(DBContext)) as DBContext;
+            _logger = logger;
         }
 
         // GET: api/<MyWorldController>
@@ -40,6 +46,21 @@ namespace My.World.Api.Controllers
             {
                 return reader.ReadToEndAsync().Result;
             }
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error(
+        [FromServices] IWebHostEnvironment webHostEnvironment)
+        {
+            _logger.LogInformation("Exception happened.");
+            var context = this.HttpContext.Features.Get<IExceptionHandlerFeature>();
+            if (context != null)
+            {
+                _logger.LogError(context.Error?.Message);
+            }
+            return Problem(
+                detail: context.Error.StackTrace,
+                title: context.Error.Message);
         }
 
         [HttpPost]
@@ -7039,6 +7060,215 @@ namespace My.World.Api.Controllers
 
         }
         #endregion Vehicles
+
+        #region AppConfig
+        [HttpPost]
+        [Route("AddAppConfig")]
+        public IActionResult AddAppConfig()
+        {
+            string _rawContent = null;
+
+            var responseModel = new ResponseModel<string>()
+            {
+                HttpStatusCode = "200"
+            };
+
+            try
+            {
+                _rawContent = GetRawContent(_rawContent);
+                var objPayLoad = JsonConvert.DeserializeObject<AppConfigModel>(_rawContent);
+                var AppConfigService = new AppConfigService(_dbContext);
+                responseModel = AppConfigService.AddAppConfigData(objPayLoad);
+            }
+            catch (Exception ex)
+            {
+                string message = "Error while processing ";
+
+                if (!ex.Message.ToLower().Contains("object reference"))
+                    message += ex.Message;
+
+                responseModel.HttpStatusCode = ((int)HttpStatusCode.BadRequest).ToString();
+                responseModel.Message = message;
+                responseModel.Reason.Add("ERROR");
+                responseModel.IsSuccess = false;
+            }
+
+            return new JsonResult(responseModel);
+
+        }
+
+        [HttpPost]
+        [Route("GetAppConfig")]
+        public IActionResult GetAppConfig()
+        {
+            string _rawContent = null;
+
+            var responseModel = new ResponseModel<AppConfigModel>()
+            {
+                HttpStatusCode = "200"
+            };
+
+            try
+            {
+                _rawContent = GetRawContent(_rawContent);
+                var objPayLoad = JsonConvert.DeserializeObject<AppConfigModel>(_rawContent);
+                var AppConfigService = new AppConfigService(_dbContext);
+                responseModel = AppConfigService.GetAppConfigData(objPayLoad);
+            }
+            catch (Exception ex)
+            {
+                string message = "Error while processing ";
+
+                if (!ex.Message.ToLower().Contains("object reference"))
+                    message += ex.Message;
+
+                responseModel.HttpStatusCode = ((int)HttpStatusCode.BadRequest).ToString();
+                responseModel.Message = message;
+                responseModel.Reason.Add("ERROR");
+                responseModel.IsSuccess = false;
+            }
+
+            return new JsonResult(responseModel);
+
+        }
+
+        [HttpPost]
+        [Route("DeleteAppConfig")]
+        public IActionResult DeleteAppConfig()
+        {
+            string _rawContent = null;
+
+            var responseModel = new ResponseModel<string>()
+            {
+                HttpStatusCode = "200"
+            };
+
+            try
+            {
+                _rawContent = GetRawContent(_rawContent);
+                var objPayLoad = JsonConvert.DeserializeObject<AppConfigModel>(_rawContent);
+                var AppConfigService = new AppConfigService(_dbContext);
+                responseModel = AppConfigService.DeleteAppConfigData(objPayLoad);
+            }
+            catch (Exception ex)
+            {
+                string message = "Error while processing ";
+
+                if (!ex.Message.ToLower().Contains("object reference"))
+                    message += ex.Message;
+
+                responseModel.HttpStatusCode = ((int)HttpStatusCode.BadRequest).ToString();
+                responseModel.Message = message;
+                responseModel.Reason.Add("ERROR");
+                responseModel.IsSuccess = false;
+            }
+
+            return new JsonResult(responseModel);
+
+        }
+
+        [HttpGet]
+        [Route("GetAllAppConfig")]
+        public IActionResult GetAllAppConfigForUserID()
+        {
+            string _rawContent = null;
+
+            var responseModel = new ResponseModel<List<AppConfigModel>>()
+            {
+                HttpStatusCode = "200"
+            };
+
+            try
+            {
+                var AppConfigService = new AppConfigService(_dbContext);
+                responseModel = AppConfigService.GetAllAppConfigForUserID();
+            }
+            catch (Exception ex)
+            {
+                string message = "Error while processing ";
+
+                if (!ex.Message.ToLower().Contains("object reference"))
+                    message += ex.Message;
+
+                responseModel.HttpStatusCode = ((int)HttpStatusCode.BadRequest).ToString();
+                responseModel.Message = message;
+                responseModel.Reason.Add("ERROR");
+                responseModel.IsSuccess = false;
+            }
+
+            return new JsonResult(responseModel);
+
+        }
+
+        [HttpPost]
+        [Route("SaveAppconfig")]
+        public IActionResult SaveAppconfig(AppConfigModel model)
+        {
+            string _rawContent = null;
+
+            var responseModel = new ResponseModel<string>()
+            {
+                HttpStatusCode = "200"
+            };
+
+            try
+            {
+                _rawContent = GetRawContent(_rawContent);
+                var objPayLoad = JsonConvert.DeserializeObject<AppConfigModel>(_rawContent);
+                var AppConfigService = new AppConfigService(_dbContext);
+                responseModel = AppConfigService.SaveAppConfig(objPayLoad);
+            }
+            catch (Exception ex)
+            {
+                string message = "Error while processing ";
+
+                if (!ex.Message.ToLower().Contains("object reference"))
+                    message += ex.Message;
+
+                responseModel.HttpStatusCode = ((int)HttpStatusCode.BadRequest).ToString();
+                responseModel.Message = message;
+                responseModel.Reason.Add("ERROR");
+                responseModel.IsSuccess = false;
+            }
+
+            return new JsonResult(responseModel);
+
+        }
+
+
+        [HttpPost]
+        [Route("UpdateAppconfig")]
+        public IActionResult UpdateAppconfig(AppConfigModel model)
+        {
+            string _rawContent = null;
+
+            var responseModel = new ResponseModel<string>()
+            {
+                HttpStatusCode = "200"
+            };
+
+            try
+            {
+                var AppConfigService = new AppConfigService(_dbContext);
+                responseModel = AppConfigService.UpdateAppConfig(model);
+            }
+            catch (Exception ex)
+            {
+                string message = "Error while processing ";
+
+                if (!ex.Message.ToLower().Contains("object reference"))
+                    message += ex.Message;
+
+                responseModel.HttpStatusCode = ((int)HttpStatusCode.BadRequest).ToString();
+                responseModel.Message = message;
+                responseModel.Reason.Add("ERROR");
+                responseModel.IsSuccess = false;
+            }
+
+            return new JsonResult(responseModel);
+
+        }
+        #endregion AppConfig
 
     }
 }

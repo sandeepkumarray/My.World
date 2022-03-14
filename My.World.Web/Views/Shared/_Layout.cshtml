@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Hosting;
+@inject IWebHostEnvironment Environment
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -24,8 +26,38 @@
     <link href="~/css/jquery-confirm.min.css" rel="stylesheet" />
     <link href="~/css/app.css" rel="stylesheet">
     <link href="~/vendors/material/css/MaterialIcons.css" rel="stylesheet" />
+    <style>
+        #beta {
+            float: left;
+            top: 1.5em;
+            left: -3em;
+            position: absolute; /* or fixed if you want it to always be visible */
+            transform: rotate(-45deg);
+            background: red;
+            color: white;
+            font-weight: bold;
+            padding-left: 3em;
+            padding-right: 3em;
+            padding-top: .5em;
+            padding-bottom: .5em;
+            border: 0;
+            margin: 0;
+            height: auto;
+            width: auto;
+            z-index: 999999999; /* or whatever is needed to show on top of other elements */
+        }
+
+            #beta::before {
+                content: "⚠️ BETA ⚠️";
+            }
+    </style>
 </head>
+
 <body class="c-app">
+    @if (@Environment.EnvironmentName == "Development")
+    {
+        <hr id="beta" aria-label="Warning this page is a beta.">
+    }
     <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
         <div class="c-sidebar-brand d-lg-down-none">
             <img class="c-sidebar-brand-full" src="~/assets/img/myWorldHeader.png" width="118" height="46" alt="Logo" />
@@ -186,6 +218,7 @@
     <script src="~/vendors/waves/waves.min.js"></script>
     <script src="~/vendors/fontawesome/js/all.js"></script>
     <script src="~/js/jquery-confirm.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 
     @RenderSection("scripts", false)
     <script>

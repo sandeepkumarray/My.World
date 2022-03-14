@@ -145,14 +145,22 @@
    
     <script type="text/javascript">
     
-		function setBerriesBody() {
-		    html = htmlDecode('@Model.florasModel.Berries');
-		    $('#Berries').append(html);
+		function setTagsBody() {
+		    html = htmlDecode('@Model.florasModel.Tags');
+		    $('#Tags').append(html);
 		};
 
-		function setColoringsBody() {
-		    html = htmlDecode('@Model.florasModel.Colorings');
-		    $('#Colorings').append(html);
+		function setUniverseBody() {
+		    $('#florasModel_Universe').val('@Model.florasModel.Universe');
+		};
+
+		function setNameBody() {
+		    $('#florasModel_Name').val('@Model.florasModel.Name');
+		};
+
+		function setOther_NamesBody() {
+		    html = htmlDecode('@Model.florasModel.Other_Names');
+		    $('#Other_Names').append(html);
 		};
 
 		function setDescriptionBody() {
@@ -160,19 +168,14 @@
 		    $('#Description').append(html);
 		};
 
-		function setEaten_byBody() {
-		    html = htmlDecode('@Model.florasModel.Eaten_by');
-		    $('#Eaten_by').append(html);
+		function setOrderBody() {
+		    html = htmlDecode('@Model.florasModel.Order');
+		    $('#Order').append(html);
 		};
 
-		function setFamilyBody() {
-		    html = htmlDecode('@Model.florasModel.Family');
-		    $('#Family').append(html);
-		};
-
-		function setFruitsBody() {
-		    html = htmlDecode('@Model.florasModel.Fruits');
-		    $('#Fruits').append(html);
+		function setRelated_floraBody() {
+		    html = htmlDecode('@Model.florasModel.Related_flora');
+		    $('#Related_flora').append(html);
 		};
 
 		function setGenusBody() {
@@ -180,9 +183,34 @@
 		    $('#Genus').append(html);
 		};
 
-		function setLocationsBody() {
-		    html = htmlDecode('@Model.florasModel.Locations');
-		    $('#Locations').append(html);
+		function setFamilyBody() {
+		    html = htmlDecode('@Model.florasModel.Family');
+		    $('#Family').append(html);
+		};
+
+		function setSizeBody() {
+		    html = htmlDecode('@Model.florasModel.Size');
+		    $('#Size').append(html);
+		};
+
+		function setSmellBody() {
+		    html = htmlDecode('@Model.florasModel.Smell');
+		    $('#Smell').append(html);
+		};
+
+		function setTasteBody() {
+		    html = htmlDecode('@Model.florasModel.Taste');
+		    $('#Taste').append(html);
+		};
+
+		function setColoringsBody() {
+		    html = htmlDecode('@Model.florasModel.Colorings');
+		    $('#Colorings').append(html);
+		};
+
+		function setFruitsBody() {
+		    html = htmlDecode('@Model.florasModel.Fruits');
+		    $('#Fruits').append(html);
 		};
 
 		function setMagical_effectsBody() {
@@ -200,13 +228,9 @@
 		    $('#Medicinal_purposes').append(html);
 		};
 
-		function setNameBody() {
-		    $('#florasModel_Name').val('@Model.florasModel.Name');
-		};
-
-		function setNotesBody() {
-		    html = htmlDecode('@Model.florasModel.Notes');
-		    $('#Notes').append(html);
+		function setBerriesBody() {
+		    html = htmlDecode('@Model.florasModel.Berries');
+		    $('#Berries').append(html);
 		};
 
 		function setNutsBody() {
@@ -214,29 +238,9 @@
 		    $('#Nuts').append(html);
 		};
 
-		function setOrderBody() {
-		    html = htmlDecode('@Model.florasModel.Order');
-		    $('#Order').append(html);
-		};
-
-		function setOther_NamesBody() {
-		    html = htmlDecode('@Model.florasModel.Other_Names');
-		    $('#Other_Names').append(html);
-		};
-
-		function setPrivate_NotesBody() {
-		    html = htmlDecode('@Model.florasModel.Private_Notes');
-		    $('#Private_Notes').append(html);
-		};
-
-		function setRelated_floraBody() {
-		    html = htmlDecode('@Model.florasModel.Related_flora');
-		    $('#Related_flora').append(html);
-		};
-
-		function setReproductionBody() {
-		    html = htmlDecode('@Model.florasModel.Reproduction');
-		    $('#Reproduction').append(html);
+		function setSeedsBody() {
+		    html = htmlDecode('@Model.florasModel.Seeds');
+		    $('#Seeds').append(html);
 		};
 
 		function setSeasonalityBody() {
@@ -244,63 +248,59 @@
 		    $('#Seasonality').append(html);
 		};
 
-		function setSeedsBody() {
-		    html = htmlDecode('@Model.florasModel.Seeds');
-		    $('#Seeds').append(html);
+		function setLocationsBody() {
+		    html = htmlDecode('@Model.florasModel.Locations');
+		    $('#Locations').append(html);
 		};
 
-		function setSizeBody() {
-		    html = htmlDecode('@Model.florasModel.Size');
-		    $('#Size').append(html);
+		function setReproductionBody() {
+		    html = htmlDecode('@Model.florasModel.Reproduction');
+		    $('#Reproduction').append(html);
 		};
 
-		function setSmellBody() {
-		    html = htmlDecode('@Model.florasModel.Smell');
-		    $('#Smell').append(html);
+		function setEaten_byBody() {
+		    html = htmlDecode('@Model.florasModel.Eaten_by');
+		    $('#Eaten_by').append(html);
 		};
 
-		function setTagsBody() {
-		    html = htmlDecode('@Model.florasModel.Tags');
-		    $('#Tags').append(html);
+		function setNotesBody() {
+		    html = htmlDecode('@Model.florasModel.Notes');
+		    $('#Notes').append(html);
 		};
 
-		function setTasteBody() {
-		    html = htmlDecode('@Model.florasModel.Taste');
-		    $('#Taste').append(html);
-		};
-
-		function setUniverseBody() {
-		    $('#florasModel_Universe').val('@Model.florasModel.Universe');
+		function setPrivate_NotesBody() {
+		    html = htmlDecode('@Model.florasModel.Private_Notes');
+		    $('#Private_Notes').append(html);
 		};
 
 
 
         $(document).ready(function () {
-			setBerriesBody();
-			setColoringsBody();
+			setTagsBody();
+			setNameBody();
+			setOther_NamesBody();
 			setDescriptionBody();
-			setEaten_byBody();
-			setFamilyBody();
-			setFruitsBody();
+			setOrderBody();
+			setRelated_floraBody();
 			setGenusBody();
-			setLocationsBody();
+			setFamilyBody();
+			setSizeBody();
+			setSmellBody();
+			setTasteBody();
+			setColoringsBody();
+			setFruitsBody();
 			setMagical_effectsBody();
 			setMaterial_usesBody();
 			setMedicinal_purposesBody();
-			setNameBody();
-			setNotesBody();
+			setBerriesBody();
 			setNutsBody();
-			setOrderBody();
-			setOther_NamesBody();
-			setPrivate_NotesBody();
-			setRelated_floraBody();
-			setReproductionBody();
-			setSeasonalityBody();
 			setSeedsBody();
-			setSizeBody();
-			setSmellBody();
-			setTagsBody();
-			setTasteBody();
+			setSeasonalityBody();
+			setLocationsBody();
+			setReproductionBody();
+			setEaten_byBody();
+			setNotesBody();
+			setPrivate_NotesBody();
 
         });
 

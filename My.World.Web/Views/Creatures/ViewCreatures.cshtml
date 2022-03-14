@@ -1,3 +1,6 @@
+@using Microsoft.AspNetCore.Http
+@using My.World.Web
+@inject IHttpContextAccessor HttpContextAccessor
 @model My.World.Web.ViewModel.CreaturesViewModel
 
 @{
@@ -112,7 +115,7 @@
                                                                                 else if (att.field_name.ToLower() == "universe")
                                                                                 {
                                                                                 <select id="ddlUniverseList" class="form-control" style="min-width:150px"
-                                                                                        asp-items="@(new SelectList(@Model.UniversesList, " id", "name" , Model.creaturesModel.Universe))"
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name" , Model.creaturesModel.Universe))"
                                                                                         onchange="UniverseSelected();">
                                                                                 </select>
                                                                                 }
@@ -168,17 +171,21 @@
                                                                                         <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
                                                                                             <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">
                                                                                                 <a class="remove-image" style="display: inline;"
-                                                                                                   asp-controller="buildings" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
+                                                                                                   asp-controller="creatures" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
                                                                                             </div>
                                                                                         </div>
                                                                                     }
                                                                                 </div>
                                                                             </div>
-
+                                                                            <div class="mb-3">
+                                                                                <div class="row">
+                                                                                    <h3><label class="form-label"> Only @Model.RemainingContentSize is left for content upload.</label></h3>
+                                                                                </div>
+                                                                            </div>
                                                                             <div class="mb-3">
                                                                                 <label class="form-label" for="exampleFormControlInput1">Upload Images...</label>
                                                                                 <div>
-                                                                                    @using (Html.BeginForm("UploadAttachment", "buildings", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
+                                                                                    @using (Html.BeginForm("UploadAttachment", "creatures", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
                                                                                     {
                                                                                     <div class="dz-message needsclick">
                                                                                         <button type="button" class="dz-button">Drop files here or click to upload.</button><br />
@@ -266,6 +273,25 @@
     </div>
 </div>
 
+<div id="contentsExceededModal" bsmodal="" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade" aria-modal="true" style="display: none;">
+    <div role="document" class="modal-dialog modal-danger modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Alert !</h4>
+                <button type="button" aria-label="Close" data-dismiss="modal" class="close">
+                    <span aria-hidden="true">�</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>You have Exceeded the maximum allowed size of @My.World.Web.Helpers.Utility.SizeSuffix(Convert.ToInt64(@HttpContextAccessor.HttpContext.Session.GetString("AllowedTotalContentSize"))) per content to upload images.</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script src="~/js/quill.js"></script>
     <script src="~/js/quill.mention.min.js"></script>
@@ -275,43 +301,26 @@
 
     <script type="text/javascript">
 
-        			function setAggressivenessBody() {
-			    Aggressiveness_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Aggressiveness'));
-			    $('#Aggressiveness').focusout(function () {
-			        postSaveEditorData('Aggressiveness', Aggressiveness_editor.root.innerHTML);
+        			function setType_of_creatureBody() {
+			    Type_of_creature_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Type_of_creature'));
+			    $('#Type_of_creature').focusout(function () {
+			        postSaveEditorData('Type_of_creature', Type_of_creature_editor.root.innerHTML);
 			    });
 			};
 
-			function setAncestorsBody() {
-			    Ancestors_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Ancestors'));
-			    $('#Ancestors').focusout(function () {
-			        postSaveEditorData('Ancestors', Ancestors_editor.root.innerHTML);
+			function setUniverseBody() {
+			    $('#creaturesModel_Universe').val('@Model.creaturesModel.Universe');
+			};
+
+			function setTagsBody() {
+			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Tags'));
+			    $('#Tags').focusout(function () {
+			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
 			    });
 			};
 
-			function setClassBody() {
-			    Class_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Class'));
-			    $('#Class').focusout(function () {
-			        postSaveEditorData('Class', Class_editor.root.innerHTML);
-			    });
-			};
-
-			function setColorBody() {
-			    $('#creaturesModel_Color').val('@Model.creaturesModel.Color');
-			};
-
-			function setCompetitorsBody() {
-			    Competitors_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Competitors'));
-			    $('#Competitors').focusout(function () {
-			        postSaveEditorData('Competitors', Competitors_editor.root.innerHTML);
-			    });
-			};
-
-			function setConditionsBody() {
-			    Conditions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Conditions'));
-			    $('#Conditions').focusout(function () {
-			        postSaveEditorData('Conditions', Conditions_editor.root.innerHTML);
-			    });
+			function setNameBody() {
+			    $('#creaturesModel_Name').val('@Model.creaturesModel.Name');
 			};
 
 			function setDescriptionBody() {
@@ -321,49 +330,14 @@
 			    });
 			};
 
-			function setEvolutionary_driveBody() {
-			    Evolutionary_drive_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Evolutionary_drive'));
-			    $('#Evolutionary_drive').focusout(function () {
-			        postSaveEditorData('Evolutionary_drive', Evolutionary_drive_editor.root.innerHTML);
-			    });
+			function setWeightBody() {
+			    $('#creaturesModel_Weight').val('@Model.creaturesModel.Weight');
 			};
 
-			function setFamilyBody() {
-			    Family_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Family'));
-			    $('#Family').focusout(function () {
-			        postSaveEditorData('Family', Family_editor.root.innerHTML);
-			    });
-			};
-
-			function setFood_sourcesBody() {
-			    Food_sources_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Food_sources'));
-			    $('#Food_sources').focusout(function () {
-			        postSaveEditorData('Food_sources', Food_sources_editor.root.innerHTML);
-			    });
-			};
-
-			function setGenusBody() {
-			    Genus_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Genus'));
-			    $('#Genus').focusout(function () {
-			        postSaveEditorData('Genus', Genus_editor.root.innerHTML);
-			    });
-			};
-
-			function setHabitatsBody() {
-			    Habitats_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Habitats'));
-			    $('#Habitats').focusout(function () {
-			        postSaveEditorData('Habitats', Habitats_editor.root.innerHTML);
-			    });
-			};
-
-			function setHeightBody() {
-			    $('#creaturesModel_Height').val('@Model.creaturesModel.Height');
-			};
-
-			function setHerding_patternsBody() {
-			    Herding_patterns_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Herding_patterns'));
-			    $('#Herding_patterns').focusout(function () {
-			        postSaveEditorData('Herding_patterns', Herding_patterns_editor.root.innerHTML);
+			function setNotable_featuresBody() {
+			    Notable_features_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Notable_features'));
+			    $('#Notable_features').focusout(function () {
+			        postSaveEditorData('Notable_features', Notable_features_editor.root.innerHTML);
 			    });
 			};
 
@@ -374,15 +348,44 @@
 			    });
 			};
 
-			function setMating_ritualBody() {
-			    Mating_ritual_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Mating_ritual'));
-			    $('#Mating_ritual').focusout(function () {
-			        postSaveEditorData('Mating_ritual', Mating_ritual_editor.root.innerHTML);
+			function setVestigial_featuresBody() {
+			    Vestigial_features_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Vestigial_features'));
+			    $('#Vestigial_features').focusout(function () {
+			        postSaveEditorData('Vestigial_features', Vestigial_features_editor.root.innerHTML);
 			    });
 			};
 
-			function setMaximum_speedBody() {
-			    $('#creaturesModel_Maximum_speed').val('@Model.creaturesModel.Maximum_speed');
+			function setColorBody() {
+			    $('#creaturesModel_Color').val('@Model.creaturesModel.Color');
+			};
+
+			function setShapeBody() {
+			    Shape_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Shape'));
+			    $('#Shape').focusout(function () {
+			        postSaveEditorData('Shape', Shape_editor.root.innerHTML);
+			    });
+			};
+
+			function setSizeBody() {
+			    $('#creaturesModel_Size').val('@Model.creaturesModel.Size');
+			};
+
+			function setHeightBody() {
+			    $('#creaturesModel_Height').val('@Model.creaturesModel.Height');
+			};
+
+			function setStrongest_senseBody() {
+			    Strongest_sense_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Strongest_sense'));
+			    $('#Strongest_sense').focusout(function () {
+			        postSaveEditorData('Strongest_sense', Strongest_sense_editor.root.innerHTML);
+			    });
+			};
+
+			function setAggressivenessBody() {
+			    Aggressiveness_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Aggressiveness'));
+			    $('#Aggressiveness').focusout(function () {
+			        postSaveEditorData('Aggressiveness', Aggressiveness_editor.root.innerHTML);
+			    });
 			};
 
 			function setMethod_of_attackBody() {
@@ -399,236 +402,14 @@
 			    });
 			};
 
-			function setMigratory_patternsBody() {
-			    Migratory_patterns_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Migratory_patterns'));
-			    $('#Migratory_patterns').focusout(function () {
-			        postSaveEditorData('Migratory_patterns', Migratory_patterns_editor.root.innerHTML);
-			    });
-			};
-
-			function setMortality_rateBody() {
-			    Mortality_rate_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Mortality_rate'));
-			    $('#Mortality_rate').focusout(function () {
-			        postSaveEditorData('Mortality_rate', Mortality_rate_editor.root.innerHTML);
-			    });
-			};
-
-			function setNameBody() {
-			    $('#creaturesModel_Name').val('@Model.creaturesModel.Name');
-			};
-
-			function setNotable_featuresBody() {
-			    Notable_features_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Notable_features'));
-			    $('#Notable_features').focusout(function () {
-			        postSaveEditorData('Notable_features', Notable_features_editor.root.innerHTML);
-			    });
-			};
-
-			function setNotesBody() {
-			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Notes'));
-			    $('#Notes').focusout(function () {
-			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
-			    });
-			};
-
-			function setOffspring_careBody() {
-			    Offspring_care_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Offspring_care'));
-			    $('#Offspring_care').focusout(function () {
-			        postSaveEditorData('Offspring_care', Offspring_care_editor.root.innerHTML);
-			    });
-			};
-
-			function setOrderBody() {
-			    Order_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Order'));
-			    $('#Order').focusout(function () {
-			        postSaveEditorData('Order', Order_editor.root.innerHTML);
-			    });
-			};
-
-			function setParental_instinctsBody() {
-			    Parental_instincts_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Parental_instincts'));
-			    $('#Parental_instincts').focusout(function () {
-			        postSaveEditorData('Parental_instincts', Parental_instincts_editor.root.innerHTML);
-			    });
-			};
-
-			function setPhylumBody() {
-			    Phylum_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Phylum'));
-			    $('#Phylum').focusout(function () {
-			        postSaveEditorData('Phylum', Phylum_editor.root.innerHTML);
-			    });
-			};
-
-			function setPredatorsBody() {
-			    Predators_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Predators'));
-			    $('#Predators').focusout(function () {
-			        postSaveEditorData('Predators', Predators_editor.root.innerHTML);
-			    });
-			};
-
-			function setPredictionsBody() {
-			    Predictions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Predictions'));
-			    $('#Predictions').focusout(function () {
-			        postSaveEditorData('Predictions', Predictions_editor.root.innerHTML);
-			    });
-			};
-
-			function setPreferred_habitatBody() {
-			    Preferred_habitat_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Preferred_habitat'));
-			    $('#Preferred_habitat').focusout(function () {
-			        postSaveEditorData('Preferred_habitat', Preferred_habitat_editor.root.innerHTML);
-			    });
-			};
-
-			function setPreyBody() {
-			    Prey_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Prey'));
-			    $('#Prey').focusout(function () {
-			        postSaveEditorData('Prey', Prey_editor.root.innerHTML);
-			    });
-			};
-
-			function setPrivate_notesBody() {
-			    Private_notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Private_notes'));
-			    $('#Private_notes').focusout(function () {
-			        postSaveEditorData('Private_notes', Private_notes_editor.root.innerHTML);
-			    });
-			};
-
-			function setRelated_creaturesBody() {
-			    Related_creatures_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Related_creatures'));
-			    $('#Related_creatures').focusout(function () {
-			        postSaveEditorData('Related_creatures', Related_creatures_editor.root.innerHTML);
-			    });
-			};
-
-			function setReproductionBody() {
-			    Reproduction_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Reproduction'));
-			    $('#Reproduction').focusout(function () {
-			        postSaveEditorData('Reproduction', Reproduction_editor.root.innerHTML);
-			    });
-			};
-
-			function setReproduction_ageBody() {
-			    $('#creaturesModel_Reproduction_age').val('@Model.creaturesModel.Reproduction_age');
-			};
-
-			function setReproduction_frequencyBody() {
-			    Reproduction_frequency_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Reproduction_frequency'));
-			    $('#Reproduction_frequency').focusout(function () {
-			        postSaveEditorData('Reproduction_frequency', Reproduction_frequency_editor.root.innerHTML);
-			    });
-			};
-
-			function setRequirementsBody() {
-			    Requirements_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Requirements'));
-			    $('#Requirements').focusout(function () {
-			        postSaveEditorData('Requirements', Requirements_editor.root.innerHTML);
-			    });
-			};
-
-			function setShapeBody() {
-			    Shape_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Shape'));
-			    $('#Shape').focusout(function () {
-			        postSaveEditorData('Shape', Shape_editor.root.innerHTML);
-			    });
-			};
-
-			function setSimilar_creaturesBody() {
-			    Similar_creatures_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Similar_creatures'));
-			    $('#Similar_creatures').focusout(function () {
-			        postSaveEditorData('Similar_creatures', Similar_creatures_editor.root.innerHTML);
-			    });
-			};
-
-			function setSizeBody() {
-			    $('#creaturesModel_Size').val('@Model.creaturesModel.Size');
-			};
-
-			function setSoundsBody() {
-			    Sounds_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Sounds'));
-			    $('#Sounds').focusout(function () {
-			        postSaveEditorData('Sounds', Sounds_editor.root.innerHTML);
-			    });
-			};
-
-			function setSpeciesBody() {
-			    Species_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Species'));
-			    $('#Species').focusout(function () {
-			        postSaveEditorData('Species', Species_editor.root.innerHTML);
-			    });
-			};
-
-			function setSpoilsBody() {
-			    Spoils_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Spoils'));
-			    $('#Spoils').focusout(function () {
-			        postSaveEditorData('Spoils', Spoils_editor.root.innerHTML);
-			    });
+			function setMaximum_speedBody() {
+			    $('#creaturesModel_Maximum_speed').val('@Model.creaturesModel.Maximum_speed');
 			};
 
 			function setStrengthsBody() {
 			    Strengths_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Strengths'));
 			    $('#Strengths').focusout(function () {
 			        postSaveEditorData('Strengths', Strengths_editor.root.innerHTML);
-			    });
-			};
-
-			function setStrongest_senseBody() {
-			    Strongest_sense_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Strongest_sense'));
-			    $('#Strongest_sense').focusout(function () {
-			        postSaveEditorData('Strongest_sense', Strongest_sense_editor.root.innerHTML);
-			    });
-			};
-
-			function setSymbolismsBody() {
-			    Symbolisms_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Symbolisms'));
-			    $('#Symbolisms').focusout(function () {
-			        postSaveEditorData('Symbolisms', Symbolisms_editor.root.innerHTML);
-			    });
-			};
-
-			function setTagsBody() {
-			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Tags'));
-			    $('#Tags').focusout(function () {
-			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
-			    });
-			};
-
-			function setTradeoffsBody() {
-			    Tradeoffs_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Tradeoffs'));
-			    $('#Tradeoffs').focusout(function () {
-			        postSaveEditorData('Tradeoffs', Tradeoffs_editor.root.innerHTML);
-			    });
-			};
-
-			function setType_of_creatureBody() {
-			    Type_of_creature_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Type_of_creature'));
-			    $('#Type_of_creature').focusout(function () {
-			        postSaveEditorData('Type_of_creature', Type_of_creature_editor.root.innerHTML);
-			    });
-			};
-
-			function setUniverseBody() {
-			    $('#creaturesModel_Universe').val('@Model.creaturesModel.Universe');
-			};
-
-			function setVariationsBody() {
-			    Variations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Variations'));
-			    $('#Variations').focusout(function () {
-			        postSaveEditorData('Variations', Variations_editor.root.innerHTML);
-			    });
-			};
-
-			function setVestigial_featuresBody() {
-			    Vestigial_features_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Vestigial_features'));
-			    $('#Vestigial_features').focusout(function () {
-			        postSaveEditorData('Vestigial_features', Vestigial_features_editor.root.innerHTML);
-			    });
-			};
-
-			function setWeakest_senseBody() {
-			    Weakest_sense_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Weakest_sense'));
-			    $('#Weakest_sense').focusout(function () {
-			        postSaveEditorData('Weakest_sense', Weakest_sense_editor.root.innerHTML);
 			    });
 			};
 
@@ -639,15 +420,272 @@
 			    });
 			};
 
-			function setWeightBody() {
-			    $('#creaturesModel_Weight').val('@Model.creaturesModel.Weight');
+			function setSoundsBody() {
+			    Sounds_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Sounds'));
+			    $('#Sounds').focusout(function () {
+			        postSaveEditorData('Sounds', Sounds_editor.root.innerHTML);
+			    });
+			};
+
+			function setSpoilsBody() {
+			    Spoils_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Spoils'));
+			    $('#Spoils').focusout(function () {
+			        postSaveEditorData('Spoils', Spoils_editor.root.innerHTML);
+			    });
+			};
+
+			function setConditionsBody() {
+			    Conditions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Conditions'));
+			    $('#Conditions').focusout(function () {
+			        postSaveEditorData('Conditions', Conditions_editor.root.innerHTML);
+			    });
+			};
+
+			function setWeakest_senseBody() {
+			    Weakest_sense_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Weakest_sense'));
+			    $('#Weakest_sense').focusout(function () {
+			        postSaveEditorData('Weakest_sense', Weakest_sense_editor.root.innerHTML);
+			    });
+			};
+
+			function setHerding_patternsBody() {
+			    Herding_patterns_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Herding_patterns'));
+			    $('#Herding_patterns').focusout(function () {
+			        postSaveEditorData('Herding_patterns', Herding_patterns_editor.root.innerHTML);
+			    });
+			};
+
+			function setPreyBody() {
+			    Prey_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Prey'));
+			    $('#Prey').focusout(function () {
+			        postSaveEditorData('Prey', Prey_editor.root.innerHTML);
+			    });
+			};
+
+			function setPredatorsBody() {
+			    Predators_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Predators'));
+			    $('#Predators').focusout(function () {
+			        postSaveEditorData('Predators', Predators_editor.root.innerHTML);
+			    });
+			};
+
+			function setCompetitorsBody() {
+			    Competitors_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Competitors'));
+			    $('#Competitors').focusout(function () {
+			        postSaveEditorData('Competitors', Competitors_editor.root.innerHTML);
+			    });
+			};
+
+			function setMigratory_patternsBody() {
+			    Migratory_patterns_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Migratory_patterns'));
+			    $('#Migratory_patterns').focusout(function () {
+			        postSaveEditorData('Migratory_patterns', Migratory_patterns_editor.root.innerHTML);
+			    });
+			};
+
+			function setFood_sourcesBody() {
+			    Food_sources_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Food_sources'));
+			    $('#Food_sources').focusout(function () {
+			        postSaveEditorData('Food_sources', Food_sources_editor.root.innerHTML);
+			    });
+			};
+
+			function setHabitatsBody() {
+			    Habitats_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Habitats'));
+			    $('#Habitats').focusout(function () {
+			        postSaveEditorData('Habitats', Habitats_editor.root.innerHTML);
+			    });
+			};
+
+			function setPreferred_habitatBody() {
+			    Preferred_habitat_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Preferred_habitat'));
+			    $('#Preferred_habitat').focusout(function () {
+			        postSaveEditorData('Preferred_habitat', Preferred_habitat_editor.root.innerHTML);
+			    });
+			};
+
+			function setSimilar_creaturesBody() {
+			    Similar_creatures_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Similar_creatures'));
+			    $('#Similar_creatures').focusout(function () {
+			        postSaveEditorData('Similar_creatures', Similar_creatures_editor.root.innerHTML);
+			    });
+			};
+
+			function setSymbolismsBody() {
+			    Symbolisms_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Symbolisms'));
+			    $('#Symbolisms').focusout(function () {
+			        postSaveEditorData('Symbolisms', Symbolisms_editor.root.innerHTML);
+			    });
+			};
+
+			function setRelated_creaturesBody() {
+			    Related_creatures_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Related_creatures'));
+			    $('#Related_creatures').focusout(function () {
+			        postSaveEditorData('Related_creatures', Related_creatures_editor.root.innerHTML);
+			    });
+			};
+
+			function setAncestorsBody() {
+			    Ancestors_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Ancestors'));
+			    $('#Ancestors').focusout(function () {
+			        postSaveEditorData('Ancestors', Ancestors_editor.root.innerHTML);
+			    });
+			};
+
+			function setEvolutionary_driveBody() {
+			    Evolutionary_drive_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Evolutionary_drive'));
+			    $('#Evolutionary_drive').focusout(function () {
+			        postSaveEditorData('Evolutionary_drive', Evolutionary_drive_editor.root.innerHTML);
+			    });
+			};
+
+			function setTradeoffsBody() {
+			    Tradeoffs_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Tradeoffs'));
+			    $('#Tradeoffs').focusout(function () {
+			        postSaveEditorData('Tradeoffs', Tradeoffs_editor.root.innerHTML);
+			    });
+			};
+
+			function setPredictionsBody() {
+			    Predictions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Predictions'));
+			    $('#Predictions').focusout(function () {
+			        postSaveEditorData('Predictions', Predictions_editor.root.innerHTML);
+			    });
+			};
+
+			function setMortality_rateBody() {
+			    Mortality_rate_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Mortality_rate'));
+			    $('#Mortality_rate').focusout(function () {
+			        postSaveEditorData('Mortality_rate', Mortality_rate_editor.root.innerHTML);
+			    });
+			};
+
+			function setOffspring_careBody() {
+			    Offspring_care_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Offspring_care'));
+			    $('#Offspring_care').focusout(function () {
+			        postSaveEditorData('Offspring_care', Offspring_care_editor.root.innerHTML);
+			    });
+			};
+
+			function setReproduction_ageBody() {
+			    $('#creaturesModel_Reproduction_age').val('@Model.creaturesModel.Reproduction_age');
+			};
+
+			function setRequirementsBody() {
+			    Requirements_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Requirements'));
+			    $('#Requirements').focusout(function () {
+			        postSaveEditorData('Requirements', Requirements_editor.root.innerHTML);
+			    });
+			};
+
+			function setMating_ritualBody() {
+			    Mating_ritual_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Mating_ritual'));
+			    $('#Mating_ritual').focusout(function () {
+			        postSaveEditorData('Mating_ritual', Mating_ritual_editor.root.innerHTML);
+			    });
+			};
+
+			function setReproductionBody() {
+			    Reproduction_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Reproduction'));
+			    $('#Reproduction').focusout(function () {
+			        postSaveEditorData('Reproduction', Reproduction_editor.root.innerHTML);
+			    });
+			};
+
+			function setReproduction_frequencyBody() {
+			    Reproduction_frequency_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Reproduction_frequency'));
+			    $('#Reproduction_frequency').focusout(function () {
+			        postSaveEditorData('Reproduction_frequency', Reproduction_frequency_editor.root.innerHTML);
+			    });
+			};
+
+			function setParental_instinctsBody() {
+			    Parental_instincts_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Parental_instincts'));
+			    $('#Parental_instincts').focusout(function () {
+			        postSaveEditorData('Parental_instincts', Parental_instincts_editor.root.innerHTML);
+			    });
+			};
+
+			function setVariationsBody() {
+			    Variations_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Variations'));
+			    $('#Variations').focusout(function () {
+			        postSaveEditorData('Variations', Variations_editor.root.innerHTML);
+			    });
+			};
+
+			function setPhylumBody() {
+			    Phylum_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Phylum'));
+			    $('#Phylum').focusout(function () {
+			        postSaveEditorData('Phylum', Phylum_editor.root.innerHTML);
+			    });
+			};
+
+			function setClassBody() {
+			    Class_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Class'));
+			    $('#Class').focusout(function () {
+			        postSaveEditorData('Class', Class_editor.root.innerHTML);
+			    });
+			};
+
+			function setOrderBody() {
+			    Order_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Order'));
+			    $('#Order').focusout(function () {
+			        postSaveEditorData('Order', Order_editor.root.innerHTML);
+			    });
+			};
+
+			function setFamilyBody() {
+			    Family_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Family'));
+			    $('#Family').focusout(function () {
+			        postSaveEditorData('Family', Family_editor.root.innerHTML);
+			    });
+			};
+
+			function setGenusBody() {
+			    Genus_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Genus'));
+			    $('#Genus').focusout(function () {
+			        postSaveEditorData('Genus', Genus_editor.root.innerHTML);
+			    });
+			};
+
+			function setSpeciesBody() {
+			    Species_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Species'));
+			    $('#Species').focusout(function () {
+			        postSaveEditorData('Species', Species_editor.root.innerHTML);
+			    });
+			};
+
+			function setPrivate_notesBody() {
+			    Private_notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Private_notes'));
+			    $('#Private_notes').focusout(function () {
+			        postSaveEditorData('Private_notes', Private_notes_editor.root.innerHTML);
+			    });
+			};
+
+			function setNotesBody() {
+			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.creaturesModel.Notes'));
+			    $('#Notes').focusout(function () {
+			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
+			    });
 			};
 
 
 
         $(document).ready(function () {
-            			$('#creaturesModel_Color').blur(function() {
+            			$('#creaturesModel_Name').blur(function() {
+			    postSaveData('Name', $('#creaturesModel_Name').val());
+			});
+
+			$('#creaturesModel_Weight').blur(function() {
+			    postSaveData('Weight', $('#creaturesModel_Weight').val());
+			});
+
+			$('#creaturesModel_Color').blur(function() {
 			    postSaveData('Color', $('#creaturesModel_Color').val());
+			});
+
+			$('#creaturesModel_Size').blur(function() {
+			    postSaveData('Size', $('#creaturesModel_Size').val());
 			});
 
 			$('#creaturesModel_Height').blur(function() {
@@ -658,20 +696,8 @@
 			    postSaveData('Maximum_speed', $('#creaturesModel_Maximum_speed').val());
 			});
 
-			$('#creaturesModel_Name').blur(function() {
-			    postSaveData('Name', $('#creaturesModel_Name').val());
-			});
-
 			$('#creaturesModel_Reproduction_age').blur(function() {
 			    postSaveData('Reproduction_age', $('#creaturesModel_Reproduction_age').val());
-			});
-
-			$('#creaturesModel_Size').blur(function() {
-			    postSaveData('Size', $('#creaturesModel_Size').val());
-			});
-
-			$('#creaturesModel_Weight').blur(function() {
-			    postSaveData('Weight', $('#creaturesModel_Weight').val());
 			});
 
 
@@ -725,10 +751,18 @@
                         $('.roller').width(progress + '%');
                     });
 
-                    self.on("queuecomplete", function (progress) {
-                        $('.meter').delay(999).slideUp(999);
-                        console.log("Files uploaded");
-                        location.reload();
+                    self.on('error', function (file, response) {
+                        console.log("Files upload Error");
+                        showModal(response.message);
+                    });
+                    self.on('success', function () {
+                        self.on("queuecomplete", function () {
+                            $('.meter').delay(999).slideUp(999);
+                            console.log("Files uploaded");
+                            var locUrL = location.href.replace('#Gallery_panel', '') + "#Gallery_panel";
+                            window.location.href = locUrL;
+                            location.reload();
+                        });
                     });
                     self.on("complete", function (file) {
                         self.removeFile(file);

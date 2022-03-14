@@ -1,3 +1,6 @@
+@using Microsoft.AspNetCore.Http
+@using My.World.Web
+@inject IHttpContextAccessor HttpContextAccessor
 @model My.World.Web.ViewModel.VehiclesViewModel
 
 @{
@@ -112,7 +115,7 @@
                                                                                 else if (att.field_name.ToLower() == "universe")
                                                                                 {
                                                                                 <select id="ddlUniverseList" class="form-control" style="min-width:150px"
-                                                                                        asp-items="@(new SelectList(@Model.UniversesList, " id", "name" , Model.vehiclesModel.Universe))"
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name" , Model.vehiclesModel.Universe))"
                                                                                         onchange="UniverseSelected();">
                                                                                 </select>
                                                                                 }
@@ -168,17 +171,21 @@
                                                                                         <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
                                                                                             <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">
                                                                                                 <a class="remove-image" style="display: inline;"
-                                                                                                   asp-controller="buildings" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
+                                                                                                   asp-controller="vehicles" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
                                                                                             </div>
                                                                                         </div>
                                                                                     }
                                                                                 </div>
                                                                             </div>
-
+                                                                            <div class="mb-3">
+                                                                                <div class="row">
+                                                                                    <h3><label class="form-label"> Only @Model.RemainingContentSize is left for content upload.</label></h3>
+                                                                                </div>
+                                                                            </div>
                                                                             <div class="mb-3">
                                                                                 <label class="form-label" for="exampleFormControlInput1">Upload Images...</label>
                                                                                 <div>
-                                                                                    @using (Html.BeginForm("UploadAttachment", "buildings", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
+                                                                                    @using (Html.BeginForm("UploadAttachment", "vehicles", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
                                                                                     {
                                                                                     <div class="dz-message needsclick">
                                                                                         <button type="button" class="dz-button">Drop files here or click to upload.</button><br />
@@ -266,6 +273,25 @@
     </div>
 </div>
 
+<div id="contentsExceededModal" bsmodal="" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade" aria-modal="true" style="display: none;">
+    <div role="document" class="modal-dialog modal-danger modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Alert !</h4>
+                <button type="button" aria-label="Close" data-dismiss="modal" class="close">
+                    <span aria-hidden="true">�</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>You have Exceeded the maximum allowed size of @My.World.Web.Helpers.Utility.SizeSuffix(Convert.ToInt64(@HttpContextAccessor.HttpContext.Session.GetString("AllowedTotalContentSize"))) per content to upload images.</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script src="~/js/quill.js"></script>
     <script src="~/js/quill.mention.min.js"></script>
@@ -275,32 +301,58 @@
 
     <script type="text/javascript">
 
-        			function setAlternate_namesBody() {
+        			function setUniverseBody() {
+			    $('#vehiclesModel_Universe').val('@Model.vehiclesModel.Universe');
+			};
+
+			function setType_of_vehicleBody() {
+			    Type_of_vehicle_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.vehiclesModel.Type_of_vehicle'));
+			    $('#Type_of_vehicle').focusout(function () {
+			        postSaveEditorData('Type_of_vehicle', Type_of_vehicle_editor.root.innerHTML);
+			    });
+			};
+
+			function setAlternate_namesBody() {
 			    Alternate_names_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.vehiclesModel.Alternate_names'));
 			    $('#Alternate_names').focusout(function () {
 			        postSaveEditorData('Alternate_names', Alternate_names_editor.root.innerHTML);
 			    });
 			};
 
-			function setColorsBody() {
-			    Colors_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.vehiclesModel.Colors'));
-			    $('#Colors').focusout(function () {
-			        postSaveEditorData('Colors', Colors_editor.root.innerHTML);
+			function setTagsBody() {
+			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.vehiclesModel.Tags'));
+			    $('#Tags').focusout(function () {
+			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
 			    });
 			};
 
-			function setCostsBody() {
-			    $('#vehiclesModel_Costs').val('@Model.vehiclesModel.Costs');
-			};
-
-			function setCountryBody() {
-			    $('#vehiclesModel_Country').val('@Model.vehiclesModel.Country');
+			function setNameBody() {
+			    $('#vehiclesModel_Name').val('@Model.vehiclesModel.Name');
 			};
 
 			function setDescriptionBody() {
 			    Description_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.vehiclesModel.Description'));
 			    $('#Description').focusout(function () {
 			        postSaveEditorData('Description', Description_editor.root.innerHTML);
+			    });
+			};
+
+			function setDimensionsBody() {
+			    $('#vehiclesModel_Dimensions').val('@Model.vehiclesModel.Dimensions');
+			};
+
+			function setSizeBody() {
+			    $('#vehiclesModel_Size').val('@Model.vehiclesModel.Size');
+			};
+
+			function setDoorsBody() {
+			    $('#vehiclesModel_Doors').val('@Model.vehiclesModel.Doors');
+			};
+
+			function setMaterialsBody() {
+			    Materials_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.vehiclesModel.Materials'));
+			    $('#Materials').focusout(function () {
+			        postSaveEditorData('Materials', Materials_editor.root.innerHTML);
 			    });
 			};
 
@@ -311,8 +363,15 @@
 			    });
 			};
 
-			function setDimensionsBody() {
-			    $('#vehiclesModel_Dimensions').val('@Model.vehiclesModel.Dimensions');
+			function setWindowsBody() {
+			    $('#vehiclesModel_Windows').val('@Model.vehiclesModel.Windows');
+			};
+
+			function setColorsBody() {
+			    Colors_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.vehiclesModel.Colors'));
+			    $('#Colors').focusout(function () {
+			        postSaveEditorData('Colors', Colors_editor.root.innerHTML);
+			    });
 			};
 
 			function setDistanceBody() {
@@ -322,57 +381,10 @@
 			    });
 			};
 
-			function setDoorsBody() {
-			    $('#vehiclesModel_Doors').val('@Model.vehiclesModel.Doors');
-			};
-
 			function setFeaturesBody() {
 			    Features_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.vehiclesModel.Features'));
 			    $('#Features').focusout(function () {
 			        postSaveEditorData('Features', Features_editor.root.innerHTML);
-			    });
-			};
-
-			function setFuelBody() {
-			    $('#vehiclesModel_Fuel').val('@Model.vehiclesModel.Fuel');
-			};
-
-			function setManufacturerBody() {
-			    Manufacturer_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.vehiclesModel.Manufacturer'));
-			    $('#Manufacturer').focusout(function () {
-			        postSaveEditorData('Manufacturer', Manufacturer_editor.root.innerHTML);
-			    });
-			};
-
-			function setMaterialsBody() {
-			    Materials_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.vehiclesModel.Materials'));
-			    $('#Materials').focusout(function () {
-			        postSaveEditorData('Materials', Materials_editor.root.innerHTML);
-			    });
-			};
-
-			function setNameBody() {
-			    $('#vehiclesModel_Name').val('@Model.vehiclesModel.Name');
-			};
-
-			function setNotesBody() {
-			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.vehiclesModel.Notes'));
-			    $('#Notes').focusout(function () {
-			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
-			    });
-			};
-
-			function setOwnerBody() {
-			    Owner_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.vehiclesModel.Owner'));
-			    $('#Owner').focusout(function () {
-			        postSaveEditorData('Owner', Owner_editor.root.innerHTML);
-			    });
-			};
-
-			function setPrivate_NotesBody() {
-			    Private_Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.vehiclesModel.Private_Notes'));
-			    $('#Private_Notes').focusout(function () {
-			        postSaveEditorData('Private_Notes', Private_Notes_editor.root.innerHTML);
 			    });
 			};
 
@@ -383,30 +395,12 @@
 			    });
 			};
 
-			function setSizeBody() {
-			    $('#vehiclesModel_Size').val('@Model.vehiclesModel.Size');
+			function setFuelBody() {
+			    $('#vehiclesModel_Fuel').val('@Model.vehiclesModel.Fuel');
 			};
 
 			function setSpeedBody() {
 			    $('#vehiclesModel_Speed').val('@Model.vehiclesModel.Speed');
-			};
-
-			function setTagsBody() {
-			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.vehiclesModel.Tags'));
-			    $('#Tags').focusout(function () {
-			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
-			    });
-			};
-
-			function setType_of_vehicleBody() {
-			    Type_of_vehicle_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.vehiclesModel.Type_of_vehicle'));
-			    $('#Type_of_vehicle').focusout(function () {
-			        postSaveEditorData('Type_of_vehicle', Type_of_vehicle_editor.root.innerHTML);
-			    });
-			};
-
-			function setUniverseBody() {
-			    $('#vehiclesModel_Universe').val('@Model.vehiclesModel.Universe');
 			};
 
 			function setVariantsBody() {
@@ -416,55 +410,87 @@
 			    });
 			};
 
+			function setManufacturerBody() {
+			    Manufacturer_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.vehiclesModel.Manufacturer'));
+			    $('#Manufacturer').focusout(function () {
+			        postSaveEditorData('Manufacturer', Manufacturer_editor.root.innerHTML);
+			    });
+			};
+
+			function setCostsBody() {
+			    $('#vehiclesModel_Costs').val('@Model.vehiclesModel.Costs');
+			};
+
 			function setWeightBody() {
 			    $('#vehiclesModel_Weight').val('@Model.vehiclesModel.Weight');
 			};
 
-			function setWindowsBody() {
-			    $('#vehiclesModel_Windows').val('@Model.vehiclesModel.Windows');
+			function setCountryBody() {
+			    $('#vehiclesModel_Country').val('@Model.vehiclesModel.Country');
+			};
+
+			function setOwnerBody() {
+			    Owner_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.vehiclesModel.Owner'));
+			    $('#Owner').focusout(function () {
+			        postSaveEditorData('Owner', Owner_editor.root.innerHTML);
+			    });
+			};
+
+			function setNotesBody() {
+			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.vehiclesModel.Notes'));
+			    $('#Notes').focusout(function () {
+			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
+			    });
+			};
+
+			function setPrivate_NotesBody() {
+			    Private_Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.vehiclesModel.Private_Notes'));
+			    $('#Private_Notes').focusout(function () {
+			        postSaveEditorData('Private_Notes', Private_Notes_editor.root.innerHTML);
+			    });
 			};
 
 
 
         $(document).ready(function () {
-            			$('#vehiclesModel_Costs').blur(function() {
-			    postSaveData('Costs', $('#vehiclesModel_Costs').val());
-			});
-
-			$('#vehiclesModel_Country').blur(function() {
-			    postSaveData('Country', $('#vehiclesModel_Country').val());
+            			$('#vehiclesModel_Name').blur(function() {
+			    postSaveData('Name', $('#vehiclesModel_Name').val());
 			});
 
 			$('#vehiclesModel_Dimensions').blur(function() {
 			    postSaveData('Dimensions', $('#vehiclesModel_Dimensions').val());
 			});
 
+			$('#vehiclesModel_Size').blur(function() {
+			    postSaveData('Size', $('#vehiclesModel_Size').val());
+			});
+
 			$('#vehiclesModel_Doors').blur(function() {
 			    postSaveData('Doors', $('#vehiclesModel_Doors').val());
+			});
+
+			$('#vehiclesModel_Windows').blur(function() {
+			    postSaveData('Windows', $('#vehiclesModel_Windows').val());
 			});
 
 			$('#vehiclesModel_Fuel').blur(function() {
 			    postSaveData('Fuel', $('#vehiclesModel_Fuel').val());
 			});
 
-			$('#vehiclesModel_Name').blur(function() {
-			    postSaveData('Name', $('#vehiclesModel_Name').val());
-			});
-
-			$('#vehiclesModel_Size').blur(function() {
-			    postSaveData('Size', $('#vehiclesModel_Size').val());
-			});
-
 			$('#vehiclesModel_Speed').blur(function() {
 			    postSaveData('Speed', $('#vehiclesModel_Speed').val());
+			});
+
+			$('#vehiclesModel_Costs').blur(function() {
+			    postSaveData('Costs', $('#vehiclesModel_Costs').val());
 			});
 
 			$('#vehiclesModel_Weight').blur(function() {
 			    postSaveData('Weight', $('#vehiclesModel_Weight').val());
 			});
 
-			$('#vehiclesModel_Windows').blur(function() {
-			    postSaveData('Windows', $('#vehiclesModel_Windows').val());
+			$('#vehiclesModel_Country').blur(function() {
+			    postSaveData('Country', $('#vehiclesModel_Country').val());
 			});
 
 
@@ -518,10 +544,18 @@
                         $('.roller').width(progress + '%');
                     });
 
-                    self.on("queuecomplete", function (progress) {
-                        $('.meter').delay(999).slideUp(999);
-                        console.log("Files uploaded");
-                        location.reload();
+                    self.on('error', function (file, response) {
+                        console.log("Files upload Error");
+                        showModal(response.message);
+                    });
+                    self.on('success', function () {
+                        self.on("queuecomplete", function () {
+                            $('.meter').delay(999).slideUp(999);
+                            console.log("Files uploaded");
+                            var locUrL = location.href.replace('#Gallery_panel', '') + "#Gallery_panel";
+                            window.location.href = locUrL;
+                            location.reload();
+                        });
                     });
                     self.on("complete", function (file) {
                         self.removeFile(file);

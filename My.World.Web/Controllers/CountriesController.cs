@@ -13,6 +13,7 @@ using My.World.Web.Services;
 using Newtonsoft.Json;
 using My.World.Web.ViewModel;
 using Microsoft.Extensions.Configuration;
+using System.Web;
 
 namespace My.World.Web.Controllers
 {
@@ -103,7 +104,17 @@ namespace My.World.Web.Controllers
 			countriesViewModel.headerBackgroundColor = contentTypesModel.sec_color;
 			_iObjectBucketApiService.SetObjectStorageSecrets(model.user_id);
 			countriesViewModel.ContentObjectModelList = _iObjectBucketApiService.GetAllContentObjectAttachments(Convert.ToInt64(Id), "countries");
-			return View(countriesViewModel);
+			countriesViewModel.ContentObjectModelList.ForEach(o => 
+			{
+			    var publicUrl = "http://" + _iObjectBucketApiService.objectStorageKeysModel.endpoint
+			                + '/' + _iObjectBucketApiService.objectStorageKeysModel.bucketName + '/' + _config.GetValue<string>("BucketEnv") + '/' + o.object_name; 
+			    o.file_url = HttpUtility.UrlPathEncode(publicUrl); 
+			}); 
+			var existing_total_size = countriesViewModel.ContentObjectModelList.Sum(f => f.object_size);
+			var AllowedTotalContentSize = Convert.ToInt64(HttpContext.Session.GetString("AllowedTotalContentSize"));
+			var remainingSize = AllowedTotalContentSize - existing_total_size;
+			countriesViewModel.RemainingContentSize = Helpers.Utility.SizeSuffix(remainingSize);
+			return View(countriesViewModel); 
 
 		}
 
@@ -154,37 +165,333 @@ namespace My.World.Web.Controllers
 			if (model != null)
 			{
 				
-				model.Architecture  = model.Architecture == null ? model.Architecture : model.Architecture.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Tags  = model.Tags == null ? model.Tags : model.Tags.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Description  = model.Description == null ? model.Description : model.Description.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Other_Names  = model.Other_Names == null ? model.Other_Names : model.Other_Names.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Landmarks  = model.Landmarks == null ? model.Landmarks : model.Landmarks.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Locations  = model.Locations == null ? model.Locations : model.Locations.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Towns  = model.Towns == null ? model.Towns : model.Towns.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Bordering_countries  = model.Bordering_countries == null ? model.Bordering_countries : model.Bordering_countries.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Education  = model.Education == null ? model.Education : model.Education.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Governments  = model.Governments == null ? model.Governments : model.Governments.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Religions  = model.Religions == null ? model.Religions : model.Religions.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Languages  = model.Languages == null ? model.Languages : model.Languages.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Sports  = model.Sports == null ? model.Sports : model.Sports.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Architecture  = model.Architecture == null ? model.Architecture : model.Architecture.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Music  = model.Music == null ? model.Music : model.Music.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Pop_culture  = model.Pop_culture == null ? model.Pop_culture : model.Pop_culture.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Laws  = model.Laws == null ? model.Laws : model.Laws.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Currency  = model.Currency == null ? model.Currency : model.Currency.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Social_hierarchy  = model.Social_hierarchy == null ? model.Social_hierarchy : model.Social_hierarchy.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Crops  = model.Crops == null ? model.Crops : model.Crops.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Climate  = model.Climate == null ? model.Climate : model.Climate.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Creatures  = model.Creatures == null ? model.Creatures : model.Creatures.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Crops  = model.Crops == null ? model.Crops : model.Crops.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Currency  = model.Currency == null ? model.Currency : model.Currency.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Description  = model.Description == null ? model.Description : model.Description.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Education  = model.Education == null ? model.Education : model.Education.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Flora  = model.Flora == null ? model.Flora : model.Flora.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Founding_story  = model.Founding_story == null ? model.Founding_story : model.Founding_story.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Governments  = model.Governments == null ? model.Governments : model.Governments.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Landmarks  = model.Landmarks == null ? model.Landmarks : model.Landmarks.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Languages  = model.Languages == null ? model.Languages : model.Languages.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Laws  = model.Laws == null ? model.Laws : model.Laws.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Locations  = model.Locations == null ? model.Locations : model.Locations.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Music  = model.Music == null ? model.Music : model.Music.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Notable_wars  = model.Notable_wars == null ? model.Notable_wars : model.Notable_wars.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Notes  = model.Notes == null ? model.Notes : model.Notes.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Other_Names  = model.Other_Names == null ? model.Other_Names : model.Other_Names.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Pop_culture  = model.Pop_culture == null ? model.Pop_culture : model.Pop_culture.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Founding_story  = model.Founding_story == null ? model.Founding_story : model.Founding_story.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Private_Notes  = model.Private_Notes == null ? model.Private_Notes : model.Private_Notes.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Religions  = model.Religions == null ? model.Religions : model.Religions.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Social_hierarchy  = model.Social_hierarchy == null ? model.Social_hierarchy : model.Social_hierarchy.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Sports  = model.Sports == null ? model.Sports : model.Sports.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Tags  = model.Tags == null ? model.Tags : model.Tags.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Towns  = model.Towns == null ? model.Towns : model.Towns.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Notes  = model.Notes == null ? model.Notes : model.Notes.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 			}
 
 		}
 
 		#region Save Properties Methods
+		[HttpPost]
+		[Route("{id}/SaveTags")]
+		public IActionResult SaveTags(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Tags";
+			var CountrieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CountriesModel model = new CountriesModel();
+			model.id = CountrieID;
+			model._id = CountrieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCountriesApiService.SaveCountrie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("SaveName")]
+		public IActionResult SaveName()
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Name";
+			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
+			var CountrieID = Convert.ToInt64(obj["CountrieID"].Value);
+			var value = Convert.ToString(obj["value"].Value);
+			
+			CountriesModel model = new CountriesModel();
+			model.id = CountrieID;
+			model._id = CountrieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCountriesApiService.SaveCountrie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveDescription")]
+		public IActionResult SaveDescription(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Description";
+			var CountrieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CountriesModel model = new CountriesModel();
+			model.id = CountrieID;
+			model._id = CountrieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCountriesApiService.SaveCountrie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveOther_Names")]
+		public IActionResult SaveOther_Names(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Other_Names";
+			var CountrieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CountriesModel model = new CountriesModel();
+			model.id = CountrieID;
+			model._id = CountrieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCountriesApiService.SaveCountrie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("SaveUniverse")]
+		public IActionResult SaveUniverse()
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Universe";
+			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
+			var CountrieID = Convert.ToInt64(obj["CountrieID"].Value);
+			var value = Convert.ToString(obj["value"].Value);
+			
+			CountriesModel model = new CountriesModel();
+			model.id = CountrieID;
+			model._id = CountrieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCountriesApiService.SaveCountrie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveLandmarks")]
+		public IActionResult SaveLandmarks(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Landmarks";
+			var CountrieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CountriesModel model = new CountriesModel();
+			model.id = CountrieID;
+			model._id = CountrieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCountriesApiService.SaveCountrie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveLocations")]
+		public IActionResult SaveLocations(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Locations";
+			var CountrieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CountriesModel model = new CountriesModel();
+			model.id = CountrieID;
+			model._id = CountrieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCountriesApiService.SaveCountrie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveTowns")]
+		public IActionResult SaveTowns(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Towns";
+			var CountrieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CountriesModel model = new CountriesModel();
+			model.id = CountrieID;
+			model._id = CountrieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCountriesApiService.SaveCountrie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveBordering_countries")]
+		public IActionResult SaveBordering_countries(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Bordering_countries";
+			var CountrieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CountriesModel model = new CountriesModel();
+			model.id = CountrieID;
+			model._id = CountrieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCountriesApiService.SaveCountrie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveEducation")]
+		public IActionResult SaveEducation(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Education";
+			var CountrieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CountriesModel model = new CountriesModel();
+			model.id = CountrieID;
+			model._id = CountrieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCountriesApiService.SaveCountrie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveGovernments")]
+		public IActionResult SaveGovernments(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Governments";
+			var CountrieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CountriesModel model = new CountriesModel();
+			model.id = CountrieID;
+			model._id = CountrieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCountriesApiService.SaveCountrie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveReligions")]
+		public IActionResult SaveReligions(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Religions";
+			var CountrieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CountriesModel model = new CountriesModel();
+			model.id = CountrieID;
+			model._id = CountrieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCountriesApiService.SaveCountrie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveLanguages")]
+		public IActionResult SaveLanguages(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Languages";
+			var CountrieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CountriesModel model = new CountriesModel();
+			model.id = CountrieID;
+			model._id = CountrieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCountriesApiService.SaveCountrie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveSports")]
+		public IActionResult SaveSports(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Sports";
+			var CountrieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CountriesModel model = new CountriesModel();
+			model.id = CountrieID;
+			model._id = CountrieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCountriesApiService.SaveCountrie(model);
+			return Json(response);
+
+		}
+
 		[HttpPost]
 		[Route("{id}/SaveArchitecture")]
 		public IActionResult SaveArchitecture(string id)
@@ -195,6 +502,133 @@ namespace My.World.Web.Controllers
 			var type = "Architecture";
 			var CountrieID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
+			
+			CountriesModel model = new CountriesModel();
+			model.id = CountrieID;
+			model._id = CountrieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCountriesApiService.SaveCountrie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveMusic")]
+		public IActionResult SaveMusic(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Music";
+			var CountrieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CountriesModel model = new CountriesModel();
+			model.id = CountrieID;
+			model._id = CountrieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCountriesApiService.SaveCountrie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SavePop_culture")]
+		public IActionResult SavePop_culture(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Pop_culture";
+			var CountrieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CountriesModel model = new CountriesModel();
+			model.id = CountrieID;
+			model._id = CountrieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCountriesApiService.SaveCountrie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveLaws")]
+		public IActionResult SaveLaws(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Laws";
+			var CountrieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CountriesModel model = new CountriesModel();
+			model.id = CountrieID;
+			model._id = CountrieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCountriesApiService.SaveCountrie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveCurrency")]
+		public IActionResult SaveCurrency(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Currency";
+			var CountrieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CountriesModel model = new CountriesModel();
+			model.id = CountrieID;
+			model._id = CountrieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCountriesApiService.SaveCountrie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveSocial_hierarchy")]
+		public IActionResult SaveSocial_hierarchy(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Social_hierarchy";
+			var CountrieID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			CountriesModel model = new CountriesModel();
+			model.id = CountrieID;
+			model._id = CountrieID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iCountriesApiService.SaveCountrie(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("SavePopulation")]
+		public IActionResult SavePopulation()
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Population";
+			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
+			var CountrieID = Convert.ToInt64(obj["CountrieID"].Value);
+			var value = Convert.ToString(obj["value"].Value);
 			
 			CountriesModel model = new CountriesModel();
 			model.id = CountrieID;
@@ -229,13 +663,13 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveBordering_countries")]
-		public IActionResult SaveBordering_countries(string id)
+		[Route("{id}/SaveCrops")]
+		public IActionResult SaveCrops(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Bordering_countries";
+			var type = "Crops";
 			var CountrieID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -292,76 +726,13 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveCrops")]
-		public IActionResult SaveCrops(string id)
+		[Route("{id}/SaveFlora")]
+		public IActionResult SaveFlora(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Crops";
-			var CountrieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CountriesModel model = new CountriesModel();
-			model.id = CountrieID;
-			model._id = CountrieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCountriesApiService.SaveCountrie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveCurrency")]
-		public IActionResult SaveCurrency(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Currency";
-			var CountrieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CountriesModel model = new CountriesModel();
-			model.id = CountrieID;
-			model._id = CountrieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCountriesApiService.SaveCountrie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveDescription")]
-		public IActionResult SaveDescription(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Description";
-			var CountrieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CountriesModel model = new CountriesModel();
-			model.id = CountrieID;
-			model._id = CountrieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCountriesApiService.SaveCountrie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveEducation")]
-		public IActionResult SaveEducation(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Education";
+			var type = "Flora";
 			var CountrieID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -398,13 +769,13 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveFlora")]
-		public IActionResult SaveFlora(string id)
+		[Route("{id}/SaveNotable_wars")]
+		public IActionResult SaveNotable_wars(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Flora";
+			var type = "Notable_wars";
 			var CountrieID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -440,161 +811,13 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveGovernments")]
-		public IActionResult SaveGovernments(string id)
+		[Route("{id}/SavePrivate_Notes")]
+		public IActionResult SavePrivate_Notes(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Governments";
-			var CountrieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CountriesModel model = new CountriesModel();
-			model.id = CountrieID;
-			model._id = CountrieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCountriesApiService.SaveCountrie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveLandmarks")]
-		public IActionResult SaveLandmarks(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Landmarks";
-			var CountrieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CountriesModel model = new CountriesModel();
-			model.id = CountrieID;
-			model._id = CountrieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCountriesApiService.SaveCountrie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveLanguages")]
-		public IActionResult SaveLanguages(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Languages";
-			var CountrieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CountriesModel model = new CountriesModel();
-			model.id = CountrieID;
-			model._id = CountrieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCountriesApiService.SaveCountrie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveLaws")]
-		public IActionResult SaveLaws(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Laws";
-			var CountrieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CountriesModel model = new CountriesModel();
-			model.id = CountrieID;
-			model._id = CountrieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCountriesApiService.SaveCountrie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveLocations")]
-		public IActionResult SaveLocations(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Locations";
-			var CountrieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CountriesModel model = new CountriesModel();
-			model.id = CountrieID;
-			model._id = CountrieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCountriesApiService.SaveCountrie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveMusic")]
-		public IActionResult SaveMusic(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Music";
-			var CountrieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CountriesModel model = new CountriesModel();
-			model.id = CountrieID;
-			model._id = CountrieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCountriesApiService.SaveCountrie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("SaveName")]
-		public IActionResult SaveName()
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Name";
-			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
-			var CountrieID = Convert.ToInt64(obj["CountrieID"].Value);
-			var value = Convert.ToString(obj["value"].Value);
-			
-			CountriesModel model = new CountriesModel();
-			model.id = CountrieID;
-			model._id = CountrieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCountriesApiService.SaveCountrie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveNotable_wars")]
-		public IActionResult SaveNotable_wars(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Notable_wars";
+			var type = "Private_Notes";
 			var CountrieID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -628,218 +851,6 @@ namespace My.World.Web.Controllers
 			return Json(response);
 
 		}
-
-		[HttpPost]
-		[Route("{id}/SaveOther_Names")]
-		public IActionResult SaveOther_Names(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Other_Names";
-			var CountrieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CountriesModel model = new CountriesModel();
-			model.id = CountrieID;
-			model._id = CountrieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCountriesApiService.SaveCountrie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SavePop_culture")]
-		public IActionResult SavePop_culture(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Pop_culture";
-			var CountrieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CountriesModel model = new CountriesModel();
-			model.id = CountrieID;
-			model._id = CountrieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCountriesApiService.SaveCountrie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("SavePopulation")]
-		public IActionResult SavePopulation()
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Population";
-			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
-			var CountrieID = Convert.ToInt64(obj["CountrieID"].Value);
-			var value = Convert.ToString(obj["value"].Value);
-			
-			CountriesModel model = new CountriesModel();
-			model.id = CountrieID;
-			model._id = CountrieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCountriesApiService.SaveCountrie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SavePrivate_Notes")]
-		public IActionResult SavePrivate_Notes(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Private_Notes";
-			var CountrieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CountriesModel model = new CountriesModel();
-			model.id = CountrieID;
-			model._id = CountrieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCountriesApiService.SaveCountrie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveReligions")]
-		public IActionResult SaveReligions(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Religions";
-			var CountrieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CountriesModel model = new CountriesModel();
-			model.id = CountrieID;
-			model._id = CountrieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCountriesApiService.SaveCountrie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveSocial_hierarchy")]
-		public IActionResult SaveSocial_hierarchy(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Social_hierarchy";
-			var CountrieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CountriesModel model = new CountriesModel();
-			model.id = CountrieID;
-			model._id = CountrieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCountriesApiService.SaveCountrie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveSports")]
-		public IActionResult SaveSports(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Sports";
-			var CountrieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CountriesModel model = new CountriesModel();
-			model.id = CountrieID;
-			model._id = CountrieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCountriesApiService.SaveCountrie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveTags")]
-		public IActionResult SaveTags(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Tags";
-			var CountrieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CountriesModel model = new CountriesModel();
-			model.id = CountrieID;
-			model._id = CountrieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCountriesApiService.SaveCountrie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveTowns")]
-		public IActionResult SaveTowns(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Towns";
-			var CountrieID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			CountriesModel model = new CountriesModel();
-			model.id = CountrieID;
-			model._id = CountrieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCountriesApiService.SaveCountrie(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("SaveUniverse")]
-		public IActionResult SaveUniverse()
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Universe";
-			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
-			var CountrieID = Convert.ToInt64(obj["CountrieID"].Value);
-			var value = Convert.ToString(obj["value"].Value);
-			
-			CountriesModel model = new CountriesModel();
-			model.id = CountrieID;
-			model._id = CountrieID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iCountriesApiService.SaveCountrie(model);
-			return Json(response);
-
-		}
 		#endregion 
 
 		[HttpPost]
@@ -847,40 +858,53 @@ namespace My.World.Web.Controllers
 		public IActionResult UploadAttachment(List<IFormFile> files)
 		{
 			var accountID = Convert.ToInt64(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserID")?.Value);
-			string content_Id = HttpContext.Session.GetString("CountriesID");
+			string content_Id = HttpContext.Session.GetString("CountrieID");
+			
+			var ContentObjectModelList = _iObjectBucketApiService.GetAllContentObjectAttachments(Convert.ToInt64(content_Id), "countries");
+			var existing_total_size = ContentObjectModelList.Sum(f => f.object_size);
 			
 			var rq_files = Request.Form.Files;
+			var upload_file_size = rq_files.Sum(f => f.Length);
+			var total_size = upload_file_size + existing_total_size;
+			var AllowedTotalContentSize = Convert.ToInt64(HttpContext.Session.GetString("AllowedTotalContentSize"));
 			
-			if (rq_files != null)
+			if (total_size <= AllowedTotalContentSize)
 			{
-			    foreach (var file in rq_files)
-			    {
-			        using (var ms = new MemoryStream())
-			        {
-			            ContentObjectModel model = new ContentObjectModel();
-			            model.object_type = file.ContentType;
-			            model.object_name = file.FileName;
-			            model.object_size = file.Length;
+				if (rq_files != null)
+				{
+					foreach (var file in rq_files)
+					{
+						using (var ms = new MemoryStream())
+						{
+							ContentObjectModel model = new ContentObjectModel();
+							model.object_type = file.ContentType;
+							model.object_name = file.FileName;
+							model.object_size = file.Length;
+							model.bucket_folder = _config.GetValue<string>("BucketEnv");
 			
-			            file.CopyTo(ms);
-			            model.file = ms;
-			            model.file.Seek(0, 0);
-			            _iObjectBucketApiService.SetObjectStorageSecrets(accountID);
-			            var response = _iObjectBucketApiService.UploadObject(model).Result;
+							file.CopyTo(ms);
+							model.file = ms;
+							model.file.Seek(0, 0);
+							_iObjectBucketApiService.SetObjectStorageSecrets(accountID);
+							var response = _iObjectBucketApiService.UploadObject(model).Result;
 			
-			            if (!string.IsNullOrEmpty(response.Value))
-			            {
-			                ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
-			                contentObjectAttachmentModel.object_id = Convert.ToInt64(response.Value);
-			                contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
-			                contentObjectAttachmentModel.content_type = "countries";
+							if (!string.IsNullOrEmpty(response.Value))
+							{
+								ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
+								contentObjectAttachmentModel.object_id = Convert.ToInt64(response.Value);
+								contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
+								contentObjectAttachmentModel.content_type = "countries";
 			
-			                _iObjectBucketApiService.AddContentObjectAttachment(contentObjectAttachmentModel);
-			            }
-			        }
-			    }
+								_iObjectBucketApiService.AddContentObjectAttachment(contentObjectAttachmentModel);
+							}
+						}
+					}
+				}
 			}
-			
+			else
+			{
+				return BadRequest(new { message = "You have Exceeded the maximum allowed size of 50 MB per content to upload images." });
+			}
 			return Ok();
 
 		}
@@ -889,16 +913,17 @@ namespace My.World.Web.Controllers
 		public IActionResult DeleteAttachment(long objectId,string objectName)
 		{
 			var accountID = Convert.ToInt64(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserID")?.Value);
-			string content_Id = HttpContext.Session.GetString("CountriesID");
+			string content_Id = HttpContext.Session.GetString("CountrieID");
 			
 			ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
 			contentObjectAttachmentModel.object_id = objectId;
 			contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
 			contentObjectAttachmentModel.content_type = "countries";
 			
+			var bucket_folder = _config.GetValue<string>("BucketEnv");
 			ContentObjectModel contentObjectModel = new ContentObjectModel();
 			contentObjectModel.object_id = objectId;
-			contentObjectModel.object_name = objectName;
+			contentObjectModel.object_name = bucket_folder + " / " + objectName;
 			
 			_iObjectBucketApiService.SetObjectStorageSecrets(accountID);
 			_iObjectBucketApiService.DeleteObject(contentObjectModel);

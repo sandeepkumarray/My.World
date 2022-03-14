@@ -148,7 +148,7 @@ namespace My.World.Web.Services
 
             string objectName = Path.GetFileName(model.object_name);
             string contentType = Utility.GetcontentType(objectName);
-
+            objectName = model.bucket_folder + "/" + objectName;
             try
             {
                 //var GetObjectresponse = await GetObject(model);

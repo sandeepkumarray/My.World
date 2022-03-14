@@ -39,6 +39,9 @@ namespace My.World.Api.Models
 		[DisplayName("File Url")]
 		public string file_url { get; set; }
 
+		[JsonProperty("bucket_folder")]
+		[DisplayName("Bucket Folder")]
+		public string bucket_folder { get; set; }
 		public ContentObjectModel()
 		{
 		}

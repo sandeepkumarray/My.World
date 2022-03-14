@@ -145,19 +145,36 @@
    
     <script type="text/javascript">
     
-		function setAtmosphereBody() {
-		    html = htmlDecode('@Model.planetsModel.Atmosphere');
-		    $('#Atmosphere').append(html);
+		function setDescriptionBody() {
+		    html = htmlDecode('@Model.planetsModel.Description');
+		    $('#Description').append(html);
 		};
 
-		function setCalendar_SystemBody() {
-		    html = htmlDecode('@Model.planetsModel.Calendar_System');
-		    $('#Calendar_System').append(html);
+		function setUniverseBody() {
+		    $('#planetsModel_Universe').val('@Model.planetsModel.Universe');
 		};
 
-		function setClimateBody() {
-		    html = htmlDecode('@Model.planetsModel.Climate');
-		    $('#Climate').append(html);
+		function setTagsBody() {
+		    html = htmlDecode('@Model.planetsModel.Tags');
+		    $('#Tags').append(html);
+		};
+
+		function setNameBody() {
+		    $('#planetsModel_Name').val('@Model.planetsModel.Name');
+		};
+
+		function setWeatherBody() {
+		    html = htmlDecode('@Model.planetsModel.Weather');
+		    $('#Weather').append(html);
+		};
+
+		function setWater_ContentBody() {
+		    $('#planetsModel_Water_Content').val('@Model.planetsModel.Water_Content');
+		};
+
+		function setNatural_ResourcesBody() {
+		    html = htmlDecode('@Model.planetsModel.Natural_Resources');
+		    $('#Natural_Resources').append(html);
 		};
 
 		function setContinentsBody() {
@@ -170,39 +187,9 @@
 		    $('#Countries').append(html);
 		};
 
-		function setCreaturesBody() {
-		    html = htmlDecode('@Model.planetsModel.Creatures');
-		    $('#Creatures').append(html);
-		};
-
-		function setDay_skyBody() {
-		    html = htmlDecode('@Model.planetsModel.Day_sky');
-		    $('#Day_sky').append(html);
-		};
-
-		function setDeitiesBody() {
-		    html = htmlDecode('@Model.planetsModel.Deities');
-		    $('#Deities').append(html);
-		};
-
-		function setDescriptionBody() {
-		    html = htmlDecode('@Model.planetsModel.Description');
-		    $('#Description').append(html);
-		};
-
-		function setFirst_Inhabitants_StoryBody() {
-		    html = htmlDecode('@Model.planetsModel.First_Inhabitants_Story');
-		    $('#First_Inhabitants_Story').append(html);
-		};
-
-		function setFloraBody() {
-		    html = htmlDecode('@Model.planetsModel.Flora');
-		    $('#Flora').append(html);
-		};
-
-		function setGroupsBody() {
-		    html = htmlDecode('@Model.planetsModel.Groups');
-		    $('#Groups').append(html);
+		function setLocationsBody() {
+		    html = htmlDecode('@Model.planetsModel.Locations');
+		    $('#Locations').append(html);
 		};
 
 		function setLandmarksBody() {
@@ -210,80 +197,22 @@
 		    $('#Landmarks').append(html);
 		};
 
-		function setLanguagesBody() {
-		    html = htmlDecode('@Model.planetsModel.Languages');
-		    $('#Languages').append(html);
+		function setSizeBody() {
+		    $('#planetsModel_Size').val('@Model.planetsModel.Size');
 		};
 
-		function setLength_Of_DayBody() {
-		    $('#planetsModel_Length_Of_Day').val('@Model.planetsModel.Length_Of_Day');
+		function setSurfaceBody() {
+		    $('#planetsModel_Surface').val('@Model.planetsModel.Surface');
 		};
 
-		function setLength_Of_NightBody() {
-		    $('#planetsModel_Length_Of_Night').val('@Model.planetsModel.Length_Of_Night');
+		function setClimateBody() {
+		    html = htmlDecode('@Model.planetsModel.Climate');
+		    $('#Climate').append(html);
 		};
 
-		function setLocationsBody() {
-		    html = htmlDecode('@Model.planetsModel.Locations');
-		    $('#Locations').append(html);
-		};
-
-		function setMoonsBody() {
-		    html = htmlDecode('@Model.planetsModel.Moons');
-		    $('#Moons').append(html);
-		};
-
-		function setNameBody() {
-		    $('#planetsModel_Name').val('@Model.planetsModel.Name');
-		};
-
-		function setNatural_diastersBody() {
-		    html = htmlDecode('@Model.planetsModel.Natural_diasters');
-		    $('#Natural_diasters').append(html);
-		};
-
-		function setNatural_ResourcesBody() {
-		    html = htmlDecode('@Model.planetsModel.Natural_Resources');
-		    $('#Natural_Resources').append(html);
-		};
-
-		function setNearby_planetsBody() {
-		    html = htmlDecode('@Model.planetsModel.Nearby_planets');
-		    $('#Nearby_planets').append(html);
-		};
-
-		function setNight_skyBody() {
-		    html = htmlDecode('@Model.planetsModel.Night_sky');
-		    $('#Night_sky').append(html);
-		};
-
-		function setNotesBody() {
-		    html = htmlDecode('@Model.planetsModel.Notes');
-		    $('#Notes').append(html);
-		};
-
-		function setOrbitBody() {
-		    html = htmlDecode('@Model.planetsModel.Orbit');
-		    $('#Orbit').append(html);
-		};
-
-		function setPopulationBody() {
-		    $('#planetsModel_Population').val('@Model.planetsModel.Population');
-		};
-
-		function setPrivate_NotesBody() {
-		    html = htmlDecode('@Model.planetsModel.Private_Notes');
-		    $('#Private_Notes').append(html);
-		};
-
-		function setRacesBody() {
-		    html = htmlDecode('@Model.planetsModel.Races');
-		    $('#Races').append(html);
-		};
-
-		function setReligionsBody() {
-		    html = htmlDecode('@Model.planetsModel.Religions');
-		    $('#Religions').append(html);
+		function setAtmosphereBody() {
+		    html = htmlDecode('@Model.planetsModel.Atmosphere');
+		    $('#Atmosphere').append(html);
 		};
 
 		function setSeasonsBody() {
@@ -291,26 +220,36 @@
 		    $('#Seasons').append(html);
 		};
 
-		function setSizeBody() {
-		    $('#planetsModel_Size').val('@Model.planetsModel.Size');
-		};
-
-		function setSunsBody() {
-		    html = htmlDecode('@Model.planetsModel.Suns');
-		    $('#Suns').append(html);
-		};
-
-		function setSurfaceBody() {
-		    $('#planetsModel_Surface').val('@Model.planetsModel.Surface');
-		};
-
-		function setTagsBody() {
-		    html = htmlDecode('@Model.planetsModel.Tags');
-		    $('#Tags').append(html);
-		};
-
 		function setTemperatureBody() {
 		    $('#planetsModel_Temperature').val('@Model.planetsModel.Temperature');
+		};
+
+		function setNatural_diastersBody() {
+		    html = htmlDecode('@Model.planetsModel.Natural_diasters');
+		    $('#Natural_diasters').append(html);
+		};
+
+		function setCalendar_SystemBody() {
+		    html = htmlDecode('@Model.planetsModel.Calendar_System');
+		    $('#Calendar_System').append(html);
+		};
+
+		function setDay_skyBody() {
+		    html = htmlDecode('@Model.planetsModel.Day_sky');
+		    $('#Day_sky').append(html);
+		};
+
+		function setNight_skyBody() {
+		    html = htmlDecode('@Model.planetsModel.Night_sky');
+		    $('#Night_sky').append(html);
+		};
+
+		function setLength_Of_NightBody() {
+		    $('#planetsModel_Length_Of_Night').val('@Model.planetsModel.Length_Of_Night');
+		};
+
+		function setLength_Of_DayBody() {
+		    $('#planetsModel_Length_Of_Day').val('@Model.planetsModel.Length_Of_Day');
 		};
 
 		function setTownsBody() {
@@ -318,8 +257,43 @@
 		    $('#Towns').append(html);
 		};
 
-		function setUniverseBody() {
-		    $('#planetsModel_Universe').val('@Model.planetsModel.Universe');
+		function setPopulationBody() {
+		    $('#planetsModel_Population').val('@Model.planetsModel.Population');
+		};
+
+		function setRacesBody() {
+		    html = htmlDecode('@Model.planetsModel.Races');
+		    $('#Races').append(html);
+		};
+
+		function setFloraBody() {
+		    html = htmlDecode('@Model.planetsModel.Flora');
+		    $('#Flora').append(html);
+		};
+
+		function setCreaturesBody() {
+		    html = htmlDecode('@Model.planetsModel.Creatures');
+		    $('#Creatures').append(html);
+		};
+
+		function setReligionsBody() {
+		    html = htmlDecode('@Model.planetsModel.Religions');
+		    $('#Religions').append(html);
+		};
+
+		function setDeitiesBody() {
+		    html = htmlDecode('@Model.planetsModel.Deities');
+		    $('#Deities').append(html);
+		};
+
+		function setGroupsBody() {
+		    html = htmlDecode('@Model.planetsModel.Groups');
+		    $('#Groups').append(html);
+		};
+
+		function setLanguagesBody() {
+		    html = htmlDecode('@Model.planetsModel.Languages');
+		    $('#Languages').append(html);
 		};
 
 		function setVisible_ConstellationsBody() {
@@ -327,13 +301,29 @@
 		    $('#Visible_Constellations').append(html);
 		};
 
-		function setWater_ContentBody() {
-		    $('#planetsModel_Water_Content').val('@Model.planetsModel.Water_Content');
+		function setSunsBody() {
+		    html = htmlDecode('@Model.planetsModel.Suns');
+		    $('#Suns').append(html);
 		};
 
-		function setWeatherBody() {
-		    html = htmlDecode('@Model.planetsModel.Weather');
-		    $('#Weather').append(html);
+		function setMoonsBody() {
+		    html = htmlDecode('@Model.planetsModel.Moons');
+		    $('#Moons').append(html);
+		};
+
+		function setOrbitBody() {
+		    html = htmlDecode('@Model.planetsModel.Orbit');
+		    $('#Orbit').append(html);
+		};
+
+		function setNearby_planetsBody() {
+		    html = htmlDecode('@Model.planetsModel.Nearby_planets');
+		    $('#Nearby_planets').append(html);
+		};
+
+		function setFirst_Inhabitants_StoryBody() {
+		    html = htmlDecode('@Model.planetsModel.First_Inhabitants_Story');
+		    $('#First_Inhabitants_Story').append(html);
 		};
 
 		function setWorld_HistoryBody() {
@@ -341,49 +331,59 @@
 		    $('#World_History').append(html);
 		};
 
+		function setPrivate_NotesBody() {
+		    html = htmlDecode('@Model.planetsModel.Private_Notes');
+		    $('#Private_Notes').append(html);
+		};
+
+		function setNotesBody() {
+		    html = htmlDecode('@Model.planetsModel.Notes');
+		    $('#Notes').append(html);
+		};
+
 
 
         $(document).ready(function () {
-			setAtmosphereBody();
-			setCalendar_SystemBody();
-			setClimateBody();
+			setDescriptionBody();
+			setTagsBody();
+			setNameBody();
+			setWeatherBody();
+			setWater_ContentBody();
+			setNatural_ResourcesBody();
 			setContinentsBody();
 			setCountriesBody();
-			setCreaturesBody();
-			setDay_skyBody();
-			setDeitiesBody();
-			setDescriptionBody();
-			setFirst_Inhabitants_StoryBody();
-			setFloraBody();
-			setGroupsBody();
-			setLandmarksBody();
-			setLanguagesBody();
-			setLength_Of_DayBody();
-			setLength_Of_NightBody();
 			setLocationsBody();
-			setMoonsBody();
-			setNameBody();
-			setNatural_diastersBody();
-			setNatural_ResourcesBody();
-			setNearby_planetsBody();
-			setNight_skyBody();
-			setNotesBody();
-			setOrbitBody();
-			setPopulationBody();
-			setPrivate_NotesBody();
-			setRacesBody();
-			setReligionsBody();
-			setSeasonsBody();
+			setLandmarksBody();
 			setSizeBody();
-			setSunsBody();
 			setSurfaceBody();
-			setTagsBody();
+			setClimateBody();
+			setAtmosphereBody();
+			setSeasonsBody();
 			setTemperatureBody();
+			setNatural_diastersBody();
+			setCalendar_SystemBody();
+			setDay_skyBody();
+			setNight_skyBody();
+			setLength_Of_NightBody();
+			setLength_Of_DayBody();
 			setTownsBody();
+			setPopulationBody();
+			setRacesBody();
+			setFloraBody();
+			setCreaturesBody();
+			setReligionsBody();
+			setDeitiesBody();
+			setGroupsBody();
+			setLanguagesBody();
 			setVisible_ConstellationsBody();
-			setWater_ContentBody();
-			setWeatherBody();
+			setSunsBody();
+			setMoonsBody();
+			setOrbitBody();
+			setNearby_planetsBody();
+			setFirst_Inhabitants_StoryBody();
 			setWorld_HistoryBody();
+			setPrivate_NotesBody();
+			setNotesBody();
 
         });
 

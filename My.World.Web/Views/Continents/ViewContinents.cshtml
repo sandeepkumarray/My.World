@@ -1,3 +1,6 @@
+@using Microsoft.AspNetCore.Http
+@using My.World.Web
+@inject IHttpContextAccessor HttpContextAccessor
 @model My.World.Web.ViewModel.ContinentsViewModel
 
 @{
@@ -112,7 +115,7 @@
                                                                                 else if (att.field_name.ToLower() == "universe")
                                                                                 {
                                                                                 <select id="ddlUniverseList" class="form-control" style="min-width:150px"
-                                                                                        asp-items="@(new SelectList(@Model.UniversesList, " id", "name" , Model.continentsModel.Universe))"
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name" , Model.continentsModel.Universe))"
                                                                                         onchange="UniverseSelected();">
                                                                                 </select>
                                                                                 }
@@ -168,17 +171,21 @@
                                                                                         <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
                                                                                             <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">
                                                                                                 <a class="remove-image" style="display: inline;"
-                                                                                                   asp-controller="buildings" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
+                                                                                                   asp-controller="continents" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
                                                                                             </div>
                                                                                         </div>
                                                                                     }
                                                                                 </div>
                                                                             </div>
-
+                                                                            <div class="mb-3">
+                                                                                <div class="row">
+                                                                                    <h3><label class="form-label"> Only @Model.RemainingContentSize is left for content upload.</label></h3>
+                                                                                </div>
+                                                                            </div>
                                                                             <div class="mb-3">
                                                                                 <label class="form-label" for="exampleFormControlInput1">Upload Images...</label>
                                                                                 <div>
-                                                                                    @using (Html.BeginForm("UploadAttachment", "buildings", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
+                                                                                    @using (Html.BeginForm("UploadAttachment", "continents", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
                                                                                     {
                                                                                     <div class="dz-message needsclick">
                                                                                         <button type="button" class="dz-button">Drop files here or click to upload.</button><br />
@@ -266,6 +273,25 @@
     </div>
 </div>
 
+<div id="contentsExceededModal" bsmodal="" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade" aria-modal="true" style="display: none;">
+    <div role="document" class="modal-dialog modal-danger modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Alert !</h4>
+                <button type="button" aria-label="Close" data-dismiss="modal" class="close">
+                    <span aria-hidden="true">�</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>You have Exceeded the maximum allowed size of @My.World.Web.Helpers.Utility.SizeSuffix(Convert.ToInt64(@HttpContextAccessor.HttpContext.Session.GetString("AllowedTotalContentSize"))) per content to upload images.</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script src="~/js/quill.js"></script>
     <script src="~/js/quill.mention.min.js"></script>
@@ -275,15 +301,57 @@
 
     <script type="text/javascript">
 
-        			function setArchitectureBody() {
-			    Architecture_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Architecture'));
-			    $('#Architecture').focusout(function () {
-			        postSaveEditorData('Architecture', Architecture_editor.root.innerHTML);
+        			function setTagsBody() {
+			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Tags'));
+			    $('#Tags').focusout(function () {
+			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
 			    });
 			};
 
-			function setAreaBody() {
-			    $('#continentsModel_Area').val('@Model.continentsModel.Area');
+			function setUniverseBody() {
+			    $('#continentsModel_Universe').val('@Model.continentsModel.Universe');
+			};
+
+			function setDescriptionBody() {
+			    Description_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Description'));
+			    $('#Description').focusout(function () {
+			        postSaveEditorData('Description', Description_editor.root.innerHTML);
+			    });
+			};
+
+			function setOther_NamesBody() {
+			    Other_Names_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Other_Names'));
+			    $('#Other_Names').focusout(function () {
+			        postSaveEditorData('Other_Names', Other_Names_editor.root.innerHTML);
+			    });
+			};
+
+			function setLocal_nameBody() {
+			    Local_name_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Local_name'));
+			    $('#Local_name').focusout(function () {
+			        postSaveEditorData('Local_name', Local_name_editor.root.innerHTML);
+			    });
+			};
+
+			function setRegional_disadvantagesBody() {
+			    Regional_disadvantages_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Regional_disadvantages'));
+			    $('#Regional_disadvantages').focusout(function () {
+			        postSaveEditorData('Regional_disadvantages', Regional_disadvantages_editor.root.innerHTML);
+			    });
+			};
+
+			function setRegional_advantagesBody() {
+			    Regional_advantages_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Regional_advantages'));
+			    $('#Regional_advantages').focusout(function () {
+			        postSaveEditorData('Regional_advantages', Regional_advantages_editor.root.innerHTML);
+			    });
+			};
+
+			function setLandmarksBody() {
+			    Landmarks_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Landmarks'));
+			    $('#Landmarks').focusout(function () {
+			        postSaveEditorData('Landmarks', Landmarks_editor.root.innerHTML);
+			    });
 			};
 
 			function setBodies_of_waterBody() {
@@ -293,10 +361,119 @@
 			    });
 			};
 
+			function setMineralogyBody() {
+			    Mineralogy_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Mineralogy'));
+			    $('#Mineralogy').focusout(function () {
+			        postSaveEditorData('Mineralogy', Mineralogy_editor.root.innerHTML);
+			    });
+			};
+
+			function setTopographyBody() {
+			    Topography_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Topography'));
+			    $('#Topography').focusout(function () {
+			        postSaveEditorData('Topography', Topography_editor.root.innerHTML);
+			    });
+			};
+
+			function setPopulationBody() {
+			    Population_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Population'));
+			    $('#Population').focusout(function () {
+			        postSaveEditorData('Population', Population_editor.root.innerHTML);
+			    });
+			};
+
+			function setShapeBody() {
+			    Shape_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Shape'));
+			    $('#Shape').focusout(function () {
+			        postSaveEditorData('Shape', Shape_editor.root.innerHTML);
+			    });
+			};
+
+			function setAreaBody() {
+			    $('#continentsModel_Area').val('@Model.continentsModel.Area');
+			};
+
+			function setPopular_foodsBody() {
+			    Popular_foods_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Popular_foods'));
+			    $('#Popular_foods').focusout(function () {
+			        postSaveEditorData('Popular_foods', Popular_foods_editor.root.innerHTML);
+			    });
+			};
+
+			function setGovernmentsBody() {
+			    Governments_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Governments'));
+			    $('#Governments').focusout(function () {
+			        postSaveEditorData('Governments', Governments_editor.root.innerHTML);
+			    });
+			};
+
+			function setTraditionsBody() {
+			    Traditions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Traditions'));
+			    $('#Traditions').focusout(function () {
+			        postSaveEditorData('Traditions', Traditions_editor.root.innerHTML);
+			    });
+			};
+
+			function setLanguagesBody() {
+			    Languages_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Languages'));
+			    $('#Languages').focusout(function () {
+			        postSaveEditorData('Languages', Languages_editor.root.innerHTML);
+			    });
+			};
+
 			function setCountriesBody() {
 			    Countries_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Countries'));
 			    $('#Countries').focusout(function () {
 			        postSaveEditorData('Countries', Countries_editor.root.innerHTML);
+			    });
+			};
+
+			function setReputationBody() {
+			    Reputation_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Reputation'));
+			    $('#Reputation').focusout(function () {
+			        postSaveEditorData('Reputation', Reputation_editor.root.innerHTML);
+			    });
+			};
+
+			function setArchitectureBody() {
+			    Architecture_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Architecture'));
+			    $('#Architecture').focusout(function () {
+			        postSaveEditorData('Architecture', Architecture_editor.root.innerHTML);
+			    });
+			};
+
+			function setTourismBody() {
+			    Tourism_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Tourism'));
+			    $('#Tourism').focusout(function () {
+			        postSaveEditorData('Tourism', Tourism_editor.root.innerHTML);
+			    });
+			};
+
+			function setEconomyBody() {
+			    Economy_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Economy'));
+			    $('#Economy').focusout(function () {
+			        postSaveEditorData('Economy', Economy_editor.root.innerHTML);
+			    });
+			};
+
+			function setPoliticsBody() {
+			    Politics_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Politics'));
+			    $('#Politics').focusout(function () {
+			        postSaveEditorData('Politics', Politics_editor.root.innerHTML);
+			    });
+			};
+
+			function setDemonymBody() {
+			    Demonym_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Demonym'));
+			    $('#Demonym').focusout(function () {
+			        postSaveEditorData('Demonym', Demonym_editor.root.innerHTML);
+			    });
+			};
+
+			function setFlorasBody() {
+			    Floras_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Floras'));
+			    $('#Floras').focusout(function () {
+			        postSaveEditorData('Floras', Floras_editor.root.innerHTML);
 			    });
 			};
 
@@ -314,90 +491,6 @@
 			    });
 			};
 
-			function setDemonymBody() {
-			    Demonym_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Demonym'));
-			    $('#Demonym').focusout(function () {
-			        postSaveEditorData('Demonym', Demonym_editor.root.innerHTML);
-			    });
-			};
-
-			function setDescriptionBody() {
-			    Description_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Description'));
-			    $('#Description').focusout(function () {
-			        postSaveEditorData('Description', Description_editor.root.innerHTML);
-			    });
-			};
-
-			function setDiscoveryBody() {
-			    Discovery_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Discovery'));
-			    $('#Discovery').focusout(function () {
-			        postSaveEditorData('Discovery', Discovery_editor.root.innerHTML);
-			    });
-			};
-
-			function setEconomyBody() {
-			    Economy_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Economy'));
-			    $('#Economy').focusout(function () {
-			        postSaveEditorData('Economy', Economy_editor.root.innerHTML);
-			    });
-			};
-
-			function setFlorasBody() {
-			    Floras_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Floras'));
-			    $('#Floras').focusout(function () {
-			        postSaveEditorData('Floras', Floras_editor.root.innerHTML);
-			    });
-			};
-
-			function setFormationBody() {
-			    Formation_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Formation'));
-			    $('#Formation').focusout(function () {
-			        postSaveEditorData('Formation', Formation_editor.root.innerHTML);
-			    });
-			};
-
-			function setGovernmentsBody() {
-			    Governments_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Governments'));
-			    $('#Governments').focusout(function () {
-			        postSaveEditorData('Governments', Governments_editor.root.innerHTML);
-			    });
-			};
-
-			function setHumidityBody() {
-			    Humidity_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Humidity'));
-			    $('#Humidity').focusout(function () {
-			        postSaveEditorData('Humidity', Humidity_editor.root.innerHTML);
-			    });
-			};
-
-			function setLandmarksBody() {
-			    Landmarks_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Landmarks'));
-			    $('#Landmarks').focusout(function () {
-			        postSaveEditorData('Landmarks', Landmarks_editor.root.innerHTML);
-			    });
-			};
-
-			function setLanguagesBody() {
-			    Languages_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Languages'));
-			    $('#Languages').focusout(function () {
-			        postSaveEditorData('Languages', Languages_editor.root.innerHTML);
-			    });
-			};
-
-			function setLocal_nameBody() {
-			    Local_name_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Local_name'));
-			    $('#Local_name').focusout(function () {
-			        postSaveEditorData('Local_name', Local_name_editor.root.innerHTML);
-			    });
-			};
-
-			function setMineralogyBody() {
-			    Mineralogy_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Mineralogy'));
-			    $('#Mineralogy').focusout(function () {
-			        postSaveEditorData('Mineralogy', Mineralogy_editor.root.innerHTML);
-			    });
-			};
-
 			function setNatural_disastersBody() {
 			    Natural_disasters_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Natural_disasters'));
 			    $('#Natural_disasters').focusout(function () {
@@ -405,38 +498,10 @@
 			    });
 			};
 
-			function setNotesBody() {
-			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Notes'));
-			    $('#Notes').focusout(function () {
-			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
-			    });
-			};
-
-			function setOther_NamesBody() {
-			    Other_Names_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Other_Names'));
-			    $('#Other_Names').focusout(function () {
-			        postSaveEditorData('Other_Names', Other_Names_editor.root.innerHTML);
-			    });
-			};
-
-			function setPoliticsBody() {
-			    Politics_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Politics'));
-			    $('#Politics').focusout(function () {
-			        postSaveEditorData('Politics', Politics_editor.root.innerHTML);
-			    });
-			};
-
-			function setPopular_foodsBody() {
-			    Popular_foods_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Popular_foods'));
-			    $('#Popular_foods').focusout(function () {
-			        postSaveEditorData('Popular_foods', Popular_foods_editor.root.innerHTML);
-			    });
-			};
-
-			function setPopulationBody() {
-			    Population_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Population'));
-			    $('#Population').focusout(function () {
-			        postSaveEditorData('Population', Population_editor.root.innerHTML);
+			function setWindsBody() {
+			    Winds_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Winds'));
+			    $('#Winds').focusout(function () {
+			        postSaveEditorData('Winds', Winds_editor.root.innerHTML);
 			    });
 			};
 
@@ -447,38 +512,10 @@
 			    });
 			};
 
-			function setPrivate_NotesBody() {
-			    Private_Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Private_Notes'));
-			    $('#Private_Notes').focusout(function () {
-			        postSaveEditorData('Private_Notes', Private_Notes_editor.root.innerHTML);
-			    });
-			};
-
-			function setRegional_advantagesBody() {
-			    Regional_advantages_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Regional_advantages'));
-			    $('#Regional_advantages').focusout(function () {
-			        postSaveEditorData('Regional_advantages', Regional_advantages_editor.root.innerHTML);
-			    });
-			};
-
-			function setRegional_disadvantagesBody() {
-			    Regional_disadvantages_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Regional_disadvantages'));
-			    $('#Regional_disadvantages').focusout(function () {
-			        postSaveEditorData('Regional_disadvantages', Regional_disadvantages_editor.root.innerHTML);
-			    });
-			};
-
-			function setReputationBody() {
-			    Reputation_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Reputation'));
-			    $('#Reputation').focusout(function () {
-			        postSaveEditorData('Reputation', Reputation_editor.root.innerHTML);
-			    });
-			};
-
-			function setRuinsBody() {
-			    Ruins_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Ruins'));
-			    $('#Ruins').focusout(function () {
-			        postSaveEditorData('Ruins', Ruins_editor.root.innerHTML);
+			function setHumidityBody() {
+			    Humidity_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Humidity'));
+			    $('#Humidity').focusout(function () {
+			        postSaveEditorData('Humidity', Humidity_editor.root.innerHTML);
 			    });
 			};
 
@@ -489,20 +526,6 @@
 			    });
 			};
 
-			function setShapeBody() {
-			    Shape_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Shape'));
-			    $('#Shape').focusout(function () {
-			        postSaveEditorData('Shape', Shape_editor.root.innerHTML);
-			    });
-			};
-
-			function setTagsBody() {
-			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Tags'));
-			    $('#Tags').focusout(function () {
-			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
-			    });
-			};
-
 			function setTemperatureBody() {
 			    Temperature_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Temperature'));
 			    $('#Temperature').focusout(function () {
@@ -510,29 +533,11 @@
 			    });
 			};
 
-			function setTopographyBody() {
-			    Topography_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Topography'));
-			    $('#Topography').focusout(function () {
-			        postSaveEditorData('Topography', Topography_editor.root.innerHTML);
+			function setRuinsBody() {
+			    Ruins_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Ruins'));
+			    $('#Ruins').focusout(function () {
+			        postSaveEditorData('Ruins', Ruins_editor.root.innerHTML);
 			    });
-			};
-
-			function setTourismBody() {
-			    Tourism_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Tourism'));
-			    $('#Tourism').focusout(function () {
-			        postSaveEditorData('Tourism', Tourism_editor.root.innerHTML);
-			    });
-			};
-
-			function setTraditionsBody() {
-			    Traditions_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Traditions'));
-			    $('#Traditions').focusout(function () {
-			        postSaveEditorData('Traditions', Traditions_editor.root.innerHTML);
-			    });
-			};
-
-			function setUniverseBody() {
-			    $('#continentsModel_Universe').val('@Model.continentsModel.Universe');
 			};
 
 			function setWarsBody() {
@@ -542,10 +547,31 @@
 			    });
 			};
 
-			function setWindsBody() {
-			    Winds_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Winds'));
-			    $('#Winds').focusout(function () {
-			        postSaveEditorData('Winds', Winds_editor.root.innerHTML);
+			function setDiscoveryBody() {
+			    Discovery_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Discovery'));
+			    $('#Discovery').focusout(function () {
+			        postSaveEditorData('Discovery', Discovery_editor.root.innerHTML);
+			    });
+			};
+
+			function setFormationBody() {
+			    Formation_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Formation'));
+			    $('#Formation').focusout(function () {
+			        postSaveEditorData('Formation', Formation_editor.root.innerHTML);
+			    });
+			};
+
+			function setPrivate_NotesBody() {
+			    Private_Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Private_Notes'));
+			    $('#Private_Notes').focusout(function () {
+			        postSaveEditorData('Private_Notes', Private_Notes_editor.root.innerHTML);
+			    });
+			};
+
+			function setNotesBody() {
+			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.continentsModel.Notes'));
+			    $('#Notes').focusout(function () {
+			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
 			    });
 			};
 
@@ -607,10 +633,18 @@
                         $('.roller').width(progress + '%');
                     });
 
-                    self.on("queuecomplete", function (progress) {
-                        $('.meter').delay(999).slideUp(999);
-                        console.log("Files uploaded");
-                        location.reload();
+                    self.on('error', function (file, response) {
+                        console.log("Files upload Error");
+                        showModal(response.message);
+                    });
+                    self.on('success', function () {
+                        self.on("queuecomplete", function () {
+                            $('.meter').delay(999).slideUp(999);
+                            console.log("Files uploaded");
+                            var locUrL = location.href.replace('#Gallery_panel', '') + "#Gallery_panel";
+                            window.location.href = locUrL;
+                            location.reload();
+                        });
                     });
                     self.on("complete", function (file) {
                         self.removeFile(file);

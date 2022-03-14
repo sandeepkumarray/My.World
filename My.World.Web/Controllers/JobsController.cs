@@ -13,6 +13,7 @@ using My.World.Web.Services;
 using Newtonsoft.Json;
 using My.World.Web.ViewModel;
 using Microsoft.Extensions.Configuration;
+using System.Web;
 
 namespace My.World.Web.Controllers
 {
@@ -103,7 +104,17 @@ namespace My.World.Web.Controllers
 			jobsViewModel.headerBackgroundColor = contentTypesModel.sec_color;
 			_iObjectBucketApiService.SetObjectStorageSecrets(model.user_id);
 			jobsViewModel.ContentObjectModelList = _iObjectBucketApiService.GetAllContentObjectAttachments(Convert.ToInt64(Id), "jobs");
-			return View(jobsViewModel);
+			jobsViewModel.ContentObjectModelList.ForEach(o => 
+			{
+			    var publicUrl = "http://" + _iObjectBucketApiService.objectStorageKeysModel.endpoint
+			                + '/' + _iObjectBucketApiService.objectStorageKeysModel.bucketName + '/' + _config.GetValue<string>("BucketEnv") + '/' + o.object_name; 
+			    o.file_url = HttpUtility.UrlPathEncode(publicUrl); 
+			}); 
+			var existing_total_size = jobsViewModel.ContentObjectModelList.Sum(f => f.object_size);
+			var AllowedTotalContentSize = Convert.ToInt64(HttpContext.Session.GetString("AllowedTotalContentSize"));
+			var remainingSize = AllowedTotalContentSize - existing_total_size;
+			jobsViewModel.RemainingContentSize = Helpers.Utility.SizeSuffix(remainingSize);
+			return View(jobsViewModel); 
 
 		}
 
@@ -154,43 +165,66 @@ namespace My.World.Web.Controllers
 			if (model != null)
 			{
 				
-				model.Alternate_names  = model.Alternate_names == null ? model.Alternate_names : model.Alternate_names.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Description  = model.Description == null ? model.Description : model.Description.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Education  = model.Education == null ? model.Education : model.Education.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Type_of_job  = model.Type_of_job == null ? model.Type_of_job : model.Type_of_job.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Alternate_names  = model.Alternate_names == null ? model.Alternate_names : model.Alternate_names.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Tags  = model.Tags == null ? model.Tags : model.Tags.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Experience  = model.Experience == null ? model.Experience : model.Experience.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Field  = model.Field == null ? model.Field : model.Field.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Initial_goal  = model.Initial_goal == null ? model.Initial_goal : model.Initial_goal.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Job_origin  = model.Job_origin == null ? model.Job_origin : model.Job_origin.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Education  = model.Education == null ? model.Education : model.Education.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Vehicles  = model.Vehicles == null ? model.Vehicles : model.Vehicles.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Training  = model.Training == null ? model.Training : model.Training.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Long_term_risks  = model.Long_term_risks == null ? model.Long_term_risks : model.Long_term_risks.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Occupational_hazards  = model.Occupational_hazards == null ? model.Occupational_hazards : model.Occupational_hazards.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Time_off  = model.Time_off == null ? model.Time_off : model.Time_off.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Similar_jobs  = model.Similar_jobs == null ? model.Similar_jobs : model.Similar_jobs.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Promotions  = model.Promotions == null ? model.Promotions : model.Promotions.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Specializations  = model.Specializations == null ? model.Specializations : model.Specializations.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Field  = model.Field == null ? model.Field : model.Field.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Ranks  = model.Ranks == null ? model.Ranks : model.Ranks.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Traditions  = model.Traditions == null ? model.Traditions : model.Traditions.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Job_origin  = model.Job_origin == null ? model.Job_origin : model.Job_origin.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+				model.Initial_goal  = model.Initial_goal == null ? model.Initial_goal : model.Initial_goal.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Notable_figures  = model.Notable_figures == null ? model.Notable_figures : model.Notable_figures.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Notes  = model.Notes == null ? model.Notes : model.Notes.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Occupational_hazards  = model.Occupational_hazards == null ? model.Occupational_hazards : model.Occupational_hazards.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 				model.Private_Notes  = model.Private_Notes == null ? model.Private_Notes : model.Private_Notes.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Promotions  = model.Promotions == null ? model.Promotions : model.Promotions.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Ranks  = model.Ranks == null ? model.Ranks : model.Ranks.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Similar_jobs  = model.Similar_jobs == null ? model.Similar_jobs : model.Similar_jobs.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Specializations  = model.Specializations == null ? model.Specializations : model.Specializations.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Tags  = model.Tags == null ? model.Tags : model.Tags.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Time_off  = model.Time_off == null ? model.Time_off : model.Time_off.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Traditions  = model.Traditions == null ? model.Traditions : model.Traditions.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Training  = model.Training == null ? model.Training : model.Training.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Type_of_job  = model.Type_of_job == null ? model.Type_of_job : model.Type_of_job.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
-				model.Vehicles  = model.Vehicles == null ? model.Vehicles : model.Vehicles.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
 			}
 
 		}
 
 		#region Save Properties Methods
 		[HttpPost]
-		[Route("{id}/SaveAlternate_names")]
-		public IActionResult SaveAlternate_names(string id)
+		[Route("SaveName")]
+		public IActionResult SaveName()
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Alternate_names";
-			var JobID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
+			var type = "Name";
+			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
+			var JobID = Convert.ToInt64(obj["JobID"].Value);
+			var value = Convert.ToString(obj["value"].Value);
+			
+			JobsModel model = new JobsModel();
+			model.id = JobID;
+			model._id = JobID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iJobsApiService.SaveJob(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("SaveUniverse")]
+		public IActionResult SaveUniverse()
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Universe";
+			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
+			var JobID = Convert.ToInt64(obj["JobID"].Value);
+			var value = Convert.ToString(obj["value"].Value);
 			
 			JobsModel model = new JobsModel();
 			model.id = JobID;
@@ -224,13 +258,55 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveEducation")]
-		public IActionResult SaveEducation(string id)
+		[Route("{id}/SaveType_of_job")]
+		public IActionResult SaveType_of_job(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Education";
+			var type = "Type_of_job";
+			var JobID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			JobsModel model = new JobsModel();
+			model.id = JobID;
+			model._id = JobID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iJobsApiService.SaveJob(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveAlternate_names")]
+		public IActionResult SaveAlternate_names(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Alternate_names";
+			var JobID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			JobsModel model = new JobsModel();
+			model.id = JobID;
+			model._id = JobID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iJobsApiService.SaveJob(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveTags")]
+		public IActionResult SaveTags(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Tags";
 			var JobID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -266,13 +342,13 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveField")]
-		public IActionResult SaveField(string id)
+		[Route("{id}/SaveEducation")]
+		public IActionResult SaveEducation(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Field";
+			var type = "Education";
 			var JobID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -287,13 +363,35 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveInitial_goal")]
-		public IActionResult SaveInitial_goal(string id)
+		[Route("SaveWork_hours")]
+		public IActionResult SaveWork_hours()
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Initial_goal";
+			var type = "Work_hours";
+			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
+			var JobID = Convert.ToInt64(obj["JobID"].Value);
+			var value = Convert.ToString(obj["value"].Value);
+			
+			JobsModel model = new JobsModel();
+			model.id = JobID;
+			model._id = JobID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iJobsApiService.SaveJob(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SaveVehicles")]
+		public IActionResult SaveVehicles(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Vehicles";
 			var JobID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -308,13 +406,13 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveJob_origin")]
-		public IActionResult SaveJob_origin(string id)
+		[Route("{id}/SaveTraining")]
+		public IActionResult SaveTraining(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Job_origin";
+			var type = "Training";
 			var JobID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -336,70 +434,6 @@ namespace My.World.Web.Controllers
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
 			var type = "Long_term_risks";
-			var JobID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			JobsModel model = new JobsModel();
-			model.id = JobID;
-			model._id = JobID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iJobsApiService.SaveJob(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("SaveName")]
-		public IActionResult SaveName()
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Name";
-			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
-			var JobID = Convert.ToInt64(obj["JobID"].Value);
-			var value = Convert.ToString(obj["value"].Value);
-			
-			JobsModel model = new JobsModel();
-			model.id = JobID;
-			model._id = JobID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iJobsApiService.SaveJob(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveNotable_figures")]
-		public IActionResult SaveNotable_figures(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Notable_figures";
-			var JobID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			JobsModel model = new JobsModel();
-			model.id = JobID;
-			model._id = JobID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iJobsApiService.SaveJob(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveNotes")]
-		public IActionResult SaveNotes(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Notes";
 			var JobID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -457,55 +491,13 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SavePrivate_Notes")]
-		public IActionResult SavePrivate_Notes(string id)
+		[Route("{id}/SaveTime_off")]
+		public IActionResult SaveTime_off(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Private_Notes";
-			var JobID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			JobsModel model = new JobsModel();
-			model.id = JobID;
-			model._id = JobID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iJobsApiService.SaveJob(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SavePromotions")]
-		public IActionResult SavePromotions(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Promotions";
-			var JobID = Convert.ToInt64(id);
-			var value = Convert.ToString(_rawContent);
-			
-			JobsModel model = new JobsModel();
-			model.id = JobID;
-			model._id = JobID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iJobsApiService.SaveJob(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveRanks")]
-		public IActionResult SaveRanks(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Ranks";
+			var type = "Time_off";
 			var JobID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -541,6 +533,27 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
+		[Route("{id}/SavePromotions")]
+		public IActionResult SavePromotions(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Promotions";
+			var JobID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			JobsModel model = new JobsModel();
+			model.id = JobID;
+			model._id = JobID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iJobsApiService.SaveJob(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
 		[Route("{id}/SaveSpecializations")]
 		public IActionResult SaveSpecializations(string id)
 		{
@@ -562,13 +575,13 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveTags")]
-		public IActionResult SaveTags(string id)
+		[Route("{id}/SaveField")]
+		public IActionResult SaveField(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Tags";
+			var type = "Field";
 			var JobID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -583,13 +596,13 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveTime_off")]
-		public IActionResult SaveTime_off(string id)
+		[Route("{id}/SaveRanks")]
+		public IActionResult SaveRanks(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Time_off";
+			var type = "Ranks";
 			var JobID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -625,13 +638,13 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveTraining")]
-		public IActionResult SaveTraining(string id)
+		[Route("{id}/SaveJob_origin")]
+		public IActionResult SaveJob_origin(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Training";
+			var type = "Job_origin";
 			var JobID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -646,13 +659,13 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("{id}/SaveType_of_job")]
-		public IActionResult SaveType_of_job(string id)
+		[Route("{id}/SaveInitial_goal")]
+		public IActionResult SaveInitial_goal(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Type_of_job";
+			var type = "Initial_goal";
 			var JobID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -667,35 +680,13 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("SaveUniverse")]
-		public IActionResult SaveUniverse()
+		[Route("{id}/SaveNotable_figures")]
+		public IActionResult SaveNotable_figures(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Universe";
-			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
-			var JobID = Convert.ToInt64(obj["JobID"].Value);
-			var value = Convert.ToString(obj["value"].Value);
-			
-			JobsModel model = new JobsModel();
-			model.id = JobID;
-			model._id = JobID;
-			model.column_type = type;
-			model.column_value = value;
-			response = _iJobsApiService.SaveJob(model);
-			return Json(response);
-
-		}
-
-		[HttpPost]
-		[Route("{id}/SaveVehicles")]
-		public IActionResult SaveVehicles(string id)
-		{
-			string _rawContent = null;
-			_rawContent = GetRawContent(_rawContent);
-			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Vehicles";
+			var type = "Notable_figures";
 			var JobID = Convert.ToInt64(id);
 			var value = Convert.ToString(_rawContent);
 			
@@ -710,16 +701,36 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpPost]
-		[Route("SaveWork_hours")]
-		public IActionResult SaveWork_hours()
+		[Route("{id}/SaveNotes")]
+		public IActionResult SaveNotes(string id)
 		{
 			string _rawContent = null;
 			_rawContent = GetRawContent(_rawContent);
 			ResponseModel<string> response = new ResponseModel<string>();
-			var type = "Work_hours";
-			dynamic obj = JsonConvert.DeserializeObject(_rawContent);
-			var JobID = Convert.ToInt64(obj["JobID"].Value);
-			var value = Convert.ToString(obj["value"].Value);
+			var type = "Notes";
+			var JobID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
+			
+			JobsModel model = new JobsModel();
+			model.id = JobID;
+			model._id = JobID;
+			model.column_type = type;
+			model.column_value = value;
+			response = _iJobsApiService.SaveJob(model);
+			return Json(response);
+
+		}
+
+		[HttpPost]
+		[Route("{id}/SavePrivate_Notes")]
+		public IActionResult SavePrivate_Notes(string id)
+		{
+			string _rawContent = null;
+			_rawContent = GetRawContent(_rawContent);
+			ResponseModel<string> response = new ResponseModel<string>();
+			var type = "Private_Notes";
+			var JobID = Convert.ToInt64(id);
+			var value = Convert.ToString(_rawContent);
 			
 			JobsModel model = new JobsModel();
 			model.id = JobID;
@@ -737,40 +748,53 @@ namespace My.World.Web.Controllers
 		public IActionResult UploadAttachment(List<IFormFile> files)
 		{
 			var accountID = Convert.ToInt64(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserID")?.Value);
-			string content_Id = HttpContext.Session.GetString("JobsID");
+			string content_Id = HttpContext.Session.GetString("JobID");
+			
+			var ContentObjectModelList = _iObjectBucketApiService.GetAllContentObjectAttachments(Convert.ToInt64(content_Id), "jobs");
+			var existing_total_size = ContentObjectModelList.Sum(f => f.object_size);
 			
 			var rq_files = Request.Form.Files;
+			var upload_file_size = rq_files.Sum(f => f.Length);
+			var total_size = upload_file_size + existing_total_size;
+			var AllowedTotalContentSize = Convert.ToInt64(HttpContext.Session.GetString("AllowedTotalContentSize"));
 			
-			if (rq_files != null)
+			if (total_size <= AllowedTotalContentSize)
 			{
-			    foreach (var file in rq_files)
-			    {
-			        using (var ms = new MemoryStream())
-			        {
-			            ContentObjectModel model = new ContentObjectModel();
-			            model.object_type = file.ContentType;
-			            model.object_name = file.FileName;
-			            model.object_size = file.Length;
+				if (rq_files != null)
+				{
+					foreach (var file in rq_files)
+					{
+						using (var ms = new MemoryStream())
+						{
+							ContentObjectModel model = new ContentObjectModel();
+							model.object_type = file.ContentType;
+							model.object_name = file.FileName;
+							model.object_size = file.Length;
+							model.bucket_folder = _config.GetValue<string>("BucketEnv");
 			
-			            file.CopyTo(ms);
-			            model.file = ms;
-			            model.file.Seek(0, 0);
-			            _iObjectBucketApiService.SetObjectStorageSecrets(accountID);
-			            var response = _iObjectBucketApiService.UploadObject(model).Result;
+							file.CopyTo(ms);
+							model.file = ms;
+							model.file.Seek(0, 0);
+							_iObjectBucketApiService.SetObjectStorageSecrets(accountID);
+							var response = _iObjectBucketApiService.UploadObject(model).Result;
 			
-			            if (!string.IsNullOrEmpty(response.Value))
-			            {
-			                ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
-			                contentObjectAttachmentModel.object_id = Convert.ToInt64(response.Value);
-			                contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
-			                contentObjectAttachmentModel.content_type = "jobs";
+							if (!string.IsNullOrEmpty(response.Value))
+							{
+								ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
+								contentObjectAttachmentModel.object_id = Convert.ToInt64(response.Value);
+								contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
+								contentObjectAttachmentModel.content_type = "jobs";
 			
-			                _iObjectBucketApiService.AddContentObjectAttachment(contentObjectAttachmentModel);
-			            }
-			        }
-			    }
+								_iObjectBucketApiService.AddContentObjectAttachment(contentObjectAttachmentModel);
+							}
+						}
+					}
+				}
 			}
-			
+			else
+			{
+				return BadRequest(new { message = "You have Exceeded the maximum allowed size of 50 MB per content to upload images." });
+			}
 			return Ok();
 
 		}
@@ -779,16 +803,17 @@ namespace My.World.Web.Controllers
 		public IActionResult DeleteAttachment(long objectId,string objectName)
 		{
 			var accountID = Convert.ToInt64(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserID")?.Value);
-			string content_Id = HttpContext.Session.GetString("JobsID");
+			string content_Id = HttpContext.Session.GetString("JobID");
 			
 			ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
 			contentObjectAttachmentModel.object_id = objectId;
 			contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
 			contentObjectAttachmentModel.content_type = "jobs";
 			
+			var bucket_folder = _config.GetValue<string>("BucketEnv");
 			ContentObjectModel contentObjectModel = new ContentObjectModel();
 			contentObjectModel.object_id = objectId;
-			contentObjectModel.object_name = objectName;
+			contentObjectModel.object_name = bucket_folder + " / " + objectName;
 			
 			_iObjectBucketApiService.SetObjectStorageSecrets(accountID);
 			_iObjectBucketApiService.DeleteObject(contentObjectModel);

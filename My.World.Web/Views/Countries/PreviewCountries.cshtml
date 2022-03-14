@@ -145,18 +145,115 @@
    
     <script type="text/javascript">
     
+		function setTagsBody() {
+		    html = htmlDecode('@Model.countriesModel.Tags');
+		    $('#Tags').append(html);
+		};
+
+		function setNameBody() {
+		    $('#countriesModel_Name').val('@Model.countriesModel.Name');
+		};
+
+		function setDescriptionBody() {
+		    html = htmlDecode('@Model.countriesModel.Description');
+		    $('#Description').append(html);
+		};
+
+		function setOther_NamesBody() {
+		    html = htmlDecode('@Model.countriesModel.Other_Names');
+		    $('#Other_Names').append(html);
+		};
+
+		function setUniverseBody() {
+		    $('#countriesModel_Universe').val('@Model.countriesModel.Universe');
+		};
+
+		function setLandmarksBody() {
+		    html = htmlDecode('@Model.countriesModel.Landmarks');
+		    $('#Landmarks').append(html);
+		};
+
+		function setLocationsBody() {
+		    html = htmlDecode('@Model.countriesModel.Locations');
+		    $('#Locations').append(html);
+		};
+
+		function setTownsBody() {
+		    html = htmlDecode('@Model.countriesModel.Towns');
+		    $('#Towns').append(html);
+		};
+
+		function setBordering_countriesBody() {
+		    html = htmlDecode('@Model.countriesModel.Bordering_countries');
+		    $('#Bordering_countries').append(html);
+		};
+
+		function setEducationBody() {
+		    html = htmlDecode('@Model.countriesModel.Education');
+		    $('#Education').append(html);
+		};
+
+		function setGovernmentsBody() {
+		    html = htmlDecode('@Model.countriesModel.Governments');
+		    $('#Governments').append(html);
+		};
+
+		function setReligionsBody() {
+		    html = htmlDecode('@Model.countriesModel.Religions');
+		    $('#Religions').append(html);
+		};
+
+		function setLanguagesBody() {
+		    html = htmlDecode('@Model.countriesModel.Languages');
+		    $('#Languages').append(html);
+		};
+
+		function setSportsBody() {
+		    html = htmlDecode('@Model.countriesModel.Sports');
+		    $('#Sports').append(html);
+		};
+
 		function setArchitectureBody() {
 		    html = htmlDecode('@Model.countriesModel.Architecture');
 		    $('#Architecture').append(html);
+		};
+
+		function setMusicBody() {
+		    html = htmlDecode('@Model.countriesModel.Music');
+		    $('#Music').append(html);
+		};
+
+		function setPop_cultureBody() {
+		    html = htmlDecode('@Model.countriesModel.Pop_culture');
+		    $('#Pop_culture').append(html);
+		};
+
+		function setLawsBody() {
+		    html = htmlDecode('@Model.countriesModel.Laws');
+		    $('#Laws').append(html);
+		};
+
+		function setCurrencyBody() {
+		    html = htmlDecode('@Model.countriesModel.Currency');
+		    $('#Currency').append(html);
+		};
+
+		function setSocial_hierarchyBody() {
+		    html = htmlDecode('@Model.countriesModel.Social_hierarchy');
+		    $('#Social_hierarchy').append(html);
+		};
+
+		function setPopulationBody() {
+		    $('#countriesModel_Population').val('@Model.countriesModel.Population');
 		};
 
 		function setAreaBody() {
 		    $('#countriesModel_Area').val('@Model.countriesModel.Area');
 		};
 
-		function setBordering_countriesBody() {
-		    html = htmlDecode('@Model.countriesModel.Bordering_countries');
-		    $('#Bordering_countries').append(html);
+		function setCropsBody() {
+		    html = htmlDecode('@Model.countriesModel.Crops');
+		    $('#Crops').append(html);
 		};
 
 		function setClimateBody() {
@@ -169,72 +266,13 @@
 		    $('#Creatures').append(html);
 		};
 
-		function setCropsBody() {
-		    html = htmlDecode('@Model.countriesModel.Crops');
-		    $('#Crops').append(html);
-		};
-
-		function setCurrencyBody() {
-		    html = htmlDecode('@Model.countriesModel.Currency');
-		    $('#Currency').append(html);
-		};
-
-		function setDescriptionBody() {
-		    html = htmlDecode('@Model.countriesModel.Description');
-		    $('#Description').append(html);
-		};
-
-		function setEducationBody() {
-		    html = htmlDecode('@Model.countriesModel.Education');
-		    $('#Education').append(html);
-		};
-
-		function setEstablished_yearBody() {
-		    $('#countriesModel_Established_year').val('@Model.countriesModel.Established_year');
-		};
-
 		function setFloraBody() {
 		    html = htmlDecode('@Model.countriesModel.Flora');
 		    $('#Flora').append(html);
 		};
 
-		function setFounding_storyBody() {
-		    html = htmlDecode('@Model.countriesModel.Founding_story');
-		    $('#Founding_story').append(html);
-		};
-
-		function setGovernmentsBody() {
-		    html = htmlDecode('@Model.countriesModel.Governments');
-		    $('#Governments').append(html);
-		};
-
-		function setLandmarksBody() {
-		    html = htmlDecode('@Model.countriesModel.Landmarks');
-		    $('#Landmarks').append(html);
-		};
-
-		function setLanguagesBody() {
-		    html = htmlDecode('@Model.countriesModel.Languages');
-		    $('#Languages').append(html);
-		};
-
-		function setLawsBody() {
-		    html = htmlDecode('@Model.countriesModel.Laws');
-		    $('#Laws').append(html);
-		};
-
-		function setLocationsBody() {
-		    html = htmlDecode('@Model.countriesModel.Locations');
-		    $('#Locations').append(html);
-		};
-
-		function setMusicBody() {
-		    html = htmlDecode('@Model.countriesModel.Music');
-		    $('#Music').append(html);
-		};
-
-		function setNameBody() {
-		    $('#countriesModel_Name').val('@Model.countriesModel.Name');
+		function setEstablished_yearBody() {
+		    $('#countriesModel_Established_year').val('@Model.countriesModel.Established_year');
 		};
 
 		function setNotable_warsBody() {
@@ -242,23 +280,9 @@
 		    $('#Notable_wars').append(html);
 		};
 
-		function setNotesBody() {
-		    html = htmlDecode('@Model.countriesModel.Notes');
-		    $('#Notes').append(html);
-		};
-
-		function setOther_NamesBody() {
-		    html = htmlDecode('@Model.countriesModel.Other_Names');
-		    $('#Other_Names').append(html);
-		};
-
-		function setPop_cultureBody() {
-		    html = htmlDecode('@Model.countriesModel.Pop_culture');
-		    $('#Pop_culture').append(html);
-		};
-
-		function setPopulationBody() {
-		    $('#countriesModel_Population').val('@Model.countriesModel.Population');
+		function setFounding_storyBody() {
+		    html = htmlDecode('@Model.countriesModel.Founding_story');
+		    $('#Founding_story').append(html);
 		};
 
 		function setPrivate_NotesBody() {
@@ -266,68 +290,44 @@
 		    $('#Private_Notes').append(html);
 		};
 
-		function setReligionsBody() {
-		    html = htmlDecode('@Model.countriesModel.Religions');
-		    $('#Religions').append(html);
-		};
-
-		function setSocial_hierarchyBody() {
-		    html = htmlDecode('@Model.countriesModel.Social_hierarchy');
-		    $('#Social_hierarchy').append(html);
-		};
-
-		function setSportsBody() {
-		    html = htmlDecode('@Model.countriesModel.Sports');
-		    $('#Sports').append(html);
-		};
-
-		function setTagsBody() {
-		    html = htmlDecode('@Model.countriesModel.Tags');
-		    $('#Tags').append(html);
-		};
-
-		function setTownsBody() {
-		    html = htmlDecode('@Model.countriesModel.Towns');
-		    $('#Towns').append(html);
-		};
-
-		function setUniverseBody() {
-		    $('#countriesModel_Universe').val('@Model.countriesModel.Universe');
+		function setNotesBody() {
+		    html = htmlDecode('@Model.countriesModel.Notes');
+		    $('#Notes').append(html);
 		};
 
 
 
         $(document).ready(function () {
-			setArchitectureBody();
-			setAreaBody();
+			setTagsBody();
+			setNameBody();
+			setDescriptionBody();
+			setOther_NamesBody();
+			setLandmarksBody();
+			setLocationsBody();
+			setTownsBody();
 			setBordering_countriesBody();
+			setEducationBody();
+			setGovernmentsBody();
+			setReligionsBody();
+			setLanguagesBody();
+			setSportsBody();
+			setArchitectureBody();
+			setMusicBody();
+			setPop_cultureBody();
+			setLawsBody();
+			setCurrencyBody();
+			setSocial_hierarchyBody();
+			setPopulationBody();
+			setAreaBody();
+			setCropsBody();
 			setClimateBody();
 			setCreaturesBody();
-			setCropsBody();
-			setCurrencyBody();
-			setDescriptionBody();
-			setEducationBody();
-			setEstablished_yearBody();
 			setFloraBody();
-			setFounding_storyBody();
-			setGovernmentsBody();
-			setLandmarksBody();
-			setLanguagesBody();
-			setLawsBody();
-			setLocationsBody();
-			setMusicBody();
-			setNameBody();
+			setEstablished_yearBody();
 			setNotable_warsBody();
-			setNotesBody();
-			setOther_NamesBody();
-			setPop_cultureBody();
-			setPopulationBody();
+			setFounding_storyBody();
 			setPrivate_NotesBody();
-			setReligionsBody();
-			setSocial_hierarchyBody();
-			setSportsBody();
-			setTagsBody();
-			setTownsBody();
+			setNotesBody();
 
         });
 

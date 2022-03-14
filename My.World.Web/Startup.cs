@@ -165,6 +165,8 @@ namespace My.World.Web
             //services.AddScoped<IObjectStorage, ObjectStorage>(pr => new ObjectStorage());
             services.AddScoped<IObjectBucketApiService, ObjectBucketApiService>(pr => new ObjectBucketApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
 
+            services.AddScoped<IAppconfigApiService, AppconfigApiService>(pr => new AppconfigApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true; // consent required

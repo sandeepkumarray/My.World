@@ -145,98 +145,13 @@
    
     <script type="text/javascript">
     
-		function setAlliesBody() {
-		    html = htmlDecode('@Model.groupsModel.Allies');
-		    $('#Allies').append(html);
+		function setTagsBody() {
+		    html = htmlDecode('@Model.groupsModel.Tags');
+		    $('#Tags').append(html);
 		};
 
-		function setClientsBody() {
-		    html = htmlDecode('@Model.groupsModel.Clients');
-		    $('#Clients').append(html);
-		};
-
-		function setCreaturesBody() {
-		    html = htmlDecode('@Model.groupsModel.Creatures');
-		    $('#Creatures').append(html);
-		};
-
-		function setDescriptionBody() {
-		    html = htmlDecode('@Model.groupsModel.Description');
-		    $('#Description').append(html);
-		};
-
-		function setEnemiesBody() {
-		    html = htmlDecode('@Model.groupsModel.Enemies');
-		    $('#Enemies').append(html);
-		};
-
-		function setEquipmentBody() {
-		    html = htmlDecode('@Model.groupsModel.Equipment');
-		    $('#Equipment').append(html);
-		};
-
-		function setGoalsBody() {
-		    html = htmlDecode('@Model.groupsModel.Goals');
-		    $('#Goals').append(html);
-		};
-
-		function setHeadquartersBody() {
-		    html = htmlDecode('@Model.groupsModel.Headquarters');
-		    $('#Headquarters').append(html);
-		};
-
-		function setInventoryBody() {
-		    html = htmlDecode('@Model.groupsModel.Inventory');
-		    $('#Inventory').append(html);
-		};
-
-		function setKey_itemsBody() {
-		    html = htmlDecode('@Model.groupsModel.Key_items');
-		    $('#Key_items').append(html);
-		};
-
-		function setLeadersBody() {
-		    html = htmlDecode('@Model.groupsModel.Leaders');
-		    $('#Leaders').append(html);
-		};
-
-		function setLocationsBody() {
-		    html = htmlDecode('@Model.groupsModel.Locations');
-		    $('#Locations').append(html);
-		};
-
-		function setMembersBody() {
-		    html = htmlDecode('@Model.groupsModel.Members');
-		    $('#Members').append(html);
-		};
-
-		function setMotivationsBody() {
-		    html = htmlDecode('@Model.groupsModel.Motivations');
-		    $('#Motivations').append(html);
-		};
-
-		function setNameBody() {
-		    $('#groupsModel_Name').val('@Model.groupsModel.Name');
-		};
-
-		function setNotesBody() {
-		    html = htmlDecode('@Model.groupsModel.Notes');
-		    $('#Notes').append(html);
-		};
-
-		function setObstaclesBody() {
-		    html = htmlDecode('@Model.groupsModel.Obstacles');
-		    $('#Obstacles').append(html);
-		};
-
-		function setOfficesBody() {
-		    html = htmlDecode('@Model.groupsModel.Offices');
-		    $('#Offices').append(html);
-		};
-
-		function setOrganization_structureBody() {
-		    html = htmlDecode('@Model.groupsModel.Organization_structure');
-		    $('#Organization_structure').append(html);
+		function setUniverseBody() {
+		    $('#groupsModel_Universe').val('@Model.groupsModel.Universe');
 		};
 
 		function setOther_NamesBody() {
@@ -244,24 +159,13 @@
 		    $('#Other_Names').append(html);
 		};
 
-		function setPrivate_notesBody() {
-		    html = htmlDecode('@Model.groupsModel.Private_notes');
-		    $('#Private_notes').append(html);
+		function setDescriptionBody() {
+		    html = htmlDecode('@Model.groupsModel.Description');
+		    $('#Description').append(html);
 		};
 
-		function setRisksBody() {
-		    html = htmlDecode('@Model.groupsModel.Risks');
-		    $('#Risks').append(html);
-		};
-
-		function setRivalsBody() {
-		    html = htmlDecode('@Model.groupsModel.Rivals');
-		    $('#Rivals').append(html);
-		};
-
-		function setSistergroupsBody() {
-		    html = htmlDecode('@Model.groupsModel.Sistergroups');
-		    $('#Sistergroups').append(html);
+		function setNameBody() {
+		    $('#groupsModel_Name').val('@Model.groupsModel.Name');
 		};
 
 		function setSubgroupsBody() {
@@ -274,14 +178,49 @@
 		    $('#Supergroups').append(html);
 		};
 
-		function setSuppliersBody() {
-		    html = htmlDecode('@Model.groupsModel.Suppliers');
-		    $('#Suppliers').append(html);
+		function setSistergroupsBody() {
+		    html = htmlDecode('@Model.groupsModel.Sistergroups');
+		    $('#Sistergroups').append(html);
 		};
 
-		function setTagsBody() {
-		    html = htmlDecode('@Model.groupsModel.Tags');
-		    $('#Tags').append(html);
+		function setOrganization_structureBody() {
+		    html = htmlDecode('@Model.groupsModel.Organization_structure');
+		    $('#Organization_structure').append(html);
+		};
+
+		function setLeadersBody() {
+		    html = htmlDecode('@Model.groupsModel.Leaders');
+		    $('#Leaders').append(html);
+		};
+
+		function setCreaturesBody() {
+		    html = htmlDecode('@Model.groupsModel.Creatures');
+		    $('#Creatures').append(html);
+		};
+
+		function setMembersBody() {
+		    html = htmlDecode('@Model.groupsModel.Members');
+		    $('#Members').append(html);
+		};
+
+		function setOfficesBody() {
+		    html = htmlDecode('@Model.groupsModel.Offices');
+		    $('#Offices').append(html);
+		};
+
+		function setLocationsBody() {
+		    html = htmlDecode('@Model.groupsModel.Locations');
+		    $('#Locations').append(html);
+		};
+
+		function setHeadquartersBody() {
+		    html = htmlDecode('@Model.groupsModel.Headquarters');
+		    $('#Headquarters').append(html);
+		};
+
+		function setMotivationsBody() {
+		    html = htmlDecode('@Model.groupsModel.Motivations');
+		    $('#Motivations').append(html);
 		};
 
 		function setTraditionsBody() {
@@ -289,42 +228,103 @@
 		    $('#Traditions').append(html);
 		};
 
-		function setUniverseBody() {
-		    $('#groupsModel_Universe').val('@Model.groupsModel.Universe');
+		function setRisksBody() {
+		    html = htmlDecode('@Model.groupsModel.Risks');
+		    $('#Risks').append(html);
+		};
+
+		function setObstaclesBody() {
+		    html = htmlDecode('@Model.groupsModel.Obstacles');
+		    $('#Obstacles').append(html);
+		};
+
+		function setGoalsBody() {
+		    html = htmlDecode('@Model.groupsModel.Goals');
+		    $('#Goals').append(html);
+		};
+
+		function setClientsBody() {
+		    html = htmlDecode('@Model.groupsModel.Clients');
+		    $('#Clients').append(html);
+		};
+
+		function setAlliesBody() {
+		    html = htmlDecode('@Model.groupsModel.Allies');
+		    $('#Allies').append(html);
+		};
+
+		function setEnemiesBody() {
+		    html = htmlDecode('@Model.groupsModel.Enemies');
+		    $('#Enemies').append(html);
+		};
+
+		function setRivalsBody() {
+		    html = htmlDecode('@Model.groupsModel.Rivals');
+		    $('#Rivals').append(html);
+		};
+
+		function setSuppliersBody() {
+		    html = htmlDecode('@Model.groupsModel.Suppliers');
+		    $('#Suppliers').append(html);
+		};
+
+		function setInventoryBody() {
+		    html = htmlDecode('@Model.groupsModel.Inventory');
+		    $('#Inventory').append(html);
+		};
+
+		function setEquipmentBody() {
+		    html = htmlDecode('@Model.groupsModel.Equipment');
+		    $('#Equipment').append(html);
+		};
+
+		function setKey_itemsBody() {
+		    html = htmlDecode('@Model.groupsModel.Key_items');
+		    $('#Key_items').append(html);
+		};
+
+		function setNotesBody() {
+		    html = htmlDecode('@Model.groupsModel.Notes');
+		    $('#Notes').append(html);
+		};
+
+		function setPrivate_notesBody() {
+		    html = htmlDecode('@Model.groupsModel.Private_notes');
+		    $('#Private_notes').append(html);
 		};
 
 
 
         $(document).ready(function () {
-			setAlliesBody();
-			setClientsBody();
-			setCreaturesBody();
-			setDescriptionBody();
-			setEnemiesBody();
-			setEquipmentBody();
-			setGoalsBody();
-			setHeadquartersBody();
-			setInventoryBody();
-			setKey_itemsBody();
-			setLeadersBody();
-			setLocationsBody();
-			setMembersBody();
-			setMotivationsBody();
-			setNameBody();
-			setNotesBody();
-			setObstaclesBody();
-			setOfficesBody();
-			setOrganization_structureBody();
+			setTagsBody();
 			setOther_NamesBody();
-			setPrivate_notesBody();
-			setRisksBody();
-			setRivalsBody();
-			setSistergroupsBody();
+			setDescriptionBody();
+			setNameBody();
 			setSubgroupsBody();
 			setSupergroupsBody();
-			setSuppliersBody();
-			setTagsBody();
+			setSistergroupsBody();
+			setOrganization_structureBody();
+			setLeadersBody();
+			setCreaturesBody();
+			setMembersBody();
+			setOfficesBody();
+			setLocationsBody();
+			setHeadquartersBody();
+			setMotivationsBody();
 			setTraditionsBody();
+			setRisksBody();
+			setObstaclesBody();
+			setGoalsBody();
+			setClientsBody();
+			setAlliesBody();
+			setEnemiesBody();
+			setRivalsBody();
+			setSuppliersBody();
+			setInventoryBody();
+			setEquipmentBody();
+			setKey_itemsBody();
+			setNotesBody();
+			setPrivate_notesBody();
 
         });
 

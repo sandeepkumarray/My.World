@@ -145,13 +145,43 @@
    
     <script type="text/javascript">
     
-		function setArchitectureBody() {
-		    html = htmlDecode('@Model.continentsModel.Architecture');
-		    $('#Architecture').append(html);
+		function setTagsBody() {
+		    html = htmlDecode('@Model.continentsModel.Tags');
+		    $('#Tags').append(html);
 		};
 
-		function setAreaBody() {
-		    $('#continentsModel_Area').val('@Model.continentsModel.Area');
+		function setUniverseBody() {
+		    $('#continentsModel_Universe').val('@Model.continentsModel.Universe');
+		};
+
+		function setDescriptionBody() {
+		    html = htmlDecode('@Model.continentsModel.Description');
+		    $('#Description').append(html);
+		};
+
+		function setOther_NamesBody() {
+		    html = htmlDecode('@Model.continentsModel.Other_Names');
+		    $('#Other_Names').append(html);
+		};
+
+		function setLocal_nameBody() {
+		    html = htmlDecode('@Model.continentsModel.Local_name');
+		    $('#Local_name').append(html);
+		};
+
+		function setRegional_disadvantagesBody() {
+		    html = htmlDecode('@Model.continentsModel.Regional_disadvantages');
+		    $('#Regional_disadvantages').append(html);
+		};
+
+		function setRegional_advantagesBody() {
+		    html = htmlDecode('@Model.continentsModel.Regional_advantages');
+		    $('#Regional_advantages').append(html);
+		};
+
+		function setLandmarksBody() {
+		    html = htmlDecode('@Model.continentsModel.Landmarks');
+		    $('#Landmarks').append(html);
 		};
 
 		function setBodies_of_waterBody() {
@@ -159,9 +189,88 @@
 		    $('#Bodies_of_water').append(html);
 		};
 
+		function setMineralogyBody() {
+		    html = htmlDecode('@Model.continentsModel.Mineralogy');
+		    $('#Mineralogy').append(html);
+		};
+
+		function setTopographyBody() {
+		    html = htmlDecode('@Model.continentsModel.Topography');
+		    $('#Topography').append(html);
+		};
+
+		function setPopulationBody() {
+		    html = htmlDecode('@Model.continentsModel.Population');
+		    $('#Population').append(html);
+		};
+
+		function setShapeBody() {
+		    html = htmlDecode('@Model.continentsModel.Shape');
+		    $('#Shape').append(html);
+		};
+
+		function setAreaBody() {
+		    $('#continentsModel_Area').val('@Model.continentsModel.Area');
+		};
+
+		function setPopular_foodsBody() {
+		    html = htmlDecode('@Model.continentsModel.Popular_foods');
+		    $('#Popular_foods').append(html);
+		};
+
+		function setGovernmentsBody() {
+		    html = htmlDecode('@Model.continentsModel.Governments');
+		    $('#Governments').append(html);
+		};
+
+		function setTraditionsBody() {
+		    html = htmlDecode('@Model.continentsModel.Traditions');
+		    $('#Traditions').append(html);
+		};
+
+		function setLanguagesBody() {
+		    html = htmlDecode('@Model.continentsModel.Languages');
+		    $('#Languages').append(html);
+		};
+
 		function setCountriesBody() {
 		    html = htmlDecode('@Model.continentsModel.Countries');
 		    $('#Countries').append(html);
+		};
+
+		function setReputationBody() {
+		    html = htmlDecode('@Model.continentsModel.Reputation');
+		    $('#Reputation').append(html);
+		};
+
+		function setArchitectureBody() {
+		    html = htmlDecode('@Model.continentsModel.Architecture');
+		    $('#Architecture').append(html);
+		};
+
+		function setTourismBody() {
+		    html = htmlDecode('@Model.continentsModel.Tourism');
+		    $('#Tourism').append(html);
+		};
+
+		function setEconomyBody() {
+		    html = htmlDecode('@Model.continentsModel.Economy');
+		    $('#Economy').append(html);
+		};
+
+		function setPoliticsBody() {
+		    html = htmlDecode('@Model.continentsModel.Politics');
+		    $('#Politics').append(html);
+		};
+
+		function setDemonymBody() {
+		    html = htmlDecode('@Model.continentsModel.Demonym');
+		    $('#Demonym').append(html);
+		};
+
+		function setFlorasBody() {
+		    html = htmlDecode('@Model.continentsModel.Floras');
+		    $('#Floras').append(html);
 		};
 
 		function setCreaturesBody() {
@@ -174,168 +283,9 @@
 		    $('#Crops').append(html);
 		};
 
-		function setDemonymBody() {
-		    html = htmlDecode('@Model.continentsModel.Demonym');
-		    $('#Demonym').append(html);
-		};
-
-		function setDescriptionBody() {
-		    html = htmlDecode('@Model.continentsModel.Description');
-		    $('#Description').append(html);
-		};
-
-		function setDiscoveryBody() {
-		    html = htmlDecode('@Model.continentsModel.Discovery');
-		    $('#Discovery').append(html);
-		};
-
-		function setEconomyBody() {
-		    html = htmlDecode('@Model.continentsModel.Economy');
-		    $('#Economy').append(html);
-		};
-
-		function setFlorasBody() {
-		    html = htmlDecode('@Model.continentsModel.Floras');
-		    $('#Floras').append(html);
-		};
-
-		function setFormationBody() {
-		    html = htmlDecode('@Model.continentsModel.Formation');
-		    $('#Formation').append(html);
-		};
-
-		function setGovernmentsBody() {
-		    html = htmlDecode('@Model.continentsModel.Governments');
-		    $('#Governments').append(html);
-		};
-
-		function setHumidityBody() {
-		    html = htmlDecode('@Model.continentsModel.Humidity');
-		    $('#Humidity').append(html);
-		};
-
-		function setLandmarksBody() {
-		    html = htmlDecode('@Model.continentsModel.Landmarks');
-		    $('#Landmarks').append(html);
-		};
-
-		function setLanguagesBody() {
-		    html = htmlDecode('@Model.continentsModel.Languages');
-		    $('#Languages').append(html);
-		};
-
-		function setLocal_nameBody() {
-		    html = htmlDecode('@Model.continentsModel.Local_name');
-		    $('#Local_name').append(html);
-		};
-
-		function setMineralogyBody() {
-		    html = htmlDecode('@Model.continentsModel.Mineralogy');
-		    $('#Mineralogy').append(html);
-		};
-
 		function setNatural_disastersBody() {
 		    html = htmlDecode('@Model.continentsModel.Natural_disasters');
 		    $('#Natural_disasters').append(html);
-		};
-
-		function setNotesBody() {
-		    html = htmlDecode('@Model.continentsModel.Notes');
-		    $('#Notes').append(html);
-		};
-
-		function setOther_NamesBody() {
-		    html = htmlDecode('@Model.continentsModel.Other_Names');
-		    $('#Other_Names').append(html);
-		};
-
-		function setPoliticsBody() {
-		    html = htmlDecode('@Model.continentsModel.Politics');
-		    $('#Politics').append(html);
-		};
-
-		function setPopular_foodsBody() {
-		    html = htmlDecode('@Model.continentsModel.Popular_foods');
-		    $('#Popular_foods').append(html);
-		};
-
-		function setPopulationBody() {
-		    html = htmlDecode('@Model.continentsModel.Population');
-		    $('#Population').append(html);
-		};
-
-		function setPrecipitationBody() {
-		    html = htmlDecode('@Model.continentsModel.Precipitation');
-		    $('#Precipitation').append(html);
-		};
-
-		function setPrivate_NotesBody() {
-		    html = htmlDecode('@Model.continentsModel.Private_Notes');
-		    $('#Private_Notes').append(html);
-		};
-
-		function setRegional_advantagesBody() {
-		    html = htmlDecode('@Model.continentsModel.Regional_advantages');
-		    $('#Regional_advantages').append(html);
-		};
-
-		function setRegional_disadvantagesBody() {
-		    html = htmlDecode('@Model.continentsModel.Regional_disadvantages');
-		    $('#Regional_disadvantages').append(html);
-		};
-
-		function setReputationBody() {
-		    html = htmlDecode('@Model.continentsModel.Reputation');
-		    $('#Reputation').append(html);
-		};
-
-		function setRuinsBody() {
-		    html = htmlDecode('@Model.continentsModel.Ruins');
-		    $('#Ruins').append(html);
-		};
-
-		function setSeasonsBody() {
-		    html = htmlDecode('@Model.continentsModel.Seasons');
-		    $('#Seasons').append(html);
-		};
-
-		function setShapeBody() {
-		    html = htmlDecode('@Model.continentsModel.Shape');
-		    $('#Shape').append(html);
-		};
-
-		function setTagsBody() {
-		    html = htmlDecode('@Model.continentsModel.Tags');
-		    $('#Tags').append(html);
-		};
-
-		function setTemperatureBody() {
-		    html = htmlDecode('@Model.continentsModel.Temperature');
-		    $('#Temperature').append(html);
-		};
-
-		function setTopographyBody() {
-		    html = htmlDecode('@Model.continentsModel.Topography');
-		    $('#Topography').append(html);
-		};
-
-		function setTourismBody() {
-		    html = htmlDecode('@Model.continentsModel.Tourism');
-		    $('#Tourism').append(html);
-		};
-
-		function setTraditionsBody() {
-		    html = htmlDecode('@Model.continentsModel.Traditions');
-		    $('#Traditions').append(html);
-		};
-
-		function setUniverseBody() {
-		    $('#continentsModel_Universe').val('@Model.continentsModel.Universe');
-		};
-
-		function setWarsBody() {
-		    html = htmlDecode('@Model.continentsModel.Wars');
-		    $('#Wars').append(html);
 		};
 
 		function setWindsBody() {
@@ -343,48 +293,98 @@
 		    $('#Winds').append(html);
 		};
 
+		function setPrecipitationBody() {
+		    html = htmlDecode('@Model.continentsModel.Precipitation');
+		    $('#Precipitation').append(html);
+		};
+
+		function setHumidityBody() {
+		    html = htmlDecode('@Model.continentsModel.Humidity');
+		    $('#Humidity').append(html);
+		};
+
+		function setSeasonsBody() {
+		    html = htmlDecode('@Model.continentsModel.Seasons');
+		    $('#Seasons').append(html);
+		};
+
+		function setTemperatureBody() {
+		    html = htmlDecode('@Model.continentsModel.Temperature');
+		    $('#Temperature').append(html);
+		};
+
+		function setRuinsBody() {
+		    html = htmlDecode('@Model.continentsModel.Ruins');
+		    $('#Ruins').append(html);
+		};
+
+		function setWarsBody() {
+		    html = htmlDecode('@Model.continentsModel.Wars');
+		    $('#Wars').append(html);
+		};
+
+		function setDiscoveryBody() {
+		    html = htmlDecode('@Model.continentsModel.Discovery');
+		    $('#Discovery').append(html);
+		};
+
+		function setFormationBody() {
+		    html = htmlDecode('@Model.continentsModel.Formation');
+		    $('#Formation').append(html);
+		};
+
+		function setPrivate_NotesBody() {
+		    html = htmlDecode('@Model.continentsModel.Private_Notes');
+		    $('#Private_Notes').append(html);
+		};
+
+		function setNotesBody() {
+		    html = htmlDecode('@Model.continentsModel.Notes');
+		    $('#Notes').append(html);
+		};
+
 
 
         $(document).ready(function () {
-			setArchitectureBody();
-			setAreaBody();
+			setTagsBody();
+			setDescriptionBody();
+			setOther_NamesBody();
+			setLocal_nameBody();
+			setRegional_disadvantagesBody();
+			setRegional_advantagesBody();
+			setLandmarksBody();
 			setBodies_of_waterBody();
+			setMineralogyBody();
+			setTopographyBody();
+			setPopulationBody();
+			setShapeBody();
+			setAreaBody();
+			setPopular_foodsBody();
+			setGovernmentsBody();
+			setTraditionsBody();
+			setLanguagesBody();
 			setCountriesBody();
+			setReputationBody();
+			setArchitectureBody();
+			setTourismBody();
+			setEconomyBody();
+			setPoliticsBody();
+			setDemonymBody();
+			setFlorasBody();
 			setCreaturesBody();
 			setCropsBody();
-			setDemonymBody();
-			setDescriptionBody();
-			setDiscoveryBody();
-			setEconomyBody();
-			setFlorasBody();
-			setFormationBody();
-			setGovernmentsBody();
-			setHumidityBody();
-			setLandmarksBody();
-			setLanguagesBody();
-			setLocal_nameBody();
-			setMineralogyBody();
 			setNatural_disastersBody();
-			setNotesBody();
-			setOther_NamesBody();
-			setPoliticsBody();
-			setPopular_foodsBody();
-			setPopulationBody();
-			setPrecipitationBody();
-			setPrivate_NotesBody();
-			setRegional_advantagesBody();
-			setRegional_disadvantagesBody();
-			setReputationBody();
-			setRuinsBody();
-			setSeasonsBody();
-			setShapeBody();
-			setTagsBody();
-			setTemperatureBody();
-			setTopographyBody();
-			setTourismBody();
-			setTraditionsBody();
-			setWarsBody();
 			setWindsBody();
+			setPrecipitationBody();
+			setHumidityBody();
+			setSeasonsBody();
+			setTemperatureBody();
+			setRuinsBody();
+			setWarsBody();
+			setDiscoveryBody();
+			setFormationBody();
+			setPrivate_NotesBody();
+			setNotesBody();
 
         });
 

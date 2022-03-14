@@ -32,16 +32,19 @@ namespace My.World.Web.Controllers
         private readonly IContentplansApiService _contentPlansService;
         Microsoft.Extensions.Configuration.IConfiguration _config;
         public readonly IObjectBucketApiService _iObjectBucketApiService;
+        readonly IAppconfigApiService _appconfigApiService;
 
         public AccountController(IUsersApiService usersApiService, IEmailClient emailClient,
             IContentplansApiService contentPlansService,
-            Microsoft.Extensions.Configuration.IConfiguration config, IObjectBucketApiService iObjectBucketApiService)
+            Microsoft.Extensions.Configuration.IConfiguration config, IObjectBucketApiService iObjectBucketApiService,
+            IAppconfigApiService appconfigApiService)
         {
             _usersApiService = usersApiService;
             _emailClient = emailClient;
             _contentPlansService = contentPlansService;
             _config = config;
             _iObjectBucketApiService = iObjectBucketApiService;
+            _appconfigApiService = appconfigApiService;
         }
 
         // GET: AccountController
@@ -129,6 +132,11 @@ namespace My.World.Web.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
             HttpContext.Session.SetString(AppConstants.JWTTOKEN, tokenString);
+
+            var appConfigList = _appconfigApiService.GetAllAppConfig();
+            appConfigList.ForEach(c=> {
+                HttpContext.Session.SetString(c.key, c.value);
+            });
 
             var userContentBucketModel = _iObjectBucketApiService.GetUserContentBucket(new UserContentBucketModel() { user_id = account.id });
             if(userContentBucketModel == null)

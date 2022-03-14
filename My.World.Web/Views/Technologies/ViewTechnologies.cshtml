@@ -1,3 +1,6 @@
+@using Microsoft.AspNetCore.Http
+@using My.World.Web
+@inject IHttpContextAccessor HttpContextAccessor
 @model My.World.Web.ViewModel.TechnologiesViewModel
 
 @{
@@ -112,7 +115,7 @@
                                                                                 else if (att.field_name.ToLower() == "universe")
                                                                                 {
                                                                                 <select id="ddlUniverseList" class="form-control" style="min-width:150px"
-                                                                                        asp-items="@(new SelectList(@Model.UniversesList, " id", "name" , Model.technologiesModel.Universe))"
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name" , Model.technologiesModel.Universe))"
                                                                                         onchange="UniverseSelected();">
                                                                                 </select>
                                                                                 }
@@ -168,17 +171,21 @@
                                                                                         <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
                                                                                             <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">
                                                                                                 <a class="remove-image" style="display: inline;"
-                                                                                                   asp-controller="buildings" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
+                                                                                                   asp-controller="technologies" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
                                                                                             </div>
                                                                                         </div>
                                                                                     }
                                                                                 </div>
                                                                             </div>
-
+                                                                            <div class="mb-3">
+                                                                                <div class="row">
+                                                                                    <h3><label class="form-label"> Only @Model.RemainingContentSize is left for content upload.</label></h3>
+                                                                                </div>
+                                                                            </div>
                                                                             <div class="mb-3">
                                                                                 <label class="form-label" for="exampleFormControlInput1">Upload Images...</label>
                                                                                 <div>
-                                                                                    @using (Html.BeginForm("UploadAttachment", "buildings", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
+                                                                                    @using (Html.BeginForm("UploadAttachment", "technologies", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
                                                                                     {
                                                                                     <div class="dz-message needsclick">
                                                                                         <button type="button" class="dz-button">Drop files here or click to upload.</button><br />
@@ -266,6 +273,25 @@
     </div>
 </div>
 
+<div id="contentsExceededModal" bsmodal="" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade" aria-modal="true" style="display: none;">
+    <div role="document" class="modal-dialog modal-danger modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Alert !</h4>
+                <button type="button" aria-label="Close" data-dismiss="modal" class="close">
+                    <span aria-hidden="true">�</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>You have Exceeded the maximum allowed size of @My.World.Web.Helpers.Utility.SizeSuffix(Convert.ToInt64(@HttpContextAccessor.HttpContext.Session.GetString("AllowedTotalContentSize"))) per content to upload images.</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script src="~/js/quill.js"></script>
     <script src="~/js/quill.mention.min.js"></script>
@@ -275,84 +301,10 @@
 
     <script type="text/javascript">
 
-        			function setCharactersBody() {
-			    Characters_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Characters'));
-			    $('#Characters').focusout(function () {
-			        postSaveEditorData('Characters', Characters_editor.root.innerHTML);
-			    });
-			};
-
-			function setChild_technologiesBody() {
-			    Child_technologies_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Child_technologies'));
-			    $('#Child_technologies').focusout(function () {
-			        postSaveEditorData('Child_technologies', Child_technologies_editor.root.innerHTML);
-			    });
-			};
-
-			function setColorsBody() {
-			    Colors_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Colors'));
-			    $('#Colors').focusout(function () {
-			        postSaveEditorData('Colors', Colors_editor.root.innerHTML);
-			    });
-			};
-
-			function setCostBody() {
-			    $('#technologiesModel_Cost').val('@Model.technologiesModel.Cost');
-			};
-
-			function setCountriesBody() {
-			    Countries_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Countries'));
-			    $('#Countries').focusout(function () {
-			        postSaveEditorData('Countries', Countries_editor.root.innerHTML);
-			    });
-			};
-
-			function setCreaturesBody() {
-			    Creatures_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Creatures'));
-			    $('#Creatures').focusout(function () {
-			        postSaveEditorData('Creatures', Creatures_editor.root.innerHTML);
-			    });
-			};
-
-			function setDescriptionBody() {
-			    Description_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Description'));
-			    $('#Description').focusout(function () {
-			        postSaveEditorData('Description', Description_editor.root.innerHTML);
-			    });
-			};
-
-			function setGroupsBody() {
-			    Groups_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Groups'));
-			    $('#Groups').focusout(function () {
-			        postSaveEditorData('Groups', Groups_editor.root.innerHTML);
-			    });
-			};
-
-			function setHow_It_WorksBody() {
-			    How_It_Works_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.How_It_Works'));
-			    $('#How_It_Works').focusout(function () {
-			        postSaveEditorData('How_It_Works', How_It_Works_editor.root.innerHTML);
-			    });
-			};
-
-			function setMagic_effectsBody() {
-			    Magic_effects_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Magic_effects'));
-			    $('#Magic_effects').focusout(function () {
-			        postSaveEditorData('Magic_effects', Magic_effects_editor.root.innerHTML);
-			    });
-			};
-
-			function setManufacturing_ProcessBody() {
-			    Manufacturing_Process_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Manufacturing_Process'));
-			    $('#Manufacturing_Process').focusout(function () {
-			        postSaveEditorData('Manufacturing_Process', Manufacturing_Process_editor.root.innerHTML);
-			    });
-			};
-
-			function setMaterialsBody() {
-			    Materials_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Materials'));
-			    $('#Materials').focusout(function () {
-			        postSaveEditorData('Materials', Materials_editor.root.innerHTML);
+        			function setTagsBody() {
+			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Tags'));
+			    $('#Tags').focusout(function () {
+			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
 			    });
 			};
 
@@ -360,10 +312,10 @@
 			    $('#technologiesModel_Name').val('@Model.technologiesModel.Name');
 			};
 
-			function setNotesBody() {
-			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Notes'));
-			    $('#Notes').focusout(function () {
-			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
+			function setDescriptionBody() {
+			    Description_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Description'));
+			    $('#Description').focusout(function () {
+			        postSaveEditorData('Description', Description_editor.root.innerHTML);
 			    });
 			};
 
@@ -374,38 +326,39 @@
 			    });
 			};
 
-			function setParent_technologiesBody() {
-			    Parent_technologies_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Parent_technologies'));
-			    $('#Parent_technologies').focusout(function () {
-			        postSaveEditorData('Parent_technologies', Parent_technologies_editor.root.innerHTML);
+			function setUniverseBody() {
+			    $('#technologiesModel_Universe').val('@Model.technologiesModel.Universe');
+			};
+
+			function setSales_ProcessBody() {
+			    Sales_Process_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Sales_Process'));
+			    $('#Sales_Process').focusout(function () {
+			        postSaveEditorData('Sales_Process', Sales_Process_editor.root.innerHTML);
 			    });
 			};
 
-			function setPhysical_DescriptionBody() {
-			    Physical_Description_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Physical_Description'));
-			    $('#Physical_Description').focusout(function () {
-			        postSaveEditorData('Physical_Description', Physical_Description_editor.root.innerHTML);
+			function setMaterialsBody() {
+			    Materials_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Materials'));
+			    $('#Materials').focusout(function () {
+			        postSaveEditorData('Materials', Materials_editor.root.innerHTML);
 			    });
+			};
+
+			function setManufacturing_ProcessBody() {
+			    Manufacturing_Process_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Manufacturing_Process'));
+			    $('#Manufacturing_Process').focusout(function () {
+			        postSaveEditorData('Manufacturing_Process', Manufacturing_Process_editor.root.innerHTML);
+			    });
+			};
+
+			function setCostBody() {
+			    $('#technologiesModel_Cost').val('@Model.technologiesModel.Cost');
 			};
 
 			function setPlanetsBody() {
 			    Planets_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Planets'));
 			    $('#Planets').focusout(function () {
 			        postSaveEditorData('Planets', Planets_editor.root.innerHTML);
-			    });
-			};
-
-			function setPrivate_NotesBody() {
-			    Private_Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Private_Notes'));
-			    $('#Private_Notes').focusout(function () {
-			        postSaveEditorData('Private_Notes', Private_Notes_editor.root.innerHTML);
-			    });
-			};
-
-			function setPurposeBody() {
-			    Purpose_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Purpose'));
-			    $('#Purpose').focusout(function () {
-			        postSaveEditorData('Purpose', Purpose_editor.root.innerHTML);
 			    });
 			};
 
@@ -416,35 +369,24 @@
 			    });
 			};
 
-			function setRelated_technologiesBody() {
-			    Related_technologies_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Related_technologies'));
-			    $('#Related_technologies').focusout(function () {
-			        postSaveEditorData('Related_technologies', Related_technologies_editor.root.innerHTML);
+			function setCreaturesBody() {
+			    Creatures_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Creatures'));
+			    $('#Creatures').focusout(function () {
+			        postSaveEditorData('Creatures', Creatures_editor.root.innerHTML);
 			    });
 			};
 
-			function setResources_UsedBody() {
-			    Resources_Used_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Resources_Used'));
-			    $('#Resources_Used').focusout(function () {
-			        postSaveEditorData('Resources_Used', Resources_Used_editor.root.innerHTML);
+			function setGroupsBody() {
+			    Groups_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Groups'));
+			    $('#Groups').focusout(function () {
+			        postSaveEditorData('Groups', Groups_editor.root.innerHTML);
 			    });
 			};
 
-			function setSales_ProcessBody() {
-			    Sales_Process_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Sales_Process'));
-			    $('#Sales_Process').focusout(function () {
-			        postSaveEditorData('Sales_Process', Sales_Process_editor.root.innerHTML);
-			    });
-			};
-
-			function setSizeBody() {
-			    $('#technologiesModel_Size').val('@Model.technologiesModel.Size');
-			};
-
-			function setTagsBody() {
-			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Tags'));
-			    $('#Tags').focusout(function () {
-			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
+			function setCountriesBody() {
+			    Countries_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Countries'));
+			    $('#Countries').focusout(function () {
+			        postSaveEditorData('Countries', Countries_editor.root.innerHTML);
 			    });
 			};
 
@@ -455,31 +397,115 @@
 			    });
 			};
 
-			function setUniverseBody() {
-			    $('#technologiesModel_Universe').val('@Model.technologiesModel.Universe');
+			function setCharactersBody() {
+			    Characters_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Characters'));
+			    $('#Characters').focusout(function () {
+			        postSaveEditorData('Characters', Characters_editor.root.innerHTML);
+			    });
+			};
+
+			function setMagic_effectsBody() {
+			    Magic_effects_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Magic_effects'));
+			    $('#Magic_effects').focusout(function () {
+			        postSaveEditorData('Magic_effects', Magic_effects_editor.root.innerHTML);
+			    });
+			};
+
+			function setResources_UsedBody() {
+			    Resources_Used_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Resources_Used'));
+			    $('#Resources_Used').focusout(function () {
+			        postSaveEditorData('Resources_Used', Resources_Used_editor.root.innerHTML);
+			    });
+			};
+
+			function setHow_It_WorksBody() {
+			    How_It_Works_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.How_It_Works'));
+			    $('#How_It_Works').focusout(function () {
+			        postSaveEditorData('How_It_Works', How_It_Works_editor.root.innerHTML);
+			    });
+			};
+
+			function setPurposeBody() {
+			    Purpose_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Purpose'));
+			    $('#Purpose').focusout(function () {
+			        postSaveEditorData('Purpose', Purpose_editor.root.innerHTML);
+			    });
 			};
 
 			function setWeightBody() {
 			    $('#technologiesModel_Weight').val('@Model.technologiesModel.Weight');
 			};
 
+			function setPhysical_DescriptionBody() {
+			    Physical_Description_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Physical_Description'));
+			    $('#Physical_Description').focusout(function () {
+			        postSaveEditorData('Physical_Description', Physical_Description_editor.root.innerHTML);
+			    });
+			};
+
+			function setSizeBody() {
+			    $('#technologiesModel_Size').val('@Model.technologiesModel.Size');
+			};
+
+			function setColorsBody() {
+			    Colors_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Colors'));
+			    $('#Colors').focusout(function () {
+			        postSaveEditorData('Colors', Colors_editor.root.innerHTML);
+			    });
+			};
+
+			function setRelated_technologiesBody() {
+			    Related_technologies_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Related_technologies'));
+			    $('#Related_technologies').focusout(function () {
+			        postSaveEditorData('Related_technologies', Related_technologies_editor.root.innerHTML);
+			    });
+			};
+
+			function setParent_technologiesBody() {
+			    Parent_technologies_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Parent_technologies'));
+			    $('#Parent_technologies').focusout(function () {
+			        postSaveEditorData('Parent_technologies', Parent_technologies_editor.root.innerHTML);
+			    });
+			};
+
+			function setChild_technologiesBody() {
+			    Child_technologies_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Child_technologies'));
+			    $('#Child_technologies').focusout(function () {
+			        postSaveEditorData('Child_technologies', Child_technologies_editor.root.innerHTML);
+			    });
+			};
+
+			function setNotesBody() {
+			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Notes'));
+			    $('#Notes').focusout(function () {
+			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
+			    });
+			};
+
+			function setPrivate_NotesBody() {
+			    Private_Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.technologiesModel.Private_Notes'));
+			    $('#Private_Notes').focusout(function () {
+			        postSaveEditorData('Private_Notes', Private_Notes_editor.root.innerHTML);
+			    });
+			};
+
 
 
         $(document).ready(function () {
-            			$('#technologiesModel_Cost').blur(function() {
-			    postSaveData('Cost', $('#technologiesModel_Cost').val());
-			});
-
-			$('#technologiesModel_Name').blur(function() {
+            			$('#technologiesModel_Name').blur(function() {
 			    postSaveData('Name', $('#technologiesModel_Name').val());
 			});
 
-			$('#technologiesModel_Size').blur(function() {
-			    postSaveData('Size', $('#technologiesModel_Size').val());
+			$('#technologiesModel_Cost').blur(function() {
+			    postSaveData('Cost', $('#technologiesModel_Cost').val());
 			});
 
 			$('#technologiesModel_Weight').blur(function() {
 			    postSaveData('Weight', $('#technologiesModel_Weight').val());
+			});
+
+			$('#technologiesModel_Size').blur(function() {
+			    postSaveData('Size', $('#technologiesModel_Size').val());
 			});
 
 
@@ -533,10 +559,18 @@
                         $('.roller').width(progress + '%');
                     });
 
-                    self.on("queuecomplete", function (progress) {
-                        $('.meter').delay(999).slideUp(999);
-                        console.log("Files uploaded");
-                        location.reload();
+                    self.on('error', function (file, response) {
+                        console.log("Files upload Error");
+                        showModal(response.message);
+                    });
+                    self.on('success', function () {
+                        self.on("queuecomplete", function () {
+                            $('.meter').delay(999).slideUp(999);
+                            console.log("Files uploaded");
+                            var locUrL = location.href.replace('#Gallery_panel', '') + "#Gallery_panel";
+                            window.location.href = locUrL;
+                            location.reload();
+                        });
                     });
                     self.on("complete", function (file) {
                         self.removeFile(file);

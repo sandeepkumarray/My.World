@@ -1,3 +1,6 @@
+@using Microsoft.AspNetCore.Http
+@using My.World.Web
+@inject IHttpContextAccessor HttpContextAccessor
 @model My.World.Web.ViewModel.LanguagesViewModel
 
 @{
@@ -112,7 +115,7 @@
                                                                                 else if (att.field_name.ToLower() == "universe")
                                                                                 {
                                                                                 <select id="ddlUniverseList" class="form-control" style="min-width:150px"
-                                                                                        asp-items="@(new SelectList(@Model.UniversesList, " id", "name" , Model.languagesModel.Universe))"
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name" , Model.languagesModel.Universe))"
                                                                                         onchange="UniverseSelected();">
                                                                                 </select>
                                                                                 }
@@ -168,17 +171,21 @@
                                                                                         <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
                                                                                             <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">
                                                                                                 <a class="remove-image" style="display: inline;"
-                                                                                                   asp-controller="buildings" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
+                                                                                                   asp-controller="languages" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
                                                                                             </div>
                                                                                         </div>
                                                                                     }
                                                                                 </div>
                                                                             </div>
-
+                                                                            <div class="mb-3">
+                                                                                <div class="row">
+                                                                                    <h3><label class="form-label"> Only @Model.RemainingContentSize is left for content upload.</label></h3>
+                                                                                </div>
+                                                                            </div>
                                                                             <div class="mb-3">
                                                                                 <label class="form-label" for="exampleFormControlInput1">Upload Images...</label>
                                                                                 <div>
-                                                                                    @using (Html.BeginForm("UploadAttachment", "buildings", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
+                                                                                    @using (Html.BeginForm("UploadAttachment", "languages", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
                                                                                     {
                                                                                     <div class="dz-message needsclick">
                                                                                         <button type="button" class="dz-button">Drop files here or click to upload.</button><br />
@@ -266,6 +273,25 @@
     </div>
 </div>
 
+<div id="contentsExceededModal" bsmodal="" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade" aria-modal="true" style="display: none;">
+    <div role="document" class="modal-dialog modal-danger modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Alert !</h4>
+                <button type="button" aria-label="Close" data-dismiss="modal" class="close">
+                    <span aria-hidden="true">�</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>You have Exceeded the maximum allowed size of @My.World.Web.Helpers.Utility.SizeSuffix(Convert.ToInt64(@HttpContextAccessor.HttpContext.Session.GetString("AllowedTotalContentSize"))) per content to upload images.</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script src="~/js/quill.js"></script>
     <script src="~/js/quill.mention.min.js"></script>
@@ -275,98 +301,14 @@
 
     <script type="text/javascript">
 
-        			function setBody_partsBody() {
-			    Body_parts_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Body_parts'));
-			    $('#Body_parts').focusout(function () {
-			        postSaveEditorData('Body_parts', Body_parts_editor.root.innerHTML);
-			    });
+        			function setUniverseBody() {
+			    $('#languagesModel_Universe').val('@Model.languagesModel.Universe');
 			};
 
-			function setDeterminersBody() {
-			    Determiners_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Determiners'));
-			    $('#Determiners').focusout(function () {
-			        postSaveEditorData('Determiners', Determiners_editor.root.innerHTML);
-			    });
-			};
-
-			function setDialectical_informationBody() {
-			    Dialectical_information_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Dialectical_information'));
-			    $('#Dialectical_information').focusout(function () {
-			        postSaveEditorData('Dialectical_information', Dialectical_information_editor.root.innerHTML);
-			    });
-			};
-
-			function setEvolutionBody() {
-			    Evolution_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Evolution'));
-			    $('#Evolution').focusout(function () {
-			        postSaveEditorData('Evolution', Evolution_editor.root.innerHTML);
-			    });
-			};
-
-			function setFamilyBody() {
-			    Family_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Family'));
-			    $('#Family').focusout(function () {
-			        postSaveEditorData('Family', Family_editor.root.innerHTML);
-			    });
-			};
-
-			function setGesturesBody() {
-			    Gestures_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Gestures'));
-			    $('#Gestures').focusout(function () {
-			        postSaveEditorData('Gestures', Gestures_editor.root.innerHTML);
-			    });
-			};
-
-			function setGoodbyesBody() {
-			    Goodbyes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Goodbyes'));
-			    $('#Goodbyes').focusout(function () {
-			        postSaveEditorData('Goodbyes', Goodbyes_editor.root.innerHTML);
-			    });
-			};
-
-			function setGrammarBody() {
-			    Grammar_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Grammar'));
-			    $('#Grammar').focusout(function () {
-			        postSaveEditorData('Grammar', Grammar_editor.root.innerHTML);
-			    });
-			};
-
-			function setGreetingsBody() {
-			    Greetings_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Greetings'));
-			    $('#Greetings').focusout(function () {
-			        postSaveEditorData('Greetings', Greetings_editor.root.innerHTML);
-			    });
-			};
-
-			function setHistoryBody() {
-			    History_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.History'));
-			    $('#History').focusout(function () {
-			        postSaveEditorData('History', History_editor.root.innerHTML);
-			    });
-			};
-
-			function setNameBody() {
-			    $('#languagesModel_Name').val('@Model.languagesModel.Name');
-			};
-
-			function setNo_wordsBody() {
-			    No_words_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.No_words'));
-			    $('#No_words').focusout(function () {
-			        postSaveEditorData('No_words', No_words_editor.root.innerHTML);
-			    });
-			};
-
-			function setNotesBody() {
-			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Notes'));
-			    $('#Notes').focusout(function () {
-			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
-			    });
-			};
-
-			function setNumbersBody() {
-			    Numbers_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Numbers'));
-			    $('#Numbers').focusout(function () {
-			        postSaveEditorData('Numbers', Numbers_editor.root.innerHTML);
+			function setTagsBody() {
+			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Tags'));
+			    $('#Tags').focusout(function () {
+			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
 			    });
 			};
 
@@ -377,38 +319,21 @@
 			    });
 			};
 
-			function setPhonologyBody() {
-			    Phonology_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Phonology'));
-			    $('#Phonology').focusout(function () {
-			        postSaveEditorData('Phonology', Phonology_editor.root.innerHTML);
+			function setNameBody() {
+			    $('#languagesModel_Name').val('@Model.languagesModel.Name');
+			};
+
+			function setTypologyBody() {
+			    Typology_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Typology'));
+			    $('#Typology').focusout(function () {
+			        postSaveEditorData('Typology', Typology_editor.root.innerHTML);
 			    });
 			};
 
-			function setPleaseBody() {
-			    Please_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Please'));
-			    $('#Please').focusout(function () {
-			        postSaveEditorData('Please', Please_editor.root.innerHTML);
-			    });
-			};
-
-			function setPrivate_notesBody() {
-			    Private_notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Private_notes'));
-			    $('#Private_notes').focusout(function () {
-			        postSaveEditorData('Private_notes', Private_notes_editor.root.innerHTML);
-			    });
-			};
-
-			function setPronounsBody() {
-			    Pronouns_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Pronouns'));
-			    $('#Pronouns').focusout(function () {
-			        postSaveEditorData('Pronouns', Pronouns_editor.root.innerHTML);
-			    });
-			};
-
-			function setQuantifiersBody() {
-			    Quantifiers_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Quantifiers'));
-			    $('#Quantifiers').focusout(function () {
-			        postSaveEditorData('Quantifiers', Quantifiers_editor.root.innerHTML);
+			function setDialectical_informationBody() {
+			    Dialectical_information_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Dialectical_information'));
+			    $('#Dialectical_information').focusout(function () {
+			        postSaveEditorData('Dialectical_information', Dialectical_information_editor.root.innerHTML);
 			    });
 			};
 
@@ -419,24 +344,45 @@
 			    });
 			};
 
-			function setSorryBody() {
-			    Sorry_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Sorry'));
-			    $('#Sorry').focusout(function () {
-			        postSaveEditorData('Sorry', Sorry_editor.root.innerHTML);
+			function setHistoryBody() {
+			    History_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.History'));
+			    $('#History').focusout(function () {
+			        postSaveEditorData('History', History_editor.root.innerHTML);
 			    });
 			};
 
-			function setTagsBody() {
-			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Tags'));
-			    $('#Tags').focusout(function () {
-			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
+			function setEvolutionBody() {
+			    Evolution_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Evolution'));
+			    $('#Evolution').focusout(function () {
+			        postSaveEditorData('Evolution', Evolution_editor.root.innerHTML);
 			    });
 			};
 
-			function setThank_youBody() {
-			    Thank_you_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Thank_you'));
-			    $('#Thank_you').focusout(function () {
-			        postSaveEditorData('Thank_you', Thank_you_editor.root.innerHTML);
+			function setGesturesBody() {
+			    Gestures_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Gestures'));
+			    $('#Gestures').focusout(function () {
+			        postSaveEditorData('Gestures', Gestures_editor.root.innerHTML);
+			    });
+			};
+
+			function setPhonologyBody() {
+			    Phonology_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Phonology'));
+			    $('#Phonology').focusout(function () {
+			        postSaveEditorData('Phonology', Phonology_editor.root.innerHTML);
+			    });
+			};
+
+			function setGrammarBody() {
+			    Grammar_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Grammar'));
+			    $('#Grammar').focusout(function () {
+			        postSaveEditorData('Grammar', Grammar_editor.root.innerHTML);
+			    });
+			};
+
+			function setPleaseBody() {
+			    Please_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Please'));
+			    $('#Please').focusout(function () {
+			        postSaveEditorData('Please', Please_editor.root.innerHTML);
 			    });
 			};
 
@@ -447,15 +393,25 @@
 			    });
 			};
 
-			function setTypologyBody() {
-			    Typology_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Typology'));
-			    $('#Typology').focusout(function () {
-			        postSaveEditorData('Typology', Typology_editor.root.innerHTML);
+			function setFamilyBody() {
+			    Family_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Family'));
+			    $('#Family').focusout(function () {
+			        postSaveEditorData('Family', Family_editor.root.innerHTML);
 			    });
 			};
 
-			function setUniverseBody() {
-			    $('#languagesModel_Universe').val('@Model.languagesModel.Universe');
+			function setBody_partsBody() {
+			    Body_parts_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Body_parts'));
+			    $('#Body_parts').focusout(function () {
+			        postSaveEditorData('Body_parts', Body_parts_editor.root.innerHTML);
+			    });
+			};
+
+			function setNo_wordsBody() {
+			    No_words_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.No_words'));
+			    $('#No_words').focusout(function () {
+			        postSaveEditorData('No_words', No_words_editor.root.innerHTML);
+			    });
 			};
 
 			function setYes_wordsBody() {
@@ -465,10 +421,80 @@
 			    });
 			};
 
+			function setSorryBody() {
+			    Sorry_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Sorry'));
+			    $('#Sorry').focusout(function () {
+			        postSaveEditorData('Sorry', Sorry_editor.root.innerHTML);
+			    });
+			};
+
 			function setYou_are_welcomeBody() {
 			    You_are_welcome_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.You_are_welcome'));
 			    $('#You_are_welcome').focusout(function () {
 			        postSaveEditorData('You_are_welcome', You_are_welcome_editor.root.innerHTML);
+			    });
+			};
+
+			function setThank_youBody() {
+			    Thank_you_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Thank_you'));
+			    $('#Thank_you').focusout(function () {
+			        postSaveEditorData('Thank_you', Thank_you_editor.root.innerHTML);
+			    });
+			};
+
+			function setGoodbyesBody() {
+			    Goodbyes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Goodbyes'));
+			    $('#Goodbyes').focusout(function () {
+			        postSaveEditorData('Goodbyes', Goodbyes_editor.root.innerHTML);
+			    });
+			};
+
+			function setGreetingsBody() {
+			    Greetings_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Greetings'));
+			    $('#Greetings').focusout(function () {
+			        postSaveEditorData('Greetings', Greetings_editor.root.innerHTML);
+			    });
+			};
+
+			function setPronounsBody() {
+			    Pronouns_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Pronouns'));
+			    $('#Pronouns').focusout(function () {
+			        postSaveEditorData('Pronouns', Pronouns_editor.root.innerHTML);
+			    });
+			};
+
+			function setNumbersBody() {
+			    Numbers_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Numbers'));
+			    $('#Numbers').focusout(function () {
+			        postSaveEditorData('Numbers', Numbers_editor.root.innerHTML);
+			    });
+			};
+
+			function setQuantifiersBody() {
+			    Quantifiers_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Quantifiers'));
+			    $('#Quantifiers').focusout(function () {
+			        postSaveEditorData('Quantifiers', Quantifiers_editor.root.innerHTML);
+			    });
+			};
+
+			function setDeterminersBody() {
+			    Determiners_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Determiners'));
+			    $('#Determiners').focusout(function () {
+			        postSaveEditorData('Determiners', Determiners_editor.root.innerHTML);
+			    });
+			};
+
+			function setNotesBody() {
+			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Notes'));
+			    $('#Notes').focusout(function () {
+			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
+			    });
+			};
+
+			function setPrivate_notesBody() {
+			    Private_notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.languagesModel.Private_notes'));
+			    $('#Private_notes').focusout(function () {
+			        postSaveEditorData('Private_notes', Private_notes_editor.root.innerHTML);
 			    });
 			};
 
@@ -530,10 +556,18 @@
                         $('.roller').width(progress + '%');
                     });
 
-                    self.on("queuecomplete", function (progress) {
-                        $('.meter').delay(999).slideUp(999);
-                        console.log("Files uploaded");
-                        location.reload();
+                    self.on('error', function (file, response) {
+                        console.log("Files upload Error");
+                        showModal(response.message);
+                    });
+                    self.on('success', function () {
+                        self.on("queuecomplete", function () {
+                            $('.meter').delay(999).slideUp(999);
+                            console.log("Files uploaded");
+                            var locUrL = location.href.replace('#Gallery_panel', '') + "#Gallery_panel";
+                            window.location.href = locUrL;
+                            location.reload();
+                        });
                     });
                     self.on("complete", function (file) {
                         self.removeFile(file);

@@ -145,9 +145,12 @@
    
     <script type="text/javascript">
     
-		function setAlternate_namesBody() {
-		    html = htmlDecode('@Model.jobsModel.Alternate_names');
-		    $('#Alternate_names').append(html);
+		function setNameBody() {
+		    $('#jobsModel_Name').val('@Model.jobsModel.Name');
+		};
+
+		function setUniverseBody() {
+		    $('#jobsModel_Universe').val('@Model.jobsModel.Universe');
 		};
 
 		function setDescriptionBody() {
@@ -155,9 +158,19 @@
 		    $('#Description').append(html);
 		};
 
-		function setEducationBody() {
-		    html = htmlDecode('@Model.jobsModel.Education');
-		    $('#Education').append(html);
+		function setType_of_jobBody() {
+		    html = htmlDecode('@Model.jobsModel.Type_of_job');
+		    $('#Type_of_job').append(html);
+		};
+
+		function setAlternate_namesBody() {
+		    html = htmlDecode('@Model.jobsModel.Alternate_names');
+		    $('#Alternate_names').append(html);
+		};
+
+		function setTagsBody() {
+		    html = htmlDecode('@Model.jobsModel.Tags');
+		    $('#Tags').append(html);
 		};
 
 		function setExperienceBody() {
@@ -165,19 +178,23 @@
 		    $('#Experience').append(html);
 		};
 
-		function setFieldBody() {
-		    html = htmlDecode('@Model.jobsModel.Field');
-		    $('#Field').append(html);
+		function setEducationBody() {
+		    html = htmlDecode('@Model.jobsModel.Education');
+		    $('#Education').append(html);
 		};
 
-		function setInitial_goalBody() {
-		    html = htmlDecode('@Model.jobsModel.Initial_goal');
-		    $('#Initial_goal').append(html);
+		function setWork_hoursBody() {
+		    $('#jobsModel_Work_hours').val('@Model.jobsModel.Work_hours');
 		};
 
-		function setJob_originBody() {
-		    html = htmlDecode('@Model.jobsModel.Job_origin');
-		    $('#Job_origin').append(html);
+		function setVehiclesBody() {
+		    html = htmlDecode('@Model.jobsModel.Vehicles');
+		    $('#Vehicles').append(html);
+		};
+
+		function setTrainingBody() {
+		    html = htmlDecode('@Model.jobsModel.Training');
+		    $('#Training').append(html);
 		};
 
 		function setLong_term_risksBody() {
@@ -185,8 +202,58 @@
 		    $('#Long_term_risks').append(html);
 		};
 
-		function setNameBody() {
-		    $('#jobsModel_Name').val('@Model.jobsModel.Name');
+		function setOccupational_hazardsBody() {
+		    html = htmlDecode('@Model.jobsModel.Occupational_hazards');
+		    $('#Occupational_hazards').append(html);
+		};
+
+		function setPay_rateBody() {
+		    $('#jobsModel_Pay_rate').val('@Model.jobsModel.Pay_rate');
+		};
+
+		function setTime_offBody() {
+		    html = htmlDecode('@Model.jobsModel.Time_off');
+		    $('#Time_off').append(html);
+		};
+
+		function setSimilar_jobsBody() {
+		    html = htmlDecode('@Model.jobsModel.Similar_jobs');
+		    $('#Similar_jobs').append(html);
+		};
+
+		function setPromotionsBody() {
+		    html = htmlDecode('@Model.jobsModel.Promotions');
+		    $('#Promotions').append(html);
+		};
+
+		function setSpecializationsBody() {
+		    html = htmlDecode('@Model.jobsModel.Specializations');
+		    $('#Specializations').append(html);
+		};
+
+		function setFieldBody() {
+		    html = htmlDecode('@Model.jobsModel.Field');
+		    $('#Field').append(html);
+		};
+
+		function setRanksBody() {
+		    html = htmlDecode('@Model.jobsModel.Ranks');
+		    $('#Ranks').append(html);
+		};
+
+		function setTraditionsBody() {
+		    html = htmlDecode('@Model.jobsModel.Traditions');
+		    $('#Traditions').append(html);
+		};
+
+		function setJob_originBody() {
+		    html = htmlDecode('@Model.jobsModel.Job_origin');
+		    $('#Job_origin').append(html);
+		};
+
+		function setInitial_goalBody() {
+		    html = htmlDecode('@Model.jobsModel.Initial_goal');
+		    $('#Initial_goal').append(html);
 		};
 
 		function setNotable_figuresBody() {
@@ -199,106 +266,39 @@
 		    $('#Notes').append(html);
 		};
 
-		function setOccupational_hazardsBody() {
-		    html = htmlDecode('@Model.jobsModel.Occupational_hazards');
-		    $('#Occupational_hazards').append(html);
-		};
-
-		function setPay_rateBody() {
-		    $('#jobsModel_Pay_rate').val('@Model.jobsModel.Pay_rate');
-		};
-
 		function setPrivate_NotesBody() {
 		    html = htmlDecode('@Model.jobsModel.Private_Notes');
 		    $('#Private_Notes').append(html);
 		};
 
-		function setPromotionsBody() {
-		    html = htmlDecode('@Model.jobsModel.Promotions');
-		    $('#Promotions').append(html);
-		};
-
-		function setRanksBody() {
-		    html = htmlDecode('@Model.jobsModel.Ranks');
-		    $('#Ranks').append(html);
-		};
-
-		function setSimilar_jobsBody() {
-		    html = htmlDecode('@Model.jobsModel.Similar_jobs');
-		    $('#Similar_jobs').append(html);
-		};
-
-		function setSpecializationsBody() {
-		    html = htmlDecode('@Model.jobsModel.Specializations');
-		    $('#Specializations').append(html);
-		};
-
-		function setTagsBody() {
-		    html = htmlDecode('@Model.jobsModel.Tags');
-		    $('#Tags').append(html);
-		};
-
-		function setTime_offBody() {
-		    html = htmlDecode('@Model.jobsModel.Time_off');
-		    $('#Time_off').append(html);
-		};
-
-		function setTraditionsBody() {
-		    html = htmlDecode('@Model.jobsModel.Traditions');
-		    $('#Traditions').append(html);
-		};
-
-		function setTrainingBody() {
-		    html = htmlDecode('@Model.jobsModel.Training');
-		    $('#Training').append(html);
-		};
-
-		function setType_of_jobBody() {
-		    html = htmlDecode('@Model.jobsModel.Type_of_job');
-		    $('#Type_of_job').append(html);
-		};
-
-		function setUniverseBody() {
-		    $('#jobsModel_Universe').val('@Model.jobsModel.Universe');
-		};
-
-		function setVehiclesBody() {
-		    html = htmlDecode('@Model.jobsModel.Vehicles');
-		    $('#Vehicles').append(html);
-		};
-
-		function setWork_hoursBody() {
-		    $('#jobsModel_Work_hours').val('@Model.jobsModel.Work_hours');
-		};
-
 
 
         $(document).ready(function () {
-			setAlternate_namesBody();
-			setDescriptionBody();
-			setEducationBody();
-			setExperienceBody();
-			setFieldBody();
-			setInitial_goalBody();
-			setJob_originBody();
-			setLong_term_risksBody();
 			setNameBody();
-			setNotable_figuresBody();
-			setNotesBody();
+			setDescriptionBody();
+			setType_of_jobBody();
+			setAlternate_namesBody();
+			setTagsBody();
+			setExperienceBody();
+			setEducationBody();
+			setWork_hoursBody();
+			setVehiclesBody();
+			setTrainingBody();
+			setLong_term_risksBody();
 			setOccupational_hazardsBody();
 			setPay_rateBody();
-			setPrivate_NotesBody();
-			setPromotionsBody();
-			setRanksBody();
-			setSimilar_jobsBody();
-			setSpecializationsBody();
-			setTagsBody();
 			setTime_offBody();
+			setSimilar_jobsBody();
+			setPromotionsBody();
+			setSpecializationsBody();
+			setFieldBody();
+			setRanksBody();
 			setTraditionsBody();
-			setTrainingBody();
-			setType_of_jobBody();
-			setVehiclesBody();
-			setWork_hoursBody();
+			setJob_originBody();
+			setInitial_goalBody();
+			setNotable_figuresBody();
+			setNotesBody();
+			setPrivate_NotesBody();
 
         });
 

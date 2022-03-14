@@ -145,6 +145,39 @@
    
     <script type="text/javascript">
     
+		function setTagsBody() {
+		    html = htmlDecode('@Model.magicsModel.Tags');
+		    $('#Tags').append(html);
+		};
+
+		function setNameBody() {
+		    $('#magicsModel_Name').val('@Model.magicsModel.Name');
+		};
+
+		function setDescriptionBody() {
+		    html = htmlDecode('@Model.magicsModel.Description');
+		    $('#Description').append(html);
+		};
+
+		function setType_of_magicBody() {
+		    html = htmlDecode('@Model.magicsModel.Type_of_magic');
+		    $('#Type_of_magic').append(html);
+		};
+
+		function setUniverseBody() {
+		    $('#magicsModel_Universe').val('@Model.magicsModel.Universe');
+		};
+
+		function setEffectsBody() {
+		    html = htmlDecode('@Model.magicsModel.Effects');
+		    $('#Effects').append(html);
+		};
+
+		function setVisualsBody() {
+		    html = htmlDecode('@Model.magicsModel.Visuals');
+		    $('#Visuals').append(html);
+		};
+
 		function setAftereffectsBody() {
 		    html = htmlDecode('@Model.magicsModel.Aftereffects');
 		    $('#Aftereffects').append(html);
@@ -155,43 +188,8 @@
 		    $('#Conditions').append(html);
 		};
 
-		function setDeitiesBody() {
-		    html = htmlDecode('@Model.magicsModel.Deities');
-		    $('#Deities').append(html);
-		};
-
-		function setDescriptionBody() {
-		    html = htmlDecode('@Model.magicsModel.Description');
-		    $('#Description').append(html);
-		};
-
-		function setEducationBody() {
-		    html = htmlDecode('@Model.magicsModel.Education');
-		    $('#Education').append(html);
-		};
-
-		function setEffectsBody() {
-		    html = htmlDecode('@Model.magicsModel.Effects');
-		    $('#Effects').append(html);
-		};
-
-		function setElementBody() {
-		    html = htmlDecode('@Model.magicsModel.Element');
-		    $('#Element').append(html);
-		};
-
-		function setLimitationsBody() {
-		    html = htmlDecode('@Model.magicsModel.Limitations');
-		    $('#Limitations').append(html);
-		};
-
-		function setMaterials_requiredBody() {
-		    html = htmlDecode('@Model.magicsModel.Materials_required');
-		    $('#Materials_required').append(html);
-		};
-
-		function setNameBody() {
-		    $('#magicsModel_Name').val('@Model.magicsModel.Name');
+		function setScaleBody() {
+		    $('#magicsModel_Scale').val('@Model.magicsModel.Scale');
 		};
 
 		function setNegative_effectsBody() {
@@ -204,28 +202,24 @@
 		    $('#Neutral_effects').append(html);
 		};
 
-		function setNotesBody() {
-		    html = htmlDecode('@Model.magicsModel.Notes');
-		    $('#Notes').append(html);
-		};
-
 		function setPositive_effectsBody() {
 		    html = htmlDecode('@Model.magicsModel.Positive_effects');
 		    $('#Positive_effects').append(html);
 		};
 
-		function setPrivate_notesBody() {
-		    html = htmlDecode('@Model.magicsModel.Private_notes');
-		    $('#Private_notes').append(html);
+		function setDeitiesBody() {
+		    html = htmlDecode('@Model.magicsModel.Deities');
+		    $('#Deities').append(html);
 		};
 
-		function setResource_costsBody() {
-		    html = htmlDecode('@Model.magicsModel.Resource_costs');
-		    $('#Resource_costs').append(html);
+		function setElementBody() {
+		    html = htmlDecode('@Model.magicsModel.Element');
+		    $('#Element').append(html);
 		};
 
-		function setScaleBody() {
-		    $('#magicsModel_Scale').val('@Model.magicsModel.Scale');
+		function setMaterials_requiredBody() {
+		    html = htmlDecode('@Model.magicsModel.Materials_required');
+		    $('#Materials_required').append(html);
 		};
 
 		function setSkills_requiredBody() {
@@ -233,49 +227,55 @@
 		    $('#Skills_required').append(html);
 		};
 
-		function setTagsBody() {
-		    html = htmlDecode('@Model.magicsModel.Tags');
-		    $('#Tags').append(html);
+		function setEducationBody() {
+		    html = htmlDecode('@Model.magicsModel.Education');
+		    $('#Education').append(html);
 		};
 
-		function setType_of_magicBody() {
-		    html = htmlDecode('@Model.magicsModel.Type_of_magic');
-		    $('#Type_of_magic').append(html);
+		function setResource_costsBody() {
+		    html = htmlDecode('@Model.magicsModel.Resource_costs');
+		    $('#Resource_costs').append(html);
 		};
 
-		function setUniverseBody() {
-		    $('#magicsModel_Universe').val('@Model.magicsModel.Universe');
+		function setLimitationsBody() {
+		    html = htmlDecode('@Model.magicsModel.Limitations');
+		    $('#Limitations').append(html);
 		};
 
-		function setVisualsBody() {
-		    html = htmlDecode('@Model.magicsModel.Visuals');
-		    $('#Visuals').append(html);
+		function setPrivate_notesBody() {
+		    html = htmlDecode('@Model.magicsModel.Private_notes');
+		    $('#Private_notes').append(html);
+		};
+
+		function setNotesBody() {
+		    html = htmlDecode('@Model.magicsModel.Notes');
+		    $('#Notes').append(html);
 		};
 
 
 
         $(document).ready(function () {
+			setTagsBody();
+			setNameBody();
+			setDescriptionBody();
+			setType_of_magicBody();
+			setEffectsBody();
+			setVisualsBody();
 			setAftereffectsBody();
 			setConditionsBody();
-			setDeitiesBody();
-			setDescriptionBody();
-			setEducationBody();
-			setEffectsBody();
-			setElementBody();
-			setLimitationsBody();
-			setMaterials_requiredBody();
-			setNameBody();
+			setScaleBody();
 			setNegative_effectsBody();
 			setNeutral_effectsBody();
-			setNotesBody();
 			setPositive_effectsBody();
-			setPrivate_notesBody();
-			setResource_costsBody();
-			setScaleBody();
+			setDeitiesBody();
+			setElementBody();
+			setMaterials_requiredBody();
 			setSkills_requiredBody();
-			setTagsBody();
-			setType_of_magicBody();
-			setVisualsBody();
+			setEducationBody();
+			setResource_costsBody();
+			setLimitationsBody();
+			setPrivate_notesBody();
+			setNotesBody();
 
         });
 

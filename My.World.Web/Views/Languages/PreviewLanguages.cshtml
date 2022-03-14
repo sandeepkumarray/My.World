@@ -145,113 +145,8 @@
    
     <script type="text/javascript">
     
-		function setBody_partsBody() {
-		    html = htmlDecode('@Model.languagesModel.Body_parts');
-		    $('#Body_parts').append(html);
-		};
-
-		function setDeterminersBody() {
-		    html = htmlDecode('@Model.languagesModel.Determiners');
-		    $('#Determiners').append(html);
-		};
-
-		function setDialectical_informationBody() {
-		    html = htmlDecode('@Model.languagesModel.Dialectical_information');
-		    $('#Dialectical_information').append(html);
-		};
-
-		function setEvolutionBody() {
-		    html = htmlDecode('@Model.languagesModel.Evolution');
-		    $('#Evolution').append(html);
-		};
-
-		function setFamilyBody() {
-		    html = htmlDecode('@Model.languagesModel.Family');
-		    $('#Family').append(html);
-		};
-
-		function setGesturesBody() {
-		    html = htmlDecode('@Model.languagesModel.Gestures');
-		    $('#Gestures').append(html);
-		};
-
-		function setGoodbyesBody() {
-		    html = htmlDecode('@Model.languagesModel.Goodbyes');
-		    $('#Goodbyes').append(html);
-		};
-
-		function setGrammarBody() {
-		    html = htmlDecode('@Model.languagesModel.Grammar');
-		    $('#Grammar').append(html);
-		};
-
-		function setGreetingsBody() {
-		    html = htmlDecode('@Model.languagesModel.Greetings');
-		    $('#Greetings').append(html);
-		};
-
-		function setHistoryBody() {
-		    html = htmlDecode('@Model.languagesModel.History');
-		    $('#History').append(html);
-		};
-
-		function setNameBody() {
-		    $('#languagesModel_Name').val('@Model.languagesModel.Name');
-		};
-
-		function setNo_wordsBody() {
-		    html = htmlDecode('@Model.languagesModel.No_words');
-		    $('#No_words').append(html);
-		};
-
-		function setNotesBody() {
-		    html = htmlDecode('@Model.languagesModel.Notes');
-		    $('#Notes').append(html);
-		};
-
-		function setNumbersBody() {
-		    html = htmlDecode('@Model.languagesModel.Numbers');
-		    $('#Numbers').append(html);
-		};
-
-		function setOther_NamesBody() {
-		    html = htmlDecode('@Model.languagesModel.Other_Names');
-		    $('#Other_Names').append(html);
-		};
-
-		function setPhonologyBody() {
-		    html = htmlDecode('@Model.languagesModel.Phonology');
-		    $('#Phonology').append(html);
-		};
-
-		function setPleaseBody() {
-		    html = htmlDecode('@Model.languagesModel.Please');
-		    $('#Please').append(html);
-		};
-
-		function setPrivate_notesBody() {
-		    html = htmlDecode('@Model.languagesModel.Private_notes');
-		    $('#Private_notes').append(html);
-		};
-
-		function setPronounsBody() {
-		    html = htmlDecode('@Model.languagesModel.Pronouns');
-		    $('#Pronouns').append(html);
-		};
-
-		function setQuantifiersBody() {
-		    html = htmlDecode('@Model.languagesModel.Quantifiers');
-		    $('#Quantifiers').append(html);
-		};
-
-		function setRegisterBody() {
-		    html = htmlDecode('@Model.languagesModel.Register');
-		    $('#Register').append(html);
-		};
-
-		function setSorryBody() {
-		    html = htmlDecode('@Model.languagesModel.Sorry');
-		    $('#Sorry').append(html);
+		function setUniverseBody() {
+		    $('#languagesModel_Universe').val('@Model.languagesModel.Universe');
 		};
 
 		function setTagsBody() {
@@ -259,14 +154,13 @@
 		    $('#Tags').append(html);
 		};
 
-		function setThank_youBody() {
-		    html = htmlDecode('@Model.languagesModel.Thank_you');
-		    $('#Thank_you').append(html);
+		function setOther_NamesBody() {
+		    html = htmlDecode('@Model.languagesModel.Other_Names');
+		    $('#Other_Names').append(html);
 		};
 
-		function setTradeBody() {
-		    html = htmlDecode('@Model.languagesModel.Trade');
-		    $('#Trade').append(html);
+		function setNameBody() {
+		    $('#languagesModel_Name').val('@Model.languagesModel.Name');
 		};
 
 		function setTypologyBody() {
@@ -274,8 +168,64 @@
 		    $('#Typology').append(html);
 		};
 
-		function setUniverseBody() {
-		    $('#languagesModel_Universe').val('@Model.languagesModel.Universe');
+		function setDialectical_informationBody() {
+		    html = htmlDecode('@Model.languagesModel.Dialectical_information');
+		    $('#Dialectical_information').append(html);
+		};
+
+		function setRegisterBody() {
+		    html = htmlDecode('@Model.languagesModel.Register');
+		    $('#Register').append(html);
+		};
+
+		function setHistoryBody() {
+		    html = htmlDecode('@Model.languagesModel.History');
+		    $('#History').append(html);
+		};
+
+		function setEvolutionBody() {
+		    html = htmlDecode('@Model.languagesModel.Evolution');
+		    $('#Evolution').append(html);
+		};
+
+		function setGesturesBody() {
+		    html = htmlDecode('@Model.languagesModel.Gestures');
+		    $('#Gestures').append(html);
+		};
+
+		function setPhonologyBody() {
+		    html = htmlDecode('@Model.languagesModel.Phonology');
+		    $('#Phonology').append(html);
+		};
+
+		function setGrammarBody() {
+		    html = htmlDecode('@Model.languagesModel.Grammar');
+		    $('#Grammar').append(html);
+		};
+
+		function setPleaseBody() {
+		    html = htmlDecode('@Model.languagesModel.Please');
+		    $('#Please').append(html);
+		};
+
+		function setTradeBody() {
+		    html = htmlDecode('@Model.languagesModel.Trade');
+		    $('#Trade').append(html);
+		};
+
+		function setFamilyBody() {
+		    html = htmlDecode('@Model.languagesModel.Family');
+		    $('#Family').append(html);
+		};
+
+		function setBody_partsBody() {
+		    html = htmlDecode('@Model.languagesModel.Body_parts');
+		    $('#Body_parts').append(html);
+		};
+
+		function setNo_wordsBody() {
+		    html = htmlDecode('@Model.languagesModel.No_words');
+		    $('#No_words').append(html);
 		};
 
 		function setYes_wordsBody() {
@@ -283,42 +233,92 @@
 		    $('#Yes_words').append(html);
 		};
 
+		function setSorryBody() {
+		    html = htmlDecode('@Model.languagesModel.Sorry');
+		    $('#Sorry').append(html);
+		};
+
 		function setYou_are_welcomeBody() {
 		    html = htmlDecode('@Model.languagesModel.You_are_welcome');
 		    $('#You_are_welcome').append(html);
 		};
 
+		function setThank_youBody() {
+		    html = htmlDecode('@Model.languagesModel.Thank_you');
+		    $('#Thank_you').append(html);
+		};
+
+		function setGoodbyesBody() {
+		    html = htmlDecode('@Model.languagesModel.Goodbyes');
+		    $('#Goodbyes').append(html);
+		};
+
+		function setGreetingsBody() {
+		    html = htmlDecode('@Model.languagesModel.Greetings');
+		    $('#Greetings').append(html);
+		};
+
+		function setPronounsBody() {
+		    html = htmlDecode('@Model.languagesModel.Pronouns');
+		    $('#Pronouns').append(html);
+		};
+
+		function setNumbersBody() {
+		    html = htmlDecode('@Model.languagesModel.Numbers');
+		    $('#Numbers').append(html);
+		};
+
+		function setQuantifiersBody() {
+		    html = htmlDecode('@Model.languagesModel.Quantifiers');
+		    $('#Quantifiers').append(html);
+		};
+
+		function setDeterminersBody() {
+		    html = htmlDecode('@Model.languagesModel.Determiners');
+		    $('#Determiners').append(html);
+		};
+
+		function setNotesBody() {
+		    html = htmlDecode('@Model.languagesModel.Notes');
+		    $('#Notes').append(html);
+		};
+
+		function setPrivate_notesBody() {
+		    html = htmlDecode('@Model.languagesModel.Private_notes');
+		    $('#Private_notes').append(html);
+		};
+
 
 
         $(document).ready(function () {
-			setBody_partsBody();
-			setDeterminersBody();
-			setDialectical_informationBody();
-			setEvolutionBody();
-			setFamilyBody();
-			setGesturesBody();
-			setGoodbyesBody();
-			setGrammarBody();
-			setGreetingsBody();
-			setHistoryBody();
-			setNameBody();
-			setNo_wordsBody();
-			setNotesBody();
-			setNumbersBody();
-			setOther_NamesBody();
-			setPhonologyBody();
-			setPleaseBody();
-			setPrivate_notesBody();
-			setPronounsBody();
-			setQuantifiersBody();
-			setRegisterBody();
-			setSorryBody();
 			setTagsBody();
-			setThank_youBody();
-			setTradeBody();
+			setOther_NamesBody();
+			setNameBody();
 			setTypologyBody();
+			setDialectical_informationBody();
+			setRegisterBody();
+			setHistoryBody();
+			setEvolutionBody();
+			setGesturesBody();
+			setPhonologyBody();
+			setGrammarBody();
+			setPleaseBody();
+			setTradeBody();
+			setFamilyBody();
+			setBody_partsBody();
+			setNo_wordsBody();
 			setYes_wordsBody();
+			setSorryBody();
 			setYou_are_welcomeBody();
+			setThank_youBody();
+			setGoodbyesBody();
+			setGreetingsBody();
+			setPronounsBody();
+			setNumbersBody();
+			setQuantifiersBody();
+			setDeterminersBody();
+			setNotesBody();
+			setPrivate_notesBody();
 
         });
 

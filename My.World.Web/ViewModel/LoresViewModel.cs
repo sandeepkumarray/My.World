@@ -34,28 +34,10 @@ namespace My.World.Web.ViewModel
 		private List<ContentObjectModel> _contentObjectModelList { get; set; }
 
 		[JsonProperty("contentobjectmodellist")]
-		public List<ContentObjectModel> ContentObjectModelList		
-		{
-		    get
-			{
-		        return _contentObjectModelList;
-		    }
-		    set
-			{
-		        _contentObjectModelList = value;
-		        if (_contentObjectModelList != null)
-		        {
-		            foreach (var contentObject in _contentObjectModelList)
-		            {
-		                var publicUrl = "http://" + iObjectBucketApiService.objectStorageKeysModel.endpoint
-		                    + '/' + iObjectBucketApiService.objectStorageKeysModel.bucketName + '/' + contentObject.object_name;
-		
-		                contentObject.file_url = HttpUtility.UrlPathEncode(publicUrl);
-		            }
-		        }
-		    }
-		}
+		public List<ContentObjectModel> ContentObjectModelList { get; set; }
 
+		[JsonProperty("remainingcontentsize")]
+		public string RemainingContentSize { get; set; }
 
 
 		public LoresViewModel()

@@ -1,3 +1,6 @@
+@using Microsoft.AspNetCore.Http
+@using My.World.Web
+@inject IHttpContextAccessor HttpContextAccessor
 @model My.World.Web.ViewModel.LandmarksViewModel
 
 @{
@@ -112,7 +115,7 @@
                                                                                 else if (att.field_name.ToLower() == "universe")
                                                                                 {
                                                                                 <select id="ddlUniverseList" class="form-control" style="min-width:150px"
-                                                                                        asp-items="@(new SelectList(@Model.UniversesList, " id", "name" , Model.landmarksModel.Universe))"
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name" , Model.landmarksModel.Universe))"
                                                                                         onchange="UniverseSelected();">
                                                                                 </select>
                                                                                 }
@@ -168,17 +171,21 @@
                                                                                         <div class="card-img" style="width: 18rem;margin-right: 1.5rem;">
                                                                                             <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">
                                                                                                 <a class="remove-image" style="display: inline;"
-                                                                                                   asp-controller="buildings" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
+                                                                                                   asp-controller="landmarks" asp-action="DeleteAttachment" asp-route-objectId="@contentObject.object_id" asp-route-objectName="@contentObject.object_name">&#215;</a>
                                                                                             </div>
                                                                                         </div>
                                                                                     }
                                                                                 </div>
                                                                             </div>
-
+                                                                            <div class="mb-3">
+                                                                                <div class="row">
+                                                                                    <h3><label class="form-label"> Only @Model.RemainingContentSize is left for content upload.</label></h3>
+                                                                                </div>
+                                                                            </div>
                                                                             <div class="mb-3">
                                                                                 <label class="form-label" for="exampleFormControlInput1">Upload Images...</label>
                                                                                 <div>
-                                                                                    @using (Html.BeginForm("UploadAttachment", "buildings", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
+                                                                                    @using (Html.BeginForm("UploadAttachment", "landmarks", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
                                                                                     {
                                                                                     <div class="dz-message needsclick">
                                                                                         <button type="button" class="dz-button">Drop files here or click to upload.</button><br />
@@ -266,6 +273,25 @@
     </div>
 </div>
 
+<div id="contentsExceededModal" bsmodal="" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade" aria-modal="true" style="display: none;">
+    <div role="document" class="modal-dialog modal-danger modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Alert !</h4>
+                <button type="button" aria-label="Close" data-dismiss="modal" class="close">
+                    <span aria-hidden="true">�</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>You have Exceeded the maximum allowed size of @My.World.Web.Helpers.Utility.SizeSuffix(Convert.ToInt64(@HttpContextAccessor.HttpContext.Session.GetString("AllowedTotalContentSize"))) per content to upload images.</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script src="~/js/quill.js"></script>
     <script src="~/js/quill.mention.min.js"></script>
@@ -275,31 +301,14 @@
 
     <script type="text/javascript">
 
-        			function setColorsBody() {
-			    Colors_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.landmarksModel.Colors'));
-			    $('#Colors').focusout(function () {
-			        postSaveEditorData('Colors', Colors_editor.root.innerHTML);
-			    });
+        			function setNameBody() {
+			    $('#landmarksModel_Name').val('@Model.landmarksModel.Name');
 			};
 
-			function setCountryBody() {
-			    Country_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.landmarksModel.Country'));
-			    $('#Country').focusout(function () {
-			        postSaveEditorData('Country', Country_editor.root.innerHTML);
-			    });
-			};
-
-			function setCreation_storyBody() {
-			    Creation_story_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.landmarksModel.Creation_story'));
-			    $('#Creation_story').focusout(function () {
-			        postSaveEditorData('Creation_story', Creation_story_editor.root.innerHTML);
-			    });
-			};
-
-			function setCreaturesBody() {
-			    Creatures_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.landmarksModel.Creatures'));
-			    $('#Creatures').focusout(function () {
-			        postSaveEditorData('Creatures', Creatures_editor.root.innerHTML);
+			function setTagsBody() {
+			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.landmarksModel.Tags'));
+			    $('#Tags').focusout(function () {
+			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
 			    });
 			};
 
@@ -310,64 +319,10 @@
 			    });
 			};
 
-			function setEstablished_yearBody() {
-			    $('#landmarksModel_Established_year').val('@Model.landmarksModel.Established_year');
-			};
-
-			function setFloraBody() {
-			    Flora_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.landmarksModel.Flora'));
-			    $('#Flora').focusout(function () {
-			        postSaveEditorData('Flora', Flora_editor.root.innerHTML);
-			    });
-			};
-
-			function setMaterialsBody() {
-			    Materials_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.landmarksModel.Materials'));
-			    $('#Materials').focusout(function () {
-			        postSaveEditorData('Materials', Materials_editor.root.innerHTML);
-			    });
-			};
-
-			function setNameBody() {
-			    $('#landmarksModel_Name').val('@Model.landmarksModel.Name');
-			};
-
-			function setNearby_townsBody() {
-			    Nearby_towns_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.landmarksModel.Nearby_towns'));
-			    $('#Nearby_towns').focusout(function () {
-			        postSaveEditorData('Nearby_towns', Nearby_towns_editor.root.innerHTML);
-			    });
-			};
-
-			function setNotesBody() {
-			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.landmarksModel.Notes'));
-			    $('#Notes').focusout(function () {
-			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
-			    });
-			};
-
 			function setOther_NamesBody() {
 			    Other_Names_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.landmarksModel.Other_Names'));
 			    $('#Other_Names').focusout(function () {
 			        postSaveEditorData('Other_Names', Other_Names_editor.root.innerHTML);
-			    });
-			};
-
-			function setPrivate_NotesBody() {
-			    Private_Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.landmarksModel.Private_Notes'));
-			    $('#Private_Notes').focusout(function () {
-			        postSaveEditorData('Private_Notes', Private_Notes_editor.root.innerHTML);
-			    });
-			};
-
-			function setSizeBody() {
-			    $('#landmarksModel_Size').val('@Model.landmarksModel.Size');
-			};
-
-			function setTagsBody() {
-			    Tags_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.landmarksModel.Tags'));
-			    $('#Tags').focusout(function () {
-			        postSaveEditorData('Tags', Tags_editor.root.innerHTML);
 			    });
 			};
 
@@ -382,19 +337,90 @@
 			    $('#landmarksModel_Universe').val('@Model.landmarksModel.Universe');
 			};
 
+			function setCountryBody() {
+			    Country_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.landmarksModel.Country'));
+			    $('#Country').focusout(function () {
+			        postSaveEditorData('Country', Country_editor.root.innerHTML);
+			    });
+			};
+
+			function setNearby_townsBody() {
+			    Nearby_towns_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.landmarksModel.Nearby_towns'));
+			    $('#Nearby_towns').focusout(function () {
+			        postSaveEditorData('Nearby_towns', Nearby_towns_editor.root.innerHTML);
+			    });
+			};
+
+			function setSizeBody() {
+			    $('#landmarksModel_Size').val('@Model.landmarksModel.Size');
+			};
+
+			function setColorsBody() {
+			    Colors_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.landmarksModel.Colors'));
+			    $('#Colors').focusout(function () {
+			        postSaveEditorData('Colors', Colors_editor.root.innerHTML);
+			    });
+			};
+
+			function setMaterialsBody() {
+			    Materials_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.landmarksModel.Materials'));
+			    $('#Materials').focusout(function () {
+			        postSaveEditorData('Materials', Materials_editor.root.innerHTML);
+			    });
+			};
+
+			function setCreaturesBody() {
+			    Creatures_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.landmarksModel.Creatures'));
+			    $('#Creatures').focusout(function () {
+			        postSaveEditorData('Creatures', Creatures_editor.root.innerHTML);
+			    });
+			};
+
+			function setFloraBody() {
+			    Flora_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.landmarksModel.Flora'));
+			    $('#Flora').focusout(function () {
+			        postSaveEditorData('Flora', Flora_editor.root.innerHTML);
+			    });
+			};
+
+			function setCreation_storyBody() {
+			    Creation_story_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.landmarksModel.Creation_story'));
+			    $('#Creation_story').focusout(function () {
+			        postSaveEditorData('Creation_story', Creation_story_editor.root.innerHTML);
+			    });
+			};
+
+			function setEstablished_yearBody() {
+			    $('#landmarksModel_Established_year').val('@Model.landmarksModel.Established_year');
+			};
+
+			function setNotesBody() {
+			    Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.landmarksModel.Notes'));
+			    $('#Notes').focusout(function () {
+			        postSaveEditorData('Notes', Notes_editor.root.innerHTML);
+			    });
+			};
+
+			function setPrivate_NotesBody() {
+			    Private_Notes_editor.clipboard.dangerouslyPasteHTML(htmlDecode('@Model.landmarksModel.Private_Notes'));
+			    $('#Private_Notes').focusout(function () {
+			        postSaveEditorData('Private_Notes', Private_Notes_editor.root.innerHTML);
+			    });
+			};
+
 
 
         $(document).ready(function () {
-            			$('#landmarksModel_Established_year').blur(function() {
-			    postSaveData('Established_year', $('#landmarksModel_Established_year').val());
-			});
-
-			$('#landmarksModel_Name').blur(function() {
+            			$('#landmarksModel_Name').blur(function() {
 			    postSaveData('Name', $('#landmarksModel_Name').val());
 			});
 
 			$('#landmarksModel_Size').blur(function() {
 			    postSaveData('Size', $('#landmarksModel_Size').val());
+			});
+
+			$('#landmarksModel_Established_year').blur(function() {
+			    postSaveData('Established_year', $('#landmarksModel_Established_year').val());
 			});
 
 
@@ -448,10 +474,18 @@
                         $('.roller').width(progress + '%');
                     });
 
-                    self.on("queuecomplete", function (progress) {
-                        $('.meter').delay(999).slideUp(999);
-                        console.log("Files uploaded");
-                        location.reload();
+                    self.on('error', function (file, response) {
+                        console.log("Files upload Error");
+                        showModal(response.message);
+                    });
+                    self.on('success', function () {
+                        self.on("queuecomplete", function () {
+                            $('.meter').delay(999).slideUp(999);
+                            console.log("Files uploaded");
+                            var locUrL = location.href.replace('#Gallery_panel', '') + "#Gallery_panel";
+                            window.location.href = locUrL;
+                            location.reload();
+                        });
                     });
                     self.on("complete", function (file) {
                         self.removeFile(file);
