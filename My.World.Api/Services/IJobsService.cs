@@ -20,5 +20,7 @@ namespace My.World.Api.Services
 
 		ResponseModel<string> SaveJob(JobsModel Data);
 
+		ResponseModel<string> UpdateJobsData(JobsModel Data);
+
 	}
 }

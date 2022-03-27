@@ -20,5 +20,7 @@ namespace My.World.Api.Services
 
 		ResponseModel<string> SaveCharacter(CharactersModel Data);
 
+		ResponseModel<string> UpdateCharactersData(CharactersModel Data);
+
 	}
 }

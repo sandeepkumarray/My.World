@@ -27,16 +27,16 @@ namespace My.World.Web.Controllers
 
 		public readonly IUsersApiService _iUsersApiService;
 
-		public readonly IContenttypesApiService _iContenttypesApiService;
+		public readonly IContentTypesApiService _iContenttypesApiService;
 
 		public readonly IObjectBucketApiService _iObjectBucketApiService;
 
 		public readonly IConfiguration _config;
 
 
-		public BuildingsController(IBuildingsApiService iBuildingsApiService,IUniversesApiService iUniversesApiService,IUsersApiService iUsersApiService,IContenttypesApiService iContenttypesApiService,IObjectBucketApiService iObjectBucketApiService,IConfiguration config)
+		public BuildingsController(IBuildingsApiService iBuildingsApiService,IUniversesApiService iUniversesApiService,IUsersApiService iUsersApiService,IContentTypesApiService iContenttypesApiService,IObjectBucketApiService iObjectBucketApiService,IConfiguration config)
 		{
-			_iBuildingsApiService = iBuildingsApiService;
+_iBuildingsApiService = iBuildingsApiService;
 			_iUniversesApiService = iUniversesApiService;
 			_iUsersApiService = iUsersApiService;
 			_iContenttypesApiService = iContenttypesApiService;
@@ -54,12 +54,11 @@ namespace My.World.Web.Controllers
 
 		}
 
-		[Route("Index")]
 		public IActionResult Index()
 		{
 			var accountID = Convert.ToInt64(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserID")?.Value);
 			_iObjectBucketApiService.SetObjectStorageSecrets(accountID);
-			string imageFormat = _config.GetValue<string>("ContentImageUrlFormat");
+			string imageFormat = HttpContext.Session.GetString("ContentImageUrlFormat");
 			var buildings = _iBuildingsApiService.GetAllBuildings(accountID);
 			buildings.ForEach(b =>
 			{
@@ -81,7 +80,7 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpGet]
-		[Route("{Id}")]
+		[Route("{Id}/edit")]
 		public IActionResult ViewBuildings(string Id)
 		{
 			BuildingsModel model = new BuildingsModel();
@@ -119,7 +118,7 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpGet]
-		[Route("Preview/{Id}")]
+		[Route("{Id}")]
 		public IActionResult PreviewBuildings(string Id)
 		{
 			BuildingsModel model = new BuildingsModel();
@@ -144,6 +143,12 @@ namespace My.World.Web.Controllers
 			buildingsViewModel.headerBackgroundColor = contentTypesModel.sec_color;
 			_iObjectBucketApiService.SetObjectStorageSecrets(model.user_id);
 			buildingsViewModel.ContentObjectModelList = _iObjectBucketApiService.GetAllContentObjectAttachments(Convert.ToInt64(Id), "buildings");
+			buildingsViewModel.ContentObjectModelList.ForEach(o => 
+			{
+			    var publicUrl = "http://" + _iObjectBucketApiService.objectStorageKeysModel.endpoint
+			                + '/' + _iObjectBucketApiService.objectStorageKeysModel.bucketName + '/' + _config.GetValue<string>("BucketEnv") + '/' + o.object_name; 
+			    o.file_url = HttpUtility.UrlPathEncode(publicUrl); 
+			}); 
 			return View(buildingsViewModel);
 
 		}
@@ -160,7 +165,7 @@ namespace My.World.Web.Controllers
 
 		}
 
-		public void TransformData(BuildingsModel model)
+		private void TransformData(BuildingsModel model)
 		{
 			if (model != null)
 			{

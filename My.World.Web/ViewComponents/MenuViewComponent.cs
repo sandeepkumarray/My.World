@@ -15,11 +15,11 @@ namespace My.World.Web.ViewComponents
     {
         private readonly IDashboardApiService _dashboardApiService;
         public readonly IUsersApiService _iUsersApiService;
-        private readonly IContentplansApiService _contentPlansService;
+        private readonly IContentPlansApiService _contentPlansService;
 
         public List<DashboardItem> DashboardItemList { get; private set; }
 
-        public MenuViewComponent(IDashboardApiService dashboardApiService, IUsersApiService iUsersApiService, IContentplansApiService iContentplansApiService, IContenttypesApiService iContenttypesApiService)
+        public MenuViewComponent(IDashboardApiService dashboardApiService, IUsersApiService iUsersApiService, IContentPlansApiService iContentplansApiService, IContentTypesApiService IContentTypesApiService)
         {
             _dashboardApiService = dashboardApiService;
             _iUsersApiService = iUsersApiService;

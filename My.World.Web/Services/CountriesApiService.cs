@@ -14,74 +14,74 @@ namespace My.World.Web.Services
 
 		public string AddCountries(CountriesModel model)
 		{
-						string countriesModel = null;
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "AddCountries";
-						client.ServiceMethod = Method.POST;
-						client.RequestBody = model;
-						string jsonResult = client.GetResponseAsync();
-						ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
-						countriesModel = response.Value;
-						return countriesModel;
+			string countriesModel = null;
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Countries/AddCountries";
+			client.ServiceMethod = Method.POST;
+			client.RequestBody = model;
+			string jsonResult = client.GetResponseAsync();
+			ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
+			countriesModel = response.Value;
+			return countriesModel;
 
 		}
 
 		public CountriesModel GetCountries(CountriesModel model)
 		{
-						CountriesModel countriesModel = null;
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "GetCountries";
-						client.ServiceMethod = Method.POST;
-						client.RequestBody = model;
-						string jsonResult = client.GetResponseAsync();
-						ResponseModel<CountriesModel> response = JsonConvert.DeserializeObject<ResponseModel<CountriesModel>>(jsonResult);
-						countriesModel = response.Value;
-						return countriesModel;
+			CountriesModel countriesModel = null;
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Countries/GetCountries";
+			client.ServiceMethod = Method.POST;
+			client.RequestBody = model;
+			string jsonResult = client.GetResponseAsync();
+			ResponseModel<CountriesModel> response = JsonConvert.DeserializeObject<ResponseModel<CountriesModel>>(jsonResult);
+			countriesModel = response.Value;
+			return countriesModel;
 
 		}
 
 		public string DeleteCountries(CountriesModel model)
 		{
-						string countriesModel = null;
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "DeleteCountries";
-						client.ServiceMethod = Method.POST;
-						client.RequestBody = model;
-						string jsonResult = client.GetResponseAsync();
-						ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
-						countriesModel = response.Value;
-						return countriesModel;
+			string countriesModel = null;
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Countries/DeleteCountries";
+			client.ServiceMethod = Method.POST;
+			client.RequestBody = model;
+			string jsonResult = client.GetResponseAsync();
+			ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
+			countriesModel = response.Value;
+			return countriesModel;
 
 		}
 
 		public List<CountriesModel> GetAllCountries(long UserId)
 		{
-						List<CountriesModel> countriesModel = new List<CountriesModel>();
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "GetAllCountries/" + UserId;
-						client.ServiceMethod = Method.GET;
-						string jsonResult = client.GETAsync();
-						ResponseModel<List<CountriesModel>> response = JsonConvert.DeserializeObject<ResponseModel<List<CountriesModel>>>(jsonResult);
-						countriesModel = response.Value;
-						return countriesModel;
+			List<CountriesModel> countriesModel = new List<CountriesModel>();
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Countries/GetAllCountries/" + UserId;
+			client.ServiceMethod = Method.GET;
+			string jsonResult = client.GETAsync();
+			ResponseModel<List<CountriesModel>> response = JsonConvert.DeserializeObject<ResponseModel<List<CountriesModel>>>(jsonResult);
+			countriesModel = response.Value;
+			return countriesModel;
 
 		}
 
 		public ResponseModel<string> SaveCountrie(CountriesModel model)
 		{
-						string countriesModel = null;
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "SaveCountrie";
-						client.ServiceMethod = Method.POST;
-						client.RequestBody = model;
-						string jsonResult = client.GetResponseAsync();
-						ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
-						return response;
+			string countriesModel = null;
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Countries/SaveCountrie";
+			client.ServiceMethod = Method.POST;
+			client.RequestBody = model;
+			string jsonResult = client.GetResponseAsync();
+			ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
+			return response;
 
 		}
 

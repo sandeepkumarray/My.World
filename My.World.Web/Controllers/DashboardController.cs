@@ -17,10 +17,10 @@ namespace My.World.Web.Controllers
     {
         private readonly IDashboardApiService _dashboardApiService;
         private readonly IUsersApiService _usersApiService;
-        private readonly IContentplansApiService _contentPlansService;
+        private readonly IContentPlansApiService _contentPlansService;
 
         public DashboardController(IDashboardApiService dashboardApiService, IUsersApiService usersApiService,
-            IContentplansApiService contentPlansService)
+            IContentPlansApiService contentPlansService)
         {
             _dashboardApiService = dashboardApiService;
             _usersApiService = usersApiService;

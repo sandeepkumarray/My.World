@@ -263,5 +263,66 @@ namespace My.World.Api.DataAccess
 
 		}
 
+		public string UpdateGovernmentsData(GovernmentsModel Data)
+		{
+			string _return_value = string.Empty;
+			try
+			{
+				dbContext.cmd = new MySqlCommand();
+				dbContext.cmd.Connection = dbContext.GetConnection();
+				dbContext.cmd.CommandText = "UPDATE governments SET Airforce = @Airforce,Approval_Ratings = @Approval_Ratings,Checks_And_Balances = @Checks_And_Balances,Civilian_Life = @Civilian_Life,created_at = @created_at,Creatures = @Creatures,Criminal_System = @Criminal_System,Description = @Description,Electoral_Process = @Electoral_Process,Flag_Design_Story = @Flag_Design_Story,Founding_Story = @Founding_Story,Geocultural = @Geocultural,Groups = @Groups,Holidays = @Holidays,Immigration = @Immigration,International_Relations = @International_Relations,Items = @Items,Jobs = @Jobs,Laws = @Laws,Leaders = @Leaders,Military = @Military,Name = @Name,Navy = @Navy,Notable_Wars = @Notable_Wars,Notes = @Notes,Political_figures = @Political_figures,Power_Source = @Power_Source,Power_Structure = @Power_Structure,Privacy_Ideologies = @Privacy_Ideologies,Private_Notes = @Private_Notes,Socioeconomical = @Socioeconomical,Sociopolitical = @Sociopolitical,Space_Program = @Space_Program,Tags = @Tags,Technologies = @Technologies,Term_Lengths = @Term_Lengths,Type_Of_Government = @Type_Of_Government,Universe = @Universe,updated_at = @updated_at,user_id = @user_id,Vehicles = @Vehicles WHERE id = @id";
+				dbContext.AddInParameter(dbContext.cmd, "@Airforce", Data.Airforce);
+				dbContext.AddInParameter(dbContext.cmd, "@Approval_Ratings", Data.Approval_Ratings);
+				dbContext.AddInParameter(dbContext.cmd, "@Checks_And_Balances", Data.Checks_And_Balances);
+				dbContext.AddInParameter(dbContext.cmd, "@Civilian_Life", Data.Civilian_Life);
+				dbContext.AddInParameter(dbContext.cmd, "@created_at", Data.created_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Creatures", Data.Creatures);
+				dbContext.AddInParameter(dbContext.cmd, "@Criminal_System", Data.Criminal_System);
+				dbContext.AddInParameter(dbContext.cmd, "@Description", Data.Description);
+				dbContext.AddInParameter(dbContext.cmd, "@Electoral_Process", Data.Electoral_Process);
+				dbContext.AddInParameter(dbContext.cmd, "@Flag_Design_Story", Data.Flag_Design_Story);
+				dbContext.AddInParameter(dbContext.cmd, "@Founding_Story", Data.Founding_Story);
+				dbContext.AddInParameter(dbContext.cmd, "@Geocultural", Data.Geocultural);
+				dbContext.AddInParameter(dbContext.cmd, "@Groups", Data.Groups);
+				dbContext.AddInParameter(dbContext.cmd, "@Holidays", Data.Holidays);
+				dbContext.AddInParameter(dbContext.cmd, "@Immigration", Data.Immigration);
+				dbContext.AddInParameter(dbContext.cmd, "@International_Relations", Data.International_Relations);
+				dbContext.AddInParameter(dbContext.cmd, "@Items", Data.Items);
+				dbContext.AddInParameter(dbContext.cmd, "@Jobs", Data.Jobs);
+				dbContext.AddInParameter(dbContext.cmd, "@Laws", Data.Laws);
+				dbContext.AddInParameter(dbContext.cmd, "@Leaders", Data.Leaders);
+				dbContext.AddInParameter(dbContext.cmd, "@Military", Data.Military);
+				dbContext.AddInParameter(dbContext.cmd, "@Name", Data.Name);
+				dbContext.AddInParameter(dbContext.cmd, "@Navy", Data.Navy);
+				dbContext.AddInParameter(dbContext.cmd, "@Notable_Wars", Data.Notable_Wars);
+				dbContext.AddInParameter(dbContext.cmd, "@Notes", Data.Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Political_figures", Data.Political_figures);
+				dbContext.AddInParameter(dbContext.cmd, "@Power_Source", Data.Power_Source);
+				dbContext.AddInParameter(dbContext.cmd, "@Power_Structure", Data.Power_Structure);
+				dbContext.AddInParameter(dbContext.cmd, "@Privacy_Ideologies", Data.Privacy_Ideologies);
+				dbContext.AddInParameter(dbContext.cmd, "@Private_Notes", Data.Private_Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Socioeconomical", Data.Socioeconomical);
+				dbContext.AddInParameter(dbContext.cmd, "@Sociopolitical", Data.Sociopolitical);
+				dbContext.AddInParameter(dbContext.cmd, "@Space_Program", Data.Space_Program);
+				dbContext.AddInParameter(dbContext.cmd, "@Tags", Data.Tags);
+				dbContext.AddInParameter(dbContext.cmd, "@Technologies", Data.Technologies);
+				dbContext.AddInParameter(dbContext.cmd, "@Term_Lengths", Data.Term_Lengths);
+				dbContext.AddInParameter(dbContext.cmd, "@Type_Of_Government", Data.Type_Of_Government);
+				dbContext.AddInParameter(dbContext.cmd, "@Universe", Data.Universe);
+				dbContext.AddInParameter(dbContext.cmd, "@updated_at", Data.updated_at);
+				dbContext.AddInParameter(dbContext.cmd, "@user_id", Data.user_id);
+				dbContext.AddInParameter(dbContext.cmd, "@Vehicles", Data.Vehicles);
+				_return_value = Convert.ToString(dbContext.cmd.ExecuteNonQuery());
+			}
+			catch (Exception ex)
+			{
+			    _return_value = null;
+			    throw;
+			}
+			
+			return _return_value;
+
+		}
+
 	}
 }

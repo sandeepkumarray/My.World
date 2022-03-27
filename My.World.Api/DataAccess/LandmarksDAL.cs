@@ -200,5 +200,45 @@ namespace My.World.Api.DataAccess
 
 		}
 
+		public string UpdateLandmarksData(LandmarksModel Data)
+		{
+			string _return_value = string.Empty;
+			try
+			{
+				dbContext.cmd = new MySqlCommand();
+				dbContext.cmd.Connection = dbContext.GetConnection();
+				dbContext.cmd.CommandText = "UPDATE landmarks SET Colors = @Colors,Country = @Country,created_at = @created_at,Creation_story = @Creation_story,Creatures = @Creatures,Description = @Description,Established_year = @Established_year,Flora = @Flora,Materials = @Materials,Name = @Name,Nearby_towns = @Nearby_towns,Notes = @Notes,Other_Names = @Other_Names,Private_Notes = @Private_Notes,Size = @Size,Tags = @Tags,Type_of_landmark = @Type_of_landmark,Universe = @Universe,updated_at = @updated_at,user_id = @user_id WHERE id = @id";
+				dbContext.AddInParameter(dbContext.cmd, "@Colors", Data.Colors);
+				dbContext.AddInParameter(dbContext.cmd, "@Country", Data.Country);
+				dbContext.AddInParameter(dbContext.cmd, "@created_at", Data.created_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Creation_story", Data.Creation_story);
+				dbContext.AddInParameter(dbContext.cmd, "@Creatures", Data.Creatures);
+				dbContext.AddInParameter(dbContext.cmd, "@Description", Data.Description);
+				dbContext.AddInParameter(dbContext.cmd, "@Established_year", Data.Established_year);
+				dbContext.AddInParameter(dbContext.cmd, "@Flora", Data.Flora);
+				dbContext.AddInParameter(dbContext.cmd, "@Materials", Data.Materials);
+				dbContext.AddInParameter(dbContext.cmd, "@Name", Data.Name);
+				dbContext.AddInParameter(dbContext.cmd, "@Nearby_towns", Data.Nearby_towns);
+				dbContext.AddInParameter(dbContext.cmd, "@Notes", Data.Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Other_Names", Data.Other_Names);
+				dbContext.AddInParameter(dbContext.cmd, "@Private_Notes", Data.Private_Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Size", Data.Size);
+				dbContext.AddInParameter(dbContext.cmd, "@Tags", Data.Tags);
+				dbContext.AddInParameter(dbContext.cmd, "@Type_of_landmark", Data.Type_of_landmark);
+				dbContext.AddInParameter(dbContext.cmd, "@Universe", Data.Universe);
+				dbContext.AddInParameter(dbContext.cmd, "@updated_at", Data.updated_at);
+				dbContext.AddInParameter(dbContext.cmd, "@user_id", Data.user_id);
+				_return_value = Convert.ToString(dbContext.cmd.ExecuteNonQuery());
+			}
+			catch (Exception ex)
+			{
+			    _return_value = null;
+			    throw;
+			}
+			
+			return _return_value;
+
+		}
+
 	}
 }

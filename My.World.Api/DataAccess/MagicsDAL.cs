@@ -215,5 +215,50 @@ namespace My.World.Api.DataAccess
 
 		}
 
+		public string UpdateMagicsData(MagicsModel Data)
+		{
+			string _return_value = string.Empty;
+			try
+			{
+				dbContext.cmd = new MySqlCommand();
+				dbContext.cmd.Connection = dbContext.GetConnection();
+				dbContext.cmd.CommandText = "UPDATE magics SET Aftereffects = @Aftereffects,Conditions = @Conditions,created_at = @created_at,Deities = @Deities,Description = @Description,Education = @Education,Effects = @Effects,Element = @Element,Limitations = @Limitations,Materials_required = @Materials_required,Name = @Name,Negative_effects = @Negative_effects,Neutral_effects = @Neutral_effects,Notes = @Notes,Positive_effects = @Positive_effects,Private_notes = @Private_notes,Resource_costs = @Resource_costs,Scale = @Scale,Skills_required = @Skills_required,Tags = @Tags,Type_of_magic = @Type_of_magic,Universe = @Universe,updated_at = @updated_at,user_id = @user_id,Visuals = @Visuals WHERE id = @id";
+				dbContext.AddInParameter(dbContext.cmd, "@Aftereffects", Data.Aftereffects);
+				dbContext.AddInParameter(dbContext.cmd, "@Conditions", Data.Conditions);
+				dbContext.AddInParameter(dbContext.cmd, "@created_at", Data.created_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Deities", Data.Deities);
+				dbContext.AddInParameter(dbContext.cmd, "@Description", Data.Description);
+				dbContext.AddInParameter(dbContext.cmd, "@Education", Data.Education);
+				dbContext.AddInParameter(dbContext.cmd, "@Effects", Data.Effects);
+				dbContext.AddInParameter(dbContext.cmd, "@Element", Data.Element);
+				dbContext.AddInParameter(dbContext.cmd, "@Limitations", Data.Limitations);
+				dbContext.AddInParameter(dbContext.cmd, "@Materials_required", Data.Materials_required);
+				dbContext.AddInParameter(dbContext.cmd, "@Name", Data.Name);
+				dbContext.AddInParameter(dbContext.cmd, "@Negative_effects", Data.Negative_effects);
+				dbContext.AddInParameter(dbContext.cmd, "@Neutral_effects", Data.Neutral_effects);
+				dbContext.AddInParameter(dbContext.cmd, "@Notes", Data.Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Positive_effects", Data.Positive_effects);
+				dbContext.AddInParameter(dbContext.cmd, "@Private_notes", Data.Private_notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Resource_costs", Data.Resource_costs);
+				dbContext.AddInParameter(dbContext.cmd, "@Scale", Data.Scale);
+				dbContext.AddInParameter(dbContext.cmd, "@Skills_required", Data.Skills_required);
+				dbContext.AddInParameter(dbContext.cmd, "@Tags", Data.Tags);
+				dbContext.AddInParameter(dbContext.cmd, "@Type_of_magic", Data.Type_of_magic);
+				dbContext.AddInParameter(dbContext.cmd, "@Universe", Data.Universe);
+				dbContext.AddInParameter(dbContext.cmd, "@updated_at", Data.updated_at);
+				dbContext.AddInParameter(dbContext.cmd, "@user_id", Data.user_id);
+				dbContext.AddInParameter(dbContext.cmd, "@Visuals", Data.Visuals);
+				_return_value = Convert.ToString(dbContext.cmd.ExecuteNonQuery());
+			}
+			catch (Exception ex)
+			{
+			    _return_value = null;
+			    throw;
+			}
+			
+			return _return_value;
+
+		}
+
 	}
 }

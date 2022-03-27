@@ -215,5 +215,50 @@ namespace My.World.Api.DataAccess
 
 		}
 
+		public string UpdateTraditionsData(TraditionsModel Data)
+		{
+			string _return_value = string.Empty;
+			try
+			{
+				dbContext.cmd = new MySqlCommand();
+				dbContext.cmd.Connection = dbContext.GetConnection();
+				dbContext.cmd.CommandText = "UPDATE traditions SET Activities = @Activities,Alternate_names = @Alternate_names,Countries = @Countries,created_at = @created_at,Dates = @Dates,Description = @Description,Etymology = @Etymology,Food = @Food,Games = @Games,Gifts = @Gifts,Groups = @Groups,Name = @Name,Notable_events = @Notable_events,Notes = @Notes,Origin = @Origin,Private_Notes = @Private_Notes,Religions = @Religions,Significance = @Significance,Symbolism = @Symbolism,Tags = @Tags,Towns = @Towns,Type_of_tradition = @Type_of_tradition,Universe = @Universe,updated_at = @updated_at,user_id = @user_id WHERE id = @id";
+				dbContext.AddInParameter(dbContext.cmd, "@Activities", Data.Activities);
+				dbContext.AddInParameter(dbContext.cmd, "@Alternate_names", Data.Alternate_names);
+				dbContext.AddInParameter(dbContext.cmd, "@Countries", Data.Countries);
+				dbContext.AddInParameter(dbContext.cmd, "@created_at", Data.created_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Dates", Data.Dates);
+				dbContext.AddInParameter(dbContext.cmd, "@Description", Data.Description);
+				dbContext.AddInParameter(dbContext.cmd, "@Etymology", Data.Etymology);
+				dbContext.AddInParameter(dbContext.cmd, "@Food", Data.Food);
+				dbContext.AddInParameter(dbContext.cmd, "@Games", Data.Games);
+				dbContext.AddInParameter(dbContext.cmd, "@Gifts", Data.Gifts);
+				dbContext.AddInParameter(dbContext.cmd, "@Groups", Data.Groups);
+				dbContext.AddInParameter(dbContext.cmd, "@Name", Data.Name);
+				dbContext.AddInParameter(dbContext.cmd, "@Notable_events", Data.Notable_events);
+				dbContext.AddInParameter(dbContext.cmd, "@Notes", Data.Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Origin", Data.Origin);
+				dbContext.AddInParameter(dbContext.cmd, "@Private_Notes", Data.Private_Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Religions", Data.Religions);
+				dbContext.AddInParameter(dbContext.cmd, "@Significance", Data.Significance);
+				dbContext.AddInParameter(dbContext.cmd, "@Symbolism", Data.Symbolism);
+				dbContext.AddInParameter(dbContext.cmd, "@Tags", Data.Tags);
+				dbContext.AddInParameter(dbContext.cmd, "@Towns", Data.Towns);
+				dbContext.AddInParameter(dbContext.cmd, "@Type_of_tradition", Data.Type_of_tradition);
+				dbContext.AddInParameter(dbContext.cmd, "@Universe", Data.Universe);
+				dbContext.AddInParameter(dbContext.cmd, "@updated_at", Data.updated_at);
+				dbContext.AddInParameter(dbContext.cmd, "@user_id", Data.user_id);
+				_return_value = Convert.ToString(dbContext.cmd.ExecuteNonQuery());
+			}
+			catch (Exception ex)
+			{
+			    _return_value = null;
+			    throw;
+			}
+			
+			return _return_value;
+
+		}
+
 	}
 }

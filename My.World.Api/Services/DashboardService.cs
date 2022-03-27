@@ -100,5 +100,26 @@ namespace My.World.Api.Services
             }
             return return_value;
         }
+
+        internal ResponseModel<BaseModel> GetContentDetailsFromTypeID(string contentType, string contentId)
+        {
+            ResponseModel<BaseModel> return_value = null;
+            try
+            {
+                return_value = new ResponseModel<BaseModel>();
+                DashboardDAL DashboardDALObj = new DashboardDAL(dbContext);
+                BaseModel value = DashboardDALObj.GetContentDetailsFromTypeID(contentType, contentId);
+                return_value.Value = value;
+                return_value.Message = "Success";
+                return_value.HttpStatusCode = "200";
+                return_value.IsSuccess = true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return return_value;
+        }
     }
 }

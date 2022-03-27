@@ -20,5 +20,7 @@ namespace My.World.Api.Services
 
 		ResponseModel<string> SaveTechnologie(TechnologiesModel Data);
 
+		ResponseModel<string> UpdateTechnologiesData(TechnologiesModel Data);
+
 	}
 }

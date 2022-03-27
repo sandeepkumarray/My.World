@@ -353,5 +353,96 @@ namespace My.World.Api.DataAccess
 
 		}
 
+		public string UpdateLoresData(LoresModel Data)
+		{
+			string _return_value = string.Empty;
+			try
+			{
+				dbContext.cmd = new MySqlCommand();
+				dbContext.cmd.Connection = dbContext.GetConnection();
+				dbContext.cmd.CommandText = "UPDATE lores SET Background_information = @Background_information,Believability = @Believability,Believers = @Believers,Buildings = @Buildings,Characters = @Characters,Conditions = @Conditions,Continents = @Continents,Countries = @Countries,created_at = @created_at,Created_phrases = @Created_phrases,Created_traditions = @Created_traditions,Creatures = @Creatures,Criticism = @Criticism,Date_recorded = @Date_recorded,Deities = @Deities,Dialect = @Dialect,Evolution_over_time = @Evolution_over_time,False_parts = @False_parts,Floras = @Floras,Foods = @Foods,Full_text = @Full_text,Genre = @Genre,Geographical_variations = @Geographical_variations,Governments = @Governments,Groups = @Groups,Historical_context = @Historical_context,Hoaxes = @Hoaxes,Impact = @Impact,Important_translations = @Important_translations,Influence_on_modern_times = @Influence_on_modern_times,Inspirations = @Inspirations,Interpretations = @Interpretations,Jobs = @Jobs,Landmarks = @Landmarks,Magic = @Magic,Media_adaptations = @Media_adaptations,Morals = @Morals,Motivations = @Motivations,Name = @Name,Notes = @Notes,Original_author = @Original_author,Original_languages = @Original_languages,Original_telling = @Original_telling,Planets = @Planets,Private_Notes = @Private_Notes,Propagation_method = @Propagation_method,Races = @Races,Reception = @Reception,Related_lores = @Related_lores,Religions = @Religions,Schools = @Schools,Source = @Source,Sports = @Sports,Structure = @Structure,Subjects = @Subjects,Summary = @Summary,Symbolisms = @Symbolisms,Tags = @Tags,Technologies = @Technologies,Time_period = @Time_period,Tone = @Tone,Towns = @Towns,Traditions = @Traditions,Translation_variations = @Translation_variations,True_parts = @True_parts,Type = @Type,Universe = @Universe,updated_at = @updated_at,user_id = @user_id,Variations = @Variations,Vehicles = @Vehicles WHERE id = @id";
+				dbContext.AddInParameter(dbContext.cmd, "@Background_information", Data.Background_information);
+				dbContext.AddInParameter(dbContext.cmd, "@Believability", Data.Believability);
+				dbContext.AddInParameter(dbContext.cmd, "@Believers", Data.Believers);
+				dbContext.AddInParameter(dbContext.cmd, "@Buildings", Data.Buildings);
+				dbContext.AddInParameter(dbContext.cmd, "@Characters", Data.Characters);
+				dbContext.AddInParameter(dbContext.cmd, "@Conditions", Data.Conditions);
+				dbContext.AddInParameter(dbContext.cmd, "@Continents", Data.Continents);
+				dbContext.AddInParameter(dbContext.cmd, "@Countries", Data.Countries);
+				dbContext.AddInParameter(dbContext.cmd, "@created_at", Data.created_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Created_phrases", Data.Created_phrases);
+				dbContext.AddInParameter(dbContext.cmd, "@Created_traditions", Data.Created_traditions);
+				dbContext.AddInParameter(dbContext.cmd, "@Creatures", Data.Creatures);
+				dbContext.AddInParameter(dbContext.cmd, "@Criticism", Data.Criticism);
+				dbContext.AddInParameter(dbContext.cmd, "@Date_recorded", Data.Date_recorded);
+				dbContext.AddInParameter(dbContext.cmd, "@Deities", Data.Deities);
+				dbContext.AddInParameter(dbContext.cmd, "@Dialect", Data.Dialect);
+				dbContext.AddInParameter(dbContext.cmd, "@Evolution_over_time", Data.Evolution_over_time);
+				dbContext.AddInParameter(dbContext.cmd, "@False_parts", Data.False_parts);
+				dbContext.AddInParameter(dbContext.cmd, "@Floras", Data.Floras);
+				dbContext.AddInParameter(dbContext.cmd, "@Foods", Data.Foods);
+				dbContext.AddInParameter(dbContext.cmd, "@Full_text", Data.Full_text);
+				dbContext.AddInParameter(dbContext.cmd, "@Genre", Data.Genre);
+				dbContext.AddInParameter(dbContext.cmd, "@Geographical_variations", Data.Geographical_variations);
+				dbContext.AddInParameter(dbContext.cmd, "@Governments", Data.Governments);
+				dbContext.AddInParameter(dbContext.cmd, "@Groups", Data.Groups);
+				dbContext.AddInParameter(dbContext.cmd, "@Historical_context", Data.Historical_context);
+				dbContext.AddInParameter(dbContext.cmd, "@Hoaxes", Data.Hoaxes);
+				dbContext.AddInParameter(dbContext.cmd, "@Impact", Data.Impact);
+				dbContext.AddInParameter(dbContext.cmd, "@Important_translations", Data.Important_translations);
+				dbContext.AddInParameter(dbContext.cmd, "@Influence_on_modern_times", Data.Influence_on_modern_times);
+				dbContext.AddInParameter(dbContext.cmd, "@Inspirations", Data.Inspirations);
+				dbContext.AddInParameter(dbContext.cmd, "@Interpretations", Data.Interpretations);
+				dbContext.AddInParameter(dbContext.cmd, "@Jobs", Data.Jobs);
+				dbContext.AddInParameter(dbContext.cmd, "@Landmarks", Data.Landmarks);
+				dbContext.AddInParameter(dbContext.cmd, "@Magic", Data.Magic);
+				dbContext.AddInParameter(dbContext.cmd, "@Media_adaptations", Data.Media_adaptations);
+				dbContext.AddInParameter(dbContext.cmd, "@Morals", Data.Morals);
+				dbContext.AddInParameter(dbContext.cmd, "@Motivations", Data.Motivations);
+				dbContext.AddInParameter(dbContext.cmd, "@Name", Data.Name);
+				dbContext.AddInParameter(dbContext.cmd, "@Notes", Data.Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Original_author", Data.Original_author);
+				dbContext.AddInParameter(dbContext.cmd, "@Original_languages", Data.Original_languages);
+				dbContext.AddInParameter(dbContext.cmd, "@Original_telling", Data.Original_telling);
+				dbContext.AddInParameter(dbContext.cmd, "@Planets", Data.Planets);
+				dbContext.AddInParameter(dbContext.cmd, "@Private_Notes", Data.Private_Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Propagation_method", Data.Propagation_method);
+				dbContext.AddInParameter(dbContext.cmd, "@Races", Data.Races);
+				dbContext.AddInParameter(dbContext.cmd, "@Reception", Data.Reception);
+				dbContext.AddInParameter(dbContext.cmd, "@Related_lores", Data.Related_lores);
+				dbContext.AddInParameter(dbContext.cmd, "@Religions", Data.Religions);
+				dbContext.AddInParameter(dbContext.cmd, "@Schools", Data.Schools);
+				dbContext.AddInParameter(dbContext.cmd, "@Source", Data.Source);
+				dbContext.AddInParameter(dbContext.cmd, "@Sports", Data.Sports);
+				dbContext.AddInParameter(dbContext.cmd, "@Structure", Data.Structure);
+				dbContext.AddInParameter(dbContext.cmd, "@Subjects", Data.Subjects);
+				dbContext.AddInParameter(dbContext.cmd, "@Summary", Data.Summary);
+				dbContext.AddInParameter(dbContext.cmd, "@Symbolisms", Data.Symbolisms);
+				dbContext.AddInParameter(dbContext.cmd, "@Tags", Data.Tags);
+				dbContext.AddInParameter(dbContext.cmd, "@Technologies", Data.Technologies);
+				dbContext.AddInParameter(dbContext.cmd, "@Time_period", Data.Time_period);
+				dbContext.AddInParameter(dbContext.cmd, "@Tone", Data.Tone);
+				dbContext.AddInParameter(dbContext.cmd, "@Towns", Data.Towns);
+				dbContext.AddInParameter(dbContext.cmd, "@Traditions", Data.Traditions);
+				dbContext.AddInParameter(dbContext.cmd, "@Translation_variations", Data.Translation_variations);
+				dbContext.AddInParameter(dbContext.cmd, "@True_parts", Data.True_parts);
+				dbContext.AddInParameter(dbContext.cmd, "@Type", Data.Type);
+				dbContext.AddInParameter(dbContext.cmd, "@Universe", Data.Universe);
+				dbContext.AddInParameter(dbContext.cmd, "@updated_at", Data.updated_at);
+				dbContext.AddInParameter(dbContext.cmd, "@user_id", Data.user_id);
+				dbContext.AddInParameter(dbContext.cmd, "@Variations", Data.Variations);
+				dbContext.AddInParameter(dbContext.cmd, "@Vehicles", Data.Vehicles);
+				_return_value = Convert.ToString(dbContext.cmd.ExecuteNonQuery());
+			}
+			catch (Exception ex)
+			{
+			    _return_value = null;
+			    throw;
+			}
+			
+			return _return_value;
+
+		}
+
 	}
 }

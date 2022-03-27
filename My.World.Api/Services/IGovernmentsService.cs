@@ -20,5 +20,7 @@ namespace My.World.Api.Services
 
 		ResponseModel<string> SaveGovernment(GovernmentsModel Data);
 
+		ResponseModel<string> UpdateGovernmentsData(GovernmentsModel Data);
+
 	}
 }

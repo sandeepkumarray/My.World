@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace My.World.Web.Services
 {
-	public interface IObjectstoragekeysApiService
+	public interface IObjectStorageKeysApiService
 	{
 
 		ObjectStorageKeysModel GetObjectStorageKeys(ObjectStorageKeysModel model);

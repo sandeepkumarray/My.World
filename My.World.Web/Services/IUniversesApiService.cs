@@ -11,16 +11,13 @@ namespace My.World.Web.Services
 	public interface IUniversesApiService
 	{
 
-		string AddUniverses(UniversesModel model);
-
-		string UpdateUniverses(UniversesModel model);
-
 		UniversesModel GetUniverses(UniversesModel model);
 
 		string DeleteUniverses(UniversesModel model);
-		
-		List<UniversesModel> GetAllUniverses(long userId);
+
+		List<UniversesModel> GetAllUniverses(long UserId);
 
 		ResponseModel<string> SaveUniverse(UniversesModel model);
+
 	}
 }

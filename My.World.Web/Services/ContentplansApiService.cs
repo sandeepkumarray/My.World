@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace My.World.Web.Services
 {
-	public class ContentplansApiService : BaseAPIService, IContentplansApiService
+	public class ContentPlansApiService : BaseAPIService, IContentPlansApiService
 	{
 
 		public string AddContentPlans(ContentPlansModel model)

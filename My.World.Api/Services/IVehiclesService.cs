@@ -20,5 +20,7 @@ namespace My.World.Api.Services
 
 		ResponseModel<string> SaveVehicle(VehiclesModel Data);
 
+		ResponseModel<string> UpdateVehiclesData(VehiclesModel Data);
+
 	}
 }

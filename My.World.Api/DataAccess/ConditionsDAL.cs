@@ -236,5 +236,57 @@ namespace My.World.Api.DataAccess
 
 		}
 
+		public string UpdateConditionsData(ConditionsModel Data)
+		{
+			string _return_value = string.Empty;
+			try
+			{
+				dbContext.cmd = new MySqlCommand();
+				dbContext.cmd.Connection = dbContext.GetConnection();
+				dbContext.cmd.CommandText = "UPDATE conditions SET Alternate_names = @Alternate_names,created_at = @created_at,Description = @Description,Diagnostic_method = @Diagnostic_method,Duration = @Duration,Environmental_factors = @Environmental_factors,Epidemiology = @Epidemiology,Evolution = @Evolution,Genetic_factors = @Genetic_factors,Immunization = @Immunization,Lifestyle_factors = @Lifestyle_factors,Medication = @Medication,Mental_effects = @Mental_effects,Name = @Name,Notes = @Notes,Origin = @Origin,Prevention = @Prevention,Private_Notes = @Private_Notes,Prognosis = @Prognosis,Rarity = @Rarity,Specialty_Field = @Specialty_Field,Symbolism = @Symbolism,Symptoms = @Symptoms,Tags = @Tags,Transmission = @Transmission,Treatment = @Treatment,Type_of_condition = @Type_of_condition,Universe = @Universe,updated_at = @updated_at,user_id = @user_id,Variations = @Variations,Visual_effects = @Visual_effects WHERE id = @id";
+				dbContext.AddInParameter(dbContext.cmd, "@Alternate_names", Data.Alternate_names);
+				dbContext.AddInParameter(dbContext.cmd, "@created_at", Data.created_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Description", Data.Description);
+				dbContext.AddInParameter(dbContext.cmd, "@Diagnostic_method", Data.Diagnostic_method);
+				dbContext.AddInParameter(dbContext.cmd, "@Duration", Data.Duration);
+				dbContext.AddInParameter(dbContext.cmd, "@Environmental_factors", Data.Environmental_factors);
+				dbContext.AddInParameter(dbContext.cmd, "@Epidemiology", Data.Epidemiology);
+				dbContext.AddInParameter(dbContext.cmd, "@Evolution", Data.Evolution);
+				dbContext.AddInParameter(dbContext.cmd, "@Genetic_factors", Data.Genetic_factors);
+				dbContext.AddInParameter(dbContext.cmd, "@Immunization", Data.Immunization);
+				dbContext.AddInParameter(dbContext.cmd, "@Lifestyle_factors", Data.Lifestyle_factors);
+				dbContext.AddInParameter(dbContext.cmd, "@Medication", Data.Medication);
+				dbContext.AddInParameter(dbContext.cmd, "@Mental_effects", Data.Mental_effects);
+				dbContext.AddInParameter(dbContext.cmd, "@Name", Data.Name);
+				dbContext.AddInParameter(dbContext.cmd, "@Notes", Data.Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Origin", Data.Origin);
+				dbContext.AddInParameter(dbContext.cmd, "@Prevention", Data.Prevention);
+				dbContext.AddInParameter(dbContext.cmd, "@Private_Notes", Data.Private_Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Prognosis", Data.Prognosis);
+				dbContext.AddInParameter(dbContext.cmd, "@Rarity", Data.Rarity);
+				dbContext.AddInParameter(dbContext.cmd, "@Specialty_Field", Data.Specialty_Field);
+				dbContext.AddInParameter(dbContext.cmd, "@Symbolism", Data.Symbolism);
+				dbContext.AddInParameter(dbContext.cmd, "@Symptoms", Data.Symptoms);
+				dbContext.AddInParameter(dbContext.cmd, "@Tags", Data.Tags);
+				dbContext.AddInParameter(dbContext.cmd, "@Transmission", Data.Transmission);
+				dbContext.AddInParameter(dbContext.cmd, "@Treatment", Data.Treatment);
+				dbContext.AddInParameter(dbContext.cmd, "@Type_of_condition", Data.Type_of_condition);
+				dbContext.AddInParameter(dbContext.cmd, "@Universe", Data.Universe);
+				dbContext.AddInParameter(dbContext.cmd, "@updated_at", Data.updated_at);
+				dbContext.AddInParameter(dbContext.cmd, "@user_id", Data.user_id);
+				dbContext.AddInParameter(dbContext.cmd, "@Variations", Data.Variations);
+				dbContext.AddInParameter(dbContext.cmd, "@Visual_effects", Data.Visual_effects);
+				_return_value = Convert.ToString(dbContext.cmd.ExecuteNonQuery());
+			}
+			catch (Exception ex)
+			{
+			    _return_value = null;
+			    throw;
+			}
+			
+			return _return_value;
+
+		}
+
 	}
 }

@@ -203,5 +203,46 @@ namespace My.World.Api.DataAccess
 
 		}
 
+		public string UpdateItemsData(ItemsModel Data)
+		{
+			string _return_value = string.Empty;
+			try
+			{
+				dbContext.cmd = new MySqlCommand();
+				dbContext.cmd.Connection = dbContext.GetConnection();
+				dbContext.cmd.CommandText = "UPDATE items SET created_at = @created_at,Current_Owners = @Current_Owners,Description = @Description,Item_Type = @Item_Type,Magic = @Magic,Magical_effects = @Magical_effects,Makers = @Makers,Materials = @Materials,Name = @Name,Notes = @Notes,Original_Owners = @Original_Owners,Past_Owners = @Past_Owners,Private_Notes = @Private_Notes,Tags = @Tags,Technical_effects = @Technical_effects,Technology = @Technology,Universe = @Universe,updated_at = @updated_at,user_id = @user_id,Weight = @Weight,Year_it_was_made = @Year_it_was_made WHERE id = @id";
+				dbContext.AddInParameter(dbContext.cmd, "@created_at", Data.created_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Current_Owners", Data.Current_Owners);
+				dbContext.AddInParameter(dbContext.cmd, "@Description", Data.Description);
+				dbContext.AddInParameter(dbContext.cmd, "@Item_Type", Data.Item_Type);
+				dbContext.AddInParameter(dbContext.cmd, "@Magic", Data.Magic);
+				dbContext.AddInParameter(dbContext.cmd, "@Magical_effects", Data.Magical_effects);
+				dbContext.AddInParameter(dbContext.cmd, "@Makers", Data.Makers);
+				dbContext.AddInParameter(dbContext.cmd, "@Materials", Data.Materials);
+				dbContext.AddInParameter(dbContext.cmd, "@Name", Data.Name);
+				dbContext.AddInParameter(dbContext.cmd, "@Notes", Data.Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Original_Owners", Data.Original_Owners);
+				dbContext.AddInParameter(dbContext.cmd, "@Past_Owners", Data.Past_Owners);
+				dbContext.AddInParameter(dbContext.cmd, "@Private_Notes", Data.Private_Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Tags", Data.Tags);
+				dbContext.AddInParameter(dbContext.cmd, "@Technical_effects", Data.Technical_effects);
+				dbContext.AddInParameter(dbContext.cmd, "@Technology", Data.Technology);
+				dbContext.AddInParameter(dbContext.cmd, "@Universe", Data.Universe);
+				dbContext.AddInParameter(dbContext.cmd, "@updated_at", Data.updated_at);
+				dbContext.AddInParameter(dbContext.cmd, "@user_id", Data.user_id);
+				dbContext.AddInParameter(dbContext.cmd, "@Weight", Data.Weight);
+				dbContext.AddInParameter(dbContext.cmd, "@Year_it_was_made", Data.Year_it_was_made);
+				_return_value = Convert.ToString(dbContext.cmd.ExecuteNonQuery());
+			}
+			catch (Exception ex)
+			{
+			    _return_value = null;
+			    throw;
+			}
+			
+			return _return_value;
+
+		}
+
 	}
 }

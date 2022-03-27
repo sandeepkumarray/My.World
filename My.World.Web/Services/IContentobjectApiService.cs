@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace My.World.Web.Services
 {
-	public interface IContentobjectApiService
+	public interface IContentObjectApiService
 	{
 		string AddContentObject(ContentObjectModel model);
 		ContentObjectModel GetContentObject(ContentObjectModel model);
@@ -17,7 +17,7 @@ namespace My.World.Web.Services
 
 		List<ContentObjectModel> GetAllContentObject(long UserId);
 
-		ResponseModel<string> SaveContentObjec(ContentObjectModel model);
+		ResponseModel<string> SaveContentObject(ContentObjectModel model);
 
 	}
 }

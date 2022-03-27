@@ -128,5 +128,26 @@ namespace My.World.Api.Services
 
 		}
 
+		public ResponseModel<string> UpdateGovernmentsData(GovernmentsModel Data)
+		{
+			ResponseModel<string> return_value = null;
+            try
+            {
+                return_value = new ResponseModel<string>();
+                GovernmentsDAL GovernmentsDalobj = new GovernmentsDAL(dbContext);
+                string value = GovernmentsDalobj.UpdateGovernmentsData(Data);
+                return_value.Value = value;
+                return_value.Message = "Success";
+                return_value.HttpStatusCode = "200";
+                return_value.IsSuccess = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return return_value;
+
+		}
+
 	}
 }

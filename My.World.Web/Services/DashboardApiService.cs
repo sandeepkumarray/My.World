@@ -29,7 +29,7 @@ namespace My.World.Web.Services
         {
             ResponseModel<string> return_value = new Api.Models.ResponseModel<string>();
             long id = 0;
-            string apiUrl = "Add" + controller;
+            string apiUrl = controller + "/Add" + controller;
             Object model = null;
 
             switch (controller)
@@ -146,12 +146,16 @@ namespace My.World.Web.Services
                     model = new VehiclesModel() { Name = "New Vehicles", created_at = DateTime.Now, updated_at = DateTime.Now, user_id = userAccount.id };
                     break;
 
+                case "Organizations":
+                    model = new OrganizationsModel() { Name = "New Organizations", created_at = DateTime.Now, updated_at = DateTime.Now, user_id = userAccount.id };
+                    break;
+
                 default:
                     break;
             }
 
             RestHttpClient client = new RestHttpClient();
-            client.Host = MyWorldApiUrl;
+            client.Host = MyWorldContentApiUrl;
             client.ApiUrl = apiUrl;
             client.ServiceMethod = Method.POST;
             client.RequestBody = model;
@@ -197,6 +201,19 @@ namespace My.World.Web.Services
             ResponseModel<List<ContentTypesModel>> response = JsonConvert.DeserializeObject<ResponseModel<List<ContentTypesModel>>>(jsonResult);
             contentTypesList = response.Value;
             return contentTypesList;
+        }
+        public BaseModel GetContentDetailsFromTypeID(string contentType, string contentId)
+        {
+            BaseModel contentTypesList = new BaseModel();
+            RestHttpClient client = new RestHttpClient();
+            client.Host = MyWorldApiUrl;
+            client.ApiUrl = "GetContentDetailsFromTypeID/" + contentType +"/" + contentId;
+            client.ServiceMethod = Method.GET;
+            string jsonResult = client.GETAsync();
+            ResponseModel<BaseModel> response = JsonConvert.DeserializeObject<ResponseModel<BaseModel>>(jsonResult);
+            contentTypesList = response.Value;
+            return contentTypesList;
+
         }
     }
 }

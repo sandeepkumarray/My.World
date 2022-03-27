@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace My.World.Web.Services
 {
-	public interface IUsercontentbucketApiService
+	public interface IUserContentBucketApiService
 	{
 		string AddUserContentBucket(UserContentBucketModel model);
 		UserContentBucketModel GetUserContentBucket(UserContentBucketModel model);

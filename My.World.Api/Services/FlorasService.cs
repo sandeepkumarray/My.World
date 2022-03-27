@@ -19,7 +19,7 @@ namespace My.World.Api.Services
 
 		public  FlorasService(DBContext dbContext)
 		{
-			this.dbContext = dbContext;
+						this.dbContext = dbContext;
 
 		}
 
@@ -115,6 +115,27 @@ namespace My.World.Api.Services
                 return_value = new ResponseModel<string>();
                 FlorasDAL FlorasDalobj = new FlorasDAL(dbContext);
                 string value = FlorasDalobj.SaveData(Data);
+                return_value.Value = value;
+                return_value.Message = "Success";
+                return_value.HttpStatusCode = "200";
+                return_value.IsSuccess = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return return_value;
+
+		}
+
+		public ResponseModel<string> UpdateFlorasData(FlorasModel Data)
+		{
+			ResponseModel<string> return_value = null;
+            try
+            {
+                return_value = new ResponseModel<string>();
+                FlorasDAL FlorasDalobj = new FlorasDAL(dbContext);
+                string value = FlorasDalobj.UpdateFlorasData(Data);
                 return_value.Value = value;
                 return_value.Message = "Success";
                 return_value.HttpStatusCode = "200";

@@ -20,5 +20,7 @@ namespace My.World.Api.Services
 
 		ResponseModel<string> SaveTradition(TraditionsModel Data);
 
+		ResponseModel<string> UpdateTraditionsData(TraditionsModel Data);
+
 	}
 }

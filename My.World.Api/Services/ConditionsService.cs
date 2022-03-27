@@ -128,5 +128,26 @@ namespace My.World.Api.Services
 
 		}
 
+		public ResponseModel<string> UpdateConditionsData(ConditionsModel Data)
+		{
+			ResponseModel<string> return_value = null;
+            try
+            {
+                return_value = new ResponseModel<string>();
+                ConditionsDAL ConditionsDalobj = new ConditionsDAL(dbContext);
+                string value = ConditionsDalobj.UpdateConditionsData(Data);
+                return_value.Value = value;
+                return_value.Message = "Success";
+                return_value.HttpStatusCode = "200";
+                return_value.IsSuccess = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return return_value;
+
+		}
+
 	}
 }

@@ -27,16 +27,16 @@ namespace My.World.Web.Controllers
 
 		public readonly IUsersApiService _iUsersApiService;
 
-		public readonly IContenttypesApiService _iContenttypesApiService;
+		public readonly IContentTypesApiService _iContenttypesApiService;
 
 		public readonly IObjectBucketApiService _iObjectBucketApiService;
 
 		public readonly IConfiguration _config;
 
 
-		public SportsController(ISportsApiService iSportsApiService,IUniversesApiService iUniversesApiService,IUsersApiService iUsersApiService,IContenttypesApiService iContenttypesApiService,IObjectBucketApiService iObjectBucketApiService,IConfiguration config)
+		public SportsController(ISportsApiService iSportsApiService,IUniversesApiService iUniversesApiService,IUsersApiService iUsersApiService,IContentTypesApiService iContenttypesApiService,IObjectBucketApiService iObjectBucketApiService,IConfiguration config)
 		{
-			_iSportsApiService = iSportsApiService;
+_iSportsApiService = iSportsApiService;
 			_iUniversesApiService = iUniversesApiService;
 			_iUsersApiService = iUsersApiService;
 			_iContenttypesApiService = iContenttypesApiService;
@@ -54,12 +54,11 @@ namespace My.World.Web.Controllers
 
 		}
 
-		[Route("Index")]
 		public IActionResult Index()
 		{
 			var accountID = Convert.ToInt64(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserID")?.Value);
 			_iObjectBucketApiService.SetObjectStorageSecrets(accountID);
-			string imageFormat = _config.GetValue<string>("ContentImageUrlFormat");
+			string imageFormat = HttpContext.Session.GetString("ContentImageUrlFormat");
 			var sports = _iSportsApiService.GetAllSports(accountID);
 			sports.ForEach(b =>
 			{
@@ -81,7 +80,7 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpGet]
-		[Route("{Id}")]
+		[Route("{Id}/edit")]
 		public IActionResult ViewSports(string Id)
 		{
 			SportsModel model = new SportsModel();
@@ -119,7 +118,7 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpGet]
-		[Route("Preview/{Id}")]
+		[Route("{Id}")]
 		public IActionResult PreviewSports(string Id)
 		{
 			SportsModel model = new SportsModel();
@@ -144,6 +143,12 @@ namespace My.World.Web.Controllers
 			sportsViewModel.headerBackgroundColor = contentTypesModel.sec_color;
 			_iObjectBucketApiService.SetObjectStorageSecrets(model.user_id);
 			sportsViewModel.ContentObjectModelList = _iObjectBucketApiService.GetAllContentObjectAttachments(Convert.ToInt64(Id), "sports");
+			sportsViewModel.ContentObjectModelList.ForEach(o => 
+			{
+			    var publicUrl = "http://" + _iObjectBucketApiService.objectStorageKeysModel.endpoint
+			                + '/' + _iObjectBucketApiService.objectStorageKeysModel.bucketName + '/' + _config.GetValue<string>("BucketEnv") + '/' + o.object_name; 
+			    o.file_url = HttpUtility.UrlPathEncode(publicUrl); 
+			}); 
 			return View(sportsViewModel);
 
 		}
@@ -160,7 +165,7 @@ namespace My.World.Web.Controllers
 
 		}
 
-		public void TransformData(SportsModel model)
+		private void TransformData(SportsModel model)
 		{
 			if (model != null)
 			{

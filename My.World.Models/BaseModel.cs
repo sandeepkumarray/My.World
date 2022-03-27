@@ -35,6 +35,10 @@ namespace My.World.Api.Models
 		[JsonProperty("image_url")]
 		[DisplayName("Image Url")]
 		public String image_url { get; set; }
+
+		[JsonProperty("content_name")]
+		[DisplayName("Content Name")]
+		public String content_name { get; set; }
 	}
 
     public class Principal

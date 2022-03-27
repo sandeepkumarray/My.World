@@ -29,15 +29,15 @@ namespace My.World.Web.Controllers
     {
         private readonly IUsersApiService _usersApiService;
         private readonly IEmailClient _emailClient;
-        private readonly IContentplansApiService _contentPlansService;
+        private readonly IContentPlansApiService _contentPlansService;
         Microsoft.Extensions.Configuration.IConfiguration _config;
         public readonly IObjectBucketApiService _iObjectBucketApiService;
-        readonly IAppconfigApiService _appconfigApiService;
+        readonly IAppConfigApiService _appconfigApiService;
 
         public AccountController(IUsersApiService usersApiService, IEmailClient emailClient,
-            IContentplansApiService contentPlansService,
+            IContentPlansApiService contentPlansService,
             Microsoft.Extensions.Configuration.IConfiguration config, IObjectBucketApiService iObjectBucketApiService,
-            IAppconfigApiService appconfigApiService)
+            IAppConfigApiService appconfigApiService)
         {
             _usersApiService = usersApiService;
             _emailClient = emailClient;

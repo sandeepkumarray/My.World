@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace My.World.Web.Services
 {
-	public interface IContentobjectattachmentApiService
+	public interface IContentObjectAttachmentApiService
 	{
 		string AddContentObjectAttachment(ContentObjectAttachmentModel model);
 		ContentObjectAttachmentModel GetContentObjectAttachment(ContentObjectAttachmentModel model);

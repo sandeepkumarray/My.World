@@ -14,74 +14,74 @@ namespace My.World.Web.Services
 
 		public string AddTowns(TownsModel model)
 		{
-						string townsModel = null;
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "AddTowns";
-						client.ServiceMethod = Method.POST;
-						client.RequestBody = model;
-						string jsonResult = client.GetResponseAsync();
-						ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
-						townsModel = response.Value;
-						return townsModel;
+			string townsModel = null;
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Towns/AddTowns";
+			client.ServiceMethod = Method.POST;
+			client.RequestBody = model;
+			string jsonResult = client.GetResponseAsync();
+			ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
+			townsModel = response.Value;
+			return townsModel;
 
 		}
 
 		public TownsModel GetTowns(TownsModel model)
 		{
-						TownsModel townsModel = null;
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "GetTowns";
-						client.ServiceMethod = Method.POST;
-						client.RequestBody = model;
-						string jsonResult = client.GetResponseAsync();
-						ResponseModel<TownsModel> response = JsonConvert.DeserializeObject<ResponseModel<TownsModel>>(jsonResult);
-						townsModel = response.Value;
-						return townsModel;
+			TownsModel townsModel = null;
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Towns/GetTowns";
+			client.ServiceMethod = Method.POST;
+			client.RequestBody = model;
+			string jsonResult = client.GetResponseAsync();
+			ResponseModel<TownsModel> response = JsonConvert.DeserializeObject<ResponseModel<TownsModel>>(jsonResult);
+			townsModel = response.Value;
+			return townsModel;
 
 		}
 
 		public string DeleteTowns(TownsModel model)
 		{
-						string townsModel = null;
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "DeleteTowns";
-						client.ServiceMethod = Method.POST;
-						client.RequestBody = model;
-						string jsonResult = client.GetResponseAsync();
-						ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
-						townsModel = response.Value;
-						return townsModel;
+			string townsModel = null;
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Towns/DeleteTowns";
+			client.ServiceMethod = Method.POST;
+			client.RequestBody = model;
+			string jsonResult = client.GetResponseAsync();
+			ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
+			townsModel = response.Value;
+			return townsModel;
 
 		}
 
 		public List<TownsModel> GetAllTowns(long UserId)
 		{
-						List<TownsModel> townsModel = new List<TownsModel>();
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "GetAllTowns/" + UserId;
-						client.ServiceMethod = Method.GET;
-						string jsonResult = client.GETAsync();
-						ResponseModel<List<TownsModel>> response = JsonConvert.DeserializeObject<ResponseModel<List<TownsModel>>>(jsonResult);
-						townsModel = response.Value;
-						return townsModel;
+			List<TownsModel> townsModel = new List<TownsModel>();
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Towns/GetAllTowns/" + UserId;
+			client.ServiceMethod = Method.GET;
+			string jsonResult = client.GETAsync();
+			ResponseModel<List<TownsModel>> response = JsonConvert.DeserializeObject<ResponseModel<List<TownsModel>>>(jsonResult);
+			townsModel = response.Value;
+			return townsModel;
 
 		}
 
 		public ResponseModel<string> SaveTown(TownsModel model)
 		{
-						string townsModel = null;
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "SaveTown";
-						client.ServiceMethod = Method.POST;
-						client.RequestBody = model;
-						string jsonResult = client.GetResponseAsync();
-						ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
-						return response;
+			string townsModel = null;
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Towns/SaveTown";
+			client.ServiceMethod = Method.POST;
+			client.RequestBody = model;
+			string jsonResult = client.GetResponseAsync();
+			ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
+			return response;
 
 		}
 

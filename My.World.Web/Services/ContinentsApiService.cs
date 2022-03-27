@@ -14,74 +14,74 @@ namespace My.World.Web.Services
 
 		public string AddContinents(ContinentsModel model)
 		{
-						string continentsModel = null;
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "AddContinents";
-						client.ServiceMethod = Method.POST;
-						client.RequestBody = model;
-						string jsonResult = client.GetResponseAsync();
-						ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
-						continentsModel = response.Value;
-						return continentsModel;
+			string continentsModel = null;
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Continents/AddContinents";
+			client.ServiceMethod = Method.POST;
+			client.RequestBody = model;
+			string jsonResult = client.GetResponseAsync();
+			ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
+			continentsModel = response.Value;
+			return continentsModel;
 
 		}
 
 		public ContinentsModel GetContinents(ContinentsModel model)
 		{
-						ContinentsModel continentsModel = null;
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "GetContinents";
-						client.ServiceMethod = Method.POST;
-						client.RequestBody = model;
-						string jsonResult = client.GetResponseAsync();
-						ResponseModel<ContinentsModel> response = JsonConvert.DeserializeObject<ResponseModel<ContinentsModel>>(jsonResult);
-						continentsModel = response.Value;
-						return continentsModel;
+			ContinentsModel continentsModel = null;
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Continents/GetContinents";
+			client.ServiceMethod = Method.POST;
+			client.RequestBody = model;
+			string jsonResult = client.GetResponseAsync();
+			ResponseModel<ContinentsModel> response = JsonConvert.DeserializeObject<ResponseModel<ContinentsModel>>(jsonResult);
+			continentsModel = response.Value;
+			return continentsModel;
 
 		}
 
 		public string DeleteContinents(ContinentsModel model)
 		{
-						string continentsModel = null;
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "DeleteContinents";
-						client.ServiceMethod = Method.POST;
-						client.RequestBody = model;
-						string jsonResult = client.GetResponseAsync();
-						ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
-						continentsModel = response.Value;
-						return continentsModel;
+			string continentsModel = null;
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Continents/DeleteContinents";
+			client.ServiceMethod = Method.POST;
+			client.RequestBody = model;
+			string jsonResult = client.GetResponseAsync();
+			ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
+			continentsModel = response.Value;
+			return continentsModel;
 
 		}
 
 		public List<ContinentsModel> GetAllContinents(long UserId)
 		{
-						List<ContinentsModel> continentsModel = new List<ContinentsModel>();
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "GetAllContinents/" + UserId;
-						client.ServiceMethod = Method.GET;
-						string jsonResult = client.GETAsync();
-						ResponseModel<List<ContinentsModel>> response = JsonConvert.DeserializeObject<ResponseModel<List<ContinentsModel>>>(jsonResult);
-						continentsModel = response.Value;
-						return continentsModel;
+			List<ContinentsModel> continentsModel = new List<ContinentsModel>();
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Continents/GetAllContinents/" + UserId;
+			client.ServiceMethod = Method.GET;
+			string jsonResult = client.GETAsync();
+			ResponseModel<List<ContinentsModel>> response = JsonConvert.DeserializeObject<ResponseModel<List<ContinentsModel>>>(jsonResult);
+			continentsModel = response.Value;
+			return continentsModel;
 
 		}
 
 		public ResponseModel<string> SaveContinent(ContinentsModel model)
 		{
-						string continentsModel = null;
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "SaveContinent";
-						client.ServiceMethod = Method.POST;
-						client.RequestBody = model;
-						string jsonResult = client.GetResponseAsync();
-						ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
-						return response;
+			string continentsModel = null;
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Continents/SaveContinent";
+			client.ServiceMethod = Method.POST;
+			client.RequestBody = model;
+			string jsonResult = client.GetResponseAsync();
+			ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
+			return response;
 
 		}
 

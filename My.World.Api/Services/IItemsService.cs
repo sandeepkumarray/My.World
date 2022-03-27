@@ -9,13 +9,18 @@ namespace My.World.Api.Services
 {
 	public interface IItemsService
 	{
+
 		ResponseModel<string> AddItemsData(ItemsModel Data);
 
 		ResponseModel<ItemsModel> GetItemsData(ItemsModel Data);
 
 		ResponseModel<string> DeleteItemsData(ItemsModel Data);
 
-		ResponseModel<List<ItemsModel>> GetAllItemsData(long UserId);
+		ResponseModel<List<ItemsModel >> GetAllItemsForUserID(long userId);
+
+		ResponseModel<string> SaveItem(ItemsModel Data);
+
+		ResponseModel<string> UpdateItemsData(ItemsModel Data);
 
 	}
 }

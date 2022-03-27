@@ -236,5 +236,57 @@ namespace My.World.Api.DataAccess
 
 		}
 
+		public string UpdateTechnologiesData(TechnologiesModel Data)
+		{
+			string _return_value = string.Empty;
+			try
+			{
+				dbContext.cmd = new MySqlCommand();
+				dbContext.cmd.Connection = dbContext.GetConnection();
+				dbContext.cmd.CommandText = "UPDATE technologies SET Characters = @Characters,Child_technologies = @Child_technologies,Colors = @Colors,Cost = @Cost,Countries = @Countries,created_at = @created_at,Creatures = @Creatures,Description = @Description,Groups = @Groups,How_It_Works = @How_It_Works,Magic_effects = @Magic_effects,Manufacturing_Process = @Manufacturing_Process,Materials = @Materials,Name = @Name,Notes = @Notes,Other_Names = @Other_Names,Parent_technologies = @Parent_technologies,Physical_Description = @Physical_Description,Planets = @Planets,Private_Notes = @Private_Notes,Purpose = @Purpose,Rarity = @Rarity,Related_technologies = @Related_technologies,Resources_Used = @Resources_Used,Sales_Process = @Sales_Process,Size = @Size,Tags = @Tags,Towns = @Towns,Universe = @Universe,updated_at = @updated_at,user_id = @user_id,Weight = @Weight WHERE id = @id";
+				dbContext.AddInParameter(dbContext.cmd, "@Characters", Data.Characters);
+				dbContext.AddInParameter(dbContext.cmd, "@Child_technologies", Data.Child_technologies);
+				dbContext.AddInParameter(dbContext.cmd, "@Colors", Data.Colors);
+				dbContext.AddInParameter(dbContext.cmd, "@Cost", Data.Cost);
+				dbContext.AddInParameter(dbContext.cmd, "@Countries", Data.Countries);
+				dbContext.AddInParameter(dbContext.cmd, "@created_at", Data.created_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Creatures", Data.Creatures);
+				dbContext.AddInParameter(dbContext.cmd, "@Description", Data.Description);
+				dbContext.AddInParameter(dbContext.cmd, "@Groups", Data.Groups);
+				dbContext.AddInParameter(dbContext.cmd, "@How_It_Works", Data.How_It_Works);
+				dbContext.AddInParameter(dbContext.cmd, "@Magic_effects", Data.Magic_effects);
+				dbContext.AddInParameter(dbContext.cmd, "@Manufacturing_Process", Data.Manufacturing_Process);
+				dbContext.AddInParameter(dbContext.cmd, "@Materials", Data.Materials);
+				dbContext.AddInParameter(dbContext.cmd, "@Name", Data.Name);
+				dbContext.AddInParameter(dbContext.cmd, "@Notes", Data.Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Other_Names", Data.Other_Names);
+				dbContext.AddInParameter(dbContext.cmd, "@Parent_technologies", Data.Parent_technologies);
+				dbContext.AddInParameter(dbContext.cmd, "@Physical_Description", Data.Physical_Description);
+				dbContext.AddInParameter(dbContext.cmd, "@Planets", Data.Planets);
+				dbContext.AddInParameter(dbContext.cmd, "@Private_Notes", Data.Private_Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Purpose", Data.Purpose);
+				dbContext.AddInParameter(dbContext.cmd, "@Rarity", Data.Rarity);
+				dbContext.AddInParameter(dbContext.cmd, "@Related_technologies", Data.Related_technologies);
+				dbContext.AddInParameter(dbContext.cmd, "@Resources_Used", Data.Resources_Used);
+				dbContext.AddInParameter(dbContext.cmd, "@Sales_Process", Data.Sales_Process);
+				dbContext.AddInParameter(dbContext.cmd, "@Size", Data.Size);
+				dbContext.AddInParameter(dbContext.cmd, "@Tags", Data.Tags);
+				dbContext.AddInParameter(dbContext.cmd, "@Towns", Data.Towns);
+				dbContext.AddInParameter(dbContext.cmd, "@Universe", Data.Universe);
+				dbContext.AddInParameter(dbContext.cmd, "@updated_at", Data.updated_at);
+				dbContext.AddInParameter(dbContext.cmd, "@user_id", Data.user_id);
+				dbContext.AddInParameter(dbContext.cmd, "@Weight", Data.Weight);
+				_return_value = Convert.ToString(dbContext.cmd.ExecuteNonQuery());
+			}
+			catch (Exception ex)
+			{
+			    _return_value = null;
+			    throw;
+			}
+			
+			return _return_value;
+
+		}
+
 	}
 }

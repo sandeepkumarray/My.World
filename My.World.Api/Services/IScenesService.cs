@@ -20,5 +20,7 @@ namespace My.World.Api.Services
 
 		ResponseModel<string> SaveScene(ScenesModel Data);
 
+		ResponseModel<string> UpdateScenesData(ScenesModel Data);
+
 	}
 }

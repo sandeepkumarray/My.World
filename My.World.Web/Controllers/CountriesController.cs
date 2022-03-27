@@ -27,16 +27,16 @@ namespace My.World.Web.Controllers
 
 		public readonly IUsersApiService _iUsersApiService;
 
-		public readonly IContenttypesApiService _iContenttypesApiService;
+		public readonly IContentTypesApiService _iContenttypesApiService;
 
 		public readonly IObjectBucketApiService _iObjectBucketApiService;
 
 		public readonly IConfiguration _config;
 
 
-		public CountriesController(ICountriesApiService iCountriesApiService,IUniversesApiService iUniversesApiService,IUsersApiService iUsersApiService,IContenttypesApiService iContenttypesApiService,IObjectBucketApiService iObjectBucketApiService,IConfiguration config)
+		public CountriesController(ICountriesApiService iCountriesApiService,IUniversesApiService iUniversesApiService,IUsersApiService iUsersApiService,IContentTypesApiService iContenttypesApiService,IObjectBucketApiService iObjectBucketApiService,IConfiguration config)
 		{
-			_iCountriesApiService = iCountriesApiService;
+_iCountriesApiService = iCountriesApiService;
 			_iUniversesApiService = iUniversesApiService;
 			_iUsersApiService = iUsersApiService;
 			_iContenttypesApiService = iContenttypesApiService;
@@ -54,12 +54,11 @@ namespace My.World.Web.Controllers
 
 		}
 
-		[Route("Index")]
 		public IActionResult Index()
 		{
 			var accountID = Convert.ToInt64(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserID")?.Value);
 			_iObjectBucketApiService.SetObjectStorageSecrets(accountID);
-			string imageFormat = _config.GetValue<string>("ContentImageUrlFormat");
+			string imageFormat = HttpContext.Session.GetString("ContentImageUrlFormat");
 			var countries = _iCountriesApiService.GetAllCountries(accountID);
 			countries.ForEach(b =>
 			{
@@ -81,7 +80,7 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpGet]
-		[Route("{Id}")]
+		[Route("{Id}/edit")]
 		public IActionResult ViewCountries(string Id)
 		{
 			CountriesModel model = new CountriesModel();
@@ -119,7 +118,7 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpGet]
-		[Route("Preview/{Id}")]
+		[Route("{Id}")]
 		public IActionResult PreviewCountries(string Id)
 		{
 			CountriesModel model = new CountriesModel();
@@ -144,6 +143,12 @@ namespace My.World.Web.Controllers
 			countriesViewModel.headerBackgroundColor = contentTypesModel.sec_color;
 			_iObjectBucketApiService.SetObjectStorageSecrets(model.user_id);
 			countriesViewModel.ContentObjectModelList = _iObjectBucketApiService.GetAllContentObjectAttachments(Convert.ToInt64(Id), "countries");
+			countriesViewModel.ContentObjectModelList.ForEach(o => 
+			{
+			    var publicUrl = "http://" + _iObjectBucketApiService.objectStorageKeysModel.endpoint
+			                + '/' + _iObjectBucketApiService.objectStorageKeysModel.bucketName + '/' + _config.GetValue<string>("BucketEnv") + '/' + o.object_name; 
+			    o.file_url = HttpUtility.UrlPathEncode(publicUrl); 
+			}); 
 			return View(countriesViewModel);
 
 		}
@@ -160,7 +165,7 @@ namespace My.World.Web.Controllers
 
 		}
 
-		public void TransformData(CountriesModel model)
+		private void TransformData(CountriesModel model)
 		{
 			if (model != null)
 			{

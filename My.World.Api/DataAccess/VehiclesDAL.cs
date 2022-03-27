@@ -227,5 +227,54 @@ namespace My.World.Api.DataAccess
 
 		}
 
+		public string UpdateVehiclesData(VehiclesModel Data)
+		{
+			string _return_value = string.Empty;
+			try
+			{
+				dbContext.cmd = new MySqlCommand();
+				dbContext.cmd.Connection = dbContext.GetConnection();
+				dbContext.cmd.CommandText = "UPDATE vehicles SET Alternate_names = @Alternate_names,Colors = @Colors,Costs = @Costs,Country = @Country,created_at = @created_at,Description = @Description,Designer = @Designer,Dimensions = @Dimensions,Distance = @Distance,Doors = @Doors,Features = @Features,Fuel = @Fuel,Manufacturer = @Manufacturer,Materials = @Materials,Name = @Name,Notes = @Notes,Owner = @Owner,Private_Notes = @Private_Notes,Safety = @Safety,Size = @Size,Speed = @Speed,Tags = @Tags,Type_of_vehicle = @Type_of_vehicle,Universe = @Universe,updated_at = @updated_at,user_id = @user_id,Variants = @Variants,Weight = @Weight,Windows = @Windows WHERE id = @id";
+				dbContext.AddInParameter(dbContext.cmd, "@Alternate_names", Data.Alternate_names);
+				dbContext.AddInParameter(dbContext.cmd, "@Colors", Data.Colors);
+				dbContext.AddInParameter(dbContext.cmd, "@Costs", Data.Costs);
+				dbContext.AddInParameter(dbContext.cmd, "@Country", Data.Country);
+				dbContext.AddInParameter(dbContext.cmd, "@created_at", Data.created_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Description", Data.Description);
+				dbContext.AddInParameter(dbContext.cmd, "@Designer", Data.Designer);
+				dbContext.AddInParameter(dbContext.cmd, "@Dimensions", Data.Dimensions);
+				dbContext.AddInParameter(dbContext.cmd, "@Distance", Data.Distance);
+				dbContext.AddInParameter(dbContext.cmd, "@Doors", Data.Doors);
+				dbContext.AddInParameter(dbContext.cmd, "@Features", Data.Features);
+				dbContext.AddInParameter(dbContext.cmd, "@Fuel", Data.Fuel);
+				dbContext.AddInParameter(dbContext.cmd, "@Manufacturer", Data.Manufacturer);
+				dbContext.AddInParameter(dbContext.cmd, "@Materials", Data.Materials);
+				dbContext.AddInParameter(dbContext.cmd, "@Name", Data.Name);
+				dbContext.AddInParameter(dbContext.cmd, "@Notes", Data.Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Owner", Data.Owner);
+				dbContext.AddInParameter(dbContext.cmd, "@Private_Notes", Data.Private_Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Safety", Data.Safety);
+				dbContext.AddInParameter(dbContext.cmd, "@Size", Data.Size);
+				dbContext.AddInParameter(dbContext.cmd, "@Speed", Data.Speed);
+				dbContext.AddInParameter(dbContext.cmd, "@Tags", Data.Tags);
+				dbContext.AddInParameter(dbContext.cmd, "@Type_of_vehicle", Data.Type_of_vehicle);
+				dbContext.AddInParameter(dbContext.cmd, "@Universe", Data.Universe);
+				dbContext.AddInParameter(dbContext.cmd, "@updated_at", Data.updated_at);
+				dbContext.AddInParameter(dbContext.cmd, "@user_id", Data.user_id);
+				dbContext.AddInParameter(dbContext.cmd, "@Variants", Data.Variants);
+				dbContext.AddInParameter(dbContext.cmd, "@Weight", Data.Weight);
+				dbContext.AddInParameter(dbContext.cmd, "@Windows", Data.Windows);
+				_return_value = Convert.ToString(dbContext.cmd.ExecuteNonQuery());
+			}
+			catch (Exception ex)
+			{
+			    _return_value = null;
+			    throw;
+			}
+			
+			return _return_value;
+
+		}
+
 	}
 }

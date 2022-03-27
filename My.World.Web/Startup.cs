@@ -92,80 +92,58 @@ namespace My.World.Web
                };
            });
 
-            services.AddScoped<IDashboardApiService, DashboardApiService>(pr => new DashboardApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-            
-            services.AddScoped<IContentplansApiService, ContentplansApiService>(pr => new ContentplansApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
+            string MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl");
+            string MyWorldContentApiUrl = Configuration.GetValue<string>("MyWorldContentApiUrl");
 
-            services.AddScoped<IContenttypesApiService, ContenttypesApiService>(pr => new ContenttypesApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
+            #region Admin Services
+            services.AddTransient<ITokenService, TokenService>(ts => new TokenService() { SecretString = Configuration.GetValue<String>("AppSettings:Secret") });
+            services.AddScoped<IAppConfigApiService, AppConfigApiService>(pr => new AppConfigApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<IContentPlansApiService, ContentPlansApiService>(pr => new ContentPlansApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<IContentTypesApiService, ContentTypesApiService>(pr => new ContentTypesApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<IDocumentsApiService, DocumentsApiService>(pr => new DocumentsApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<IFoldersApiService, FoldersApiService>(pr => new FoldersApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
 
-            services.AddScoped<IBuildingsApiService, BuildingsApiService>(pr => new BuildingsApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
+            services.AddScoped<IUserDetailsApiService, UserDetailsApiService>(pr => new UserDetailsApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
 
-            services.AddScoped<ICharactersApiService, CharactersApiService>(pr => new CharactersApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
+            services.AddScoped<IUsersApiService, UsersApiService>(pr => new UsersApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            #endregion
 
-            services.AddScoped<IConditionsApiService, ConditionsApiService>(pr => new ConditionsApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
+            #region Content Services
+            services.AddScoped<IBuildingsApiService, BuildingsApiService>(pr => new BuildingsApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<ICharactersApiService, CharactersApiService>(pr => new CharactersApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<IConditionsApiService, ConditionsApiService>(pr => new ConditionsApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<IContinentsApiService, ContinentsApiService>(pr => new ContinentsApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<ICountriesApiService, CountriesApiService>(pr => new CountriesApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<ICreaturesApiService, CreaturesApiService>(pr => new CreaturesApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<IDeitiesApiService, DeitiesApiService>(pr => new DeitiesApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<IFlorasApiService, FlorasApiService>(pr => new FlorasApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<IFoodsApiService, FoodsApiService>(pr => new FoodsApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<IGovernmentsApiService, GovernmentsApiService>(pr => new GovernmentsApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<IGroupsApiService, GroupsApiService>(pr => new GroupsApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<IItemsApiService, ItemsApiService>(pr => new ItemsApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<IJobsApiService, JobsApiService>(pr => new JobsApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<ILandmarksApiService, LandmarksApiService>(pr => new LandmarksApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<ILanguagesApiService, LanguagesApiService>(pr => new LanguagesApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<ILocationsApiService, LocationsApiService>(pr => new LocationsApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<ILoresApiService, LoresApiService>(pr => new LoresApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<IMagicsApiService, MagicsApiService>(pr => new MagicsApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<IOrganizationsApiService, OrganizationsApiService>(pr => new OrganizationsApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<IPlanetsApiService, PlanetsApiService>(pr => new PlanetsApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<IRacesApiService, RacesApiService>(pr => new RacesApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<IReligionsApiService, ReligionsApiService>(pr => new ReligionsApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<IScenesApiService, ScenesApiService>(pr => new ScenesApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<ISportsApiService, SportsApiService>(pr => new SportsApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<ITechnologiesApiService, TechnologiesApiService>(pr => new TechnologiesApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<ITownsApiService, TownsApiService>(pr => new TownsApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<ITraditionsApiService, TraditionsApiService>(pr => new TraditionsApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<IUniversesApiService, UniversesApiService>(pr => new UniversesApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<IVehiclesApiService, VehiclesApiService>(pr => new VehiclesApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            #endregion
 
-            services.AddScoped<IContinentsApiService, ContinentsApiService>(pr => new ContinentsApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<ICountriesApiService, CountriesApiService>(pr => new CountriesApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<ICreaturesApiService, CreaturesApiService>(pr => new CreaturesApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<IDeitiesApiService, DeitiesApiService>(pr => new DeitiesApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<IDocumentsApiService, DocumentsApiService>(pr => new DocumentsApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<IFlorasApiService, FlorasApiService>(pr => new FlorasApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<IFoldersApiService, FoldersApiService>(pr => new FoldersApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<IFoodsApiService, FoodsApiService>(pr => new FoodsApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<IGovernmentsApiService, GovernmentsApiService>(pr => new GovernmentsApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<IGroupsApiService, GroupsApiService>(pr => new GroupsApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<IItemsApiService, ItemsApiService>(pr => new ItemsApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<IJobsApiService, JobsApiService>(pr => new JobsApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<ILandmarksApiService, LandmarksApiService>(pr => new LandmarksApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<ILanguagesApiService, LanguagesApiService>(pr => new LanguagesApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<ILocationsApiService, LocationsApiService>(pr => new LocationsApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<ILoresApiService, LoresApiService>(pr => new LoresApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<IMagicsApiService, MagicsApiService>(pr => new MagicsApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<IPlanetsApiService, PlanetsApiService>(pr => new PlanetsApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<IRacesApiService, RacesApiService>(pr => new RacesApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<IReligionsApiService, ReligionsApiService>(pr => new ReligionsApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<IScenesApiService, ScenesApiService>(pr => new ScenesApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<ISportsApiService, SportsApiService>(pr => new SportsApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<ITechnologiesApiService, TechnologiesApiService>(pr => new TechnologiesApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<ITownsApiService, TownsApiService>(pr => new TownsApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<ITraditionsApiService, TraditionsApiService>(pr => new TraditionsApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<IUniversesApiService, UniversesApiService>(pr => new UniversesApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<IUsersApiService, UsersApiService>(pr => new UsersApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<IVehiclesApiService, VehiclesApiService>(pr => new VehiclesApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            //services.AddScoped<IObjectstoragekeysApiService, ObjectstoragekeysApiService>(pr => new ObjectstoragekeysApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            //services.AddScoped<IObjectStorage, ObjectStorage>(pr => new ObjectStorage());
-            services.AddScoped<IObjectBucketApiService, ObjectBucketApiService>(pr => new ObjectBucketApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
-
-            services.AddScoped<IAppconfigApiService, AppconfigApiService>(pr => new AppconfigApiService() { MyWorldApiUrl = Configuration.GetValue<string>("MyWorldApiUrl") });
+            #region User Defined Services
+            services.AddScoped<IDashboardApiService, DashboardApiService>(pr => new DashboardApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            services.AddScoped<IObjectBucketApiService, ObjectBucketApiService>(pr => new ObjectBucketApiService() { MyWorldApiUrl = MyWorldApiUrl, MyWorldContentApiUrl = MyWorldContentApiUrl });
+            #endregion
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -189,40 +167,17 @@ namespace My.World.Web
             var log4Net = loggerFactory.AddLog4Net();
             _logger = log4Net.CreateLogger<Startup>();
 
-            _logger.LogInformation("Current Environment "+ env.EnvironmentName);
+            _logger.LogInformation("Current Environment " + env.EnvironmentName);
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                //app.UseDeveloperExceptionPage();
+
+                app.UseExceptionHandler("/Home/Error");
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                //app.UseExceptionHandler(errorApp =>
-                //{
-                //    errorApp.Run(async context =>
-                //    {
-                //        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError; ;
-                //        context.Response.ContentType = "text/html";
-
-                //        await context.Response.WriteAsync("<html lang=\"en\"><body>\r\n");
-                //        await context.Response.WriteAsync("ERROR!<br><br>\r\n");
-
-                //        var exceptionHandlerPathFeature =
-                //            context.Features.Get<IExceptionHandlerPathFeature>();
-
-                //        if (exceptionHandlerPathFeature?.Error is FileNotFoundException)
-                //        {
-                //            await context.Response.WriteAsync(
-                //                                      "File error thrown!<br><br>\r\n");
-                //        }
-
-                //        await context.Response.WriteAsync(
-                //                                      "<a href=\"/\">Home</a><br>\r\n");
-                //        await context.Response.WriteAsync("</body></html>\r\n");
-                //        await context.Response.WriteAsync(new string(' ', 512));
-                //    });
-                //});
                 app.UseHsts();
             }
 
@@ -261,7 +216,7 @@ namespace My.World.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
-          
+
             app.Use(async (context, next) =>
             {
                 string host = context.Request.Host.Value;

@@ -74,9 +74,33 @@ namespace My.World.Web.Controllers
             DocumentsModel model = new DocumentsModel();
             model.id = Convert.ToInt64(Id);
             ViewData["DocumentId"] = Id;
-            model = _documentsApiService.Getdocuments(model);           
+            model = _documentsApiService.Getdocuments(model);
 
             model.body = model.body.Replace("[MYWORLD]", Helpers.Utility.CurrentDomain);
+
+            HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
+            doc.LoadHtml(model.body);
+            foreach (var link in doc.DocumentNode.SelectNodes("//a[@href]"))
+            {
+                HtmlAgilityPack.HtmlNode newValue = HtmlAgilityPack.HtmlNode.CreateNode(link.InnerHtml);
+                if (link.InnerHtml.Contains(':'))
+                {
+                    var oldValue = link.ChildNodes.First();
+                    string contentLabel = oldValue.InnerHtml.Split(':')[0];
+                    contentLabel = contentLabel.Replace("[", "");
+                    string contentType = contentLabel.Split('-')[0];
+                    string contentID = contentLabel.Split('-')[1];
+                    var baseModel = _dashboardApiService.GetContentDetailsFromTypeID(contentType, contentID);
+                    newValue.InnerHtml = baseModel.content_name;
+                    link.ReplaceChild(newValue, oldValue);
+                }
+                //string hrefValue = link.GetAttributeValue("href", string.Empty);
+                //if (hrefValue.Contains(':'))
+                //{
+                //    string contentLabel = hrefValue.Split(':')[0];
+                //}
+            }
+            model.body = doc.DocumentNode.InnerHtml;
             return View(model);
         }
 
@@ -133,7 +157,7 @@ namespace My.World.Web.Controllers
             var value = Convert.ToString(_rawContent);
             DocumentsModel model = new DocumentsModel();
             model.id = DocumentId;
-			model._id = DocumentId;
+            model._id = DocumentId;
             model.column_type = type;
             model.column_value = value;
             response = _documentsApiService.Savedocuments(model);
@@ -153,7 +177,7 @@ namespace My.World.Web.Controllers
             var value = Convert.ToString(_rawContent);
             DocumentsModel model = new DocumentsModel();
             model.id = DocumentId;
-			model._id = DocumentId;
+            model._id = DocumentId;
             model.column_type = type;
             model.column_value = value;
             response = _documentsApiService.Savedocuments(model);
@@ -173,7 +197,7 @@ namespace My.World.Web.Controllers
             var value = Convert.ToString(_rawContent);
             DocumentsModel model = new DocumentsModel();
             model.id = DocumentId;
-			model._id = DocumentId;
+            model._id = DocumentId;
             model.column_type = type;
             model.column_value = value;
             response = _documentsApiService.Savedocuments(model);
@@ -187,7 +211,13 @@ namespace My.World.Web.Controllers
             var userid = Convert.ToInt64(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserID")?.Value);
             var result = _dashboardApiService.GetMentionsData(userid);
             var returnValue = from m in result
-                              select new { id = m.id, value = m.name, link = "[MYWORLD]/"+ m.content_type + "/Preview/" + m.id };
+                              select new
+                              {
+                                  id = m.id,
+                                  label = m.name,
+                                  link = "[MYWORLD]/" + m.content_type + "/" + m.id,
+                                  value = "[" + m.content_type + "-" + m.id + ":" + m.name + "]"
+                              };
             return Json(returnValue);
         }
     }

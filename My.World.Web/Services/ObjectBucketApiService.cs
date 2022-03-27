@@ -237,7 +237,7 @@ namespace My.World.Web.Services
             throw new NotImplementedException();
         }
 
-        public ResponseModel<string> SaveContentObjec(ContentObjectModel model)
+        public ResponseModel<string> SaveContentObject(ContentObjectModel model)
         {
             throw new NotImplementedException();
         }

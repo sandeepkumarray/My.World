@@ -99,24 +99,22 @@
                                                         {
                                                             if (att.is_active)
                                                             {
-                                                                <div class="form-group row">
-                                                                    <label class="col-md-3 col-form-label" for="text-input">@att.field_label</label>
-                                                                    <div class="col-md-9">
-                                                                        @if (att.field_name.ToLower() != "name" && att.field_type.In(new List<string>() { "binary", "varbinary", "tinyblob", "blob", "mediumblob", "longblob", "char byte", "char", "varchar", "tinytext", "text", "mediumtext", "longtext", "set", "enum", "nchar", "national char", "nvarchar", "national varchar", "character varying" }))
-                                                                        {
-                                                                            <div id="@att.field_name" class="form-control editorNative"></div>
-                                                                        }
-                                                                        else if (att.field_type.In(new List<string>() { "int", "integer", "smallint unsigned", "mediumint", "bigint", "int unsigned", "integer unsigned", "bit" }))
-                                                                        {
-                                                                            <input id="universesModel_@att.field_name" class="form-control" type="number" readonly />
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <input id="universesModel_@att.field_name" class="form-control" readonly />
+                                                                if (att.field_name.ToLower() == "gallery")
+                                                                {
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Uploaded Images</label>
 
-                                                                        }
-                                                                    </div>
-                                                                </div>
+                                                                        <div class="row">
+                                                                            @foreach (var contentObject in Model.ContentObjectModelList)
+                                                                            {
+                                                                                <div class="card-img" style="width: 18rem; margin-right: 1.0rem;margin-top: 1.0rem;margin-left:0.5rem;">
+                                                                                    <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">                                                                                                                                                                              
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>                                                                   
+                                                                }
                                                             }
                                                         }
                                                     </div>
@@ -141,78 +139,78 @@
    
     <script type="text/javascript">
     
-			function setdescriptionBody() {
-			    html = htmlDecode('@Model.universesModel.description');
-			    $('#description').append(html);
-			};
+		function setnameBody() {
+		    $('#universesModel_name').val('@Model.universesModel.name');
+		};
 
-			function setfavoriteBody() {
-			    $('#universesModel_favorite').val('@Model.universesModel.favorite');
-			};
+		function setdescriptionBody() {
+		    html = htmlDecode('@Model.universesModel.description');
+		    $('#description').append(html);
+		};
 
-			function setgenreBody() {
-			    html = htmlDecode('@Model.universesModel.genre');
-			    $('#genre').append(html);
-			};
+		function sethistoryBody() {
+		    html = htmlDecode('@Model.universesModel.history');
+		    $('#history').append(html);
+		};
 
-			function sethistoryBody() {
-			    html = htmlDecode('@Model.universesModel.history');
-			    $('#history').append(html);
-			};
+		function setnotesBody() {
+		    html = htmlDecode('@Model.universesModel.notes');
+		    $('#notes').append(html);
+		};
 
-			function setlaws_of_physicsBody() {
-			    html = htmlDecode('@Model.universesModel.laws_of_physics');
-			    $('#laws_of_physics').append(html);
-			};
+		function setprivate_notesBody() {
+		    html = htmlDecode('@Model.universesModel.private_notes');
+		    $('#private_notes').append(html);
+		};
 
-			function setmagic_systemBody() {
-			    html = htmlDecode('@Model.universesModel.magic_system');
-			    $('#magic_system').append(html);
-			};
+		function setprivacyBody() {
+		    $('#universesModel_privacy').val('@Model.universesModel.privacy');
+		};
 
-			function setnameBody() {
-			    $('#universesModel_name').val('@Model.universesModel.name');
-			};
+		function setlaws_of_physicsBody() {
+		    html = htmlDecode('@Model.universesModel.laws_of_physics');
+		    $('#laws_of_physics').append(html);
+		};
 
-			function setnotesBody() {
-			    html = htmlDecode('@Model.universesModel.notes');
-			    $('#notes').append(html);
-			};
+		function setmagic_systemBody() {
+		    html = htmlDecode('@Model.universesModel.magic_system');
+		    $('#magic_system').append(html);
+		};
 
-			function setpage_typeBody() {
-			    html = htmlDecode('@Model.universesModel.page_type');
-			    $('#page_type').append(html);
-			};
+		function settechnologyBody() {
+		    html = htmlDecode('@Model.universesModel.technology');
+		    $('#technology').append(html);
+		};
 
-			function setprivacyBody() {
-			    $('#universesModel_privacy').val('@Model.universesModel.privacy');
-			};
+		function setgenreBody() {
+		    html = htmlDecode('@Model.universesModel.genre');
+		    $('#genre').append(html);
+		};
 
-			function setprivate_notesBody() {
-			    html = htmlDecode('@Model.universesModel.private_notes');
-			    $('#private_notes').append(html);
-			};
+		function setpage_typeBody() {
+		    html = htmlDecode('@Model.universesModel.page_type');
+		    $('#page_type').append(html);
+		};
 
-			function settechnologyBody() {
-			    html = htmlDecode('@Model.universesModel.technology');
-			    $('#technology').append(html);
-			};
+		function setfavoriteBody() {
+		    $('#universesModel_favorite').val('@Model.universesModel.favorite');
+		};
 
 
 
         $(document).ready(function () {
+			setnameBody();
 			setdescriptionBody();
-			setfavoriteBody();
-			setgenreBody();
 			sethistoryBody();
+			setnotesBody();
+			setprivate_notesBody();
+			setprivacyBody();
 			setlaws_of_physicsBody();
 			setmagic_systemBody();
-			setnameBody();
-			setnotesBody();
-			setpage_typeBody();
-			setprivacyBody();
-			setprivate_notesBody();
 			settechnologyBody();
+			setgenreBody();
+			setpage_typeBody();
+			setfavoriteBody();
 
         });
 

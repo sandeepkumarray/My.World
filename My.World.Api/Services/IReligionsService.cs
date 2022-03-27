@@ -20,5 +20,7 @@ namespace My.World.Api.Services
 
 		ResponseModel<string> SaveReligion(ReligionsModel Data);
 
+		ResponseModel<string> UpdateReligionsData(ReligionsModel Data);
+
 	}
 }

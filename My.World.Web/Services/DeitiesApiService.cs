@@ -14,74 +14,74 @@ namespace My.World.Web.Services
 
 		public string AddDeities(DeitiesModel model)
 		{
-						string deitiesModel = null;
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "AddDeities";
-						client.ServiceMethod = Method.POST;
-						client.RequestBody = model;
-						string jsonResult = client.GetResponseAsync();
-						ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
-						deitiesModel = response.Value;
-						return deitiesModel;
+			string deitiesModel = null;
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Deities/AddDeities";
+			client.ServiceMethod = Method.POST;
+			client.RequestBody = model;
+			string jsonResult = client.GetResponseAsync();
+			ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
+			deitiesModel = response.Value;
+			return deitiesModel;
 
 		}
 
 		public DeitiesModel GetDeities(DeitiesModel model)
 		{
-						DeitiesModel deitiesModel = null;
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "GetDeities";
-						client.ServiceMethod = Method.POST;
-						client.RequestBody = model;
-						string jsonResult = client.GetResponseAsync();
-						ResponseModel<DeitiesModel> response = JsonConvert.DeserializeObject<ResponseModel<DeitiesModel>>(jsonResult);
-						deitiesModel = response.Value;
-						return deitiesModel;
+			DeitiesModel deitiesModel = null;
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Deities/GetDeities";
+			client.ServiceMethod = Method.POST;
+			client.RequestBody = model;
+			string jsonResult = client.GetResponseAsync();
+			ResponseModel<DeitiesModel> response = JsonConvert.DeserializeObject<ResponseModel<DeitiesModel>>(jsonResult);
+			deitiesModel = response.Value;
+			return deitiesModel;
 
 		}
 
 		public string DeleteDeities(DeitiesModel model)
 		{
-						string deitiesModel = null;
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "DeleteDeities";
-						client.ServiceMethod = Method.POST;
-						client.RequestBody = model;
-						string jsonResult = client.GetResponseAsync();
-						ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
-						deitiesModel = response.Value;
-						return deitiesModel;
+			string deitiesModel = null;
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Deities/DeleteDeities";
+			client.ServiceMethod = Method.POST;
+			client.RequestBody = model;
+			string jsonResult = client.GetResponseAsync();
+			ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
+			deitiesModel = response.Value;
+			return deitiesModel;
 
 		}
 
 		public List<DeitiesModel> GetAllDeities(long UserId)
 		{
-						List<DeitiesModel> deitiesModel = new List<DeitiesModel>();
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "GetAllDeities/" + UserId;
-						client.ServiceMethod = Method.GET;
-						string jsonResult = client.GETAsync();
-						ResponseModel<List<DeitiesModel>> response = JsonConvert.DeserializeObject<ResponseModel<List<DeitiesModel>>>(jsonResult);
-						deitiesModel = response.Value;
-						return deitiesModel;
+			List<DeitiesModel> deitiesModel = new List<DeitiesModel>();
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Deities/GetAllDeities/" + UserId;
+			client.ServiceMethod = Method.GET;
+			string jsonResult = client.GETAsync();
+			ResponseModel<List<DeitiesModel>> response = JsonConvert.DeserializeObject<ResponseModel<List<DeitiesModel>>>(jsonResult);
+			deitiesModel = response.Value;
+			return deitiesModel;
 
 		}
 
 		public ResponseModel<string> SaveDeitie(DeitiesModel model)
 		{
-						string deitiesModel = null;
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "SaveDeitie";
-						client.ServiceMethod = Method.POST;
-						client.RequestBody = model;
-						string jsonResult = client.GetResponseAsync();
-						ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
-						return response;
+			string deitiesModel = null;
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Deities/SaveDeitie";
+			client.ServiceMethod = Method.POST;
+			client.RequestBody = model;
+			string jsonResult = client.GetResponseAsync();
+			ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
+			return response;
 
 		}
 

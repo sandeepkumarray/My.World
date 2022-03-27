@@ -317,5 +317,84 @@ namespace My.World.Api.DataAccess
 
 		}
 
+		public string UpdateCreaturesData(CreaturesModel Data)
+		{
+			string _return_value = string.Empty;
+			try
+			{
+				dbContext.cmd = new MySqlCommand();
+				dbContext.cmd.Connection = dbContext.GetConnection();
+				dbContext.cmd.CommandText = "UPDATE creatures SET Aggressiveness = @Aggressiveness,Ancestors = @Ancestors,Class = @Class,Color = @Color,Competitors = @Competitors,Conditions = @Conditions,created_at = @created_at,Description = @Description,Evolutionary_drive = @Evolutionary_drive,Family = @Family,Food_sources = @Food_sources,Genus = @Genus,Habitats = @Habitats,Height = @Height,Herding_patterns = @Herding_patterns,Materials = @Materials,Mating_ritual = @Mating_ritual,Maximum_speed = @Maximum_speed,Method_of_attack = @Method_of_attack,Methods_of_defense = @Methods_of_defense,Migratory_patterns = @Migratory_patterns,Mortality_rate = @Mortality_rate,Name = @Name,Notable_features = @Notable_features,Notes = @Notes,Offspring_care = @Offspring_care,Order = @Order,Parental_instincts = @Parental_instincts,Phylum = @Phylum,Predators = @Predators,Predictions = @Predictions,Preferred_habitat = @Preferred_habitat,Prey = @Prey,Private_notes = @Private_notes,Related_creatures = @Related_creatures,Reproduction = @Reproduction,Reproduction_age = @Reproduction_age,Reproduction_frequency = @Reproduction_frequency,Requirements = @Requirements,Shape = @Shape,Similar_creatures = @Similar_creatures,Size = @Size,Sounds = @Sounds,Species = @Species,Spoils = @Spoils,Strengths = @Strengths,Strongest_sense = @Strongest_sense,Symbolisms = @Symbolisms,Tags = @Tags,Tradeoffs = @Tradeoffs,Type_of_creature = @Type_of_creature,Universe = @Universe,updated_at = @updated_at,user_id = @user_id,Variations = @Variations,Vestigial_features = @Vestigial_features,Weakest_sense = @Weakest_sense,Weaknesses = @Weaknesses,Weight = @Weight WHERE id = @id";
+				dbContext.AddInParameter(dbContext.cmd, "@Aggressiveness", Data.Aggressiveness);
+				dbContext.AddInParameter(dbContext.cmd, "@Ancestors", Data.Ancestors);
+				dbContext.AddInParameter(dbContext.cmd, "@Class", Data.Class);
+				dbContext.AddInParameter(dbContext.cmd, "@Color", Data.Color);
+				dbContext.AddInParameter(dbContext.cmd, "@Competitors", Data.Competitors);
+				dbContext.AddInParameter(dbContext.cmd, "@Conditions", Data.Conditions);
+				dbContext.AddInParameter(dbContext.cmd, "@created_at", Data.created_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Description", Data.Description);
+				dbContext.AddInParameter(dbContext.cmd, "@Evolutionary_drive", Data.Evolutionary_drive);
+				dbContext.AddInParameter(dbContext.cmd, "@Family", Data.Family);
+				dbContext.AddInParameter(dbContext.cmd, "@Food_sources", Data.Food_sources);
+				dbContext.AddInParameter(dbContext.cmd, "@Genus", Data.Genus);
+				dbContext.AddInParameter(dbContext.cmd, "@Habitats", Data.Habitats);
+				dbContext.AddInParameter(dbContext.cmd, "@Height", Data.Height);
+				dbContext.AddInParameter(dbContext.cmd, "@Herding_patterns", Data.Herding_patterns);
+				dbContext.AddInParameter(dbContext.cmd, "@Materials", Data.Materials);
+				dbContext.AddInParameter(dbContext.cmd, "@Mating_ritual", Data.Mating_ritual);
+				dbContext.AddInParameter(dbContext.cmd, "@Maximum_speed", Data.Maximum_speed);
+				dbContext.AddInParameter(dbContext.cmd, "@Method_of_attack", Data.Method_of_attack);
+				dbContext.AddInParameter(dbContext.cmd, "@Methods_of_defense", Data.Methods_of_defense);
+				dbContext.AddInParameter(dbContext.cmd, "@Migratory_patterns", Data.Migratory_patterns);
+				dbContext.AddInParameter(dbContext.cmd, "@Mortality_rate", Data.Mortality_rate);
+				dbContext.AddInParameter(dbContext.cmd, "@Name", Data.Name);
+				dbContext.AddInParameter(dbContext.cmd, "@Notable_features", Data.Notable_features);
+				dbContext.AddInParameter(dbContext.cmd, "@Notes", Data.Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Offspring_care", Data.Offspring_care);
+				dbContext.AddInParameter(dbContext.cmd, "@Order", Data.Order);
+				dbContext.AddInParameter(dbContext.cmd, "@Parental_instincts", Data.Parental_instincts);
+				dbContext.AddInParameter(dbContext.cmd, "@Phylum", Data.Phylum);
+				dbContext.AddInParameter(dbContext.cmd, "@Predators", Data.Predators);
+				dbContext.AddInParameter(dbContext.cmd, "@Predictions", Data.Predictions);
+				dbContext.AddInParameter(dbContext.cmd, "@Preferred_habitat", Data.Preferred_habitat);
+				dbContext.AddInParameter(dbContext.cmd, "@Prey", Data.Prey);
+				dbContext.AddInParameter(dbContext.cmd, "@Private_notes", Data.Private_notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Related_creatures", Data.Related_creatures);
+				dbContext.AddInParameter(dbContext.cmd, "@Reproduction", Data.Reproduction);
+				dbContext.AddInParameter(dbContext.cmd, "@Reproduction_age", Data.Reproduction_age);
+				dbContext.AddInParameter(dbContext.cmd, "@Reproduction_frequency", Data.Reproduction_frequency);
+				dbContext.AddInParameter(dbContext.cmd, "@Requirements", Data.Requirements);
+				dbContext.AddInParameter(dbContext.cmd, "@Shape", Data.Shape);
+				dbContext.AddInParameter(dbContext.cmd, "@Similar_creatures", Data.Similar_creatures);
+				dbContext.AddInParameter(dbContext.cmd, "@Size", Data.Size);
+				dbContext.AddInParameter(dbContext.cmd, "@Sounds", Data.Sounds);
+				dbContext.AddInParameter(dbContext.cmd, "@Species", Data.Species);
+				dbContext.AddInParameter(dbContext.cmd, "@Spoils", Data.Spoils);
+				dbContext.AddInParameter(dbContext.cmd, "@Strengths", Data.Strengths);
+				dbContext.AddInParameter(dbContext.cmd, "@Strongest_sense", Data.Strongest_sense);
+				dbContext.AddInParameter(dbContext.cmd, "@Symbolisms", Data.Symbolisms);
+				dbContext.AddInParameter(dbContext.cmd, "@Tags", Data.Tags);
+				dbContext.AddInParameter(dbContext.cmd, "@Tradeoffs", Data.Tradeoffs);
+				dbContext.AddInParameter(dbContext.cmd, "@Type_of_creature", Data.Type_of_creature);
+				dbContext.AddInParameter(dbContext.cmd, "@Universe", Data.Universe);
+				dbContext.AddInParameter(dbContext.cmd, "@updated_at", Data.updated_at);
+				dbContext.AddInParameter(dbContext.cmd, "@user_id", Data.user_id);
+				dbContext.AddInParameter(dbContext.cmd, "@Variations", Data.Variations);
+				dbContext.AddInParameter(dbContext.cmd, "@Vestigial_features", Data.Vestigial_features);
+				dbContext.AddInParameter(dbContext.cmd, "@Weakest_sense", Data.Weakest_sense);
+				dbContext.AddInParameter(dbContext.cmd, "@Weaknesses", Data.Weaknesses);
+				dbContext.AddInParameter(dbContext.cmd, "@Weight", Data.Weight);
+				_return_value = Convert.ToString(dbContext.cmd.ExecuteNonQuery());
+			}
+			catch (Exception ex)
+			{
+			    _return_value = null;
+			    throw;
+			}
+			
+			return _return_value;
+
+		}
+
 	}
 }

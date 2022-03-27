@@ -227,5 +227,54 @@ namespace My.World.Api.DataAccess
 
 		}
 
+		public string UpdateLocationsData(LocationsModel Data)
+		{
+			string _return_value = string.Empty;
+			try
+			{
+				dbContext.cmd = new MySqlCommand();
+				dbContext.cmd.Connection = dbContext.GetConnection();
+				dbContext.cmd.CommandText = "UPDATE locations SET Area = @Area,Capital_cities = @Capital_cities,Climate = @Climate,created_at = @created_at,Crops = @Crops,Currency = @Currency,Description = @Description,Established_Year = @Established_Year,Founding_Story = @Founding_Story,Landmarks = @Landmarks,Language = @Language,Largest_cities = @Largest_cities,Laws = @Laws,Leaders = @Leaders,Located_at = @Located_at,Motto = @Motto,Name = @Name,Notable_cities = @Notable_cities,Notable_Wars = @Notable_Wars,Notes = @Notes,Population = @Population,Private_Notes = @Private_Notes,Spoken_Languages = @Spoken_Languages,Sports = @Sports,Tags = @Tags,Type = @Type,Universe = @Universe,updated_at = @updated_at,user_id = @user_id WHERE id = @id";
+				dbContext.AddInParameter(dbContext.cmd, "@Area", Data.Area);
+				dbContext.AddInParameter(dbContext.cmd, "@Capital_cities", Data.Capital_cities);
+				dbContext.AddInParameter(dbContext.cmd, "@Climate", Data.Climate);
+				dbContext.AddInParameter(dbContext.cmd, "@created_at", Data.created_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Crops", Data.Crops);
+				dbContext.AddInParameter(dbContext.cmd, "@Currency", Data.Currency);
+				dbContext.AddInParameter(dbContext.cmd, "@Description", Data.Description);
+				dbContext.AddInParameter(dbContext.cmd, "@Established_Year", Data.Established_Year);
+				dbContext.AddInParameter(dbContext.cmd, "@Founding_Story", Data.Founding_Story);
+				dbContext.AddInParameter(dbContext.cmd, "@Landmarks", Data.Landmarks);
+				dbContext.AddInParameter(dbContext.cmd, "@Language", Data.Language);
+				dbContext.AddInParameter(dbContext.cmd, "@Largest_cities", Data.Largest_cities);
+				dbContext.AddInParameter(dbContext.cmd, "@Laws", Data.Laws);
+				dbContext.AddInParameter(dbContext.cmd, "@Leaders", Data.Leaders);
+				dbContext.AddInParameter(dbContext.cmd, "@Located_at", Data.Located_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Motto", Data.Motto);
+				dbContext.AddInParameter(dbContext.cmd, "@Name", Data.Name);
+				dbContext.AddInParameter(dbContext.cmd, "@Notable_cities", Data.Notable_cities);
+				dbContext.AddInParameter(dbContext.cmd, "@Notable_Wars", Data.Notable_Wars);
+				dbContext.AddInParameter(dbContext.cmd, "@Notes", Data.Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Population", Data.Population);
+				dbContext.AddInParameter(dbContext.cmd, "@Private_Notes", Data.Private_Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Spoken_Languages", Data.Spoken_Languages);
+				dbContext.AddInParameter(dbContext.cmd, "@Sports", Data.Sports);
+				dbContext.AddInParameter(dbContext.cmd, "@Tags", Data.Tags);
+				dbContext.AddInParameter(dbContext.cmd, "@Type", Data.Type);
+				dbContext.AddInParameter(dbContext.cmd, "@Universe", Data.Universe);
+				dbContext.AddInParameter(dbContext.cmd, "@updated_at", Data.updated_at);
+				dbContext.AddInParameter(dbContext.cmd, "@user_id", Data.user_id);
+				_return_value = Convert.ToString(dbContext.cmd.ExecuteNonQuery());
+			}
+			catch (Exception ex)
+			{
+			    _return_value = null;
+			    throw;
+			}
+			
+			return _return_value;
+
+		}
+
 	}
 }

@@ -227,5 +227,54 @@ namespace My.World.Api.DataAccess
 
 		}
 
+		public string UpdateRacesData(RacesModel Data)
+		{
+			string _return_value = string.Empty;
+			try
+			{
+				dbContext.cmd = new MySqlCommand();
+				dbContext.cmd.Connection = dbContext.GetConnection();
+				dbContext.cmd.CommandText = "UPDATE races SET Beliefs = @Beliefs,Body_shape = @Body_shape,Conditions = @Conditions,created_at = @created_at,Description = @Description,Economics = @Economics,Famous_figures = @Famous_figures,Favorite_foods = @Favorite_foods,General_height = @General_height,General_weight = @General_weight,Governments = @Governments,Name = @Name,Notable_events = @Notable_events,Notable_features = @Notable_features,Notes = @Notes,Occupations = @Occupations,Other_Names = @Other_Names,Physical_variance = @Physical_variance,Private_notes = @Private_notes,Skin_colors = @Skin_colors,Strengths = @Strengths,Tags = @Tags,Technologies = @Technologies,Traditions = @Traditions,Typical_clothing = @Typical_clothing,Universe = @Universe,updated_at = @updated_at,user_id = @user_id,Weaknesses = @Weaknesses WHERE id = @id";
+				dbContext.AddInParameter(dbContext.cmd, "@Beliefs", Data.Beliefs);
+				dbContext.AddInParameter(dbContext.cmd, "@Body_shape", Data.Body_shape);
+				dbContext.AddInParameter(dbContext.cmd, "@Conditions", Data.Conditions);
+				dbContext.AddInParameter(dbContext.cmd, "@created_at", Data.created_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Description", Data.Description);
+				dbContext.AddInParameter(dbContext.cmd, "@Economics", Data.Economics);
+				dbContext.AddInParameter(dbContext.cmd, "@Famous_figures", Data.Famous_figures);
+				dbContext.AddInParameter(dbContext.cmd, "@Favorite_foods", Data.Favorite_foods);
+				dbContext.AddInParameter(dbContext.cmd, "@General_height", Data.General_height);
+				dbContext.AddInParameter(dbContext.cmd, "@General_weight", Data.General_weight);
+				dbContext.AddInParameter(dbContext.cmd, "@Governments", Data.Governments);
+				dbContext.AddInParameter(dbContext.cmd, "@Name", Data.Name);
+				dbContext.AddInParameter(dbContext.cmd, "@Notable_events", Data.Notable_events);
+				dbContext.AddInParameter(dbContext.cmd, "@Notable_features", Data.Notable_features);
+				dbContext.AddInParameter(dbContext.cmd, "@Notes", Data.Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Occupations", Data.Occupations);
+				dbContext.AddInParameter(dbContext.cmd, "@Other_Names", Data.Other_Names);
+				dbContext.AddInParameter(dbContext.cmd, "@Physical_variance", Data.Physical_variance);
+				dbContext.AddInParameter(dbContext.cmd, "@Private_notes", Data.Private_notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Skin_colors", Data.Skin_colors);
+				dbContext.AddInParameter(dbContext.cmd, "@Strengths", Data.Strengths);
+				dbContext.AddInParameter(dbContext.cmd, "@Tags", Data.Tags);
+				dbContext.AddInParameter(dbContext.cmd, "@Technologies", Data.Technologies);
+				dbContext.AddInParameter(dbContext.cmd, "@Traditions", Data.Traditions);
+				dbContext.AddInParameter(dbContext.cmd, "@Typical_clothing", Data.Typical_clothing);
+				dbContext.AddInParameter(dbContext.cmd, "@Universe", Data.Universe);
+				dbContext.AddInParameter(dbContext.cmd, "@updated_at", Data.updated_at);
+				dbContext.AddInParameter(dbContext.cmd, "@user_id", Data.user_id);
+				dbContext.AddInParameter(dbContext.cmd, "@Weaknesses", Data.Weaknesses);
+				_return_value = Convert.ToString(dbContext.cmd.ExecuteNonQuery());
+			}
+			catch (Exception ex)
+			{
+			    _return_value = null;
+			    throw;
+			}
+			
+			return _return_value;
+
+		}
+
 	}
 }
