@@ -20,5 +20,7 @@ namespace My.World.Api.Services
 
 		ResponseModel<string> SaveFood(FoodsModel Data);
 
+		ResponseModel<string> UpdateFoodsData(FoodsModel Data);
+
 	}
 }

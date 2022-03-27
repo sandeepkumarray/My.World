@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace My.World.Web.Services
 {
-	public interface IContentplansApiService
+	public interface IContentPlansApiService
 	{
 
 		ContentPlansModel GetContentPlans(ContentPlansModel model);

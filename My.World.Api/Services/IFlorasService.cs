@@ -20,5 +20,7 @@ namespace My.World.Api.Services
 
 		ResponseModel<string> SaveFlora(FlorasModel Data);
 
+		ResponseModel<string> UpdateFlorasData(FlorasModel Data);
+
 	}
 }

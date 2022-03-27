@@ -224,5 +224,53 @@ namespace My.World.Api.DataAccess
 
 		}
 
+		public string UpdateBuildingsData(BuildingsModel Data)
+		{
+			string _return_value = string.Empty;
+			try
+			{
+				dbContext.cmd = new MySqlCommand();
+				dbContext.cmd.Connection = dbContext.GetConnection();
+				dbContext.cmd.CommandText = "UPDATE buildings SET Address = @Address,Affiliation = @Affiliation,Alternate_names = @Alternate_names,Architect = @Architect,Architectural_style = @Architectural_style,Capacity = @Capacity,Constructed_year = @Constructed_year,Construction_cost = @Construction_cost,created_at = @created_at,Description = @Description,Developer = @Developer,Dimensions = @Dimensions,Facade = @Facade,Floor_count = @Floor_count,Name = @Name,Notable_events = @Notable_events,Notes = @Notes,Owner = @Owner,Permits = @Permits,Price = @Price,Private_Notes = @Private_Notes,Purpose = @Purpose,Tags = @Tags,Tenants = @Tenants,Type_of_building = @Type_of_building,Universe = @Universe,updated_at = @updated_at,user_id = @user_id WHERE id = @id";
+				dbContext.AddInParameter(dbContext.cmd, "@Address", Data.Address);
+				dbContext.AddInParameter(dbContext.cmd, "@Affiliation", Data.Affiliation);
+				dbContext.AddInParameter(dbContext.cmd, "@Alternate_names", Data.Alternate_names);
+				dbContext.AddInParameter(dbContext.cmd, "@Architect", Data.Architect);
+				dbContext.AddInParameter(dbContext.cmd, "@Architectural_style", Data.Architectural_style);
+				dbContext.AddInParameter(dbContext.cmd, "@Capacity", Data.Capacity);
+				dbContext.AddInParameter(dbContext.cmd, "@Constructed_year", Data.Constructed_year);
+				dbContext.AddInParameter(dbContext.cmd, "@Construction_cost", Data.Construction_cost);
+				dbContext.AddInParameter(dbContext.cmd, "@created_at", Data.created_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Description", Data.Description);
+				dbContext.AddInParameter(dbContext.cmd, "@Developer", Data.Developer);
+				dbContext.AddInParameter(dbContext.cmd, "@Dimensions", Data.Dimensions);
+				dbContext.AddInParameter(dbContext.cmd, "@Facade", Data.Facade);
+				dbContext.AddInParameter(dbContext.cmd, "@Floor_count", Data.Floor_count);
+				dbContext.AddInParameter(dbContext.cmd, "@Name", Data.Name);
+				dbContext.AddInParameter(dbContext.cmd, "@Notable_events", Data.Notable_events);
+				dbContext.AddInParameter(dbContext.cmd, "@Notes", Data.Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Owner", Data.Owner);
+				dbContext.AddInParameter(dbContext.cmd, "@Permits", Data.Permits);
+				dbContext.AddInParameter(dbContext.cmd, "@Price", Data.Price);
+				dbContext.AddInParameter(dbContext.cmd, "@Private_Notes", Data.Private_Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Purpose", Data.Purpose);
+				dbContext.AddInParameter(dbContext.cmd, "@Tags", Data.Tags);
+				dbContext.AddInParameter(dbContext.cmd, "@Tenants", Data.Tenants);
+				dbContext.AddInParameter(dbContext.cmd, "@Type_of_building", Data.Type_of_building);
+				dbContext.AddInParameter(dbContext.cmd, "@Universe", Data.Universe);
+				dbContext.AddInParameter(dbContext.cmd, "@updated_at", Data.updated_at);
+				dbContext.AddInParameter(dbContext.cmd, "@user_id", Data.user_id);
+				_return_value = Convert.ToString(dbContext.cmd.ExecuteNonQuery());
+			}
+			catch (Exception ex)
+			{
+			    _return_value = null;
+			    throw;
+			}
+			
+			return _return_value;
+
+		}
+
 	}
 }

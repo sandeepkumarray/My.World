@@ -20,5 +20,7 @@ namespace My.World.Api.Services
 
 		ResponseModel<string> SaveDeitie(DeitiesModel Data);
 
+		ResponseModel<string> UpdateDeitiesData(DeitiesModel Data);
+
 	}
 }

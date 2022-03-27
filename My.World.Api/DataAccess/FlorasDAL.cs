@@ -227,5 +227,54 @@ namespace My.World.Api.DataAccess
 
 		}
 
+		public string UpdateFlorasData(FlorasModel Data)
+		{
+			string _return_value = string.Empty;
+			try
+			{
+				dbContext.cmd = new MySqlCommand();
+				dbContext.cmd.Connection = dbContext.GetConnection();
+				dbContext.cmd.CommandText = "UPDATE floras SET Berries = @Berries,Colorings = @Colorings,created_at = @created_at,Description = @Description,Eaten_by = @Eaten_by,Family = @Family,Fruits = @Fruits,Genus = @Genus,Locations = @Locations,Magical_effects = @Magical_effects,Material_uses = @Material_uses,Medicinal_purposes = @Medicinal_purposes,Name = @Name,Notes = @Notes,Nuts = @Nuts,Order = @Order,Other_Names = @Other_Names,Private_Notes = @Private_Notes,Related_flora = @Related_flora,Reproduction = @Reproduction,Seasonality = @Seasonality,Seeds = @Seeds,Size = @Size,Smell = @Smell,Tags = @Tags,Taste = @Taste,Universe = @Universe,updated_at = @updated_at,user_id = @user_id WHERE id = @id";
+				dbContext.AddInParameter(dbContext.cmd, "@Berries", Data.Berries);
+				dbContext.AddInParameter(dbContext.cmd, "@Colorings", Data.Colorings);
+				dbContext.AddInParameter(dbContext.cmd, "@created_at", Data.created_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Description", Data.Description);
+				dbContext.AddInParameter(dbContext.cmd, "@Eaten_by", Data.Eaten_by);
+				dbContext.AddInParameter(dbContext.cmd, "@Family", Data.Family);
+				dbContext.AddInParameter(dbContext.cmd, "@Fruits", Data.Fruits);
+				dbContext.AddInParameter(dbContext.cmd, "@Genus", Data.Genus);
+				dbContext.AddInParameter(dbContext.cmd, "@Locations", Data.Locations);
+				dbContext.AddInParameter(dbContext.cmd, "@Magical_effects", Data.Magical_effects);
+				dbContext.AddInParameter(dbContext.cmd, "@Material_uses", Data.Material_uses);
+				dbContext.AddInParameter(dbContext.cmd, "@Medicinal_purposes", Data.Medicinal_purposes);
+				dbContext.AddInParameter(dbContext.cmd, "@Name", Data.Name);
+				dbContext.AddInParameter(dbContext.cmd, "@Notes", Data.Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Nuts", Data.Nuts);
+				dbContext.AddInParameter(dbContext.cmd, "@Order", Data.Order);
+				dbContext.AddInParameter(dbContext.cmd, "@Other_Names", Data.Other_Names);
+				dbContext.AddInParameter(dbContext.cmd, "@Private_Notes", Data.Private_Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Related_flora", Data.Related_flora);
+				dbContext.AddInParameter(dbContext.cmd, "@Reproduction", Data.Reproduction);
+				dbContext.AddInParameter(dbContext.cmd, "@Seasonality", Data.Seasonality);
+				dbContext.AddInParameter(dbContext.cmd, "@Seeds", Data.Seeds);
+				dbContext.AddInParameter(dbContext.cmd, "@Size", Data.Size);
+				dbContext.AddInParameter(dbContext.cmd, "@Smell", Data.Smell);
+				dbContext.AddInParameter(dbContext.cmd, "@Tags", Data.Tags);
+				dbContext.AddInParameter(dbContext.cmd, "@Taste", Data.Taste);
+				dbContext.AddInParameter(dbContext.cmd, "@Universe", Data.Universe);
+				dbContext.AddInParameter(dbContext.cmd, "@updated_at", Data.updated_at);
+				dbContext.AddInParameter(dbContext.cmd, "@user_id", Data.user_id);
+				_return_value = Convert.ToString(dbContext.cmd.ExecuteNonQuery());
+			}
+			catch (Exception ex)
+			{
+			    _return_value = null;
+			    throw;
+			}
+			
+			return _return_value;
+
+		}
+
 	}
 }

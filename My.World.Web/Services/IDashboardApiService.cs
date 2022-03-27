@@ -14,5 +14,6 @@ namespace My.World.Web.Services
         List<MentionsModel> GetMentionsData(long UserId);
         List<DashboardRecentModel> GetRecentsData(long UserId);
         List<ContentTypesModel> GetAllContentTypes();
+        public BaseModel GetContentDetailsFromTypeID(string contentType, string contentId);
     }
 }

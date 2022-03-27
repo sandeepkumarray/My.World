@@ -20,5 +20,7 @@ namespace My.World.Api.Services
 
 		ResponseModel<string> SaveMagic(MagicsModel Data);
 
+		ResponseModel<string> UpdateMagicsData(MagicsModel Data);
+
 	}
 }

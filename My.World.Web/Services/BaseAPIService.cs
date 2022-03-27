@@ -12,6 +12,8 @@ namespace My.World.Web.Services
     public class BaseAPIService
     {
         public string MyWorldApiUrl { get; set; }
+        public string MyWorldContentApiUrl { get; set; }
+
         public MinioPolicy minioPolicy { get; set; }
 
         public BaseAPIService()

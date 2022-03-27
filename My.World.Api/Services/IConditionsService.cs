@@ -20,5 +20,7 @@ namespace My.World.Api.Services
 
 		ResponseModel<string> SaveCondition(ConditionsModel Data);
 
+		ResponseModel<string> UpdateConditionsData(ConditionsModel Data);
+
 	}
 }

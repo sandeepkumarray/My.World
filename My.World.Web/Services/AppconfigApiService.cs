@@ -9,14 +9,14 @@ using Newtonsoft.Json;
 
 namespace My.World.Web.Services
 {
-    public class AppconfigApiService : BaseAPIService, IAppconfigApiService
+    public class AppConfigApiService : BaseAPIService, IAppConfigApiService
     {
 
         public string AddAppConfig(AppConfigModel model)
         {
             string appconfigModel = null;
             RestHttpClient client = new RestHttpClient();
-            client.Host = MyWorldApiUrl;
+            client.Host = MyWorldContentApiUrl;
             client.ApiUrl = "AddAppConfig";
             client.ServiceMethod = Method.POST;
             client.RequestBody = model;

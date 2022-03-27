@@ -27,16 +27,16 @@ namespace My.World.Web.Controllers
 
 		public readonly IUsersApiService _iUsersApiService;
 
-		public readonly IContenttypesApiService _iContenttypesApiService;
+		public readonly IContentTypesApiService _iContenttypesApiService;
 
 		public readonly IObjectBucketApiService _iObjectBucketApiService;
 
 		public readonly IConfiguration _config;
 
 
-		public ScenesController(IScenesApiService iScenesApiService,IUniversesApiService iUniversesApiService,IUsersApiService iUsersApiService,IContenttypesApiService iContenttypesApiService,IObjectBucketApiService iObjectBucketApiService,IConfiguration config)
+		public ScenesController(IScenesApiService iScenesApiService,IUniversesApiService iUniversesApiService,IUsersApiService iUsersApiService,IContentTypesApiService iContenttypesApiService,IObjectBucketApiService iObjectBucketApiService,IConfiguration config)
 		{
-			_iScenesApiService = iScenesApiService;
+_iScenesApiService = iScenesApiService;
 			_iUniversesApiService = iUniversesApiService;
 			_iUsersApiService = iUsersApiService;
 			_iContenttypesApiService = iContenttypesApiService;
@@ -54,12 +54,11 @@ namespace My.World.Web.Controllers
 
 		}
 
-		[Route("Index")]
 		public IActionResult Index()
 		{
 			var accountID = Convert.ToInt64(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserID")?.Value);
 			_iObjectBucketApiService.SetObjectStorageSecrets(accountID);
-			string imageFormat = _config.GetValue<string>("ContentImageUrlFormat");
+			string imageFormat = HttpContext.Session.GetString("ContentImageUrlFormat");
 			var scenes = _iScenesApiService.GetAllScenes(accountID);
 			scenes.ForEach(b =>
 			{
@@ -81,7 +80,7 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpGet]
-		[Route("{Id}")]
+		[Route("{Id}/edit")]
 		public IActionResult ViewScenes(string Id)
 		{
 			ScenesModel model = new ScenesModel();
@@ -119,7 +118,7 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpGet]
-		[Route("Preview/{Id}")]
+		[Route("{Id}")]
 		public IActionResult PreviewScenes(string Id)
 		{
 			ScenesModel model = new ScenesModel();
@@ -144,6 +143,12 @@ namespace My.World.Web.Controllers
 			scenesViewModel.headerBackgroundColor = contentTypesModel.sec_color;
 			_iObjectBucketApiService.SetObjectStorageSecrets(model.user_id);
 			scenesViewModel.ContentObjectModelList = _iObjectBucketApiService.GetAllContentObjectAttachments(Convert.ToInt64(Id), "scenes");
+			scenesViewModel.ContentObjectModelList.ForEach(o => 
+			{
+			    var publicUrl = "http://" + _iObjectBucketApiService.objectStorageKeysModel.endpoint
+			                + '/' + _iObjectBucketApiService.objectStorageKeysModel.bucketName + '/' + _config.GetValue<string>("BucketEnv") + '/' + o.object_name; 
+			    o.file_url = HttpUtility.UrlPathEncode(publicUrl); 
+			}); 
 			return View(scenesViewModel);
 
 		}
@@ -160,7 +165,7 @@ namespace My.World.Web.Controllers
 
 		}
 
-		public void TransformData(ScenesModel model)
+		private void TransformData(ScenesModel model)
 		{
 			if (model != null)
 			{

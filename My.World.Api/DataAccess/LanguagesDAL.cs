@@ -236,5 +236,57 @@ namespace My.World.Api.DataAccess
 
 		}
 
+		public string UpdateLanguagesData(LanguagesModel Data)
+		{
+			string _return_value = string.Empty;
+			try
+			{
+				dbContext.cmd = new MySqlCommand();
+				dbContext.cmd.Connection = dbContext.GetConnection();
+				dbContext.cmd.CommandText = "UPDATE languages SET Body_parts = @Body_parts,created_at = @created_at,Determiners = @Determiners,Dialectical_information = @Dialectical_information,Evolution = @Evolution,Family = @Family,Gestures = @Gestures,Goodbyes = @Goodbyes,Grammar = @Grammar,Greetings = @Greetings,History = @History,Name = @Name,No_words = @No_words,Notes = @Notes,Numbers = @Numbers,Other_Names = @Other_Names,Phonology = @Phonology,Please = @Please,Private_notes = @Private_notes,Pronouns = @Pronouns,Quantifiers = @Quantifiers,Register = @Register,Sorry = @Sorry,Tags = @Tags,Thank_you = @Thank_you,Trade = @Trade,Typology = @Typology,Universe = @Universe,updated_at = @updated_at,user_id = @user_id,Yes_words = @Yes_words,You_are_welcome = @You_are_welcome WHERE id = @id";
+				dbContext.AddInParameter(dbContext.cmd, "@Body_parts", Data.Body_parts);
+				dbContext.AddInParameter(dbContext.cmd, "@created_at", Data.created_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Determiners", Data.Determiners);
+				dbContext.AddInParameter(dbContext.cmd, "@Dialectical_information", Data.Dialectical_information);
+				dbContext.AddInParameter(dbContext.cmd, "@Evolution", Data.Evolution);
+				dbContext.AddInParameter(dbContext.cmd, "@Family", Data.Family);
+				dbContext.AddInParameter(dbContext.cmd, "@Gestures", Data.Gestures);
+				dbContext.AddInParameter(dbContext.cmd, "@Goodbyes", Data.Goodbyes);
+				dbContext.AddInParameter(dbContext.cmd, "@Grammar", Data.Grammar);
+				dbContext.AddInParameter(dbContext.cmd, "@Greetings", Data.Greetings);
+				dbContext.AddInParameter(dbContext.cmd, "@History", Data.History);
+				dbContext.AddInParameter(dbContext.cmd, "@Name", Data.Name);
+				dbContext.AddInParameter(dbContext.cmd, "@No_words", Data.No_words);
+				dbContext.AddInParameter(dbContext.cmd, "@Notes", Data.Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Numbers", Data.Numbers);
+				dbContext.AddInParameter(dbContext.cmd, "@Other_Names", Data.Other_Names);
+				dbContext.AddInParameter(dbContext.cmd, "@Phonology", Data.Phonology);
+				dbContext.AddInParameter(dbContext.cmd, "@Please", Data.Please);
+				dbContext.AddInParameter(dbContext.cmd, "@Private_notes", Data.Private_notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Pronouns", Data.Pronouns);
+				dbContext.AddInParameter(dbContext.cmd, "@Quantifiers", Data.Quantifiers);
+				dbContext.AddInParameter(dbContext.cmd, "@Register", Data.Register);
+				dbContext.AddInParameter(dbContext.cmd, "@Sorry", Data.Sorry);
+				dbContext.AddInParameter(dbContext.cmd, "@Tags", Data.Tags);
+				dbContext.AddInParameter(dbContext.cmd, "@Thank_you", Data.Thank_you);
+				dbContext.AddInParameter(dbContext.cmd, "@Trade", Data.Trade);
+				dbContext.AddInParameter(dbContext.cmd, "@Typology", Data.Typology);
+				dbContext.AddInParameter(dbContext.cmd, "@Universe", Data.Universe);
+				dbContext.AddInParameter(dbContext.cmd, "@updated_at", Data.updated_at);
+				dbContext.AddInParameter(dbContext.cmd, "@user_id", Data.user_id);
+				dbContext.AddInParameter(dbContext.cmd, "@Yes_words", Data.Yes_words);
+				dbContext.AddInParameter(dbContext.cmd, "@You_are_welcome", Data.You_are_welcome);
+				_return_value = Convert.ToString(dbContext.cmd.ExecuteNonQuery());
+			}
+			catch (Exception ex)
+			{
+			    _return_value = null;
+			    throw;
+			}
+			
+			return _return_value;
+
+		}
+
 	}
 }

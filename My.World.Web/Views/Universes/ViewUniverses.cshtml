@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http
 @using My.World.Web
 @inject IHttpContextAccessor HttpContextAccessor
 @model My.World.Web.ViewModel.UniversesViewModel
@@ -105,30 +105,30 @@
                                                                 {
                                                                     if (att.is_active)
                                                                     {
-                                                                        <div class="form-group row">
-                                                                            <label class="col-md-3 col-form-label" for="text-input">@att.field_label</label>
-                                                                            <div class="col-md-9">
-                                                                                @if (att.field_name.ToLower() != "name" && att.field_type.In(new List<string>() { "binary", "varbinary", "tinyblob", "blob", "mediumblob", "longblob", "char byte", "char", "varchar", "tinytext", "text", "mediumtext", "longtext", "set", "enum", "nchar", "national char", "nvarchar", "national varchar", "character varying" }))
+                                                                    <div class="form-group row">
+                                                                        <label class="col-md-3 col-form-label" for="text-input">@att.field_label</label>
+                                                                        <div class="col-md-9">
+                                                                            @if (att.field_name.ToLower() != "name" && att.field_type.In(new List<string>() { "binary", "varbinary", "tinyblob", "blob", "mediumblob", "longblob", "char byte", "char", "varchar", "tinytext", "text", "mediumtext", "longtext", "set", "enum", "nchar", "national char", "nvarchar", "national varchar", "character varying" }))
                                                                                 {
-                                                                                    <div id="@att.field_name" class="form-control editorNative"></div>
+                                                                                <div id="@att.field_name" class="form-control editorNative"></div>
                                                                                 }
                                                                                 else if (att.field_type.In(new List<string>
                                                                                     () { "int", "integer", "smallint unsigned", "mediumint", "bigint", "int unsigned", "integer unsigned", "bit" }))
-                                                                                {
+                                                                                    {
                                                                                     <input id="universesModel_@att.field_name" class="form-control" type="number" />
-                                                                                }
-                                                                                else if (att.field_type.In(new List<string>
-                                                                                    () { "tinyint" }))
-                                                                                {
-                                                                                    <input id="universesModel_@att.field_name" class="form-control" type="checkbox" />
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    <input id="universesModel_@att.field_name" class="form-control" />
+                                                                                    }
+                                                                                    else if (att.field_type.In(new List<string>
+                                                                                        () { "tinyint" }))
+                                                                                        {
+                                                                                        <input id="universesModel_@att.field_name" class="form-control" type="checkbox" />
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                        <input id="universesModel_@att.field_name" class="form-control" />
 
-                                                                                }
-                                                                            </div>
+                                                                                        }
                                                                         </div>
+                                                                    </div>
                                                                     }
                                                                 }
                                                             </div>
@@ -170,7 +170,6 @@
                                                                                     }
                                                                                 </div>
                                                                             </div>
-
                                                                             <div class="mb-3">
                                                                                 <div class="row">
                                                                                     <h3><label class="form-label"> Only @Model.RemainingContentSize is left for content upload.</label></h3>
@@ -181,16 +180,16 @@
                                                                                 <div>
                                                                                     @using (Html.BeginForm("UploadAttachment", "universes", FormMethod.Post, new { @class = "", @name = "myDropzone", id = "myDropzone", @enctype = "multipart/form-data" }))
                                                                                     {
-                                                                                        <div class="dz-message needsclick">
-                                                                                            <button type="button" class="dz-button">Drop files here or click to upload.</button><br />
-                                                                                            <span class="note needsclick"></span>
-                                                                                        </div>
-                                                                                        <div class="fallback">
-                                                                                            <input name="postedfiles" type="file" multiple />
-                                                                                        </div>
-                                                                                        <div>
-                                                                                            @*<input type="submit" id="Submit" name="Submit" class="btn btn-success m-t-5" value="Submit" />*@
-                                                                                        </div>
+                                                                                    <div class="dz-message needsclick">
+                                                                                        <button type="button" class="dz-button">Drop files here or click to upload.</button><br />
+                                                                                        <span class="note needsclick"></span>
+                                                                                    </div>
+                                                                                    <div class="fallback">
+                                                                                        <input name="postedfiles" type="file" multiple />
+                                                                                    </div>
+                                                                                    <div>
+                                                                                        @*<input type="submit" id="Submit" name="Submit" class="btn btn-success m-t-5" value="Submit" />*@
+                                                                                    </div>
                                                                                     }
 
                                                                                     <a href="#" id="saveAttchbtn" name="saveAttchbtn" class="btn btn-primary">Upload</a>

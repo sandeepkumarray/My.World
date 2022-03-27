@@ -72,6 +72,7 @@ namespace My.World.Api.DataAccess
                     dashboard.traditions_total = dr["traditions_total"] == DBNull.Value ? default(Int32) : Convert.ToInt32(dr["traditions_total"]);
                     dashboard.universes_total = dr["universes_total"] == DBNull.Value ? default(Int32) : Convert.ToInt32(dr["universes_total"]);
                     dashboard.vehicles_total = dr["vehicles_total"] == DBNull.Value ? default(Int32) : Convert.ToInt32(dr["vehicles_total"]);
+                    dashboard.organizations_total = dr["organizations_total"] == DBNull.Value ? default(Int32) : Convert.ToInt32(dr["organizations_total"]);
 
 
                 }
@@ -82,6 +83,70 @@ namespace My.World.Api.DataAccess
                 throw;
             }
             return dashboard;
+        }
+
+        public BaseModel GetContentDetailsFromTypeID(string contentType, string contentId)
+        {
+            BaseModel baseModel = null;
+            string sqlQuery = "select id, Name as content_name from `" + contentType + "` where id = " + contentId + ";";
+
+            switch (contentType)
+            {
+                case "buildings": break;
+                case "characters": break;
+                case "conditions": break;
+                case "continents":
+                    sqlQuery = sqlQuery.Replace("Name", "Local_name");
+                    break;
+                case "countries": break;
+                case "creatures": break;
+                case "deities": break;
+                case "floras": break;
+                case "foods": break;
+                case "governments": break;
+                case "groups": break;
+                case "items": break;
+                case "jobs": break;
+                case "landmarks": break;
+                case "languages": break;
+                case "locations": break;
+                case "lores": break;
+                case "magics": break;
+                case "organizations": break;
+                case "planets": break;
+                case "races": break;
+                case "religions": break;
+                case "scenes": break;
+                case "sports": break;
+                case "technologies": break;
+                case "towns": break;
+                case "traditions": break;
+                case "universes": break;
+                case "vehicles": break;
+
+                default:
+                    break;
+            }
+
+            dbContext.cmd = new MySqlCommand();
+
+            dbContext.cmd.Connection = dbContext.GetConnection();
+            dbContext.cmd.CommandText = sqlQuery;
+
+            DataSet ds = dbContext.ExecuteDataSet(dbContext.cmd);
+            if (ds != null && ds.Tables != null && ds.Tables.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                if (dt.Rows != null && dt.Rows.Count > 0)
+                {
+                    baseModel = new BaseModel();
+                    DataRow dr = dt.Rows[0];
+
+                    baseModel._id = dr["id"] == DBNull.Value ? default(Int64) : Convert.ToInt64(dr["id"]);
+                    baseModel.content_name = dr["content_name"] == DBNull.Value ? default(String) : Convert.ToString(dr["content_name"]);
+                }
+            }
+            return baseModel;
         }
 
         public List<MentionsModel> GetMentionsData(long user_Id)
@@ -115,7 +180,8 @@ namespace My.World.Api.DataAccess
                             "select id, name ,'towns' content_type from towns where user_id = @user_Id union all " +
                             "select id, name ,'traditions' content_type from traditions where user_id = @user_Id union all " +
                             "select id, name ,'universes' content_type from universes where user_id = @user_Id union all " +
-                            "select id, name ,'vehicles' content_type from vehicles where user_id = @user_Id ";
+                            "select id, name ,'vehicles' content_type from vehicles where user_id = @user_Id union all " +
+                            "select id, name ,'organizations' content_type from organizations where user_id = @user_Id ";
             dbContext.cmd = new MySqlCommand();
 
             dbContext.cmd.Connection = dbContext.GetConnection();
@@ -175,7 +241,8 @@ namespace My.World.Api.DataAccess
                             "select tb.id,updated_at,tb.name,'towns' content_type, ct.icon, ct.primary_color from towns tb join content_types ct where ct.name = 'Towns' and user_id = @user_Id union all " +
                             "select tb.id,updated_at,tb.name,'traditions' content_type, ct.icon, ct.primary_color from traditions tb join content_types ct where ct.name = 'Traditions' and user_id = @user_Id union all " +
                             "select tb.id,updated_at,tb.name,'universes' content_type, ct.icon, ct.primary_color from universes tb join content_types ct where ct.name = 'Universes' and user_id = @user_Id union all " +
-                            "select tb.id,updated_at,tb.name,'vehicles' content_type, ct.icon, ct.primary_color from vehicles tb join content_types ct where ct.name = 'Vehicles' and user_id = @user_Id  ";
+                            "select tb.id,updated_at,tb.name,'vehicles' content_type, ct.icon, ct.primary_color from vehicles tb join content_types ct where ct.name = 'Vehicles' and user_id = @user_Id union all " +
+                            "select tb.id,updated_at,tb.name,'organizations' content_type, ct.icon, ct.primary_color from organizations tb join content_types ct where ct.name = 'Organizations' and user_id = @user_Id  ";
 
             dbContext.cmd = new MySqlCommand();
 

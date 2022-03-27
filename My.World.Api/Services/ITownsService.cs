@@ -20,5 +20,7 @@ namespace My.World.Api.Services
 
 		ResponseModel<string> SaveTown(TownsModel Data);
 
+		ResponseModel<string> UpdateTownsData(TownsModel Data);
+
 	}
 }

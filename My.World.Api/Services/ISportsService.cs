@@ -20,5 +20,7 @@ namespace My.World.Api.Services
 
 		ResponseModel<string> SaveSport(SportsModel Data);
 
+		ResponseModel<string> UpdateSportsData(SportsModel Data);
+
 	}
 }

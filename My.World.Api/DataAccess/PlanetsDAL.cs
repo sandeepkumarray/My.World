@@ -272,5 +272,69 @@ namespace My.World.Api.DataAccess
 
 		}
 
+		public string UpdatePlanetsData(PlanetsModel Data)
+		{
+			string _return_value = string.Empty;
+			try
+			{
+				dbContext.cmd = new MySqlCommand();
+				dbContext.cmd.Connection = dbContext.GetConnection();
+				dbContext.cmd.CommandText = "UPDATE planets SET Atmosphere = @Atmosphere,Calendar_System = @Calendar_System,Climate = @Climate,Continents = @Continents,Countries = @Countries,created_at = @created_at,Creatures = @Creatures,Day_sky = @Day_sky,Deities = @Deities,Description = @Description,First_Inhabitants_Story = @First_Inhabitants_Story,Flora = @Flora,Groups = @Groups,Landmarks = @Landmarks,Languages = @Languages,Length_Of_Day = @Length_Of_Day,Length_Of_Night = @Length_Of_Night,Locations = @Locations,Moons = @Moons,Name = @Name,Natural_diasters = @Natural_diasters,Natural_Resources = @Natural_Resources,Nearby_planets = @Nearby_planets,Night_sky = @Night_sky,Notes = @Notes,Orbit = @Orbit,Population = @Population,Private_Notes = @Private_Notes,Races = @Races,Religions = @Religions,Seasons = @Seasons,Size = @Size,Suns = @Suns,Surface = @Surface,Tags = @Tags,Temperature = @Temperature,Towns = @Towns,Universe = @Universe,updated_at = @updated_at,user_id = @user_id,Visible_Constellations = @Visible_Constellations,Water_Content = @Water_Content,Weather = @Weather,World_History = @World_History WHERE id = @id";
+				dbContext.AddInParameter(dbContext.cmd, "@Atmosphere", Data.Atmosphere);
+				dbContext.AddInParameter(dbContext.cmd, "@Calendar_System", Data.Calendar_System);
+				dbContext.AddInParameter(dbContext.cmd, "@Climate", Data.Climate);
+				dbContext.AddInParameter(dbContext.cmd, "@Continents", Data.Continents);
+				dbContext.AddInParameter(dbContext.cmd, "@Countries", Data.Countries);
+				dbContext.AddInParameter(dbContext.cmd, "@created_at", Data.created_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Creatures", Data.Creatures);
+				dbContext.AddInParameter(dbContext.cmd, "@Day_sky", Data.Day_sky);
+				dbContext.AddInParameter(dbContext.cmd, "@Deities", Data.Deities);
+				dbContext.AddInParameter(dbContext.cmd, "@Description", Data.Description);
+				dbContext.AddInParameter(dbContext.cmd, "@First_Inhabitants_Story", Data.First_Inhabitants_Story);
+				dbContext.AddInParameter(dbContext.cmd, "@Flora", Data.Flora);
+				dbContext.AddInParameter(dbContext.cmd, "@Groups", Data.Groups);
+				dbContext.AddInParameter(dbContext.cmd, "@Landmarks", Data.Landmarks);
+				dbContext.AddInParameter(dbContext.cmd, "@Languages", Data.Languages);
+				dbContext.AddInParameter(dbContext.cmd, "@Length_Of_Day", Data.Length_Of_Day);
+				dbContext.AddInParameter(dbContext.cmd, "@Length_Of_Night", Data.Length_Of_Night);
+				dbContext.AddInParameter(dbContext.cmd, "@Locations", Data.Locations);
+				dbContext.AddInParameter(dbContext.cmd, "@Moons", Data.Moons);
+				dbContext.AddInParameter(dbContext.cmd, "@Name", Data.Name);
+				dbContext.AddInParameter(dbContext.cmd, "@Natural_diasters", Data.Natural_diasters);
+				dbContext.AddInParameter(dbContext.cmd, "@Natural_Resources", Data.Natural_Resources);
+				dbContext.AddInParameter(dbContext.cmd, "@Nearby_planets", Data.Nearby_planets);
+				dbContext.AddInParameter(dbContext.cmd, "@Night_sky", Data.Night_sky);
+				dbContext.AddInParameter(dbContext.cmd, "@Notes", Data.Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Orbit", Data.Orbit);
+				dbContext.AddInParameter(dbContext.cmd, "@Population", Data.Population);
+				dbContext.AddInParameter(dbContext.cmd, "@Private_Notes", Data.Private_Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Races", Data.Races);
+				dbContext.AddInParameter(dbContext.cmd, "@Religions", Data.Religions);
+				dbContext.AddInParameter(dbContext.cmd, "@Seasons", Data.Seasons);
+				dbContext.AddInParameter(dbContext.cmd, "@Size", Data.Size);
+				dbContext.AddInParameter(dbContext.cmd, "@Suns", Data.Suns);
+				dbContext.AddInParameter(dbContext.cmd, "@Surface", Data.Surface);
+				dbContext.AddInParameter(dbContext.cmd, "@Tags", Data.Tags);
+				dbContext.AddInParameter(dbContext.cmd, "@Temperature", Data.Temperature);
+				dbContext.AddInParameter(dbContext.cmd, "@Towns", Data.Towns);
+				dbContext.AddInParameter(dbContext.cmd, "@Universe", Data.Universe);
+				dbContext.AddInParameter(dbContext.cmd, "@updated_at", Data.updated_at);
+				dbContext.AddInParameter(dbContext.cmd, "@user_id", Data.user_id);
+				dbContext.AddInParameter(dbContext.cmd, "@Visible_Constellations", Data.Visible_Constellations);
+				dbContext.AddInParameter(dbContext.cmd, "@Water_Content", Data.Water_Content);
+				dbContext.AddInParameter(dbContext.cmd, "@Weather", Data.Weather);
+				dbContext.AddInParameter(dbContext.cmd, "@World_History", Data.World_History);
+				_return_value = Convert.ToString(dbContext.cmd.ExecuteNonQuery());
+			}
+			catch (Exception ex)
+			{
+			    _return_value = null;
+			    throw;
+			}
+			
+			return _return_value;
+
+		}
+
 	}
 }

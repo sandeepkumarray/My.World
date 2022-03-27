@@ -31,6 +31,10 @@ $(document).ready(function () {
                             renderList(data.filter(person => person.value.includes(searchTerm)));
                         }
                     });
+                },
+                renderItem: (item, searchTerm) => {
+                    console.log(item);
+                    return '<span>' + item.label + '</span>';
                 }
             }
         },

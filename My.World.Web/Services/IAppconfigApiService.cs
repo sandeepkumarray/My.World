@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace My.World.Web.Services
 {
-	public interface IAppconfigApiService
+	public interface IAppConfigApiService
 	{
 
 		AppConfigModel GetAppConfig(AppConfigModel model);

@@ -227,5 +227,54 @@ namespace My.World.Api.DataAccess
 
 		}
 
+		public string UpdateJobsData(JobsModel Data)
+		{
+			string _return_value = string.Empty;
+			try
+			{
+				dbContext.cmd = new MySqlCommand();
+				dbContext.cmd.Connection = dbContext.GetConnection();
+				dbContext.cmd.CommandText = "UPDATE jobs SET Alternate_names = @Alternate_names,created_at = @created_at,Description = @Description,Education = @Education,Experience = @Experience,Field = @Field,Initial_goal = @Initial_goal,Job_origin = @Job_origin,Long_term_risks = @Long_term_risks,Name = @Name,Notable_figures = @Notable_figures,Notes = @Notes,Occupational_hazards = @Occupational_hazards,Pay_rate = @Pay_rate,Private_Notes = @Private_Notes,Promotions = @Promotions,Ranks = @Ranks,Similar_jobs = @Similar_jobs,Specializations = @Specializations,Tags = @Tags,Time_off = @Time_off,Traditions = @Traditions,Training = @Training,Type_of_job = @Type_of_job,Universe = @Universe,updated_at = @updated_at,user_id = @user_id,Vehicles = @Vehicles,Work_hours = @Work_hours WHERE id = @id";
+				dbContext.AddInParameter(dbContext.cmd, "@Alternate_names", Data.Alternate_names);
+				dbContext.AddInParameter(dbContext.cmd, "@created_at", Data.created_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Description", Data.Description);
+				dbContext.AddInParameter(dbContext.cmd, "@Education", Data.Education);
+				dbContext.AddInParameter(dbContext.cmd, "@Experience", Data.Experience);
+				dbContext.AddInParameter(dbContext.cmd, "@Field", Data.Field);
+				dbContext.AddInParameter(dbContext.cmd, "@Initial_goal", Data.Initial_goal);
+				dbContext.AddInParameter(dbContext.cmd, "@Job_origin", Data.Job_origin);
+				dbContext.AddInParameter(dbContext.cmd, "@Long_term_risks", Data.Long_term_risks);
+				dbContext.AddInParameter(dbContext.cmd, "@Name", Data.Name);
+				dbContext.AddInParameter(dbContext.cmd, "@Notable_figures", Data.Notable_figures);
+				dbContext.AddInParameter(dbContext.cmd, "@Notes", Data.Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Occupational_hazards", Data.Occupational_hazards);
+				dbContext.AddInParameter(dbContext.cmd, "@Pay_rate", Data.Pay_rate);
+				dbContext.AddInParameter(dbContext.cmd, "@Private_Notes", Data.Private_Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Promotions", Data.Promotions);
+				dbContext.AddInParameter(dbContext.cmd, "@Ranks", Data.Ranks);
+				dbContext.AddInParameter(dbContext.cmd, "@Similar_jobs", Data.Similar_jobs);
+				dbContext.AddInParameter(dbContext.cmd, "@Specializations", Data.Specializations);
+				dbContext.AddInParameter(dbContext.cmd, "@Tags", Data.Tags);
+				dbContext.AddInParameter(dbContext.cmd, "@Time_off", Data.Time_off);
+				dbContext.AddInParameter(dbContext.cmd, "@Traditions", Data.Traditions);
+				dbContext.AddInParameter(dbContext.cmd, "@Training", Data.Training);
+				dbContext.AddInParameter(dbContext.cmd, "@Type_of_job", Data.Type_of_job);
+				dbContext.AddInParameter(dbContext.cmd, "@Universe", Data.Universe);
+				dbContext.AddInParameter(dbContext.cmd, "@updated_at", Data.updated_at);
+				dbContext.AddInParameter(dbContext.cmd, "@user_id", Data.user_id);
+				dbContext.AddInParameter(dbContext.cmd, "@Vehicles", Data.Vehicles);
+				dbContext.AddInParameter(dbContext.cmd, "@Work_hours", Data.Work_hours);
+				_return_value = Convert.ToString(dbContext.cmd.ExecuteNonQuery());
+			}
+			catch (Exception ex)
+			{
+			    _return_value = null;
+			    throw;
+			}
+			
+			return _return_value;
+
+		}
+
 	}
 }

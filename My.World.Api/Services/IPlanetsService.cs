@@ -20,5 +20,7 @@ namespace My.World.Api.Services
 
 		ResponseModel<string> SavePlanet(PlanetsModel Data);
 
+		ResponseModel<string> UpdatePlanetsData(PlanetsModel Data);
+
 	}
 }

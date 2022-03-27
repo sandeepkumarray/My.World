@@ -20,5 +20,7 @@ namespace My.World.Api.Services
 
 		ResponseModel<string> SaveContinent(ContinentsModel Data);
 
+		ResponseModel<string> UpdateContinentsData(ContinentsModel Data);
+
 	}
 }

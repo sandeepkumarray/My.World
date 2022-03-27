@@ -8,24 +8,50 @@ using My.World.Api.DataAccess;
 
 namespace My.World.Api.Services
 {
-    public class UniversesService : IUniversesService
-    {
-        public DBContext dbContext { get; set; }
+	public class UniversesService : IUniversesService
+	{
+		public DBContext dbContext;
 
-        public UniversesService(DBContext dbContext)
-        {
-            this.dbContext = dbContext;
 
-        }
+		public UniversesService()
+		{
+		}
 
-        public ResponseModel<UniversesModel> GetUniversesData(UniversesModel Data)
-        {
-            ResponseModel<UniversesModel> return_value = null;
+		public  UniversesService(DBContext dbContext)
+		{
+						this.dbContext = dbContext;
+
+		}
+
+		public ResponseModel<string> AddUniversesData(UniversesModel Data)
+		{
+			ResponseModel<string> return_value = null;
+            try
+            {
+                return_value = new ResponseModel<string>();
+                UniversesDAL UniversesDalobj = new UniversesDAL(dbContext);
+                string value = UniversesDalobj.AddUniversesData(Data);
+                return_value.Value = value;
+                return_value.Message = "Success";
+                return_value.HttpStatusCode = "200";
+                return_value.IsSuccess = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return return_value;
+
+		}
+
+		public ResponseModel<UniversesModel> GetUniversesData(UniversesModel Data)
+		{
+			ResponseModel<UniversesModel> return_value = null;
             try
             {
                 return_value = new ResponseModel<UniversesModel>();
-                UniversesDAL UniversesDALobj = new UniversesDAL(dbContext);
-                UniversesModel value = UniversesDALobj.GetUniversesData(Data);
+                UniversesDAL UniversesDalobj = new UniversesDAL(dbContext);
+                UniversesModel value = UniversesDalobj.GetUniversesData(Data);
                 return_value.Value = value;
                 return_value.Message = "Success";
                 return_value.HttpStatusCode = "200";
@@ -33,21 +59,20 @@ namespace My.World.Api.Services
             }
             catch (Exception)
             {
-
                 throw;
             }
             return return_value;
 
-        }
+		}
 
-        public ResponseModel<string> DeleteUniversesData(UniversesModel Data)
-        {
-            ResponseModel<string> return_value = null;
+		public ResponseModel<string> DeleteUniversesData(UniversesModel Data)
+		{
+			ResponseModel<string> return_value = null;
             try
             {
                 return_value = new ResponseModel<string>();
-                UniversesDAL UniversesDALobj = new UniversesDAL(dbContext);
-                string value = UniversesDALobj.DeleteUniversesData(Data);
+                UniversesDAL UniversesDalobj = new UniversesDAL(dbContext);
+                string value = UniversesDalobj.DeleteUniversesData(Data);
                 return_value.Value = value;
                 return_value.Message = "Success";
                 return_value.HttpStatusCode = "200";
@@ -55,21 +80,20 @@ namespace My.World.Api.Services
             }
             catch (Exception)
             {
-
                 throw;
             }
             return return_value;
 
-        }
+		}
 
-        public ResponseModel<List<UniversesModel>> GetAllUniversesForUserID(long userId)
-        {
-            ResponseModel<List<UniversesModel>> return_value = null;
+		public ResponseModel<List<UniversesModel >> GetAllUniversesForUserID(long userId)
+		{
+			ResponseModel<List<UniversesModel >> return_value = null;
             try
             {
-                return_value = new ResponseModel<List<UniversesModel>>();
-                UniversesDAL UniversesDALobj = new UniversesDAL(dbContext);
-                List<UniversesModel> value = (List<UniversesModel>)UniversesDALobj.GetAllUniversesForUserID(userId);
+                return_value = new ResponseModel<List<UniversesModel >>();
+                UniversesDAL UniversesDalobj = new UniversesDAL(dbContext);
+                List<UniversesModel> value = UniversesDalobj.GetAllUniversesForUserID(userId);
                 return_value.Value = value;
                 return_value.Message = "Success";
                 return_value.HttpStatusCode = "200";
@@ -77,42 +101,20 @@ namespace My.World.Api.Services
             }
             catch (Exception)
             {
-
-                throw;
-            }
-            return return_value;
-        }
-
-        public ResponseModel<string> SaveUniverse(UniversesModel Data)
-        {
-            ResponseModel<string> return_value = null;
-            try
-            {
-                return_value = new ResponseModel<string>();
-                UniversesDAL UniversesDALobj = new UniversesDAL(dbContext);
-                string value = UniversesDALobj.SaveData(Data);
-                return_value.Value = value;
-                return_value.Message = "Success";
-                return_value.HttpStatusCode = "200";
-                return_value.IsSuccess = true;
-            }
-            catch (Exception)
-            {
-
                 throw;
             }
             return return_value;
 
-        }
+		}
 
-        public ResponseModel<string> AddUniversesData(UniversesModel Data)
-        {
-            ResponseModel<string> return_value = null;
+		public ResponseModel<string> SaveUniverse(UniversesModel Data)
+		{
+			ResponseModel<string> return_value = null;
             try
             {
                 return_value = new ResponseModel<string>();
-                UniversesDAL UniversesDALobj = new UniversesDAL(dbContext);
-                string value = UniversesDALobj.AddUniversesData(Data);
+                UniversesDAL UniversesDalobj = new UniversesDAL(dbContext);
+                string value = UniversesDalobj.SaveData(Data);
                 return_value.Value = value;
                 return_value.Message = "Success";
                 return_value.HttpStatusCode = "200";
@@ -123,6 +125,29 @@ namespace My.World.Api.Services
                 throw;
             }
             return return_value;
-        }
-    }
+
+		}
+
+		public ResponseModel<string> UpdateUniversesData(UniversesModel Data)
+		{
+			ResponseModel<string> return_value = null;
+            try
+            {
+                return_value = new ResponseModel<string>();
+                UniversesDAL UniversesDalobj = new UniversesDAL(dbContext);
+                string value = UniversesDalobj.UpdateUniversesData(Data);
+                return_value.Value = value;
+                return_value.Message = "Success";
+                return_value.HttpStatusCode = "200";
+                return_value.IsSuccess = true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return return_value;
+
+		}
+
+	}
 }

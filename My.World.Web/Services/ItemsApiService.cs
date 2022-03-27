@@ -11,12 +11,28 @@ namespace My.World.Web.Services
 {
 	public class ItemsApiService : BaseAPIService, IItemsApiService
 	{
+
+		public string AddItems(ItemsModel model)
+		{
+			string itemsModel = null;
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Items/AddItems";
+			client.ServiceMethod = Method.POST;
+			client.RequestBody = model;
+			string jsonResult = client.GetResponseAsync();
+			ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
+			itemsModel = response.Value;
+			return itemsModel;
+
+		}
+
 		public ItemsModel GetItems(ItemsModel model)
 		{
 			ItemsModel itemsModel = null;
 			RestHttpClient client = new RestHttpClient();
-			client.Host = MyWorldApiUrl;
-			client.ApiUrl = "GetItems";
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Items/GetItems";
 			client.ServiceMethod = Method.POST;
 			client.RequestBody = model;
 			string jsonResult = client.GetResponseAsync();
@@ -30,8 +46,8 @@ namespace My.World.Web.Services
 		{
 			string itemsModel = null;
 			RestHttpClient client = new RestHttpClient();
-			client.Host = MyWorldApiUrl;
-			client.ApiUrl = "DeleteItems";
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Items/DeleteItems";
 			client.ServiceMethod = Method.POST;
 			client.RequestBody = model;
 			string jsonResult = client.GetResponseAsync();
@@ -45,9 +61,8 @@ namespace My.World.Web.Services
 		{
 			List<ItemsModel> itemsModel = new List<ItemsModel>();
 			RestHttpClient client = new RestHttpClient();
-			client.Host = MyWorldApiUrl;
-			client.ApiUrl = "GetAllItems/" + UserId;
-
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Items/GetAllItems/" + UserId;
 			client.ServiceMethod = Method.GET;
 			string jsonResult = client.GETAsync();
 			ResponseModel<List<ItemsModel>> response = JsonConvert.DeserializeObject<ResponseModel<List<ItemsModel>>>(jsonResult);
@@ -55,18 +70,20 @@ namespace My.World.Web.Services
 			return itemsModel;
 
 		}
-		
+
 		public ResponseModel<string> SaveItem(ItemsModel model)
 		{
+			string itemsModel = null;
 			RestHttpClient client = new RestHttpClient();
-			client.Host = MyWorldApiUrl;
-			client.ApiUrl = "SaveItem";
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Items/SaveItem";
 			client.ServiceMethod = Method.POST;
-			model.updated_at = DateTime.Now;
 			client.RequestBody = model;
 			string jsonResult = client.GetResponseAsync();
 			ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
 			return response;
+
 		}
+
 	}
 }

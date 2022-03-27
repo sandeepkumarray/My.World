@@ -20,5 +20,7 @@ namespace My.World.Api.Services
 
 		ResponseModel<string> SaveLocation(LocationsModel Data);
 
+		ResponseModel<string> UpdateLocationsData(LocationsModel Data);
+
 	}
 }

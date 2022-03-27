@@ -20,5 +20,7 @@ namespace My.World.Api.Services
 
 		ResponseModel<string> SaveLanguage(LanguagesModel Data);
 
+		ResponseModel<string> UpdateLanguagesData(LanguagesModel Data);
+
 	}
 }

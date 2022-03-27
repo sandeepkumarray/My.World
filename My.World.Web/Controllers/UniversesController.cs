@@ -14,7 +14,6 @@ using Newtonsoft.Json;
 using My.World.Web.ViewModel;
 using Microsoft.Extensions.Configuration;
 using System.Web;
-using Microsoft.Extensions.Logging;
 
 namespace My.World.Web.Controllers
 {
@@ -22,27 +21,25 @@ namespace My.World.Web.Controllers
 	[Route("universes")]
 	public class UniversesController : Controller
 	{
-		private readonly ILogger<UniversesController> _logger;
-
 		public readonly IUniversesApiService _iUniversesApiService;
 
 		public readonly IUsersApiService _iUsersApiService;
 
-		public readonly IContenttypesApiService _iContenttypesApiService;
+		public readonly IContentTypesApiService _iContenttypesApiService;
 
 		public readonly IObjectBucketApiService _iObjectBucketApiService;
 
 		public readonly IConfiguration _config;
 
 
-		public UniversesController(ILogger<UniversesController> logger, IUniversesApiService iUniversesApiService,IUsersApiService iUsersApiService,IContenttypesApiService iContenttypesApiService,IObjectBucketApiService iObjectBucketApiService,IConfiguration config)
+		public UniversesController(IUniversesApiService iUniversesApiService,IUsersApiService iUsersApiService,IContentTypesApiService iContenttypesApiService,IObjectBucketApiService iObjectBucketApiService,IConfiguration config)
 		{
 			_iUniversesApiService = iUniversesApiService;
 			_iUsersApiService = iUsersApiService;
 			_iContenttypesApiService = iContenttypesApiService;
 			_iObjectBucketApiService = iObjectBucketApiService;
 			_config = config;
-			_logger = logger;
+
 		}
 
 		private string GetRawContent(string _rawContent)
@@ -54,12 +51,11 @@ namespace My.World.Web.Controllers
 
 		}
 
-		[Route("Index")]
 		public IActionResult Index()
 		{
 			var accountID = Convert.ToInt64(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserID")?.Value);
 			_iObjectBucketApiService.SetObjectStorageSecrets(accountID);
-			string imageFormat = _config.GetValue<string>("ContentImageUrlFormat");
+			string imageFormat = HttpContext.Session.GetString("ContentImageUrlFormat");
 			var universes = _iUniversesApiService.GetAllUniverses(accountID);
 			universes.ForEach(b =>
 			{
@@ -81,7 +77,7 @@ namespace My.World.Web.Controllers
 		}
 
 		[HttpGet]
-		[Route("{Id}")]
+		[Route("{Id}/edit")]
 		public IActionResult ViewUniverses(string Id)
 		{
 			UniversesModel model = new UniversesModel();
@@ -99,31 +95,27 @@ namespace My.World.Web.Controllers
 			universesViewModel.UniversesList = _iUniversesApiService.GetAllUniverses(model.user_id);
 			var contentTemplate = _iUsersApiService.GetUsersContentTemplate(new UsersModel() { id = model.user_id });
 			universesViewModel.ContentTemplate = contentTemplate.Contents.Find(c => c.content_type == "universes");
-
-			_logger.LogInformation("ITEM ID = " + Id + " - content_type = universes - ContentTemplate " + JsonConvert.SerializeObject(universesViewModel.ContentTemplate));
-
 			ContentTypesModel contentTypesModel = _iContenttypesApiService.GetContentTypes(new ContentTypesModel() { name = "Universes" });
 			universesViewModel.headerBackgroundColor = contentTypesModel.primary_color;
 			universesViewModel.headerBackgroundColor = contentTypesModel.sec_color;
 			_iObjectBucketApiService.SetObjectStorageSecrets(model.user_id);
 			universesViewModel.ContentObjectModelList = _iObjectBucketApiService.GetAllContentObjectAttachments(Convert.ToInt64(Id), "universes");
-			_logger.LogInformation("ITEM ID = " + Id + " Content Objects count " + universesViewModel.ContentObjectModelList.Count());
-			universesViewModel.ContentObjectModelList.ForEach(o=>
+			universesViewModel.ContentObjectModelList.ForEach(o => 
 			{
-				var publicUrl = "http://" + _iObjectBucketApiService.objectStorageKeysModel.endpoint
-							+ '/' + _iObjectBucketApiService.objectStorageKeysModel.bucketName + '/'+ _config.GetValue<string>("BucketEnv") + '/' + o.object_name;
-				o.file_url = HttpUtility.UrlPathEncode(publicUrl);
-			});
+			    var publicUrl = "http://" + _iObjectBucketApiService.objectStorageKeysModel.endpoint
+			                + '/' + _iObjectBucketApiService.objectStorageKeysModel.bucketName + '/' + _config.GetValue<string>("BucketEnv") + '/' + o.object_name; 
+			    o.file_url = HttpUtility.UrlPathEncode(publicUrl); 
+			}); 
 			var existing_total_size = universesViewModel.ContentObjectModelList.Sum(f => f.object_size);
 			var AllowedTotalContentSize = Convert.ToInt64(HttpContext.Session.GetString("AllowedTotalContentSize"));
 			var remainingSize = AllowedTotalContentSize - existing_total_size;
 			universesViewModel.RemainingContentSize = Helpers.Utility.SizeSuffix(remainingSize);
-			return View(universesViewModel);
+			return View(universesViewModel); 
 
 		}
 
 		[HttpGet]
-		[Route("Preview/{Id}")]
+		[Route("{Id}")]
 		public IActionResult PreviewUniverses(string Id)
 		{
 			UniversesModel model = new UniversesModel();
@@ -148,6 +140,12 @@ namespace My.World.Web.Controllers
 			universesViewModel.headerBackgroundColor = contentTypesModel.sec_color;
 			_iObjectBucketApiService.SetObjectStorageSecrets(model.user_id);
 			universesViewModel.ContentObjectModelList = _iObjectBucketApiService.GetAllContentObjectAttachments(Convert.ToInt64(Id), "universes");
+			universesViewModel.ContentObjectModelList.ForEach(o => 
+			{
+			    var publicUrl = "http://" + _iObjectBucketApiService.objectStorageKeysModel.endpoint
+			                + '/' + _iObjectBucketApiService.objectStorageKeysModel.bucketName + '/' + _config.GetValue<string>("BucketEnv") + '/' + o.object_name; 
+			    o.file_url = HttpUtility.UrlPathEncode(publicUrl); 
+			}); 
 			return View(universesViewModel);
 
 		}
@@ -164,7 +162,7 @@ namespace My.World.Web.Controllers
 
 		}
 
-		public void TransformData(UniversesModel model)
+		private void TransformData(UniversesModel model)
 		{
 			if (model != null)
 			{
@@ -445,15 +443,15 @@ namespace My.World.Web.Controllers
 		{
 			var accountID = Convert.ToInt64(HttpContext.User.Claims.FirstOrDefault(x => x.Type == "UserID")?.Value);
 			string content_Id = HttpContext.Session.GetString("UniverseID");
-
-			var ContentObjectModelList = _iObjectBucketApiService.GetAllContentObjectAttachments(Convert.ToInt64(content_Id), "buildings");
+			
+			var ContentObjectModelList = _iObjectBucketApiService.GetAllContentObjectAttachments(Convert.ToInt64(content_Id), "universes");
 			var existing_total_size = ContentObjectModelList.Sum(f => f.object_size);
-
+			
 			var rq_files = Request.Form.Files;
 			var upload_file_size = rq_files.Sum(f => f.Length);
 			var total_size = upload_file_size + existing_total_size;
 			var AllowedTotalContentSize = Convert.ToInt64(HttpContext.Session.GetString("AllowedTotalContentSize"));
-
+			
 			if (total_size <= AllowedTotalContentSize)
 			{
 				if (rq_files != null)
@@ -467,27 +465,25 @@ namespace My.World.Web.Controllers
 							model.object_name = file.FileName;
 							model.object_size = file.Length;
 							model.bucket_folder = _config.GetValue<string>("BucketEnv");
-
-
+			
 							file.CopyTo(ms);
 							model.file = ms;
 							model.file.Seek(0, 0);
 							_iObjectBucketApiService.SetObjectStorageSecrets(accountID);
 							var response = _iObjectBucketApiService.UploadObject(model).Result;
-
+			
 							if (!string.IsNullOrEmpty(response.Value))
 							{
 								ContentObjectAttachmentModel contentObjectAttachmentModel = new ContentObjectAttachmentModel();
 								contentObjectAttachmentModel.object_id = Convert.ToInt64(response.Value);
 								contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
 								contentObjectAttachmentModel.content_type = "universes";
-
+			
 								_iObjectBucketApiService.AddContentObjectAttachment(contentObjectAttachmentModel);
 							}
 						}
 					}
 				}
-
 			}
 			else
 			{
@@ -507,11 +503,11 @@ namespace My.World.Web.Controllers
 			contentObjectAttachmentModel.object_id = objectId;
 			contentObjectAttachmentModel.content_id = Convert.ToInt64(content_Id);
 			contentObjectAttachmentModel.content_type = "universes";
-
+			
 			var bucket_folder = _config.GetValue<string>("BucketEnv");
 			ContentObjectModel contentObjectModel = new ContentObjectModel();
 			contentObjectModel.object_id = objectId;
-			contentObjectModel.object_name = bucket_folder + "/" + objectName;
+			contentObjectModel.object_name = bucket_folder + " / " + objectName;
 			
 			_iObjectBucketApiService.SetObjectStorageSecrets(accountID);
 			_iObjectBucketApiService.DeleteObject(contentObjectModel);

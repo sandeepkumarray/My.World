@@ -20,5 +20,7 @@ namespace My.World.Api.Services
 
 		ResponseModel<string> SaveLore(LoresModel Data);
 
+		ResponseModel<string> UpdateLoresData(LoresModel Data);
+
 	}
 }

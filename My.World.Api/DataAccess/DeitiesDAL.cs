@@ -251,5 +251,62 @@ namespace My.World.Api.DataAccess
 
 		}
 
+		public string UpdateDeitiesData(DeitiesModel Data)
+		{
+			string _return_value = string.Empty;
+			try
+			{
+				dbContext.cmd = new MySqlCommand();
+				dbContext.cmd.Connection = dbContext.GetConnection();
+				dbContext.cmd.CommandText = "UPDATE deities SET Abilities = @Abilities,Children = @Children,Conditions = @Conditions,created_at = @created_at,Creatures = @Creatures,Description = @Description,Elements = @Elements,Family_History = @Family_History,Floras = @Floras,Height = @Height,Human_Interaction = @Human_Interaction,Life_Story = @Life_Story,Name = @Name,Notable_Events = @Notable_Events,Notes = @Notes,Other_Names = @Other_Names,Parents = @Parents,Partners = @Partners,Physical_Description = @Physical_Description,Prayers = @Prayers,Private_Notes = @Private_Notes,Related_landmarks = @Related_landmarks,Related_races = @Related_races,Related_towns = @Related_towns,Relics = @Relics,Religions = @Religions,Rituals = @Rituals,Siblings = @Siblings,Strengths = @Strengths,Symbols = @Symbols,Tags = @Tags,Traditions = @Traditions,Universe = @Universe,updated_at = @updated_at,user_id = @user_id,Weaknesses = @Weaknesses,Weight = @Weight WHERE id = @id";
+				dbContext.AddInParameter(dbContext.cmd, "@Abilities", Data.Abilities);
+				dbContext.AddInParameter(dbContext.cmd, "@Children", Data.Children);
+				dbContext.AddInParameter(dbContext.cmd, "@Conditions", Data.Conditions);
+				dbContext.AddInParameter(dbContext.cmd, "@created_at", Data.created_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Creatures", Data.Creatures);
+				dbContext.AddInParameter(dbContext.cmd, "@Description", Data.Description);
+				dbContext.AddInParameter(dbContext.cmd, "@Elements", Data.Elements);
+				dbContext.AddInParameter(dbContext.cmd, "@Family_History", Data.Family_History);
+				dbContext.AddInParameter(dbContext.cmd, "@Floras", Data.Floras);
+				dbContext.AddInParameter(dbContext.cmd, "@Height", Data.Height);
+				dbContext.AddInParameter(dbContext.cmd, "@Human_Interaction", Data.Human_Interaction);
+				dbContext.AddInParameter(dbContext.cmd, "@Life_Story", Data.Life_Story);
+				dbContext.AddInParameter(dbContext.cmd, "@Name", Data.Name);
+				dbContext.AddInParameter(dbContext.cmd, "@Notable_Events", Data.Notable_Events);
+				dbContext.AddInParameter(dbContext.cmd, "@Notes", Data.Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Other_Names", Data.Other_Names);
+				dbContext.AddInParameter(dbContext.cmd, "@Parents", Data.Parents);
+				dbContext.AddInParameter(dbContext.cmd, "@Partners", Data.Partners);
+				dbContext.AddInParameter(dbContext.cmd, "@Physical_Description", Data.Physical_Description);
+				dbContext.AddInParameter(dbContext.cmd, "@Prayers", Data.Prayers);
+				dbContext.AddInParameter(dbContext.cmd, "@Private_Notes", Data.Private_Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Related_landmarks", Data.Related_landmarks);
+				dbContext.AddInParameter(dbContext.cmd, "@Related_races", Data.Related_races);
+				dbContext.AddInParameter(dbContext.cmd, "@Related_towns", Data.Related_towns);
+				dbContext.AddInParameter(dbContext.cmd, "@Relics", Data.Relics);
+				dbContext.AddInParameter(dbContext.cmd, "@Religions", Data.Religions);
+				dbContext.AddInParameter(dbContext.cmd, "@Rituals", Data.Rituals);
+				dbContext.AddInParameter(dbContext.cmd, "@Siblings", Data.Siblings);
+				dbContext.AddInParameter(dbContext.cmd, "@Strengths", Data.Strengths);
+				dbContext.AddInParameter(dbContext.cmd, "@Symbols", Data.Symbols);
+				dbContext.AddInParameter(dbContext.cmd, "@Tags", Data.Tags);
+				dbContext.AddInParameter(dbContext.cmd, "@Traditions", Data.Traditions);
+				dbContext.AddInParameter(dbContext.cmd, "@Universe", Data.Universe);
+				dbContext.AddInParameter(dbContext.cmd, "@updated_at", Data.updated_at);
+				dbContext.AddInParameter(dbContext.cmd, "@user_id", Data.user_id);
+				dbContext.AddInParameter(dbContext.cmd, "@Weaknesses", Data.Weaknesses);
+				dbContext.AddInParameter(dbContext.cmd, "@Weight", Data.Weight);
+				_return_value = Convert.ToString(dbContext.cmd.ExecuteNonQuery());
+			}
+			catch (Exception ex)
+			{
+			    _return_value = null;
+			    throw;
+			}
+			
+			return _return_value;
+
+		}
+
 	}
 }

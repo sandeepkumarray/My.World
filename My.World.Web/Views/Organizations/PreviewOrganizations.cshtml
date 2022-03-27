@@ -1,0 +1,288 @@
+@model My.World.Web.ViewModel.OrganizationsViewModel
+
+@{
+    ViewData["Title"] = "ViewOrganizations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Breadcrumb"] = "Organizations / View";
+}
+
+
+<style>
+    .editorNative {
+        min-height: 2em;
+        overflow-y: scroll;
+        max-height: 12em;
+        max-width: 50em;
+        margin: 0;
+        margin-bottom: 2px;
+        padding: 1px 0;
+        color: black;
+        font-weight: 400;
+        font-size: 1.125rem;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 2rem;
+        background: white;
+    }
+</style>
+<div class="c-body">
+    <main class="c-main">
+        <div class="container-fluid">
+            <div class="fade-in">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header"><strong>Organization</strong> Details</div>
+                            <div class="card-body">
+                               <div class="align-items-start">
+                                    <div class="tab-content">
+                                        @foreach (var cat in Model.ContentTemplate.categories.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+                                            if (cat.Attributes != null && cat.Attributes.Count > 0)
+                                            {
+                                                <div id="@panelName">
+                                                    <div class="card">
+                                                        <div class="card-header d-flex justify-content-between align-items-center" style="background:@Model.headerBackgroundColor">
+                                                            <span>@cat.Label</span>
+                                                            <span>@Html.Raw(@cat.Icon)</span>
+                                                        </div>
+                                                        <div class="card-body" style="padding:10px;">
+                                                            @foreach (var att in cat.Attributes)
+                                                            {
+                                                                if (att.is_active)
+                                                                {
+                                                                    <div class="form-group row">
+                                                                        <label class="col-md-3 col-form-label" for="text-input">@att.field_label</label>
+                                                                        <div class="col-md-9">
+                                                                            @if (att.field_name.ToLower() != "name" && att.field_type.In(new List<string>() { "binary", "varbinary", "tinyblob", "blob", "mediumblob", "longblob", "char byte", "char", "varchar", "tinytext", "text", "mediumtext", "longtext", "set", "enum", "nchar", "national char", "nvarchar", "national varchar", "character varying" }))
+                                                                            {
+                                                                                <div id="@att.field_name" class="form-control editorNative"></div>
+                                                                            }
+                                                                            else if (att.field_name.ToLower() == "universe")
+                                                                            {
+                                                                                <select id="ddlUniverseList" class="form-control" style="min-width:150px" disabled
+                                                                                        asp-items="@(new SelectList(@Model.UniversesList, "id", "name", Model.organizationsModel.Universe))">
+                                                                                </select>
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "int", "integer", "smallint unsigned", "mediumint", "bigint", "int unsigned", "integer unsigned", "bit" }))
+                                                                            {
+                                                                                <input id="organizationsModel_@att.field_name" class="form-control" type="number" readonly />
+                                                                            }
+                                                                            else if (att.field_type.In(new List<string>() { "tinyint" }))
+                                                                            {
+                                                                                <input id="organizationsModel_@att.field_name" class="form-control" type="checkbox" readonly />
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <input id="organizationsModel_@att.field_name" class="form-control" readonly />
+
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+
+
+                                        @foreach (var cat in Model.ContentTemplate.references.OrderBy(o => o.Order))
+                                        {
+                                            var active_class = cat.Order == 1 ? "active" : "";
+                                            var panelName = cat.Label + "_panel";
+
+                                            <div id="@panelName">
+                                                <div class="card">
+                                                    <div class="card-header d-flex justify-content-between align-items-center" style="background:cadetblue">
+                                                        <span>@cat.Label</span>
+                                                        <span>@Html.Raw(@cat.Icon)</span>
+                                                    </div>
+                                                    <div class="card-body" style="padding:10px;">
+                                                        @foreach (var att in cat.Attributes)
+                                                        {
+                                                            if (att.is_active)
+                                                            {
+                                                                if (att.field_name.ToLower() == "gallery")
+                                                                {
+                                                                    <div class="mb-3">
+                                                                        <label class="form-label">Uploaded Images</label>
+
+                                                                        <div class="row">
+                                                                            @foreach (var contentObject in Model.ContentObjectModelList)
+                                                                            {
+                                                                                <div class="card-img" style="width: 18rem; margin-right: 1.0rem;margin-top: 1.0rem;margin-left:0.5rem;">
+                                                                                    <div class="card-body img-container" style="height: 265px;background: url('@contentObject.file_url');background-size: cover;">                                                                                                                                                                              
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>                                                                   
+                                                                }
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+							</div>
+                            <div class="card-footer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+@section Scripts {
+   
+    <script type="text/javascript">
+    
+		function setNameBody() {
+		    $('#organizationsModel_Name').val('@Model.organizationsModel.Name');
+		};
+
+		function setUniverseBody() {
+		    $('#organizationsModel_Universe').val('@Model.organizationsModel.Universe');
+		};
+
+		function setDescriptionBody() {
+		    html = htmlDecode('@Model.organizationsModel.Description');
+		    $('#Description').append(html);
+		};
+
+		function setType_of_organizationBody() {
+		    html = htmlDecode('@Model.organizationsModel.Type_of_organization');
+		    $('#Type_of_organization').append(html);
+		};
+
+		function setAlternate_namesBody() {
+		    html = htmlDecode('@Model.organizationsModel.Alternate_names');
+		    $('#Alternate_names').append(html);
+		};
+
+		function setTagsBody() {
+		    html = htmlDecode('@Model.organizationsModel.Tags');
+		    $('#Tags').append(html);
+		};
+
+		function setOwnerBody() {
+		    html = htmlDecode('@Model.organizationsModel.Owner');
+		    $('#Owner').append(html);
+		};
+
+		function setMembersBody() {
+		    html = htmlDecode('@Model.organizationsModel.Members');
+		    $('#Members').append(html);
+		};
+
+		function setPurposeBody() {
+		    html = htmlDecode('@Model.organizationsModel.Purpose');
+		    $('#Purpose').append(html);
+		};
+
+		function setServicesBody() {
+		    html = htmlDecode('@Model.organizationsModel.Services');
+		    $('#Services').append(html);
+		};
+
+		function setSub_organizationsBody() {
+		    html = htmlDecode('@Model.organizationsModel.Sub_organizations');
+		    $('#Sub_organizations').append(html);
+		};
+
+		function setSuper_organizationsBody() {
+		    html = htmlDecode('@Model.organizationsModel.Super_organizations');
+		    $('#Super_organizations').append(html);
+		};
+
+		function setSister_organizationsBody() {
+		    html = htmlDecode('@Model.organizationsModel.Sister_organizations');
+		    $('#Sister_organizations').append(html);
+		};
+
+		function setOrganization_structureBody() {
+		    html = htmlDecode('@Model.organizationsModel.Organization_structure');
+		    $('#Organization_structure').append(html);
+		};
+
+		function setRival_organizationsBody() {
+		    html = htmlDecode('@Model.organizationsModel.Rival_organizations');
+		    $('#Rival_organizations').append(html);
+		};
+
+		function setAddressBody() {
+		    html = htmlDecode('@Model.organizationsModel.Address');
+		    $('#Address').append(html);
+		};
+
+		function setOfficesBody() {
+		    html = htmlDecode('@Model.organizationsModel.Offices');
+		    $('#Offices').append(html);
+		};
+
+		function setLocationsBody() {
+		    html = htmlDecode('@Model.organizationsModel.Locations');
+		    $('#Locations').append(html);
+		};
+
+		function setHeadquartersBody() {
+		    html = htmlDecode('@Model.organizationsModel.Headquarters');
+		    $('#Headquarters').append(html);
+		};
+
+		function setFormation_yearBody() {
+		    $('#organizationsModel_Formation_year').val('@Model.organizationsModel.Formation_year');
+		};
+
+		function setClosure_yearBody() {
+		    $('#organizationsModel_Closure_year').val('@Model.organizationsModel.Closure_year');
+		};
+
+		function setNotesBody() {
+		    html = htmlDecode('@Model.organizationsModel.Notes');
+		    $('#Notes').append(html);
+		};
+
+		function setPrivate_NotesBody() {
+		    html = htmlDecode('@Model.organizationsModel.Private_Notes');
+		    $('#Private_Notes').append(html);
+		};
+
+
+
+        $(document).ready(function () {
+			setNameBody();
+			setDescriptionBody();
+			setType_of_organizationBody();
+			setAlternate_namesBody();
+			setTagsBody();
+			setOwnerBody();
+			setMembersBody();
+			setPurposeBody();
+			setServicesBody();
+			setSub_organizationsBody();
+			setSuper_organizationsBody();
+			setSister_organizationsBody();
+			setOrganization_structureBody();
+			setRival_organizationsBody();
+			setAddressBody();
+			setOfficesBody();
+			setLocationsBody();
+			setHeadquartersBody();
+			setFormation_yearBody();
+			setClosure_yearBody();
+			setNotesBody();
+			setPrivate_NotesBody();
+
+        });
+
+    </script>
+}

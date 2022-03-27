@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace My.World.Web.Services
 {
-	public interface IContenttypesApiService
+	public interface IContentTypesApiService
 	{
 
 		ContentTypesModel GetContentTypes(ContentTypesModel model);

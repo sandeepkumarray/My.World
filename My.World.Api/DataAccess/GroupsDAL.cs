@@ -239,5 +239,58 @@ namespace My.World.Api.DataAccess
 
 		}
 
+		public string UpdateGroupsData(GroupsModel Data)
+		{
+			string _return_value = string.Empty;
+			try
+			{
+				dbContext.cmd = new MySqlCommand();
+				dbContext.cmd.Connection = dbContext.GetConnection();
+				dbContext.cmd.CommandText = "UPDATE groups SET Allies = @Allies,Clients = @Clients,created_at = @created_at,Creatures = @Creatures,Description = @Description,Enemies = @Enemies,Equipment = @Equipment,Goals = @Goals,Headquarters = @Headquarters,Inventory = @Inventory,Key_items = @Key_items,Leaders = @Leaders,Locations = @Locations,Members = @Members,Motivations = @Motivations,Name = @Name,Notes = @Notes,Obstacles = @Obstacles,Offices = @Offices,Organization_structure = @Organization_structure,Other_Names = @Other_Names,Private_notes = @Private_notes,Risks = @Risks,Rivals = @Rivals,Sistergroups = @Sistergroups,Subgroups = @Subgroups,Supergroups = @Supergroups,Suppliers = @Suppliers,Tags = @Tags,Traditions = @Traditions,Universe = @Universe,updated_at = @updated_at,user_id = @user_id WHERE id = @id";
+				dbContext.AddInParameter(dbContext.cmd, "@Allies", Data.Allies);
+				dbContext.AddInParameter(dbContext.cmd, "@Clients", Data.Clients);
+				dbContext.AddInParameter(dbContext.cmd, "@created_at", Data.created_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Creatures", Data.Creatures);
+				dbContext.AddInParameter(dbContext.cmd, "@Description", Data.Description);
+				dbContext.AddInParameter(dbContext.cmd, "@Enemies", Data.Enemies);
+				dbContext.AddInParameter(dbContext.cmd, "@Equipment", Data.Equipment);
+				dbContext.AddInParameter(dbContext.cmd, "@Goals", Data.Goals);
+				dbContext.AddInParameter(dbContext.cmd, "@Headquarters", Data.Headquarters);
+				dbContext.AddInParameter(dbContext.cmd, "@Inventory", Data.Inventory);
+				dbContext.AddInParameter(dbContext.cmd, "@Key_items", Data.Key_items);
+				dbContext.AddInParameter(dbContext.cmd, "@Leaders", Data.Leaders);
+				dbContext.AddInParameter(dbContext.cmd, "@Locations", Data.Locations);
+				dbContext.AddInParameter(dbContext.cmd, "@Members", Data.Members);
+				dbContext.AddInParameter(dbContext.cmd, "@Motivations", Data.Motivations);
+				dbContext.AddInParameter(dbContext.cmd, "@Name", Data.Name);
+				dbContext.AddInParameter(dbContext.cmd, "@Notes", Data.Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Obstacles", Data.Obstacles);
+				dbContext.AddInParameter(dbContext.cmd, "@Offices", Data.Offices);
+				dbContext.AddInParameter(dbContext.cmd, "@Organization_structure", Data.Organization_structure);
+				dbContext.AddInParameter(dbContext.cmd, "@Other_Names", Data.Other_Names);
+				dbContext.AddInParameter(dbContext.cmd, "@Private_notes", Data.Private_notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Risks", Data.Risks);
+				dbContext.AddInParameter(dbContext.cmd, "@Rivals", Data.Rivals);
+				dbContext.AddInParameter(dbContext.cmd, "@Sistergroups", Data.Sistergroups);
+				dbContext.AddInParameter(dbContext.cmd, "@Subgroups", Data.Subgroups);
+				dbContext.AddInParameter(dbContext.cmd, "@Supergroups", Data.Supergroups);
+				dbContext.AddInParameter(dbContext.cmd, "@Suppliers", Data.Suppliers);
+				dbContext.AddInParameter(dbContext.cmd, "@Tags", Data.Tags);
+				dbContext.AddInParameter(dbContext.cmd, "@Traditions", Data.Traditions);
+				dbContext.AddInParameter(dbContext.cmd, "@Universe", Data.Universe);
+				dbContext.AddInParameter(dbContext.cmd, "@updated_at", Data.updated_at);
+				dbContext.AddInParameter(dbContext.cmd, "@user_id", Data.user_id);
+				_return_value = Convert.ToString(dbContext.cmd.ExecuteNonQuery());
+			}
+			catch (Exception ex)
+			{
+			    _return_value = null;
+			    throw;
+			}
+			
+			return _return_value;
+
+		}
+
 	}
 }

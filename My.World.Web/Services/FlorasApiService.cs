@@ -16,8 +16,8 @@ namespace My.World.Web.Services
 		{
 			string florasModel = null;
 			RestHttpClient client = new RestHttpClient();
-			client.Host = MyWorldApiUrl;
-			client.ApiUrl = "AddFloras";
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Floras/AddFloras";
 			client.ServiceMethod = Method.POST;
 			client.RequestBody = model;
 			string jsonResult = client.GetResponseAsync();
@@ -31,8 +31,8 @@ namespace My.World.Web.Services
 		{
 			FlorasModel florasModel = null;
 			RestHttpClient client = new RestHttpClient();
-			client.Host = MyWorldApiUrl;
-			client.ApiUrl = "GetFloras";
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Floras/GetFloras";
 			client.ServiceMethod = Method.POST;
 			client.RequestBody = model;
 			string jsonResult = client.GetResponseAsync();
@@ -46,8 +46,8 @@ namespace My.World.Web.Services
 		{
 			string florasModel = null;
 			RestHttpClient client = new RestHttpClient();
-			client.Host = MyWorldApiUrl;
-			client.ApiUrl = "DeleteFloras";
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Floras/DeleteFloras";
 			client.ServiceMethod = Method.POST;
 			client.RequestBody = model;
 			string jsonResult = client.GetResponseAsync();
@@ -61,8 +61,8 @@ namespace My.World.Web.Services
 		{
 			List<FlorasModel> florasModel = new List<FlorasModel>();
 			RestHttpClient client = new RestHttpClient();
-			client.Host = MyWorldApiUrl;
-			client.ApiUrl = "GetAllFloras/" + UserId;
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Floras/GetAllFloras/" + UserId;
 			client.ServiceMethod = Method.GET;
 			string jsonResult = client.GETAsync();
 			ResponseModel<List<FlorasModel>> response = JsonConvert.DeserializeObject<ResponseModel<List<FlorasModel>>>(jsonResult);
@@ -75,8 +75,8 @@ namespace My.World.Web.Services
 		{
 			string florasModel = null;
 			RestHttpClient client = new RestHttpClient();
-			client.Host = MyWorldApiUrl;
-			client.ApiUrl = "SaveFlora";
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Floras/SaveFlora";
 			client.ServiceMethod = Method.POST;
 			client.RequestBody = model;
 			string jsonResult = client.GetResponseAsync();

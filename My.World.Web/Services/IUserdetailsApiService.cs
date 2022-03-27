@@ -8,18 +8,16 @@ using System.Threading.Tasks;
 
 namespace My.World.Web.Services
 {
-	public interface IUserdetailsApiService
+	public interface IUserDetailsApiService
 	{
-
-		string AddUserDetails(UserDetailsModel model);
-
-		string UpdateUserDetails(UserDetailsModel model);
 
 		UserDetailsModel GetUserDetails(UserDetailsModel model);
 
 		string DeleteUserDetails(UserDetailsModel model);
 
-		List<UserDetailsModel> GetAllUserDetails();
+		List<UserDetailsModel> GetAllUserDetails(long UserId);
+
+		ResponseModel<string> SaveUserDetail(UserDetailsModel model);
 
 	}
 }

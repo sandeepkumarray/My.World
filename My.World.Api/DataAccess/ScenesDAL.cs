@@ -185,5 +185,40 @@ namespace My.World.Api.DataAccess
 
 		}
 
+		public string UpdateScenesData(ScenesModel Data)
+		{
+			string _return_value = string.Empty;
+			try
+			{
+				dbContext.cmd = new MySqlCommand();
+				dbContext.cmd.Connection = dbContext.GetConnection();
+				dbContext.cmd.CommandText = "UPDATE scenes SET Characters_in_scene = @Characters_in_scene,created_at = @created_at,Description = @Description,Items_in_scene = @Items_in_scene,Locations_in_scene = @Locations_in_scene,Name = @Name,Notes = @Notes,Private_notes = @Private_notes,Results = @Results,Summary = @Summary,Tags = @Tags,Universe = @Universe,updated_at = @updated_at,user_id = @user_id,What_caused_this = @What_caused_this WHERE id = @id";
+				dbContext.AddInParameter(dbContext.cmd, "@Characters_in_scene", Data.Characters_in_scene);
+				dbContext.AddInParameter(dbContext.cmd, "@created_at", Data.created_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Description", Data.Description);
+				dbContext.AddInParameter(dbContext.cmd, "@Items_in_scene", Data.Items_in_scene);
+				dbContext.AddInParameter(dbContext.cmd, "@Locations_in_scene", Data.Locations_in_scene);
+				dbContext.AddInParameter(dbContext.cmd, "@Name", Data.Name);
+				dbContext.AddInParameter(dbContext.cmd, "@Notes", Data.Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Private_notes", Data.Private_notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Results", Data.Results);
+				dbContext.AddInParameter(dbContext.cmd, "@Summary", Data.Summary);
+				dbContext.AddInParameter(dbContext.cmd, "@Tags", Data.Tags);
+				dbContext.AddInParameter(dbContext.cmd, "@Universe", Data.Universe);
+				dbContext.AddInParameter(dbContext.cmd, "@updated_at", Data.updated_at);
+				dbContext.AddInParameter(dbContext.cmd, "@user_id", Data.user_id);
+				dbContext.AddInParameter(dbContext.cmd, "@What_caused_this", Data.What_caused_this);
+				_return_value = Convert.ToString(dbContext.cmd.ExecuteNonQuery());
+			}
+			catch (Exception ex)
+			{
+			    _return_value = null;
+			    throw;
+			}
+			
+			return _return_value;
+
+		}
+
 	}
 }

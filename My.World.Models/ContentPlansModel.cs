@@ -145,6 +145,10 @@ namespace My.World.Api.Models
 		[DisplayName("Vehicles Count")]
 		public Int32 vehicles_count { get; set; }
 
+		[JsonProperty("organizations_count")]
+		[DisplayName("organizations Count")]
+		public Int32 organizations_count { get; set; }
+
 		[JsonProperty("created_by")]
 		[DisplayName("Created By")]
 		public Int32 created_by { get; set; }

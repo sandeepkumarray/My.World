@@ -239,5 +239,58 @@ namespace My.World.Api.DataAccess
 
 		}
 
+		public string UpdateSportsData(SportsModel Data)
+		{
+			string _return_value = string.Empty;
+			try
+			{
+				dbContext.cmd = new MySqlCommand();
+				dbContext.cmd.Connection = dbContext.GetConnection();
+				dbContext.cmd.CommandText = "UPDATE sports SET Common_injuries = @Common_injuries,Countries = @Countries,created_at = @created_at,Creators = @Creators,Description = @Description,Equipment = @Equipment,Evolution = @Evolution,Famous_games = @Famous_games,Game_time = @Game_time,How_to_win = @How_to_win,Merchandise = @Merchandise,Most_important_muscles = @Most_important_muscles,Name = @Name,Nicknames = @Nicknames,Notes = @Notes,Number_of_players = @Number_of_players,Origin_story = @Origin_story,Penalties = @Penalties,Play_area = @Play_area,Players = @Players,Popularity = @Popularity,Positions = @Positions,Private_Notes = @Private_Notes,Rules = @Rules,Scoring = @Scoring,Strategies = @Strategies,Tags = @Tags,Teams = @Teams,Traditions = @Traditions,Uniforms = @Uniforms,Universe = @Universe,updated_at = @updated_at,user_id = @user_id WHERE id = @id";
+				dbContext.AddInParameter(dbContext.cmd, "@Common_injuries", Data.Common_injuries);
+				dbContext.AddInParameter(dbContext.cmd, "@Countries", Data.Countries);
+				dbContext.AddInParameter(dbContext.cmd, "@created_at", Data.created_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Creators", Data.Creators);
+				dbContext.AddInParameter(dbContext.cmd, "@Description", Data.Description);
+				dbContext.AddInParameter(dbContext.cmd, "@Equipment", Data.Equipment);
+				dbContext.AddInParameter(dbContext.cmd, "@Evolution", Data.Evolution);
+				dbContext.AddInParameter(dbContext.cmd, "@Famous_games", Data.Famous_games);
+				dbContext.AddInParameter(dbContext.cmd, "@Game_time", Data.Game_time);
+				dbContext.AddInParameter(dbContext.cmd, "@How_to_win", Data.How_to_win);
+				dbContext.AddInParameter(dbContext.cmd, "@Merchandise", Data.Merchandise);
+				dbContext.AddInParameter(dbContext.cmd, "@Most_important_muscles", Data.Most_important_muscles);
+				dbContext.AddInParameter(dbContext.cmd, "@Name", Data.Name);
+				dbContext.AddInParameter(dbContext.cmd, "@Nicknames", Data.Nicknames);
+				dbContext.AddInParameter(dbContext.cmd, "@Notes", Data.Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Number_of_players", Data.Number_of_players);
+				dbContext.AddInParameter(dbContext.cmd, "@Origin_story", Data.Origin_story);
+				dbContext.AddInParameter(dbContext.cmd, "@Penalties", Data.Penalties);
+				dbContext.AddInParameter(dbContext.cmd, "@Play_area", Data.Play_area);
+				dbContext.AddInParameter(dbContext.cmd, "@Players", Data.Players);
+				dbContext.AddInParameter(dbContext.cmd, "@Popularity", Data.Popularity);
+				dbContext.AddInParameter(dbContext.cmd, "@Positions", Data.Positions);
+				dbContext.AddInParameter(dbContext.cmd, "@Private_Notes", Data.Private_Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Rules", Data.Rules);
+				dbContext.AddInParameter(dbContext.cmd, "@Scoring", Data.Scoring);
+				dbContext.AddInParameter(dbContext.cmd, "@Strategies", Data.Strategies);
+				dbContext.AddInParameter(dbContext.cmd, "@Tags", Data.Tags);
+				dbContext.AddInParameter(dbContext.cmd, "@Teams", Data.Teams);
+				dbContext.AddInParameter(dbContext.cmd, "@Traditions", Data.Traditions);
+				dbContext.AddInParameter(dbContext.cmd, "@Uniforms", Data.Uniforms);
+				dbContext.AddInParameter(dbContext.cmd, "@Universe", Data.Universe);
+				dbContext.AddInParameter(dbContext.cmd, "@updated_at", Data.updated_at);
+				dbContext.AddInParameter(dbContext.cmd, "@user_id", Data.user_id);
+				_return_value = Convert.ToString(dbContext.cmd.ExecuteNonQuery());
+			}
+			catch (Exception ex)
+			{
+			    _return_value = null;
+			    throw;
+			}
+			
+			return _return_value;
+
+		}
+
 	}
 }

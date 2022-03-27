@@ -275,5 +275,70 @@ namespace My.World.Api.DataAccess
 
 		}
 
+		public string UpdateCharactersData(CharactersModel Data)
+		{
+			string _return_value = string.Empty;
+			try
+			{
+				dbContext.cmd = new MySqlCommand();
+				dbContext.cmd.Connection = dbContext.GetConnection();
+				dbContext.cmd.CommandText = "UPDATE characters SET Age = @Age,Aliases = @Aliases,archived_at = @archived_at,Background = @Background,Birthday = @Birthday,Birthplace = @Birthplace,Bodytype = @Bodytype,created_at = @created_at,deleted_at = @deleted_at,Education = @Education,Eyecolor = @Eyecolor,Facialhair = @Facialhair,Fave_animal = @Fave_animal,Fave_color = @Fave_color,Fave_food = @Fave_food,Fave_possession = @Fave_possession,Fave_weapon = @Fave_weapon,Favorite = @Favorite,Flaws = @Flaws,Gender = @Gender,Haircolor = @Haircolor,Hairstyle = @Hairstyle,Height = @Height,Hobbies = @Hobbies,Identmarks = @Identmarks,Mannerisms = @Mannerisms,Motivations = @Motivations,Name = @Name,Notes = @Notes,Occupation = @Occupation,Personality_type = @Personality_type,Pets = @Pets,Politics = @Politics,Prejudices = @Prejudices,Privacy = @Privacy,Private_notes = @Private_notes,Race = @Race,Religion = @Religion,Role = @Role,Skintone = @Skintone,Talents = @Talents,Universe = @Universe,updated_at = @updated_at,user_id = @user_id,Weight = @Weight WHERE id = @id";
+				dbContext.AddInParameter(dbContext.cmd, "@Age", Data.Age);
+				dbContext.AddInParameter(dbContext.cmd, "@Aliases", Data.Aliases);
+				dbContext.AddInParameter(dbContext.cmd, "@archived_at", Data.archived_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Background", Data.Background);
+				dbContext.AddInParameter(dbContext.cmd, "@Birthday", Data.Birthday);
+				dbContext.AddInParameter(dbContext.cmd, "@Birthplace", Data.Birthplace);
+				dbContext.AddInParameter(dbContext.cmd, "@Bodytype", Data.Bodytype);
+				dbContext.AddInParameter(dbContext.cmd, "@created_at", Data.created_at);
+				dbContext.AddInParameter(dbContext.cmd, "@deleted_at", Data.deleted_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Education", Data.Education);
+				dbContext.AddInParameter(dbContext.cmd, "@Eyecolor", Data.Eyecolor);
+				dbContext.AddInParameter(dbContext.cmd, "@Facialhair", Data.Facialhair);
+				dbContext.AddInParameter(dbContext.cmd, "@Fave_animal", Data.Fave_animal);
+				dbContext.AddInParameter(dbContext.cmd, "@Fave_color", Data.Fave_color);
+				dbContext.AddInParameter(dbContext.cmd, "@Fave_food", Data.Fave_food);
+				dbContext.AddInParameter(dbContext.cmd, "@Fave_possession", Data.Fave_possession);
+				dbContext.AddInParameter(dbContext.cmd, "@Fave_weapon", Data.Fave_weapon);
+				dbContext.AddInParameter(dbContext.cmd, "@Favorite", Data.Favorite);
+				dbContext.AddInParameter(dbContext.cmd, "@Flaws", Data.Flaws);
+				dbContext.AddInParameter(dbContext.cmd, "@Gender", Data.Gender);
+				dbContext.AddInParameter(dbContext.cmd, "@Haircolor", Data.Haircolor);
+				dbContext.AddInParameter(dbContext.cmd, "@Hairstyle", Data.Hairstyle);
+				dbContext.AddInParameter(dbContext.cmd, "@Height", Data.Height);
+				dbContext.AddInParameter(dbContext.cmd, "@Hobbies", Data.Hobbies);
+				dbContext.AddInParameter(dbContext.cmd, "@Identmarks", Data.Identmarks);
+				dbContext.AddInParameter(dbContext.cmd, "@Mannerisms", Data.Mannerisms);
+				dbContext.AddInParameter(dbContext.cmd, "@Motivations", Data.Motivations);
+				dbContext.AddInParameter(dbContext.cmd, "@Name", Data.Name);
+				dbContext.AddInParameter(dbContext.cmd, "@Notes", Data.Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Occupation", Data.Occupation);
+				dbContext.AddInParameter(dbContext.cmd, "@Personality_type", Data.Personality_type);
+				dbContext.AddInParameter(dbContext.cmd, "@Pets", Data.Pets);
+				dbContext.AddInParameter(dbContext.cmd, "@Politics", Data.Politics);
+				dbContext.AddInParameter(dbContext.cmd, "@Prejudices", Data.Prejudices);
+				dbContext.AddInParameter(dbContext.cmd, "@Privacy", Data.Privacy);
+				dbContext.AddInParameter(dbContext.cmd, "@Private_notes", Data.Private_notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Race", Data.Race);
+				dbContext.AddInParameter(dbContext.cmd, "@Religion", Data.Religion);
+				dbContext.AddInParameter(dbContext.cmd, "@Role", Data.Role);
+				dbContext.AddInParameter(dbContext.cmd, "@Skintone", Data.Skintone);
+				dbContext.AddInParameter(dbContext.cmd, "@Talents", Data.Talents);
+				dbContext.AddInParameter(dbContext.cmd, "@Universe", Data.Universe);
+				dbContext.AddInParameter(dbContext.cmd, "@updated_at", Data.updated_at);
+				dbContext.AddInParameter(dbContext.cmd, "@user_id", Data.user_id);
+				dbContext.AddInParameter(dbContext.cmd, "@Weight", Data.Weight);
+				_return_value = Convert.ToString(dbContext.cmd.ExecuteNonQuery());
+			}
+			catch (Exception ex)
+			{
+			    _return_value = null;
+			    throw;
+			}
+			
+			return _return_value;
+
+		}
+
 	}
 }

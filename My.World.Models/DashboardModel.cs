@@ -35,6 +35,8 @@ namespace My.World.Api.Models
         public Int32 traditions_total { get; set; }
         public Int32 universes_total { get; set; }
         public Int32 vehicles_total { get; set; }
+        public Int32 organizations_total {get;set;}
+
         public object this[string property]
         {
             get

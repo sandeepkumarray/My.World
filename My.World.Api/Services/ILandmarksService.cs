@@ -20,5 +20,7 @@ namespace My.World.Api.Services
 
 		ResponseModel<string> SaveLandmark(LandmarksModel Data);
 
+		ResponseModel<string> UpdateLandmarksData(LandmarksModel Data);
+
 	}
 }

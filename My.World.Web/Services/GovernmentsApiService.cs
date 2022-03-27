@@ -14,74 +14,74 @@ namespace My.World.Web.Services
 
 		public string AddGovernments(GovernmentsModel model)
 		{
-						string governmentsModel = null;
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "AddGovernments";
-						client.ServiceMethod = Method.POST;
-						client.RequestBody = model;
-						string jsonResult = client.GetResponseAsync();
-						ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
-						governmentsModel = response.Value;
-						return governmentsModel;
+			string governmentsModel = null;
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Governments/AddGovernments";
+			client.ServiceMethod = Method.POST;
+			client.RequestBody = model;
+			string jsonResult = client.GetResponseAsync();
+			ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
+			governmentsModel = response.Value;
+			return governmentsModel;
 
 		}
 
 		public GovernmentsModel GetGovernments(GovernmentsModel model)
 		{
-						GovernmentsModel governmentsModel = null;
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "GetGovernments";
-						client.ServiceMethod = Method.POST;
-						client.RequestBody = model;
-						string jsonResult = client.GetResponseAsync();
-						ResponseModel<GovernmentsModel> response = JsonConvert.DeserializeObject<ResponseModel<GovernmentsModel>>(jsonResult);
-						governmentsModel = response.Value;
-						return governmentsModel;
+			GovernmentsModel governmentsModel = null;
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Governments/GetGovernments";
+			client.ServiceMethod = Method.POST;
+			client.RequestBody = model;
+			string jsonResult = client.GetResponseAsync();
+			ResponseModel<GovernmentsModel> response = JsonConvert.DeserializeObject<ResponseModel<GovernmentsModel>>(jsonResult);
+			governmentsModel = response.Value;
+			return governmentsModel;
 
 		}
 
 		public string DeleteGovernments(GovernmentsModel model)
 		{
-						string governmentsModel = null;
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "DeleteGovernments";
-						client.ServiceMethod = Method.POST;
-						client.RequestBody = model;
-						string jsonResult = client.GetResponseAsync();
-						ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
-						governmentsModel = response.Value;
-						return governmentsModel;
+			string governmentsModel = null;
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Governments/DeleteGovernments";
+			client.ServiceMethod = Method.POST;
+			client.RequestBody = model;
+			string jsonResult = client.GetResponseAsync();
+			ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
+			governmentsModel = response.Value;
+			return governmentsModel;
 
 		}
 
 		public List<GovernmentsModel> GetAllGovernments(long UserId)
 		{
-						List<GovernmentsModel> governmentsModel = new List<GovernmentsModel>();
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "GetAllGovernments/" + UserId;
-						client.ServiceMethod = Method.GET;
-						string jsonResult = client.GETAsync();
-						ResponseModel<List<GovernmentsModel>> response = JsonConvert.DeserializeObject<ResponseModel<List<GovernmentsModel>>>(jsonResult);
-						governmentsModel = response.Value;
-						return governmentsModel;
+			List<GovernmentsModel> governmentsModel = new List<GovernmentsModel>();
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Governments/GetAllGovernments/" + UserId;
+			client.ServiceMethod = Method.GET;
+			string jsonResult = client.GETAsync();
+			ResponseModel<List<GovernmentsModel>> response = JsonConvert.DeserializeObject<ResponseModel<List<GovernmentsModel>>>(jsonResult);
+			governmentsModel = response.Value;
+			return governmentsModel;
 
 		}
 
 		public ResponseModel<string> SaveGovernment(GovernmentsModel model)
 		{
-						string governmentsModel = null;
-						RestHttpClient client = new RestHttpClient();
-						client.Host = MyWorldApiUrl;
-						client.ApiUrl = "SaveGovernment";
-						client.ServiceMethod = Method.POST;
-						client.RequestBody = model;
-						string jsonResult = client.GetResponseAsync();
-						ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
-						return response;
+			string governmentsModel = null;
+			RestHttpClient client = new RestHttpClient();
+			client.Host = MyWorldContentApiUrl;
+			client.ApiUrl = "Governments/SaveGovernment";
+			client.ServiceMethod = Method.POST;
+			client.RequestBody = model;
+			string jsonResult = client.GetResponseAsync();
+			ResponseModel<string> response = JsonConvert.DeserializeObject<ResponseModel<string>>(jsonResult);
+			return response;
 
 		}
 

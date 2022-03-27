@@ -269,5 +269,68 @@ namespace My.World.Api.DataAccess
 
 		}
 
+		public string UpdateContinentsData(ContinentsModel Data)
+		{
+			string _return_value = string.Empty;
+			try
+			{
+				dbContext.cmd = new MySqlCommand();
+				dbContext.cmd.Connection = dbContext.GetConnection();
+				dbContext.cmd.CommandText = "UPDATE continents SET Architecture = @Architecture,Area = @Area,Bodies_of_water = @Bodies_of_water,Countries = @Countries,created_at = @created_at,Creatures = @Creatures,Crops = @Crops,Demonym = @Demonym,Description = @Description,Discovery = @Discovery,Economy = @Economy,Floras = @Floras,Formation = @Formation,Governments = @Governments,Humidity = @Humidity,Landmarks = @Landmarks,Languages = @Languages,Local_name = @Local_name,Mineralogy = @Mineralogy,Natural_disasters = @Natural_disasters,Notes = @Notes,Other_Names = @Other_Names,Politics = @Politics,Popular_foods = @Popular_foods,Population = @Population,Precipitation = @Precipitation,Private_Notes = @Private_Notes,Regional_advantages = @Regional_advantages,Regional_disadvantages = @Regional_disadvantages,Reputation = @Reputation,Ruins = @Ruins,Seasons = @Seasons,Shape = @Shape,Tags = @Tags,Temperature = @Temperature,Topography = @Topography,Tourism = @Tourism,Traditions = @Traditions,Universe = @Universe,updated_at = @updated_at,user_id = @user_id,Wars = @Wars,Winds = @Winds WHERE id = @id";
+				dbContext.AddInParameter(dbContext.cmd, "@Architecture", Data.Architecture);
+				dbContext.AddInParameter(dbContext.cmd, "@Area", Data.Area);
+				dbContext.AddInParameter(dbContext.cmd, "@Bodies_of_water", Data.Bodies_of_water);
+				dbContext.AddInParameter(dbContext.cmd, "@Countries", Data.Countries);
+				dbContext.AddInParameter(dbContext.cmd, "@created_at", Data.created_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Creatures", Data.Creatures);
+				dbContext.AddInParameter(dbContext.cmd, "@Crops", Data.Crops);
+				dbContext.AddInParameter(dbContext.cmd, "@Demonym", Data.Demonym);
+				dbContext.AddInParameter(dbContext.cmd, "@Description", Data.Description);
+				dbContext.AddInParameter(dbContext.cmd, "@Discovery", Data.Discovery);
+				dbContext.AddInParameter(dbContext.cmd, "@Economy", Data.Economy);
+				dbContext.AddInParameter(dbContext.cmd, "@Floras", Data.Floras);
+				dbContext.AddInParameter(dbContext.cmd, "@Formation", Data.Formation);
+				dbContext.AddInParameter(dbContext.cmd, "@Governments", Data.Governments);
+				dbContext.AddInParameter(dbContext.cmd, "@Humidity", Data.Humidity);
+				dbContext.AddInParameter(dbContext.cmd, "@Landmarks", Data.Landmarks);
+				dbContext.AddInParameter(dbContext.cmd, "@Languages", Data.Languages);
+				dbContext.AddInParameter(dbContext.cmd, "@Local_name", Data.Local_name);
+				dbContext.AddInParameter(dbContext.cmd, "@Mineralogy", Data.Mineralogy);
+				dbContext.AddInParameter(dbContext.cmd, "@Natural_disasters", Data.Natural_disasters);
+				dbContext.AddInParameter(dbContext.cmd, "@Notes", Data.Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Other_Names", Data.Other_Names);
+				dbContext.AddInParameter(dbContext.cmd, "@Politics", Data.Politics);
+				dbContext.AddInParameter(dbContext.cmd, "@Popular_foods", Data.Popular_foods);
+				dbContext.AddInParameter(dbContext.cmd, "@Population", Data.Population);
+				dbContext.AddInParameter(dbContext.cmd, "@Precipitation", Data.Precipitation);
+				dbContext.AddInParameter(dbContext.cmd, "@Private_Notes", Data.Private_Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Regional_advantages", Data.Regional_advantages);
+				dbContext.AddInParameter(dbContext.cmd, "@Regional_disadvantages", Data.Regional_disadvantages);
+				dbContext.AddInParameter(dbContext.cmd, "@Reputation", Data.Reputation);
+				dbContext.AddInParameter(dbContext.cmd, "@Ruins", Data.Ruins);
+				dbContext.AddInParameter(dbContext.cmd, "@Seasons", Data.Seasons);
+				dbContext.AddInParameter(dbContext.cmd, "@Shape", Data.Shape);
+				dbContext.AddInParameter(dbContext.cmd, "@Tags", Data.Tags);
+				dbContext.AddInParameter(dbContext.cmd, "@Temperature", Data.Temperature);
+				dbContext.AddInParameter(dbContext.cmd, "@Topography", Data.Topography);
+				dbContext.AddInParameter(dbContext.cmd, "@Tourism", Data.Tourism);
+				dbContext.AddInParameter(dbContext.cmd, "@Traditions", Data.Traditions);
+				dbContext.AddInParameter(dbContext.cmd, "@Universe", Data.Universe);
+				dbContext.AddInParameter(dbContext.cmd, "@updated_at", Data.updated_at);
+				dbContext.AddInParameter(dbContext.cmd, "@user_id", Data.user_id);
+				dbContext.AddInParameter(dbContext.cmd, "@Wars", Data.Wars);
+				dbContext.AddInParameter(dbContext.cmd, "@Winds", Data.Winds);
+				_return_value = Convert.ToString(dbContext.cmd.ExecuteNonQuery());
+			}
+			catch (Exception ex)
+			{
+			    _return_value = null;
+			    throw;
+			}
+			
+			return _return_value;
+
+		}
+
 	}
 }

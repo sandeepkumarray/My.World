@@ -257,5 +257,64 @@ namespace My.World.Api.DataAccess
 
 		}
 
+		public string UpdateFoodsData(FoodsModel Data)
+		{
+			string _return_value = string.Empty;
+			try
+			{
+				dbContext.cmd = new MySqlCommand();
+				dbContext.cmd.Connection = dbContext.GetConnection();
+				dbContext.cmd.CommandText = "UPDATE foods SET Color = @Color,Conditions = @Conditions,Cooking_method = @Cooking_method,Cost = @Cost,created_at = @created_at,Description = @Description,Flavor = @Flavor,Ingredients = @Ingredients,Meal = @Meal,Name = @Name,Notes = @Notes,Nutrition = @Nutrition,Origin_story = @Origin_story,Other_Names = @Other_Names,Place_of_origin = @Place_of_origin,Preparation = @Preparation,Private_Notes = @Private_Notes,Rarity = @Rarity,Related_foods = @Related_foods,Reputation = @Reputation,Scent = @Scent,Serving = @Serving,Shelf_life = @Shelf_life,Side_effects = @Side_effects,Size = @Size,Smell = @Smell,Sold_by = @Sold_by,Spices = @Spices,Symbolisms = @Symbolisms,Tags = @Tags,Texture = @Texture,Traditions = @Traditions,Type_of_food = @Type_of_food,Universe = @Universe,updated_at = @updated_at,user_id = @user_id,Utensils_needed = @Utensils_needed,Variations = @Variations,Yield = @Yield WHERE id = @id";
+				dbContext.AddInParameter(dbContext.cmd, "@Color", Data.Color);
+				dbContext.AddInParameter(dbContext.cmd, "@Conditions", Data.Conditions);
+				dbContext.AddInParameter(dbContext.cmd, "@Cooking_method", Data.Cooking_method);
+				dbContext.AddInParameter(dbContext.cmd, "@Cost", Data.Cost);
+				dbContext.AddInParameter(dbContext.cmd, "@created_at", Data.created_at);
+				dbContext.AddInParameter(dbContext.cmd, "@Description", Data.Description);
+				dbContext.AddInParameter(dbContext.cmd, "@Flavor", Data.Flavor);
+				dbContext.AddInParameter(dbContext.cmd, "@Ingredients", Data.Ingredients);
+				dbContext.AddInParameter(dbContext.cmd, "@Meal", Data.Meal);
+				dbContext.AddInParameter(dbContext.cmd, "@Name", Data.Name);
+				dbContext.AddInParameter(dbContext.cmd, "@Notes", Data.Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Nutrition", Data.Nutrition);
+				dbContext.AddInParameter(dbContext.cmd, "@Origin_story", Data.Origin_story);
+				dbContext.AddInParameter(dbContext.cmd, "@Other_Names", Data.Other_Names);
+				dbContext.AddInParameter(dbContext.cmd, "@Place_of_origin", Data.Place_of_origin);
+				dbContext.AddInParameter(dbContext.cmd, "@Preparation", Data.Preparation);
+				dbContext.AddInParameter(dbContext.cmd, "@Private_Notes", Data.Private_Notes);
+				dbContext.AddInParameter(dbContext.cmd, "@Rarity", Data.Rarity);
+				dbContext.AddInParameter(dbContext.cmd, "@Related_foods", Data.Related_foods);
+				dbContext.AddInParameter(dbContext.cmd, "@Reputation", Data.Reputation);
+				dbContext.AddInParameter(dbContext.cmd, "@Scent", Data.Scent);
+				dbContext.AddInParameter(dbContext.cmd, "@Serving", Data.Serving);
+				dbContext.AddInParameter(dbContext.cmd, "@Shelf_life", Data.Shelf_life);
+				dbContext.AddInParameter(dbContext.cmd, "@Side_effects", Data.Side_effects);
+				dbContext.AddInParameter(dbContext.cmd, "@Size", Data.Size);
+				dbContext.AddInParameter(dbContext.cmd, "@Smell", Data.Smell);
+				dbContext.AddInParameter(dbContext.cmd, "@Sold_by", Data.Sold_by);
+				dbContext.AddInParameter(dbContext.cmd, "@Spices", Data.Spices);
+				dbContext.AddInParameter(dbContext.cmd, "@Symbolisms", Data.Symbolisms);
+				dbContext.AddInParameter(dbContext.cmd, "@Tags", Data.Tags);
+				dbContext.AddInParameter(dbContext.cmd, "@Texture", Data.Texture);
+				dbContext.AddInParameter(dbContext.cmd, "@Traditions", Data.Traditions);
+				dbContext.AddInParameter(dbContext.cmd, "@Type_of_food", Data.Type_of_food);
+				dbContext.AddInParameter(dbContext.cmd, "@Universe", Data.Universe);
+				dbContext.AddInParameter(dbContext.cmd, "@updated_at", Data.updated_at);
+				dbContext.AddInParameter(dbContext.cmd, "@user_id", Data.user_id);
+				dbContext.AddInParameter(dbContext.cmd, "@Utensils_needed", Data.Utensils_needed);
+				dbContext.AddInParameter(dbContext.cmd, "@Variations", Data.Variations);
+				dbContext.AddInParameter(dbContext.cmd, "@Yield", Data.Yield);
+				_return_value = Convert.ToString(dbContext.cmd.ExecuteNonQuery());
+			}
+			catch (Exception ex)
+			{
+			    _return_value = null;
+			    throw;
+			}
+			
+			return _return_value;
+
+		}
+
 	}
 }

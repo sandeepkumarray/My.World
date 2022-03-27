@@ -45,8 +45,21 @@ namespace My.World.Web.Controllers
         [FromServices] IWebHostEnvironment webHostEnvironment)
         {
             var context = this.HttpContext.Features.Get<IExceptionHandlerFeature>();
-            if(context != null)
+            if (context != null)
             {
+                if (context.Error != null)
+                {
+                    if (context.Error.GetType() == typeof(InvalidOperationException))
+                    {
+                        return View(new ErrorViewModel
+                        {
+                            StatusCode = "404",
+                            Message = "Oops! You're lost. The page you are looking for was not found.",
+                            RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
+                            Environment = webHostEnvironment.EnvironmentName
+                        });
+                    }
+                }
                 _logger.LogError(context.Error?.Message);
             }
             //return Problem(

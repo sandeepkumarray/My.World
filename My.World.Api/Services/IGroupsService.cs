@@ -20,5 +20,7 @@ namespace My.World.Api.Services
 
 		ResponseModel<string> SaveGroup(GroupsModel Data);
 
+		ResponseModel<string> UpdateGroupsData(GroupsModel Data);
+
 	}
 }

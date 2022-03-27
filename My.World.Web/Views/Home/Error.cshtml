@@ -5,14 +5,20 @@
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
 
-<h1>Error</h1>
+<div class="row d-flex justify-content-center align-items-center">
+    <div class="text-center mb-3">
+        @{
+            var result = string.IsNullOrEmpty(Model.StatusCode) == true ? "500" : Model.StatusCode;
 
-<div>
-    <h4>ErrorViewModel</h4>
-    <hr />
-    @Model.Environment
+            <h1 class="error-title" style="font-size:12rem;">@result</h1>
+        }
+        <h5>@Model.Message</h5>
+    </div>
 </div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+<div class="row d-flex justify-content-center align-items-center">
+    <h2>
+        <a class="btn btn-lg btn-primary" asp-controller="Dashboard" asp-action="Index" target="_self">
+            <i class="material-icons" translate="no">home</i>&nbsp; Dashboard
+        </a>
+    </h2>
 </div>
